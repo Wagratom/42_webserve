@@ -82,7 +82,7 @@
 ## [Epoll_wait](https://man7.org/linux/man-pages/man2/epoll_wait.2.html) \ `int epoll_wait(int epfd, struct epoll_event *events, int maxevents, int timeout);`
 
 * `epoll_wait()` aguarda por eventos na instância [epoll](#epoll) referenciada pelo descritor de arquivo `epfd`. O buffer apontado por `events` é usado para retornar informações da lista de prontos sobre descritores de arquivo na lista de interesse que têm alguns eventos disponíveis. Até `maxevents` são retornados por epoll_wait(). O argumento maxevents deve ser maior que zero.
-* `Valor de retorno` em caso de sucesso, retorna o número de descritores de arquivo prontos para a entrada/saída solicitada, ou zero se nenhum descritor de arquivo ficou pronto durante o tempo limite solicitado em milissegundos. Em caso de falha, retorna -1 e define errno para indicar o erro.
+* `Valor de retorno` em caso de sucesso, retorna o número de descritores de arquivo prontos para a entrada/saída solicitada, ou zero se nenhum descritor de arquivo ficou pronto durante o tempo limite solicitado em milissegundos. Em caso de falha, retorna -1 e define [errno](#errno) para indicar o erro.
 
 
 ## [socket](https://man7.org/linux/man-pages/man2/socket.2.html) \ `int socket(int domain, int type, int protocol);`
@@ -90,3 +90,32 @@
 * `Type` especifica o tipo de socket a ser criado, que determina o comportamento da comunicação.
 * `domain` especifica um domínio de comunicação; isso seleciona a família de protocolos que será usada para comunicação.
 * O `protocolo` especifica um protocolo particular a ser usado com o socket. Normalmente, apenas um único protocolo existe para suportar um tipo de socket específico dentro de uma determinada família de protocolos.
+
+## [Accept](https://man7.org/linux/man-pages/man2/accept.2.html) \ `int accept(int sockfd, struct sockaddr *restrict addr, socklen_t *restrict addrlen);`
+
+* `accept()` é usada com tipos de socket. Ela extrai o primeiro pedido de conexão na fila de conexões pendentes para o socket de escuta, `sockfd`, cria um novo socket conectado e retorna um novo descritor de arquivo que se refere a esse socket.
+`Valor de retorno` em caso de sucesso, retornam um descritor de arquivo para o soquete aceito (um inteiro não negativo). Em caso de erro, -1 é retornado, [errno](#errno) é definido para indicar o erro e addrlen permanece inalterado.
+
+## [listen](https://man7.org/linux/man-pages/man2/listen.2.html) \ `int listen(int sockfd, int backlog);`
+
+* `listen()` marca o socket referido pelo descritor de arquivo `sockfd` como um socket passivo, ou seja, como um socket que será usado para aceitar solicitações de conexão entrantes usando a função `accept(2)`.
+* `sockfd` é um descritor de arquivo que se refere a um socket do tipo SOCK_STREAM ou SOCK_SEQPACKET.
+* `backlog` define o comprimento máximo que a fila de conexões pendentes para sockfd pode crescer. Se uma solicitação de conexão chegar quando a fila estiver cheia, o cliente pode receber um erro com uma indicação de ECONNREFUSED ou, se o protocolo subjacente suportar retransmissão, a solicitação pode ser ignorada para que uma nova tentativa de conexão tenha sucesso mais tarde.
+* `Valor de retorno` Em caso de sucesso, a função retorna zero. Em caso de erro, a função retorna -1 e a variável [errno](#errno) é configurada para indicar o erro.
+
+## [Send](https://man7.org/linux/man-pages/man2/send.2.html) \ `ssize_t send(int sockfd, const void *buf, size_t len, int flags);`
+
+* `send()` permitem enviar mensagens de um socket para outro. A chamada `send()` só pode ser usada quando o socket está em um estado conectado (para que o destinatário pretendido seja conhecido). A única diferença entre `send()` e `write(2)` é a presença de flags.
+* `Valor de retorno` em caso de sucesso, retornam o número de bytes enviados. Em caso de erro, -1 é retornado e [errno](#errno) é definido para indicar o erro.
+
+## [Bind](https://man7.org/linux/man-pages/man2/bind.2.html) \ `int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);`
+
+* `bind()` é usada para associar um endereço a um socket criado com a função `socket()`. O endereço especificado é atribuído ao socket referido pelo descritor de arquivo `sockfd`.
+* O tamanho da estrutura de endereço é especificado pelo parâmetro `addrlen`.
+* `Valor de retorno ` em caso de sucesso, é retornado zero. Em caso de erro, é retornado -1 e [errno](#errno) é definido para indicar o erro.
+
+## [connect](https://man7.org/linux/man-pages/man2/connect.2.html) \ `int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);`
+
+* `connect()` conecta o socket referido pelo descritor de arquivo `sockfd` ao endereço especificado por `addr`. O argumento `addrlen` especifica o tamanho de `addr`
+* O formato do endereço em `addr` é determinado pelo espaço de endereços do socket `sockfd`.
+* `Valor de retorno ` em caso de sucesso, é retornado zero. Em caso de erro, é retornado -1 e [errno](#errno) é definido para indicar o erro.
