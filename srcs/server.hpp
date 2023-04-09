@@ -10,6 +10,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <cstdlib>
+#include <sys/epoll.h>
+#include <vector>
 
 #include "socket.hpp"
 
@@ -26,6 +28,7 @@ class Server : public Socket{
 
 	private:
 		static const int BUFFER_SIZE = 1024;
+		static const int MAX_EVENTS = 5;
 
 		void handle_client(int clientSocket);
 		void send_response(int clientSocket, const std::string response);

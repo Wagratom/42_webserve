@@ -48,6 +48,14 @@ int Socket::accept_client(int& serverSocket) {
 		std::cerr << "Error accepting client connection\n";
 		exit(EXIT_FAILURE);
 	}
+
+	// Set the O_NONBLOCK flag on the client socket
+	int flags = fcntl(clientSocket, F_GETFL, 0);
+	if ((flags == -1) || (fcntl(clientSocket, F_SETFL, flags | O_NONBLOCK) == -1)) {
+		std::cerr << "Error setting client socket to non-blocking\n";
+		exit(EXIT_FAILURE);
+	}
+
 	return clientSocket;
 }
 

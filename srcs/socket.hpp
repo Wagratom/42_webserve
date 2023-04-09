@@ -10,8 +10,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <cstdlib>
-
-class Server;
+#include <fcntl.h>
 
 class Socket {
 	public:
@@ -26,8 +25,7 @@ class Socket {
 		void close_socket(int& socket);
 
 	private:
-		static const int BACKLOG = 2;
-		Server *_server;
+		static const int BACKLOG = 5;
 };
 
 #endif // Socket_HPP
