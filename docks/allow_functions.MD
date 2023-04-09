@@ -80,3 +80,13 @@
 * Quando bem-sucedida, epoll_ctl() retorna zero. Quando ocorre um erro, epoll_ctl() retorna -1 e [errno](#errno) é definido para indicar o erro.
 
 ## [Epoll_wait](https://man7.org/linux/man-pages/man2/epoll_wait.2.html) \ `int epoll_wait(int epfd, struct epoll_event *events, int maxevents, int timeout);`
+
+* `epoll_wait()` aguarda por eventos na instância [epoll](#epoll) referenciada pelo descritor de arquivo `epfd`. O buffer apontado por `events` é usado para retornar informações da lista de prontos sobre descritores de arquivo na lista de interesse que têm alguns eventos disponíveis. Até `maxevents` são retornados por epoll_wait(). O argumento maxevents deve ser maior que zero.
+* `Valor de retorno` em caso de sucesso, retorna o número de descritores de arquivo prontos para a entrada/saída solicitada, ou zero se nenhum descritor de arquivo ficou pronto durante o tempo limite solicitado em milissegundos. Em caso de falha, retorna -1 e define errno para indicar o erro.
+
+
+## [socket](https://man7.org/linux/man-pages/man2/socket.2.html) \ `int socket(int domain, int type, int protocol);`
+* `socket()` cria um ponto de extremidade para comunicação e retorna um descritor de arquivo que se refere a esse ponto de extremidade.
+* `Type` especifica o tipo de socket a ser criado, que determina o comportamento da comunicação.
+* `domain` especifica um domínio de comunicação; isso seleciona a família de protocolos que será usada para comunicação.
+* O `protocolo` especifica um protocolo particular a ser usado com o socket. Normalmente, apenas um único protocolo existe para suportar um tipo de socket específico dentro de uma determinada família de protocolos.
