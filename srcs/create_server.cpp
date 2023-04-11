@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/11 10:08:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/11 14:05:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ bool	create_socket(int& socket_dst)
 	socket_dst = socket(AF_INET, SOCK_STREAM, 0);
 	if (socket_dst != -1)
 		return (true);
-	printf("Could not create socket");
-	return (false);
+	return (write_error_prefix("Create_socket"));
 }
 
 bool	bind_socket(int& socket_dst)
@@ -43,16 +42,14 @@ bool	bind_socket(int& socket_dst)
 
 	if (bind(socket_dst, (struct sockaddr *)&server, sizeof(server)) >= 0)
 		return (true);
-	printf("bind failed. Error");
-	return (false);
+	return (write_error_prefix("Bind_socket"));
 }
 
 bool	listen_socket(int& socket_dst)
 {
 	if (listen(socket_dst, 5) == 0)
 		return (true);
-	printf("listen failed. Error");
-	return (false);
+	return (write_error_prefix("Listen_socket"));
 }
 
 bool	create_server(int& socket_dst)
@@ -61,7 +58,7 @@ bool	create_server(int& socket_dst)
 		return (false);
 	if (!bind_socket(socket_dst))
 		return (false);
-	if (listen_socket(socket_dst))
+	if (!listen_socket(socket_dst))
 		return (false);
 	return (true);
 }

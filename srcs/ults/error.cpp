@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   web_serve.hpp                                      :+:      :+:    :+:   */
+/*   error.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/11 14:03:06 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/11 13:59:16 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/11 14:01:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include <web_serve.hpp>
 
-# include <sys/socket.h>
-# include <cstdio>
-# include <netinet/in.h>
-# include <iostream>
-# include <cstring>
-# include <sys/epoll.h>
-# include <errno.h>
-
-bool	create_server(int& socket_dst);
-bool	write_error_prefix(std::string prefix);
+bool	write_error_prefix(std::string prefix)
+{
+	std::cout << prefix << ": ";
+	if (errno != 0)
+		std::cout << strerror(errno) << std::endl;
+	return (false);
+}
