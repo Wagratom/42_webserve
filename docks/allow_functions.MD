@@ -135,6 +135,16 @@
 * `setsockopt()` é usada para configurar opções de um socket, como o tempo limite de recebimento ou envio de dados. É necessário especificar o nível do protocolo em que a opção reside e o nome da opção, além do valor que se deseja atribuir a ela.
 * `Valor de retorno` em caso de sucesso, retorna 0. Caso contrário, retornará -1 e setará a variável [errno](#errno) para indicar o erro ocorrido.
 
-*  A função getsockname() retorna o endereço atual para o qual o socket sockfd está vinculado, no buffer apontado por addr. O argumento addrlen deve ser inicializado para indicar a quantidade de espaço (em bytes) apontada por addr. Ao retornar, ele contém o tamanho real do endereço do socket.
+## [getsockname](https://man7.org/linux/man-pages/man2/getsockname.2.html)
 
-O endereço retornado é truncado se o buffer fornecido for muito pequeno; nesse caso, addrlen retornará um valor maior do que foi fornecido na chamada.
+* `getsockname()` retorna o endereço atual para o qual o socket sockfd está vinculado, no buffer apontado por `addr`. O argumento `addrlen` deve ser inicializado para indicar a quantidade de espaço (em bytes) apontada por `addr`. Ao retornar, ele contém o tamanho real do endereço do socket. O endereço retornado é truncado se o buffer fornecido for muito pequeno; nesse caso, addrlen retornará um valor maior do que foi fornecido na chamada.
+* `Valor de retorno` Em caso de sucesso, o valor 0 é retornado. Em caso de erro, o valor -1 é retornado e a variável [errno](#errno) é definida para indicar o erro.
+
+## [getprotobyname](https://man7.org/linux/man-pages/man3/getprotent.3p.html)
+
+* `getprotobyname()` Ela recebe como argumento uma string contendo o nome do protocolo e retorna um ponteiro para a estrutura `protoent`, que contém informações como o nome do protocolo, número do protocolo e família de protocolo.
+`Valor de retorno`  em caso de falhar, ela retorna um ponteiro nulo e define a variável [errno](#errno) para indicar o erro.
+
+## [fcntl](https://man7.org/linux/man-pages/man2/fcntl.2.html)
+
+* `fcntl` usada para modificar outras propriedades do descritor de arquivo, como alterar suas propriedades, definir o tamanho do buffer de leitura e escrita, ativar o modo assíncrono ou habilitar a execução do descritor de arquivo como um processo filho independente do processo principal.
