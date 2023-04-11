@@ -71,6 +71,7 @@
 ## [Epoll_create](https://man7.org/linux/man-pages/man2/epoll_create.2.html) \ `int epoll_create(int size);`
 
 * `epoll_create()` retorna um descritor de arquivo que se refere à nova instância [epoll](#epoll). Este descritor de arquivo é usado para todas as chamadas subsequentes à interface epoll.
+* `size` base no número máximo esperado de descritores de arquivo a serem monitorados. Esse numero pode ser aumentado.
 * `Valor de retorno:` Essas chamadas de sistema retornam um descritor de arquivo (um inteiro não negativo) em caso de sucesso. Em caso de erro, -1 é retornado e [errno](#errno) é configurado para indicar o erro.
 
 ## [Epoll_ctl](https://man7.org/linux/man-pages/man2/epoll_ctl.2.html) \ ` int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);`
