@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 08:23:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/12 22:58:44 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/12 23:00:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	read_request(std::string& buffer, epoll_event* event)
 		bytes_read = recv(event[0].data.fd, tmp, 1, 0);
 		if (verift_error(bytes_read))
 			return (write_error_prefix("read_request"));
-		if (bytes_read == 0)
+		if (bytes_read == 0 || bytes_read == -1)
 			break ;
 		buffer.append((char*)tmp, bytes_read);
 	}
