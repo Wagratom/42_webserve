@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/12 22:12:14 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 08:24:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct server
 {
 	int	server_fd;
 	int	epoll_fd;
+	int	number_of_connections;
 }				server;
 
 bool	create_server_configured(server& data);
@@ -45,7 +46,7 @@ bool	create_server(server& data);
 bool	conf_serve_to_read(server& data);
 int		start_server(server& data);
 
-bool	capture_new_events(int& epoll_fd, epoll_event* event);
+bool	capture_new_events(server& data, epoll_event* event);
 bool	handle_events(server& data, epoll_event* event);
 int		handle_new_connections(server& data, epoll_event* event);
 bool	separate_request_child(server& data, epoll_event* event);

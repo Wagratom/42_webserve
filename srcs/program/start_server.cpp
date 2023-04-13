@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 07:47:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/12 09:53:30 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 08:17:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	start_server(server& data)
 
 	while (true)
 	{
-		if (!capture_new_events(data.epoll_fd, event))
+		if (!capture_new_events(data, event))
 			return (-1);
 		if (!handle_events(data, event))
 			return (-1);

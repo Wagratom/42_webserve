@@ -6,18 +6,18 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/12 11:23:22 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 08:24:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_serve.hpp>
 
-bool	capture_new_events(int& epoll_fd, epoll_event* event)
+bool	capture_new_events(server& data, epoll_event* event)
 {
 	int	numb_events;
 
 	std::cout << "Waiting for new events..." << std::endl;
-	numb_events = epoll_wait(epoll_fd, event, MAX_EVENTS, -1);
+	numb_events = epoll_wait(data.epoll_fd, event, MAX_EVENTS, -1);
 	std::cout << "Number of events received:: " << numb_events << std::endl;
 	if (numb_events == -1)
 		return (write_error_prefix("handle_new_connections"));
