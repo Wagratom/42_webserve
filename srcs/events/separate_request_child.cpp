@@ -12,7 +12,7 @@
 
 #include <web_serve.hpp>
 
-bool	separate_request_child(server& data, epoll_event* event)
+bool	Server::separate_request_child(epoll_event* event)
 {
 	pid_t	pid;
 
@@ -21,7 +21,7 @@ bool	separate_request_child(server& data, epoll_event* event)
 		return (false);
 	if (pid == CHILD)
 	{
-		close(data.server_fd);
+		close(server_fd);
 		handle_request(event);
 		std::cout << "sai do filho" << std::endl;
 		exit(0);

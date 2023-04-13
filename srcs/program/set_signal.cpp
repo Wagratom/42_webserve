@@ -6,7 +6,13 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:23:01 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/12 12:23:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 09:11:53 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <web_serve.hpp>
+
+void	Server::set_signal( void )
+{
+	signal(SIGPIPE, SIG_IGN);
+}

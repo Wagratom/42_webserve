@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/13 08:24:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 09:12:22 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 # include <cstring>
 # include <sys/epoll.h>
 # include <errno.h>
-#include <unistd.h>
-       #include <fcntl.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <signal.h>
 
 
 #include <stdlib.h>
@@ -34,23 +35,50 @@
 
 # define CHILD 0
 
-typedef struct server
+class Server
 {
-	int	server_fd;
-	int	epoll_fd;
-	int	number_of_connections;
-}				server;
+	public:
+		Server();
+		~Server();
 
-bool	create_server_configured(server& data);
-bool	create_server(server& data);
-bool	conf_serve_to_read(server& data);
-int		start_server(server& data);
+		bool	create_server_configured( void );
+		bool	create_server( void );
+		bool	create_socket( void );
+		bool	bind_socket( void );
+		bool	listen_socket( void );
 
-bool	capture_new_events(server& data, epoll_event* event);
-bool	handle_events(server& data, epoll_event* event);
-int		handle_new_connections(server& data, epoll_event* event);
-bool	separate_request_child(server& data, epoll_event* event);
-bool	handle_request(epoll_event* event);
+		bool	conf_serve_to_read( void );
+		bool	create_epoll( void );
+		bool	add_mode_read( void );
 
-bool	write_error_prefix(std::string prefix);
-bool	fork_staus(pid_t& pid);
+		int		start_server( void );
+
+		bool	capture_new_events(epoll_event* event);
+		bool	handle_events(epoll_event* event);
+
+		int		handle_new_connections(epoll_event* event);
+		bool	is_new_connect(epoll_event* event);
+		bool	accept_status( int& new_client );
+		bool	save_connection( int& new_client );
+
+		bool	separate_request_child(epoll_event* event);
+		bool	handle_request(epoll_event* event);
+		bool	conf_fd_to_not_block(epoll_event* event);
+		bool	verift_error(int bytes_read);
+		bool	read_request(std::string& buffer, epoll_event* event);
+
+		bool	clean_request(epoll_event* event);
+
+
+		bool	write_error_prefix(std::string prefix);
+		bool	fork_staus(pid_t& pid);
+
+
+
+		void	set_signal( void );
+	private:
+		int	server_fd;
+		int	epoll_fd;
+		int	number_of_events;
+};
+

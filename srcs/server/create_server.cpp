@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/12 09:32:07 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 08:50:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ o que significa que o servidor aceitará conexões em qualquer endereço IP.
 sin_zero: é um campo de preenchimento para garantir que a estrutura tenha o mesmo tamanho que a sockaddr,
 usada para compatibilidade com sistemas mais antigos.Esse campo não é usado atualmente.     */
 
-bool	create_socket(int& socket_serve)
+bool	Server::create_socket( void )
 {
-	socket_serve = socket(AF_INET, SOCK_STREAM, 0);
-	if (socket_serve != -1)
+	server_fd = socket(AF_INET, SOCK_STREAM, 0);
+	if (server_fd != -1)
 		return (true);
 	return (write_error_prefix("Create_socket"));
 }
 
-bool	bind_socket(int& socket_serve)
+bool	Server::bind_socket( void )
 {
 	struct sockaddr_in server;
 
@@ -40,25 +40,25 @@ bool	bind_socket(int& socket_serve)
 	server.sin_addr.s_addr = INADDR_ANY;
 	server.sin_port = htons(PORT);
 
-	if (bind(socket_serve, (struct sockaddr *)&server, sizeof(server)) >= 0)
+	if (bind(server_fd, (struct sockaddr *)&server, sizeof(server)) >= 0)
 		return (true);
 	return (write_error_prefix("Bind_socket"));
 }
 
-bool	listen_socket(int& socket_serve)
+bool	Server::listen_socket( void )
 {
-	if (listen(socket_serve, MAX_CONNECTIONS) == 0)
+	if (listen(server_fd, MAX_CONNECTIONS) == 0)
 		return (true);
 	return (write_error_prefix("Listen_socket"));
 }
 
-bool	create_server(server& data)
+bool	Server::create_server( void )
 {
-	if (!create_socket(data.server_fd))
+	if (!create_socket())
 		return (false);
-	if (!bind_socket(data.server_fd))
+	if (!bind_socket())
 		return (false);
-	if (!listen_socket(data.server_fd))
+	if (!listen_socket())
 		return (false);
 	return (true);
 }

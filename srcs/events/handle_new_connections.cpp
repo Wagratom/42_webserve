@@ -18,37 +18,38 @@ EPOLL_CTL_MOD: Change file descriptor settings.
 EPOLL_CTL_DEL: Remove a file descriptor from the interface.
 */
 
-bool	is_new_connect(server& data, epoll_event* event)
+bool	Server::is_new_connect(epoll_event* event)
 {
 	int	event_socket;
 
 	event_socket = event->data.fd;
-	if (data.server_fd == event_socket)
+	if (server_fd == event_socket)
 		return (true);
 	return (false);
 }
 
-bool accept_status(int& server, int& server_fd)
+bool	Server::accept_status( int& new_client )
 {
-	server_fd = accept(server, NULL, NULL);
-	if (server_fd != -1)
+	new_client = accept(server_fd, NULL, NULL);
+	if (new_client != -1)
 		return (true);
 	return (write_error_prefix("handle_new_connections"));
 }
 
-bool	save_connection(int& epoll_fd, int& server_fd)
+bool	Server::save_connection( int& new_client )
 {
 	struct	epoll_event event;
 
 	event = (struct epoll_event){0,0};
-	event.data.fd = server_fd;
+	event.data.fd = new_client;
 	event.events = EPOLLIN;
-	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, server_fd, &event) == -1)
+
+	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
 		return (write_error_prefix("handle_new_connections"));
 	return (true);
 }
 
-// bool	clear_epoll_event(int& epoll_fd, int& server_fd)
+// bool	Server::clear_epoll_event(int& epoll_fd, int& server_fd)
 // {
 // 	struct	epoll_event event;
 
@@ -63,17 +64,17 @@ bool	save_connection(int& epoll_fd, int& server_fd)
 // 	return (true);
 // }
 
-int	handle_new_connections(server& data, epoll_event* event)
+int	Server::handle_new_connections(epoll_event* event)
 {
-	int		server_fd;
+	int	new_client;
 
-	if (!is_new_connect(data, event))
+	if (!is_new_connect(event))
 		return (0); // not a new connection
-	if (!accept_status(data.server_fd, server_fd))
+	if (!accept_status(new_client))
 		return (-1); // error
-	if (!save_connection(data.epoll_fd, server_fd))
+	if (!save_connection(new_client))
 		return (-1); // error
-	// if (!clear_epoll_event(data.epoll_fd, server_fd))
+	// if (!clear_epoll_event(epoll_fd, server_fd))
 	// 	return (-1); // error
 	std::cout << "New connection accepted!" << std::endl;
 	return (1); // success in create new connection

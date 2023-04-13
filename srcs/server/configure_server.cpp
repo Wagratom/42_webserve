@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/12 09:32:16 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 08:52:22 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ EPOLLRDHUP: Evento que indica que a outra ponta da conexão TCP fechou a conexã
 Edge-triggered mode (EPOLLET) - sinaliza um evento apenas quando ocorre uma mudança de estado, como a chegada de novos dados.
 Level-triggered mode (default) - sinaliza um evento enquanto o estado for verdadeiro, como a presença de dados para leitura.
 */
-bool	create_epoll(int& epoll_fd)
+bool	Server::create_epoll( void )
 {
 	epoll_fd = epoll_create(5);
 	if (epoll_fd != -1)
@@ -30,7 +30,7 @@ bool	create_epoll(int& epoll_fd)
 	return (write_error_prefix("Create_epoll"));
 }
 
-bool	add_mode_read(int&server_fd, int& epoll_fd)
+bool	Server::add_mode_read()
 {
 	struct epoll_event event;
 
@@ -43,11 +43,11 @@ bool	add_mode_read(int&server_fd, int& epoll_fd)
 	return (write_error_prefix("Add_mod_read"));
 }
 
-bool	conf_serve_to_read(server& data)
+bool	Server::conf_serve_to_read( void )
 {
-	if (!create_epoll(data.epoll_fd))
+	if (!create_epoll())
 		return (false);
-	if (!add_mode_read(data.server_fd, data.epoll_fd))
+	if (!add_mode_read())
 		return (false);
 	return (true);
 }

@@ -6,13 +6,13 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 08:23:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/12 23:00:49 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 08:34:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_serve.hpp>
 
-bool	conf_fd_to_not_block(epoll_event* event)
+bool	Server::conf_fd_to_not_block(epoll_event* event)
 {
 	int	flags;
 
@@ -24,7 +24,7 @@ bool	conf_fd_to_not_block(epoll_event* event)
 	return (true);
 }
 
-bool	verift_error(int bytes_read)
+bool	Server::verift_error(int bytes_read)
 {
 	if (bytes_read != -1)
 		return (false);
@@ -33,7 +33,7 @@ bool	verift_error(int bytes_read)
 	return (true);
 }
 
-bool	read_request(std::string& buffer, epoll_event* event)
+bool	Server::read_request(std::string& buffer, epoll_event* event)
 {
 	char	tmp[1024];
 	int		bytes_read;
@@ -50,7 +50,7 @@ bool	read_request(std::string& buffer, epoll_event* event)
 	return (true);
 }
 
-bool	handle_request(epoll_event* event)
+bool	Server::handle_request(epoll_event* event)
 {
 	std::string buffer;
 
