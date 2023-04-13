@@ -12,17 +12,27 @@
 
 #include <web_serve.hpp>
 
+// Flags for epoll_ctl()
 /*
 EPOLL_CTL_ADD: Add a file descriptor to the interface.
 EPOLL_CTL_MOD: Change file descriptor settings.
 EPOLL_CTL_DEL: Remove a file descriptor from the interface.
 */
 
-bool	Server::is_new_connect(epoll_event* event)
+// Flags for epoll_event.events
+/*
+EPOLLHUP: Indica que a outra extremidade da conexão fechou a conexão de maneira normal ou anormal, ou seja, um evento hang-up foi detectado na conexão.
+EPOLLERR: Indica que ocorreu um erro na conexão.
+EPOLLRDHUP: Indica que a outra extremidade da conexão fechou a conexão de maneira normal, ou seja, um evento hang-up foi detectado na conexão,
+mas ainda há dados para ler. Isso pode acontecer, por exemplo, quando a outra extremidade faz um shutdown parcial da conexão, fechando a gravação,
+mas ainda permitindo a leitura dos dados que já foram enviados.
+*/
+
+bool	Server::is_new_connect(epoll_event& event)
 {
 	int	event_socket;
 
-	event_socket = event->data.fd;
+	event_socket = event.data.fd;
 	if (server_fd == event_socket)
 		return (true);
 	return (false);
@@ -42,41 +52,24 @@ bool	Server::save_connection( int& new_client )
 
 	event = (struct epoll_event){0,0};
 	event.data.fd = new_client;
-	event.events = EPOLLIN;
+	event.events = EPOLLIN | EPOLLHUP | EPOLLRDHUP | EPOLLERR;
 
 	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
 		return (write_error_prefix("handle_new_connections"));
 	return (true);
 }
 
-// bool	Server::clear_epoll_event(int& epoll_fd, int& server_fd)
-// {
-// 	struct	epoll_event event;
-
-// 	event.data.fd = server_fd;
-// 	event.events = EPOLLIN;
-
-// 	if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, server_fd, &event) == -1)
-// 		return (write_error_prefix("clear_epoll_event"));
-// 	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, server_fd, &event) == -1)
-// 		return (write_error_prefix("clear_epoll_event"));
-// 	std::cout << "eu\n";
-// 	return (true);
-// }
-
-int	Server::handle_new_connections(epoll_event* event)
+bool	Server::handle_new_connections(epoll_event& event)
 {
 	int	new_client;
 
 	if (!is_new_connect(event))
-		return (0); // not a new connection
+		return (false); // not a new connection
 	if (!accept_status(new_client))
-		return (-1); // error
+		return (false); // error
 	if (!save_connection(new_client))
-		return (-1); // error
-	// if (!clear_epoll_event(epoll_fd, server_fd))
-	// 	return (-1); // error
+		return (false); // error
 	std::cout << "New connection accepted!" << std::endl;
-	return (1); // success in create new connection
+	return (true); // success in create new connection
 }
 

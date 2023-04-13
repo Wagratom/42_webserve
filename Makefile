@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/11 09:48:43 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/13 09:10:52 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/13 10:59:54 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ INCLUDES	=	-I ./include/
 SRCS		=	main.cpp create_server_conf.cpp create_server.cpp configure_server.cpp \
 				start_server.cpp handle_new_connections.cpp handle_events.cpp \
 				separate_request_child.cpp handle_request.cpp error.cpp fork_status.cpp \
-				set_signal.cpp
+				sig_closed_server.cpp
 
 OBJS_DIR	=	./objs/
 OBJS		=	$(patsubst %.cpp, $(OBJS_DIR)/%.o, $(SRCS))

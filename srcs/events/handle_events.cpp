@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/13 08:46:44 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:15:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,27 @@ bool	Server::capture_new_events(epoll_event* event)
 	return (true);
 }
 
-bool	Server::clean_request(epoll_event* event)
+bool	Server::clean_request(epoll_event& event)
 {
 	std::cout << "removendo fd do epoll" << std::endl;
-	if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, event[0].data.fd, NULL) == -1)
+	if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
 		return (write_error_prefix("remove_fd_from_epoll"));
-	close(event->data.fd);
+	close(event.data.fd);
 	return (true);
 }
 
-bool	Server::handle_events(epoll_event* event)
+bool	Server::handle_events(epoll_event& event)
 {
-	int	status;
-
-	status = handle_new_connections(event);
-	if (status == -1)
-		return (false);
-	if (status == NOT_NEW_CONNECTION)
+	if (event.events & EPOLLERR)
+		std::cout << "Error: error in connection" << std::endl;
+	else if (event.events & EPOLLRDHUP)
+		std::cout << "Error: abnormally closed connection" << std::endl;
+	else if (event.events & EPOLLRDHUP)
+		std::cout << "Client exit" << std::endl;
+	else if (event.events & EPOLLIN)
 	{
 		if (!separate_request_child(event))
 			return (false);
-		if (!clean_request(event))
-			return (false);
 	}
-	return (true);
+	return (clean_request(event));
 }

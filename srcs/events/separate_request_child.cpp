@@ -12,11 +12,10 @@
 
 #include <web_serve.hpp>
 
-bool	Server::separate_request_child(epoll_event* event)
+bool	Server::separate_request_child(epoll_event& event)
 {
 	pid_t	pid;
 
-	std::cout << "separate_request_child" << std::endl;
 	if (!fork_staus(pid))
 		return (false);
 	if (pid == CHILD)
