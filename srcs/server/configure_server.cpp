@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   configure_serve.cpp                                :+:      :+:    :+:   */
+/*   configure_server.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/11 22:27:49 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/12 09:32:16 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ bool	create_epoll(int& epoll_fd)
 	return (write_error_prefix("Create_epoll"));
 }
 
-bool	add_mode_read(int&socket_fd, int& epoll_fd)
+bool	add_mode_read(int&server_fd, int& epoll_fd)
 {
 	struct epoll_event event;
 
 	memset(&event, 0, sizeof(event));
-	event.data.fd = socket_fd;
+	event.data.fd = server_fd;
 	event.events = EPOLLIN;
 
-	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, socket_fd, &event) != -1)
+	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, server_fd, &event) != -1)
 		return (true);
 	return (write_error_prefix("Add_mod_read"));
 }
@@ -47,7 +47,7 @@ bool	conf_serve_to_read(server& data)
 {
 	if (!create_epoll(data.epoll_fd))
 		return (false);
-	if (!add_mode_read(data.socket_fd, data.epoll_fd))
+	if (!add_mode_read(data.server_fd, data.epoll_fd))
 		return (false);
 	return (true);
 }

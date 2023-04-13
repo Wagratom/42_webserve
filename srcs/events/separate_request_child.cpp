@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   separate_request_child.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/12 09:43:34 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/12 08:23:38 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/12 10:27:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_serve.hpp>
 
-int main( void )
+bool	separate_request_child(server& data, epoll_event* event)
 {
-	server data;
+	pid_t	pid;
 
-	data = (server){0,0};
-	if (!create_server_configured(data))
-		return (-1);
-	start_server(data);
-	printf("to saindo");
-	close(data.epoll_fd);
-	close(data.server_fd);
-	return (0);
-	return (start_server(data));
+	std::cout << "separate_request_child" << std::endl;
+	if (!fork_staus(pid))
+		return (false);
+	if (pid == CHILD)
+	{
+		close(data.server_fd);
+		handle_request(event);
+		std::cout << "sai do filho" << std::endl;
+		exit(0);
+	}
+	return (true);
 }

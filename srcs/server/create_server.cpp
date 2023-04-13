@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/11 22:46:30 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/12 09:32:07 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	bind_socket(int& socket_serve)
 
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
-	server.sin_port = htons(8888);
+	server.sin_port = htons(PORT);
 
 	if (bind(socket_serve, (struct sockaddr *)&server, sizeof(server)) >= 0)
 		return (true);
@@ -47,18 +47,18 @@ bool	bind_socket(int& socket_serve)
 
 bool	listen_socket(int& socket_serve)
 {
-	if (listen(socket_serve, 5) == 0)
+	if (listen(socket_serve, MAX_CONNECTIONS) == 0)
 		return (true);
 	return (write_error_prefix("Listen_socket"));
 }
 
 bool	create_server(server& data)
 {
-	if (!create_socket(data.socket_fd))
+	if (!create_socket(data.server_fd))
 		return (false);
-	if (!bind_socket(data.socket_fd))
+	if (!bind_socket(data.server_fd))
 		return (false);
-	if (!listen_socket(data.socket_fd))
+	if (!listen_socket(data.server_fd))
 		return (false);
 	return (true);
 }
