@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   web_serve.hpp                                      :+:      :+:    :+:   */
+/*   web_server.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/13 21:51:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:24:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ class Server
 		bool	save_connection( int& new_client );
 
 		bool	handle_events(epoll_event& event);
-		bool	is_closed_or_error(epoll_event& event);
-		bool	separate_request_child(epoll_event& event);
+		bool	is_closed_or_error_event(epoll_event& event);
+		bool	send_request_to_child(epoll_event& event);
 		void	handle_request_in_cuild(epoll_event& event);
 		bool	conf_fd_to_not_block(epoll_event& event);
 		bool	read_request(std::string& buffer, epoll_event& event);
@@ -86,3 +86,8 @@ class Server
 		bool	shutdown_server;
 };
 
+
+void	set_debug(bool	value);
+int		get_debug();
+void	write_debug(std::string message, int number);
+void	write_type_event_debug(epoll_event& event);

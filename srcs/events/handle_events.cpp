@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/13 21:57:24 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:17:08 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <web_serve.hpp>
+#include <web_server.hpp>
 
 // bool	Server::clean_request(epoll_event& event)
 // {
@@ -24,15 +24,14 @@
 
 bool	Server::capture_new_events(epoll_event* event)
 {
-	std::cout << "Waiting for new events..." << std::endl;
 	number_of_events = epoll_wait(epoll_fd, event, MAX_EVENTS, -1);
-	std::cout << "Number of events received:: " << number_of_events << std::endl;
+	write_debug("Number of events received:: ", number_of_events);
 	if (number_of_events == -1)
 		return (write_error_prefix("handle_new_connections"));
 	return (true);
 }
 
-bool	Server::is_closed_or_error(epoll_event& event)
+bool	Server::is_closed_or_error_event(epoll_event& event)
 {
 	if (event.events & EPOLLERR)
 		std::cout << "Error: error in connection" << std::endl;
@@ -47,9 +46,9 @@ bool	Server::is_closed_or_error(epoll_event& event)
 
 bool	Server::handle_events(epoll_event& event)
 {
-	if (is_closed_or_error(event))
+	if (is_closed_or_error_event(event))
 		return (true);
 	if (event.events & EPOLLIN)
-		return (separate_request_child(event));
+		return (send_request_to_child(event));
 	return (true);
 }

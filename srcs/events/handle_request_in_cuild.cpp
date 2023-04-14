@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_request_in_cuild.cpp                                 :+:      :+:    :+:   */
+/*   handle_request_in_cuild.cpp                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 08:23:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/13 20:18:15 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/14 10:14:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <web_serve.hpp>
+#include <web_server.hpp>
 
 bool	Server::conf_fd_to_not_block(epoll_event& event)
 {
@@ -52,15 +52,14 @@ bool	Server::read_request(std::string& buffer, epoll_event& event)
 
 void	Server::handle_request_in_cuild(epoll_event& event)
 {
-
 	std::cout << "handle_request_in_cuild" << std::endl;
-
 	std::string buffer;
 	close(server_fd);
 	if (!conf_fd_to_not_block(event))
 		exit(EXIT_FAILURE);
 	if (!read_request(buffer, event))
 		exit(EXIT_FAILURE);
+	std::cout << "buffer: " << buffer << std::endl;
 	write(event.data.fd, "Accept\n", 7);
 	close(event.data.fd);
 	std::cout << "sai do filho" << std::endl;
