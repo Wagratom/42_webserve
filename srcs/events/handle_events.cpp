@@ -6,11 +6,21 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/13 14:15:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 21:57:24 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_serve.hpp>
+
+// bool	Server::clean_request(epoll_event& event)
+// {
+// 	std::cout << "removendo fd do epoll" << std::endl;
+// 	if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
+// 		return (write_error_prefix("remove_fd_from_epoll"));
+// 	close(event.data.fd);
+// 	return (true);
+// }
+
 
 bool	Server::capture_new_events(epoll_event* event)
 {
@@ -22,16 +32,7 @@ bool	Server::capture_new_events(epoll_event* event)
 	return (true);
 }
 
-bool	Server::clean_request(epoll_event& event)
-{
-	std::cout << "removendo fd do epoll" << std::endl;
-	if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
-		return (write_error_prefix("remove_fd_from_epoll"));
-	close(event.data.fd);
-	return (true);
-}
-
-bool	Server::handle_events(epoll_event& event)
+bool	Server::is_closed_or_error(epoll_event& event)
 {
 	if (event.events & EPOLLERR)
 		std::cout << "Error: error in connection" << std::endl;
@@ -39,10 +40,16 @@ bool	Server::handle_events(epoll_event& event)
 		std::cout << "Error: abnormally closed connection" << std::endl;
 	else if (event.events & EPOLLRDHUP)
 		std::cout << "Client exit" << std::endl;
-	else if (event.events & EPOLLIN)
-	{
-		if (!separate_request_child(event))
-			return (false);
-	}
-	return (clean_request(event));
+	else
+		return (false);
+	return (true);
+}
+
+bool	Server::handle_events(epoll_event& event)
+{
+	if (is_closed_or_error(event))
+		return (true);
+	if (event.events & EPOLLIN)
+		return (separate_request_child(event));
+	return (true);
 }

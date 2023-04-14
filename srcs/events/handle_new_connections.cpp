@@ -52,7 +52,7 @@ bool	Server::save_connection( int& new_client )
 
 	event = (struct epoll_event){0,0};
 	event.data.fd = new_client;
-	event.events = EPOLLIN | EPOLLHUP | EPOLLRDHUP | EPOLLERR;
+	event.events = EPOLLIN | EPOLLHUP | EPOLLRDHUP | EPOLLERR | EPOLLONESHOT;
 
 	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
 		return (write_error_prefix("handle_new_connections"));

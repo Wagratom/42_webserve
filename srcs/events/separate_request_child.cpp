@@ -19,11 +19,6 @@ bool	Server::separate_request_child(epoll_event& event)
 	if (!fork_staus(pid))
 		return (false);
 	if (pid == CHILD)
-	{
-		close(server_fd);
-		handle_request(event);
-		std::cout << "sai do filho" << std::endl;
-		exit(0);
-	}
+		handle_request_in_cuild(event);
 	return (true);
 }

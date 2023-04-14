@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/13 14:05:18 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/13 21:51:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,21 @@ class Server
 
 		bool	capture_new_events(epoll_event* event);
 		bool	dispatch_events(epoll_event* event);
-		bool	handle_events(epoll_event& event);
-
 
 		bool	handle_new_connections(epoll_event& event);
 		bool	is_new_connect(epoll_event& event);
 		bool	accept_status( int& new_client );
 		bool	save_connection( int& new_client );
 
-		bool	handle_request(epoll_event& event);
+		bool	handle_events(epoll_event& event);
+		bool	is_closed_or_error(epoll_event& event);
 		bool	separate_request_child(epoll_event& event);
+		void	handle_request_in_cuild(epoll_event& event);
 		bool	conf_fd_to_not_block(epoll_event& event);
-		bool	verift_error(int bytes_read);
 		bool	read_request(std::string& buffer, epoll_event& event);
+		bool	verift_error(int bytes_read);
 
-		bool	clean_request(epoll_event& event);
+		// bool	clean_request(epoll_event& event);
 
 		bool	write_error_prefix(std::string prefix);
 		bool	fork_staus(pid_t& pid);
