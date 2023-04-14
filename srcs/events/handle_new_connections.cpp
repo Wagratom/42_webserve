@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 10:14:53 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:38:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	Server::accept_status( int& new_client )
 	new_client = accept(server_fd, NULL, NULL);
 	if (new_client != -1)
 		return (true);
-	return (write_error_prefix("handle_new_connections"));
+	return (write_error_prefix("accept_status"));
 }
 
 bool	Server::save_connection( int& new_client )
@@ -53,9 +53,8 @@ bool	Server::save_connection( int& new_client )
 	event = (struct epoll_event){0,0};
 	event.data.fd = new_client;
 	event.events = EPOLLIN | EPOLLHUP | EPOLLRDHUP | EPOLLERR | EPOLLONESHOT;
-
 	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
-		return (write_error_prefix("handle_new_connections"));
+		return (write_error_prefix("save_connection"));
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 10:14:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:39:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,14 @@ bool	Server::read_request(std::string& buffer, epoll_event& event)
 
 void	Server::handle_request_in_cuild(epoll_event& event)
 {
-	std::cout << "handle_request_in_cuild" << std::endl;
 	std::string buffer;
 	close(server_fd);
 	if (!conf_fd_to_not_block(event))
 		exit(EXIT_FAILURE);
 	if (!read_request(buffer, event))
 		exit(EXIT_FAILURE);
-	std::cout << "buffer: " << buffer << std::endl;
 	write(event.data.fd, "Accept\n", 7);
+	std::cout << "buffer: " << buffer << std::endl;
 	close(event.data.fd);
 	std::cout << "sai do filho" << std::endl;
 	exit(0);

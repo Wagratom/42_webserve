@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:07:54 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 10:25:56 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:29:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,14 @@ void	set_debug(bool	value)
 		std::cout << "\tDebug mode is off" << std::endl;
 }
 
-void	write_debug(std::string message, int number)
+void	write_debug(std::string message)
+{
+	if (!get_debug())
+		return ;
+	std::cout << message << std::endl;
+}
+
+void	write_debug_number(std::string message, int number)
 {
 	if (!get_debug())
 		return ;
@@ -42,23 +49,31 @@ void	write_debug(std::string message, int number)
 		std::cout << message << std::endl;
 }
 
+void	write_debug_prefix(std::string prefix, std::string message)
+{
+	if (!get_debug())
+		return ;
+	std::cout << prefix << message << std::endl;
+}
 void	write_type_event_debug(epoll_event& event)
 {
-	std::cout << "\tType of event" << std::endl;
 	if (get_debug() == false)
 		return ;
+	std::cout << "FD: "<< std::cout << event.data.fd << std::endl;
+	std::cout << "Type of event: ";
 	if (event.events & EPOLLERR)
-		std::cout << "Event: EPOLLERR" << std::endl;
-	else if (event.events & EPOLLRDHUP)
-		std::cout << "Event: EPOLLRDHUP" << std::endl;
-	else if (event.events & EPOLLRDHUP)
-		std::cout << "Event: EPOLLRDHUP" << std::endl;
-	else if (event.events & EPOLLIN)
-		std::cout << "Event: EPOLLIN" << std::endl;
-	else if (event.events & EPOLLOUT)
-		std::cout << "Event: EPOLLOUT" << std::endl;
-	else if (event.events & EPOLLHUP)
-		std::cout << "Event: EPOLLHUP" << std::endl;
-	else if (event.events & EPOLLPRI)
-		std::cout << "Event: EPOLLPRI" << std::endl;
+		std::cout << "EPOLLERR | ";
+	if (event.events & EPOLLRDHUP)
+		std::cout << "EPOLLRDHUP | ";
+	if (event.events & EPOLLRDHUP)
+		std::cout << "EPOLLRDHUP | ";
+	if (event.events & EPOLLIN)
+		std::cout << "EPOLLIN | ";
+	if (event.events & EPOLLOUT)
+		std::cout << "EPOLLOUT | ";
+	if (event.events & EPOLLHUP)
+		std::cout << "EPOLLHUP | ";
+	if (event.events & EPOLLPRI)
+		std::cout << "EPOLLPRI | ";
+	std::cout << std::endl;
 }
