@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:30:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/15 20:14:16 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/15 20:51:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,11 @@ bool	Parser::get_recurso(std::string& requesition_line)
 
 bool	Parser::valid_htpp_version(std::string& requesition_line)
 {
-	if (requesition_line == "HTTP/1.1")
-		return (true);
-	return (write_msg_error("Invalid HTTP version: valid_htpp_version"));
+	if (requesition_line.size() != 10)
+		return (write_msg_error("Invalid HTTP version: valid_htpp_version"));
+	if (requesition_line != "HTTP/1.1\r")
+		return (write_msg_error("Invalid  HTTP version: valid_htpp_version"));
+	return (true);
 }
 
 bool	Parser::parse_requesition_line( void )
