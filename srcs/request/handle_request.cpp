@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 22:15:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/15 20:25:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,11 @@ bool	Server::handle_request(epoll_event& event)
 			return (true);
 		if (!parse_request(buffer))
 			return (false);
+		std::cout << "while true" << std::endl;
 		buffer.clear();
+		sleep(1);
 	}
+	exit (0);
 	return (true);
 }
 
@@ -89,8 +92,3 @@ void	Server::handle_request_in_child(epoll_event& event)
 		error_in_request(event);
 	exit(0);
 }
-
-do pai
-cleanup();
-
-do filho

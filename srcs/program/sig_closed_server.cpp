@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:23:01 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 10:15:00 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/15 20:26:20 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	Server::set_shutdown_server(int sig)
 {
 	(void)sig;
+	exit(0);
 	std::cout <<"\n\n\n\n\n\n\n peguei" << std::endl;
 }
 

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 21:52:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/15 20:13:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,19 @@ class Parser
 		bool	parse_requesition_line( void );
 
 		bool	parse_requisition_line( void );
-		bool	get_line(std::string& line);
-		bool	get_verb(std::string& line, std::string& verb);
-		bool	valid_verb(std::string& verb);
+		bool	get_requesition_line(std::string& requesition_line);
+		bool	get_verb(std::string& requesition_line);
+		bool	valid_verb( void );
+		bool	get_recurso(std::string& requesition_line);
+		bool	valid_htpp_version(std::string& requesition_line);
 
 		bool	write_msg_error(std::string message);
 	private:
-		std::string const* const* verbs;
-		std::string			requesition;
+
+		std::string const* const*	verbs;
+		std::string					request;
+		std::string					verb;
+		std::string					recurso;
 
 
 

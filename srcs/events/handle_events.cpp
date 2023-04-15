@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 21:52:24 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/15 07:16:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ bool	Server::dispatch_events(epoll_event* event)
 		{
 			if (!handle_events(event[index]))
 				return (false);
+			clean_request(event[index]);
 		}
 		index++;
-		clean_request(event[index]);
 	}
 	return (true);
 }
