@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 11:38:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/14 21:52:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ bool	Server::save_connection( int& new_client )
 
 	event = (struct epoll_event){0,0};
 	event.data.fd = new_client;
-	event.events = EPOLLIN | EPOLLHUP | EPOLLRDHUP | EPOLLERR | EPOLLONESHOT;
+	event.events = EPOLLIN | EPOLLHUP | EPOLLRDHUP | EPOLLERR;
 	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
 		return (write_error_prefix("save_connection"));
 	return (true);

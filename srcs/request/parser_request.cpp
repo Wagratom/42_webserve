@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   send_request_to_child.cpp                          :+:      :+:    :+:   */
+/*   parser_request.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 08:23:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 10:14:57 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/14 21:45:18 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-bool	Server::send_request_to_child(epoll_event& event)
-{
-	pid_t	pid;
+Parser::Parser(std::string const* const* verbs, std::string& requesition) : verbs(verbs) {
+	this->requesition = std::string(requesition);
+}
 
-	if (!fork_staus(pid))
+bool	Parser::write_msg_error(std::string message)
+{
+	std::cout << "Error: " << message << std::endl;
+	return (false);
+}
+
+Parser::~Parser() {}
+
+bool	Server::parse_request(std::string& buffer)
+{
+	Parser	parser(reinterpret_cast<std::string const* const*>(verbs), buffer);
+
+	if (!parser.parse_requesition_line())
 		return (false);
-	if (pid == CHILD)
-		handle_request_in_cuild(event);
 	return (true);
 }
+

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 12:17:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/14 21:52:09 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,16 @@ class Server
 		bool	handle_events( epoll_event& event );
 		bool	is_closed_or_error_event( epoll_event& event );
 		bool	send_request_to_child( epoll_event& event );
-		void	handle_request_in_cuild( epoll_event& event );
+
+		void	handle_request_in_child( epoll_event& event );
 		bool	conf_fd_to_not_block( epoll_event& event );
+		bool	handle_request(epoll_event& event);
 		bool	read_request( std::string& buffer,  epoll_event& event );
+
+		bool	parse_request(std::string& buffer);
 		bool	verift_error( int bytes_read );
 
-		// bool	clean_request(epoll_event& event);
+		bool	clean_request(epoll_event& event);
 
 		bool	write_error_prefix( std::string prefix );
 		bool	fork_staus( pid_t& pid );
@@ -90,7 +94,29 @@ class Server
 		bool	shutdown_server;
 };
 
+class Parser
+{
+	public:
+		Parser(std::string const* const* verbs, std::string& requisition_line);
+		~Parser();
 
+		bool	parse_requesition_line( void );
+
+		bool	parse_requisition_line( void );
+		bool	get_line(std::string& line);
+		bool	get_verb(std::string& line, std::string& verb);
+		bool	valid_verb(std::string& verb);
+
+		bool	write_msg_error(std::string message);
+	private:
+		std::string const* const* verbs;
+		std::string			requesition;
+
+
+
+
+
+};
 void	set_debug(bool	value);
 int		get_debug( void );
 void	write_debug_number(std::string message, int number);

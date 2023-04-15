@@ -6,20 +6,20 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 10:47:27 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/14 21:52:24 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-// bool	Server::clean_request(epoll_event& event)
-// {
-// 	std::cout << "removendo fd do epoll" << std::endl;
-// 	if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
-// 		return (write_error_prefix("remove_fd_from_epoll"));
-// 	close(event.data.fd);
-// 	return (true);
-// }
+bool	Server::clean_request(epoll_event& event)
+{
+	std::cout << "removendo fd do epoll" << std::endl;
+	if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
+		return (write_error_prefix("remove_fd_from_epoll"));
+	close(event.data.fd);
+	return (true);
+}
 
 bool	Server::capture_new_events(epoll_event* event)
 {
@@ -49,6 +49,7 @@ bool	Server::dispatch_events(epoll_event* event)
 				return (false);
 		}
 		index++;
+		clean_request(event[index]);
 	}
 	return (true);
 }
@@ -72,5 +73,16 @@ bool	Server::is_closed_or_error_event(epoll_event& event)
 		std::cout << "Client exit" << std::endl;
 	else
 		return (false);
+	return (true);
+}
+
+bool	Server::send_request_to_child(epoll_event& event)
+{
+	pid_t	pid;
+
+	if (!fork_staus(pid))
+		return (false);
+	if (pid == CHILD)
+		handle_request_in_child(event);
 	return (true);
 }

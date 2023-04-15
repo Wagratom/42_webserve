@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/11 09:48:43 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/14 12:08:10 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/14 21:31:27 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,9 @@ INCLUDES	=	-I ./include/
 
 SRCS		=	main.cpp create_server_conf.cpp create_server.cpp configure_server.cpp \
 				start_server.cpp handle_new_connections.cpp handle_events.cpp \
-				send_request_to_child.cpp handle_request_in_cuild.cpp error.cpp fork_status.cpp \
-				sig_closed_server.cpp debug.cpp create_verbs.cpp
+				handle_request.cpp error.cpp fork_status.cpp \
+				sig_closed_server.cpp debug.cpp create_verbs.cpp parser_request.cpp \
+				parse_requesition_line.cpp
 
 OBJS_DIR	=	./objs/
 OBJS		=	$(patsubst %.cpp, $(OBJS_DIR)/%.o, $(SRCS))
@@ -28,7 +29,8 @@ VPATH		=	./srcs/ \
 				./srcs/ults \
 				./srcs/server \
 				./srcs/events \
-				./srcs/program
+				./srcs/program \
+				./srcs/request
 
 $(OBJS_DIR)/%.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
