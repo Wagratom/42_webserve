@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/15 20:13:35 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/16 16:47:32 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ class Server
 		bool	send_request_to_child( epoll_event& event );
 
 		void	handle_request_in_child( epoll_event& event );
-		bool	conf_fd_to_not_block( epoll_event& event );
+		bool	configured_child( epoll_event& event );
 		bool	handle_request(epoll_event& event);
 		bool	read_request( std::string& buffer,  epoll_event& event );
 
@@ -108,7 +108,7 @@ class Parser
 		bool	valid_verb( void );
 		bool	get_recurso(std::string& requesition_line);
 		bool	valid_htpp_version(std::string& requesition_line);
-
+		bool	write_error_prefix( std::string prefix );
 		bool	write_msg_error(std::string message);
 	private:
 

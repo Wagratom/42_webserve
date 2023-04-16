@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:07:54 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 11:29:37 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/16 16:48:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,6 @@ void	set_debug(bool	value)
 		std::cout << "\tDebug mode is off" << std::endl;
 }
 
-void	write_debug(std::string message)
-{
-	if (!get_debug())
-		return ;
-	std::cout << message << std::endl;
-}
-
 void	write_debug_number(std::string message, int number)
 {
 	if (!get_debug())
@@ -47,6 +40,13 @@ void	write_debug_number(std::string message, int number)
 		std::cout << message << number << std::endl;
 	else
 		std::cout << message << std::endl;
+}
+
+void	write_debug(std::string message)
+{
+	if (!get_debug())
+		return ;
+	std::cout << message << std::endl;
 }
 
 void	write_debug_prefix(std::string prefix, std::string message)

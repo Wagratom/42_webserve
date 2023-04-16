@@ -6,11 +6,12 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:30:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/15 20:51:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/16 16:54:56 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
+
 
 bool	Parser::get_requesition_line(std::string& requesition_line)
 {
@@ -18,7 +19,7 @@ bool	Parser::get_requesition_line(std::string& requesition_line)
 
 	pos = request.find("\n");
 	if (pos == std::string::npos)
-		return (write_msg_error("Invalid requesition line: get_line"));
+		return (write_error_prefix("Invalid requesition line: get_line"));
 	requesition_line = request.substr(0, pos);
 	request.erase(0, pos + 1);
 	write_debug_prefix("Requesition_line: ", requesition_line);
@@ -31,7 +32,7 @@ bool	Parser::get_verb(std::string& requesition_line)
 
 	pos = requesition_line.find("/");
 	if (pos == std::string::npos)
-		return (write_msg_error("Invalid requesition line: get_verb"));
+		return (write_error_prefix("Invalid requesition line: get_verb"));
 
 	verb = requesition_line.substr(0, (pos - 1));
 	requesition_line.erase(0, pos + 2);
@@ -46,7 +47,7 @@ bool	Parser::valid_verb(void)
 		if (verb == *verbs[i])
 			return (true);
 	}
-	return (write_msg_error("Invalid verb: valid_verb"));
+	return (write_error_prefix("Invalid verb: valid_verb"));
 }
 
 bool	Parser::get_recurso(std::string& requesition_line)
@@ -64,10 +65,11 @@ bool	Parser::get_recurso(std::string& requesition_line)
 
 bool	Parser::valid_htpp_version(std::string& requesition_line)
 {
-	if (requesition_line.size() != 10)
-		return (write_msg_error("Invalid HTTP version: valid_htpp_version"));
+	std::cout << "requesition_line: " << requesition_line << std::endl;
+	if (requesition_line.size() != 9)
+		return (write_error_prefix("Invalid HTTP version: size"));
 	if (requesition_line != "HTTP/1.1\r")
-		return (write_msg_error("Invalid  HTTP version: valid_htpp_version"));
+		return (write_error_prefix("Invalid  HTTP version: msg"));
 	return (true);
 }
 
