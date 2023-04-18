@@ -6,13 +6,13 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:51:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/18 13:22:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:33:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-static bool	get_server_names(std::string& line, std::string& server_name)
+static bool	get_server_names(std::string& line)
 {
 	size_t	start;
 
@@ -20,8 +20,12 @@ static bool	get_server_names(std::string& line, std::string& server_name)
 	if (start == std::string::npos)
 		return (write_error("Invalid server_name: no server name"));
 	line = line.substr(start);
-	server_name = line;
 	return (true);
+}
+
+void	save_server_name(std::string& aux, std::string& server_name)
+{
+	server_name = aux;
 }
 
 bool	get_server_name(char* line, std::string& server_name)
@@ -34,7 +38,8 @@ bool	get_server_name(char* line, std::string& server_name)
 		return (false);
 	if (valid_word(aux, "server_name") == false)
 		return (false);
-	if (get_server_names(aux, server_name) == false)
+	if (get_server_names(aux) == false)
 		return (false);
+	save_server_name(aux, server_name);
 	return (true);
 }
