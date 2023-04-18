@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/16 17:12:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:42:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,3 @@ void	Server::handle_request_in_child(epoll_event& event)
 		error_in_request(event);
 	exit(0);
 }
-
-server
-{}
