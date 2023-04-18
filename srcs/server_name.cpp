@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:51:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/18 10:20:29 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:22:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 static bool	get_server_names(std::string& line, std::string& server_name)
 {
-	line.erase(0, 11);
-	if (line.empty())
+	size_t	start;
+
+	start = line.find_first_not_of(" \t", 11);
+	if (start == std::string::npos)
 		return (write_error("Invalid server_name: no server name"));
-	while (std::isspace(line[0]))
-		line.erase(0, 1);
-	if (line.empty())
-		return (write_error("Invalid server_name: no server name"));
+	line = line.substr(start);
 	server_name = line;
 	return (true);
 }

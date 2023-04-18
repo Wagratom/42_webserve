@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/18 10:20:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:24:08 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,12 @@ static bool	convert_port(std::string& port_string, int& port)
 
 static bool	get_valid_port(std::string& listen, std::string& aux_port)
 {
-	size_t	pos = listen.find(" ");
-	size_t	end = listen.length() - 1;
+	size_t	start = listen.find(" ");
 
-	if (pos == std::string::npos)
-		pos = listen.find("\t");
-	if (pos == std::string::npos)
+	start = listen.find_first_not_of(" \t", 6);
+	if (start == std::string::npos)
 		return (write_error("Invalid line: no space after 'listen'"));
-	while (listen[pos] == ' ' || listen[pos] == '\t')
-		pos++;
-	aux_port = listen.substr(pos, end);
+	aux_port = listen.substr(start);
 	return (true);
 }
 

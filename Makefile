@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/18 10:56:29 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/18 13:09:11 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ VG_OJBS_TSTS	=	$(patsubst %.c, %.vg.out, $(VG_FILE_TSTS))
 
 %.vg.out:	%.c
 		@$(CC) $< $(LIB_FILO) -o $@ $(INCLUDE)
-		valgrind --leak-check=full ./$@
+		@valgrind --leak-check=full ./$@
 		@$(RM) $@
 
 vgtest: re_mandatory $(VG_OJBS_TST)

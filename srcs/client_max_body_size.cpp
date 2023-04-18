@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/18 11:18:53 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:26:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,12 @@
 
 static bool	get_max_body_size(std::string& aux)
 {
-	int	isspaces = 0;
+	size_t	start;
 
-	aux = aux.substr(20);
-	if (aux.length() == 0)
+	start = aux.find_first_not_of(" \t", 20);
+	if (start == std::string::npos)
 		return (write_error("Invalid client_max_body_size: no value"));
-	while (aux[isspaces] == ' ' || aux[isspaces] == '\t')
-		isspaces++;
-	aux.erase(0, isspaces);
-	if (aux.length() == 0)
-		return (write_error("Invalid client_max_body_size: no value"));
+	aux = aux.substr(start);
 	return (true);
 }
 

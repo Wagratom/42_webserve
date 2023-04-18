@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/18 10:40:37 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 12:52:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+
+typedef struct s_server
+{
+	int					port;
+	std::string			server_name;
+	std::string			client_max_body_size;
+	std::string			error_page;
+}						t_server;
 
 bool	write_error(std::string msg);
 bool	valid_word(std::string& listen, std::string word);
