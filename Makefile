@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/18 08:41:29 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/18 10:56:29 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ MAIN		=
 
 INCLUDE		=	-I./includes
 
-SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp
+SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp \
+				client_max_body_size.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objects
@@ -31,7 +32,7 @@ RM		=	rm -rf
 VPATH	=	./srcs \
 
 $(OBJECTS_DIR)/%.o:	%.cpp
-			$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
+			@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
 
 all:	$(NAME)
 
@@ -72,8 +73,8 @@ OJBS_TSTS		=	$(patsubst %.cpp, %.out, $(FILE_TSTS))
 
 %.out:	%.cpp
 		@$(CC) $(OBJECTS) $< -o teste $(INCLUDE)
-		./teste
-		$(RM) teste
+		@./teste
+		@$(RM) teste
 
 test: re_mandatory $(OJBS_TST)
 

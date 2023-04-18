@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/18 10:20:22 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:18:53 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static bool	get_max_body_size(std::string& aux)
 
 static bool	erase_validate_unit_measure(std::string& size)
 {
-	int	end = aux.length() - 1;
+	int	end = size.length() - 1;
 
 	if (size[end] != 'K' && size[end] != 'M' && size[end] != 'G')
-		return (write_error("Invalid client_max_body_size: value is not in k or m"));
+		return (write_error("Invalid client_max_body_size unit measure: must be K, M or G"));
 	size.erase(end);
 	return (true);
 }
@@ -52,8 +52,6 @@ static bool	is_digit_status(std::string& size)
 
 static bool	valid_max_body_size(std::string& size)
 {
-	int	end = aux.length() - 1;
-
 	if (erase_validate_unit_measure(size) == false)
 		return (false);
 	if (is_digit_status(size) == false)
@@ -61,7 +59,7 @@ static bool	valid_max_body_size(std::string& size)
 	return (true);
 }
 
-void	save_max_body_size(std::string& size, std::string& client_max_body_size)
+static void	save_max_body_size(std::string& size, std::string& client_max_body_size)
 {
 	client_max_body_size = size;
 }
@@ -70,13 +68,13 @@ bool	get_client_max_body_size(char* line, std::string& client_max_body_size)
 {
 	std::string aux;
 
-	if (!get_aux_valid(aux, line))
+	if (get_aux_valid(aux, line) == false)
 		return (false);
-	if (!valid_word(aux, "client_max_body_size"))
+	if (valid_word(aux, "client_max_body_size") == false)
 		return (false);
-	if (!get_max_body_size(aux))
+	if (get_max_body_size(aux) == false)
 		return (false);
-	if (!valid_max_body_size(aux) == false)
+	if (valid_max_body_size(aux) == false)
 		return (false);
 	save_max_body_size(aux, client_max_body_size);
 	return (true);
