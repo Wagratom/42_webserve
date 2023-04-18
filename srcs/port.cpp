@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/17 21:34:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 10:20:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ static bool	get_valid_port(std::string& listen, std::string& aux_port)
 	size_t	end = listen.length() - 1;
 
 	if (pos == std::string::npos)
-		return (write_error("Invalid port: no space after 'listen'"));
-	aux_port = listen.substr(pos + 1, end);
-	end = aux_port.length() - 1;
-	if (aux_port[end] != ';')
-		return (write_error("Invalid port: no ';' after port number"));
-	aux_port.erase(end);
+		pos = listen.find("\t");
+	if (pos == std::string::npos)
+		return (write_error("Invalid line: no space after 'listen'"));
+	while (listen[pos] == ' ' || listen[pos] == '\t')
+		pos++;
+	aux_port = listen.substr(pos, end);
 	return (true);
 }
 
@@ -72,7 +72,7 @@ bool	get_port(char*	listen, int& port)
 
 	if (listen == NULL)
 		return (false);
-	if (get_aux(aux, listen) == false)
+	if (get_aux_valid(aux, listen) == false)
 		return (false);
 	if (valid_word(aux, std::string("listen")) == false)
 		return (false);

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/17 21:33:46 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 08:46:10 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 bool	write_error(std::string msg);
 bool	valid_word(std::string& listen, std::string word);
-bool	get_aux(std::string& aux, char *line);
+bool	get_aux_valid(std::string& aux, char *line);
 
 bool	get_port(char*	line, int& port);
 bool	get_server_name(char* line, std::string& server_name);

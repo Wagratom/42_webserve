@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:51:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/17 21:33:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 10:20:29 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ bool	get_server_name(char* line, std::string& server_name)
 
 	if (line == NULL)
 		return (false);
-	if (get_aux(aux, line) == false)
+	if (get_aux_valid(aux, line) == false)
 		return (false);
 	if (valid_word(aux, "server_name") == false)
 		return (false);
 	if (get_server_names(aux, server_name) == false)
 		return (false);
+	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:01:55 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/17 14:00:00 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/18 09:13:12 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,21 @@ bool	test_numbers()
 
 	if (!equal_or_err_b(get_port(const_cast<char*>("listen 8080;"), port), true, __LINE__))
 		return (false);
+	if (!equal_or_err_b(get_port(const_cast<char*>("listen     8080;"), port), true, __LINE__))
+		return (false);
+	if (!equal_or_err_b(get_port(const_cast<char*>("listen\t\t8080;"), port), true, __LINE__))
+		return (false);
 	if (!equal_or_err_b(get_port(const_cast<char*>("listen 65535;"), port), true, __LINE__))
 		return (false);
 	if (!equal_or_err_b(get_port(const_cast<char*>("listen 0;"), port), true, __LINE__))
 		return (false);
+	if (!equal_or_err_b(get_port(const_cast<char*>("listen0;"), port), false, __LINE__))
+		return (false);
 	if (!equal_or_err_b(get_port(const_cast<char*>("listen 65536;"), port), false, __LINE__))
+		return (false);
+	if (!equal_or_err_b(get_port(const_cast<char*>("listen         ;"), port), false, __LINE__))
+		return (false);
+	if (!equal_or_err_b(get_port(const_cast<char*>("listen\t\t\t;"), port), false, __LINE__))
 		return (false);
 	if (!equal_or_err_b(get_port(const_cast<char*>("listen -1;"), port), false, __LINE__))
 		return (false);

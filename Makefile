@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/17 20:47:57 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/18 08:41:29 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ MAIN		=
 
 INCLUDE		=	-I./includes
 
-SOURCE		=	port.cpp tester.cpp func_uni.cpp
+SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objects
