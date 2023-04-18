@@ -1,0 +1,34 @@
+config
+server {
+    listen 8080;
+    server_name example.com www.example.com; # Nomes de servidor aceitos
+    error_page 404 /404.html; # Página de erro para erro 404
+    client_max_body_size 10M; # Tamanho máximo do corpo da requisição em bytes
+
+    location / {
+        root /var/www/html; # Diretório raiz do servidor
+        index index.html index.htm; # Arquivos padrão para exibir se um diretório é solicitado
+        limit_except GET POST; # Métodos aceitos para a rota
+    }
+
+    location /upload {
+        root /var/www/html; # Diretório raiz do servidor
+        limit_except POST; # Apenas método POST é aceito para a rota
+        client_body_temp_path /tmp; # Diretório temporário para armazenar o corpo da requisição
+        client_body_buffer_size 128K; # Tamanho máximo do buffer de leitura do corpo da requisição
+        client_max_body_size 50M; # Tamanho máximo do corpo da requisição em bytes
+        upload_pass /cgi-bin/upload.cgi; # Rota CGI para processar o upload de arquivos
+        upload_store /var/www/html/uploads; # Diretório para armazenar os arquivos enviados pelos usuários
+        upload_set_form_field "$upload_field_name.name" $upload_file_name; # Nome do arquivo enviado
+        upload_set_form_field "$upload_field_name.content_type" $upload_content_type; # Tipo de conteúdo do arquivo enviado
+        upload_set_form_field "$upload_field_name.path" "/uploads/$upload_file_name"; # Caminho do arquivo enviado
+    }
+
+    location /secret {
+        internal; # Rota não pode ser acessada diretamente
+        alias /var/www/secret; # Diretório real do arquivo protegido
+        limit_except GET; # Apenas método GET é aceito para a rota
+        auth_basic "Restricted Content"; # Título da janela de autenticação
+        auth_basic_user_file /etc/nginx/.htpasswd; # Arquivo contendo usuários e senhas para autenticação
+    }
+}
