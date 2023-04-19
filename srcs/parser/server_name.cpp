@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:51:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 09:38:54 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:42:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,16 @@ static bool	get_server_names(std::string& line)
 	return (true);
 }
 
-void	save_server_name(std::string& aux, std::string& server_name)
-{
-	server_name = aux;
-}
-
-bool	Parser_configuration::get_server_name(char* line, std::string& server_name)
+bool	Parser_configuration::get_server_name(std::string line)
 {
 	std::string	aux;
 
-	if (line == NULL)
-		return (false);
 	if (get_aux_valid(aux, line) == false)
 		return (false);
 	if (valid_word(aux, "server_name") == false)
 		return (false);
 	if (get_server_names(aux) == false)
 		return (false);
-	save_server_name(aux, server_name);
+	server.server_name = aux;
 	return (true);
 }

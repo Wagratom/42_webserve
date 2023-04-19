@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 09:38:27 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:10:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,25 @@ static bool	is_number_valid(std::string& port_string)
 	return (true);
 }
 
-static bool	convertion_status(std::string& port_string, int& port)
+bool	convertion_status(std::string& port_string)
 {
-	port = std::strtol(port_string.c_str(), NULL, 10);
-	if (port == 0 && port_string.length() != 1)
+	int	aux;
+
+	aux = std::strtol(port_string.c_str(), NULL, 10);
+	if (aux == 0 && port_string.length() != 1)
 		return (write_error("Invalid port: port number is not a valid number"));
-	if (port == 0 && port_string[0] != '0')
+	if (aux == 0 && port_string[0] != '0')
 		return (write_error("Invalid port: port number is not a valid number"));
-	if (port > 65535)
+	if (aux > 65535)
 		return (write_error("Invalid port: port number is too big"));
 	return (true);
 }
 
-static bool	convert_port(std::string& port_string, int& port)
+static bool	convert_port(std::string& port_string)
 {
 	if (!is_number_valid(port_string))
 		return (false);
-	if (!convertion_status(port_string, port))
+	if (!convertion_status(port_string))
 		return (false);
 	return (true);
 }
@@ -61,20 +63,19 @@ static bool	get_valid_port(std::string& listen, std::string& aux_port)
 	return (true);
 }
 
-bool	Parser_configuration::get_port(char*	listen, int& port)
+bool	Parser_configuration::get_port(std::string listen)
 {
 	std::string	aux;
 	std::string	aux_port;
 
-	if (listen == NULL)
-		return (false);
 	if (get_aux_valid(aux, listen) == false)
 		return (false);
 	if (valid_word(aux, std::string("listen")) == false)
 		return (false);
 	if (get_valid_port(aux, aux_port) == false)
 		return (false);
-	if (convert_port(aux_port, port) == false)
+	if (convert_port(aux_port) == false)
 		return (false);
+	server.port = std::strtol(aux_port.c_str(), NULL, 10);
 	return (true);
 }

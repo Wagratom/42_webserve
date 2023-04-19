@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 12:48:10 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:49:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class Parser_configuration;
 typedef struct s_dictionary_parser
 {
 	std::string			key;
-	bool				(Parser_configuration::*f)(char*, std::string&);
+	bool				(Parser_configuration::*f)(std::string);
 
 }	t_dictionary_parser;
 

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 09:38:48 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:52:04 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ bool	write_error(std::string msg)
 	return (false);
 }
 
-bool	get_aux_valid(std::string& aux, char *line)
+bool	get_aux_valid(std::string& aux, std::string& line)
 {
+	size_t	pos = line.find_first_not_of(" \t");;
 	size_t	end;
 
-	while (*line == ' ' || *line == '\t')
-		line++;
-	if (*line == '\0')
+	if (pos == std::string::npos)
 		return (write_error("Invalid line: empty line"));
 	aux = std::string(line);
 	end = aux.length() - 1;

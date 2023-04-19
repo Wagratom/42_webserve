@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:19:25 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 09:40:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:44:08 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,16 @@ static bool	cut_error_page(std::string& aux)
 	return (true);
 }
 
-static void	save_error_page(std::string& aux, std::string& error_page)
-{
-	error_page = aux;
-}
-
-bool	Parser_configuration::get_error_page(char* line, std::string& error_page)
+bool	Parser_configuration::get_error_page(std::string line)
 {
 	std::string	aux;
 
-	if (line == NULL)
-		return (write_error("Invalid error_page: NULL"));
 	if (get_aux_valid(aux, line) == false)
 		return (false);
 	if (valid_word(aux, "error_page") == false)
 		return (false);
 	if (cut_error_page(aux) == false)
 		return (false);
-	save_error_page(aux, error_page);
+	server.error_page = aux;
 	return (true);
 }

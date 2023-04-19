@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 13:18:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:14:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ bool	Parser_configuration::read_file(char* filename)
 	return (true);
 }
 
+bool	handle_line(std::string line)
+{
+	(void)line;
+	return (true);
+
+}
 bool	Parser_configuration::parser_server( void )
 {
-	std::string	line;
-
-	line = this->file->line;
-	if (line.compare("server") != 0)
-		return (write_error("Error: Invalid server configuration"));
+	if (get_server(this->file->line) == false)
+		return (false);
 	return (true);
 }
 
@@ -43,7 +46,8 @@ bool	Parser_configuration::parser(char* filename)
 {
 	if (read_file(filename) == false)
 		return (false);
-	parser_server();
+	if (parser_server() == false)
+		return (false);
 	return (true);
 }
 
