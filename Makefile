@@ -6,22 +6,23 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/19 09:25:20 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/19 13:57:09 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	tester
-LIB_FILO	=	philo.a
+NAME		=	parser
 
 MAIN		=
 
 INCLUDE		=	-I./includes
 
 SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp \
-				client_max_body_size.cpp error_page.cpp dictionary_parser.cpp\
+				client_max_body_size.cpp error_page.cpp dictionary_parser.cpp \
+				parser.cpp server.cpp\
+				add_back.cpp clear.cpp last.cpp new.cpp size.cpp delone.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
-OBJECTS_DIR	=	objects
+OBJECTS_DIR	=	objs
 
 CC 		=	c++ -g3 --std=c++98
 
@@ -30,6 +31,8 @@ CFLAGS	=	-Wall -Wextra -Werror
 RM		=	rm -rf
 
 VPATH	=	./srcs \
+			./srcs/list \
+			./srcs/parser
 
 $(OBJECTS_DIR)/%.o:	%.cpp
 			@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
@@ -47,8 +50,6 @@ clean:
 
 fclean:		clean
 				$(RM) $(NAME)
-				$(RM) $(LIB_FILO)
-
 norm:
 	@echo "\n			INCLUDES\n" && norminette include
 	@echo "\n			SOURCES\n" && norminette source

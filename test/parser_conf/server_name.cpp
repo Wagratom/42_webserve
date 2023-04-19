@@ -6,16 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 08:23:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 10:11:48 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:20:33 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parser.hpp"
-
-Parser_configuration::Parser_configuration( void ): dictionary(create_dictionary_parser())
-{}
-
-Parser_configuration::~Parser_configuration( void ) {}
+#include <parser.hpp>
 
 Parser_configuration aux;
 

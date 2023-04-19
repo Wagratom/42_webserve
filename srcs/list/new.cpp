@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   new.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 12:50:17 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 11:57:46 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/19 12:34:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-bool	valid_arguments( int argc, char *argv[])
+list_file	*ft_lstnew(std::string content)
 {
-	if (argc != 2)
-		return (write_error("Error: Invalid number of arguments"));
-	if (argv == NULL || *argv == 0)
-		return (write_error("Error: Invalid arguments"));
-	return (true);
-}
+	list_file	*_new;
 
-int main ( int argc, char *argv[] )
-{
-	Parser_configuration	parser;
-
-	if (valid_arguments(argc, argv) == false)
-		return (false);
-	if (parser.parser(argv[1]) == false)
-		return (false);
-	return (0);
+	_new = (list_file *)malloc(sizeof(list_file));
+	if (!_new)
+		return (NULL);
+	_new->line = content;
+	_new->next = NULL;
+	return (_new);
 }

@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   dictionary_parser.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 12:50:17 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 09:24:27 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/19 10:17:26 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-bool	valid_arguments( int argc, char *argv[])
+t_dictionary_parser*	Parser_configuration::create_dictionary_parser( void )
 {
-	if (argc != 2)
-		return (write_error("Error: Invalid number of arguments"));
-	if (argv == NULL || *argv == 0)
-		return (write_error("Error: Invalid arguments"));
-	return (true);
-}
-
-int main ( int argc, char *argv[] )
-{
-	Parser_configuration	parser;
-
-	if (valid_arguments(argc, argv) == false)
-		return (false);
-	if (parser.parser(argv[1]) == false)
-		return (false);
-	return (0);
+	t_dictionary_parser	static dictionary[] = {
+								{"server_name", &Parser_configuration::get_server_name},
+								{"client_max_body_size", &Parser_configuration::get_client_max_body_size},
+								{"error_page", &Parser_configuration::get_error_page},
+								{"", NULL}
+	};
+	return (dictionary);
 }

@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dictionary_parser.cpp                              :+:      :+:    :+:   */
+/*   size.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 09:24:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 10:07:25 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 12:05:48 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/19 12:10:27 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-t_dictionary_parser*	Parser_configuration::create_dictionary_parser( void )
+int	ft_lstsize(list_file *lst)
 {
-	t_dictionary_parser	static dictionary[4] = {
-								{"server_name", &Parser_configuration::get_server_name},
-								{"client_max_body_size", &Parser_configuration::get_client_max_body_size},
-								{"error_page", &Parser_configuration::get_error_page},
-								{NULL, NULL}
-	};
-	return (dictionary);
+	int	count;
+
+	count = 0;
+	while (lst && count++ >= 0)
+		lst = lst->next;
+	return (count);
 }

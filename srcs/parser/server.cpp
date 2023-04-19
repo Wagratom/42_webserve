@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 12:50:17 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 13:43:36 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/19 14:10:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-bool	valid_arguments( int argc, char *argv[])
+bool	Parser_configuration::get_server( std::string line )
 {
-	if (argc != 2)
-		return (write_error("Error: Invalid number of arguments"));
-	if (argv == NULL || *argv == 0)
-		return (write_error("Error: Invalid arguments"));
+	size_t	pos = line.find_first_not_of(" \t", 6);
+
+	if (pos == std::string::npos)
+		return (write_error("Error: Invalid line server"));
+	if (line.compare(0, 6, "server") != 0)
+		return (write_error("Error: Invalid line server"));
+	if (line.compare(pos, 2, "{\0") != 0)
+		return (write_error("Error: Invalid line server"));
 	return (true);
-}
-
-int main ( int argc, char *argv[] )
-{
-	Parser_configuration	parser;
-
-	if (valid_arguments(argc, argv) == false)
-		return (false);
-	if (parser.parser(argv[1]) == false)
-		return (false);
-	return (0);
 }

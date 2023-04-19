@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   add_back.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 12:50:17 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 12:00:34 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/19 12:11:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-bool	valid_arguments( int argc, char *argv[])
+void	ft_lstadd_back(list_file **lst, list_file *_new)
 {
-	if (argc != 2)
-		return (write_error("Error: Invalid number of arguments"));
-	if (argv == NULL || *argv == 0)
-		return (write_error("Error: Invalid arguments"));
-	return (true);
-}
+	list_file	*end;
 
-int main ( int argc, char *argv[] )
-{
-	Parser_configuration	parser;
-
-	if (valid_arguments(argc, argv) == false)
-		return (false);
-	if (parser.parser(argv[1]) == false)
-		return (false);
-	return (0);
+	if (lst == NULL)
+		return ;
+	if (*lst == 0)
+		(*lst) = _new;
+	else
+	{
+		end = ft_lstlast(*lst);
+		end->next = _new;
+	}
 }
