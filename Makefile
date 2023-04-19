@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/18 13:09:11 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/19 09:25:20 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ MAIN		=
 INCLUDE		=	-I./includes
 
 SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp \
-				client_max_body_size.cpp
+				client_max_body_size.cpp error_page.cpp dictionary_parser.cpp\
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objects

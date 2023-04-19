@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/18 13:26:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 09:35:43 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,12 @@ static void	save_max_body_size(std::string& size, std::string& client_max_body_s
 	client_max_body_size = size;
 }
 
-bool	get_client_max_body_size(char* line, std::string& client_max_body_size)
+bool	Parser_configuration::get_client_max_body_size(char* line, std::string& client_max_body_size)
 {
 	std::string aux;
 
+	if (line == NULL)
+		return (write_error("Invalid client_max_body_size: NULL"));
 	if (get_aux_valid(aux, line) == false)
 		return (false);
 	if (valid_word(aux, "client_max_body_size") == false)

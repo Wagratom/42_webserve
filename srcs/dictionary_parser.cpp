@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   dictionary_parser.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 10:11:37 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 09:24:27 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/19 10:07:25 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-Parser_configuration::Parser_configuration( void ): dictionary(create_dictionary_parser())
-{}
-
-Parser_configuration::~Parser_configuration( void ) {}
-
+t_dictionary_parser*	Parser_configuration::create_dictionary_parser( void )
+{
+	t_dictionary_parser	static dictionary[4] = {
+								{"server_name", &Parser_configuration::get_server_name},
+								{"client_max_body_size", &Parser_configuration::get_client_max_body_size},
+								{"error_page", &Parser_configuration::get_error_page},
+								{NULL, NULL}
+	};
+	return (dictionary);
+}

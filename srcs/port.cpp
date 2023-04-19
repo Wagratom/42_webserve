@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/18 13:32:38 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 09:38:27 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool	is_number_valid(std::string& port_string)
 
 static bool	convertion_status(std::string& port_string, int& port)
 {
-	port = atoi(port_string.c_str());
+	port = std::strtol(port_string.c_str(), NULL, 10);
 	if (port == 0 && port_string.length() != 1)
 		return (write_error("Invalid port: port number is not a valid number"));
 	if (port == 0 && port_string[0] != '0')
@@ -61,7 +61,7 @@ static bool	get_valid_port(std::string& listen, std::string& aux_port)
 	return (true);
 }
 
-bool	get_port(char*	listen, int& port)
+bool	Parser_configuration::get_port(char*	listen, int& port)
 {
 	std::string	aux;
 	std::string	aux_port;
