@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:51:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 14:42:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:06:04 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,14 @@ static bool	get_server_names(std::string& line)
 	return (true);
 }
 
-bool	Parser_configuration::get_server_name(std::string line)
+bool	Parser_configuration::get_server_name(std::string& line)
 {
-	std::string	aux;
-
-	if (get_aux_valid(aux, line) == false)
+	if (has_semicolon_at_end(line) == false)
 		return (false);
-	if (valid_word(aux, "server_name") == false)
+	if (valid_word(line, "server_name") == false)
 		return (false);
-	if (get_server_names(aux) == false)
+	if (get_server_names(line) == false)
 		return (false);
-	server.server_name = aux;
+	server.server_name = line;
 	return (true);
 }

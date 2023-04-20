@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:19:25 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 20:52:53 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:07:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,14 @@ static bool	cut_error_page(std::string& aux)
 	return (true);
 }
 
-bool	Parser_configuration::get_error_page(std::string line)
+bool	Parser_configuration::get_error_page(std::string& line)
 {
-	std::string	aux;
-
-	if (get_aux_valid(aux, line) == false)
+	if (has_semicolon_at_end(line) == false)
 		return (false);
-	if (valid_word(aux, "error_page") == false)
+	if (valid_word(line, "error_page") == false)
 		return (false);
-	if (cut_error_page(aux) == false)
+	if (cut_error_page(line) == false)
 		return (false);
-	server.error_page = aux;
+	server.error_page = line;
 	return (true);
 }

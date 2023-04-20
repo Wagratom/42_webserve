@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 20:49:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:06:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,15 @@ bool	write_error(std::string msg)
 	return (false);
 }
 
-bool	get_aux_valid(std::string& aux, std::string& line)
+bool	has_semicolon_at_end(std::string& line)
 {
-	size_t	pos = line.find_first_not_of(" \t");;
-	size_t	end;
+	size_t	end = line.length() - 1;
 
-	if (pos == std::string::npos)
-		return (write_error("Invalid line: empty line"));
-	aux = std::string(line);
-	end = aux.length() - 1;
-	if (aux[end] != ';')
+	if (line[end] != ';')
 		return (write_error("Invalid line: no ';' at the end"));
-	if (aux[end -1] == ' ' || aux[end - 1] == '\t')
+	if (line[end -1] == ' ' || line[end - 1] == '\t')
 		return (write_error("Invalid line: space before ';'"));
-	aux.erase(end);
+	line.erase(end);
 	return (true);
 }
 

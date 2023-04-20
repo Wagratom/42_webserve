@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.cpp                                         :+:      :+:    :+:   */
+/*   index.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:43:36 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 14:10:19 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/20 08:49:07 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/20 10:07:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-bool	Parser_configuration::get_server( std::string line )
+static bool	valid_index(std::string& line)
 {
-	size_t	pos = line.find_first_not_of(" \t", 6);
+	size_t	pos = line.find_first_not_of(" \t", 5);
 
 	if (pos == std::string::npos)
-		return (write_error("Error: Invalid line server"));
-	if (line.compare(0, 6, "server") != 0)
-		return (write_error("Error: Invalid line server"));
-	if (line.compare(pos, 2, "{\0") != 0)
-		return (write_error("Error: Invalid line server"));
+		return (write_error("Invalid line: no index"));
+	line = line.substr(pos);
+	return (true);
+}
+
+bool	Parser_configuration::get_index(std::string& line)
+{
+	if (has_semicolon_at_end(line) == false)
+		return (false);
+	if (valid_word(line, "index") == false)
+		return (false);
+	if (valid_index(line) == false)
+		return (false);
+	server.index = line;
 	return (true);
 }

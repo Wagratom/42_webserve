@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 20:44:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:06:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,25 @@ static bool	is_digit_status(std::string& size)
 
 static bool	valid_max_body_size(std::string& size)
 {
-	if (erase_validate_unit_measure(size) == false)
+	std::string aux(size);
+
+	if (erase_validate_unit_measure(aux) == false)
 		return (false);
-	if (is_digit_status(size) == false)
+	if (is_digit_status(aux) == false)
 		return (false);
 	return (true);
 }
 
-bool	Parser_configuration::get_client_max_body_size(std::string line)
+bool	Parser_configuration::get_client_max_body_size(std::string& line)
 {
-	std::string aux;
-
-	if (get_aux_valid(aux, line) == false)
+	if (has_semicolon_at_end(line) == false)
 		return (false);
-	if (valid_word(aux, "client_max_body_size") == false)
+	if (valid_word(line, "client_max_body_size") == false)
 		return (false);
-	if (get_max_body_size(aux) == false)
+	if (get_max_body_size(line) == false)
 		return (false);
-	if (valid_max_body_size(aux) == false)
+	if (valid_max_body_size(line) == false)
 		return (false);
-	server.client_max_body_size = aux;
+	server.client_max_body_size = line;
 	return (true);
 }
