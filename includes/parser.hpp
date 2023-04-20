@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 14:47:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 20:36:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 class	Parser_configuration
 {
 	public:
-		Parser_configuration( void ): dictionary(create_dictionary_parser()) {};
+		Parser_configuration( void ): dictionary(create_dictionary_parser()), file(NULL) {};
 		~Parser_configuration( void ) {};
 
 		t_dictionary_parser*	create_dictionary_parser( void );
@@ -27,10 +27,10 @@ class	Parser_configuration
 		bool					read_file( char* filename );
 		bool					parser_server( void );
 
+
+		bool					handle_line(std::string line);
 		bool					get_server( std::string line );
-
 		bool					get_port( std::string line );
-
 		bool					get_server_name( std::string line );
 		bool					get_client_max_body_size( std::string line );
 		bool					get_error_page( std::string line );

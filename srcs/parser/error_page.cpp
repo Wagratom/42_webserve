@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:19:25 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 14:44:08 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 20:52:53 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	is_digit_valid(std::string number)
 
 	n_error = std::strtol(number.c_str(), NULL, 10);
 	if (n_error < 400 || n_error > 599)
-		return (write_error("Invalid error_page: invalid number"));
+		return (write_error("Invalid error_page: invalid number error"));
 	return (true);
 }
 

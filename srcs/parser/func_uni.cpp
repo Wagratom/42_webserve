@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 14:52:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 20:49:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ bool	get_aux_valid(std::string& aux, std::string& line)
 	end = aux.length() - 1;
 	if (aux[end] != ';')
 		return (write_error("Invalid line: no ';' at the end"));
+	if (aux[end -1] == ' ' || aux[end - 1] == '\t')
+		return (write_error("Invalid line: space before ';'"));
 	aux.erase(end);
 	return (true);
 }

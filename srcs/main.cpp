@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 12:50:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/19 18:58:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ bool	valid_arguments( int argc, char *argv[])
 		return (write_error("Error: Invalid number of arguments"));
 	if (argv == NULL || *argv == 0)
 		return (write_error("Error: Invalid arguments"));
+	std::cout << "Valid arguments" << std::endl;
 	return (true);
 }
 
