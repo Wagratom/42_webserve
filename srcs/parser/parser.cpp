@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 09:58:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:09:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ bool	Parser_configuration::parser(char* filename)
 		// }
 
 	}
+	std::cout << std::endl;
 	std::cout << "Port: " << this->server.port << std::endl;
 	std::cout << "Server name: " << this->server.server_name << std::endl;
 	std::cout << "Client max body size: " << this->server.client_max_body_size << std::endl;

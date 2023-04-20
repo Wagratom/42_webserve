@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:06:44 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:12:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ bool	convertion_status(std::string& port_string)
 
 static bool	convert_port(std::string& port_string)
 {
-	std::cout << "port_string: " << port_string << std::endl;
 	if (!is_number_valid(port_string))
 		return (false);
 	if (!convertion_status(port_string))
@@ -70,7 +69,6 @@ bool	Parser_configuration::get_port(std::string& listen)
 
 	if (has_semicolon_at_end(listen) == false)
 		return (false);
-	listen = listen.erase(listen.length() - 1);
 	if (valid_word(listen, "listen") == false)
 		return (false);
 	if (get_valid_port(listen, aux_port) == false)

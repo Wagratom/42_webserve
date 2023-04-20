@@ -6,50 +6,48 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:39:44 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 14:55:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:35:54 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
-
-Parser_configuration aux;
+#include "../auxiliares.hpp"
 
 bool	test_valid_client_max_body_size()
 {
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size 1K;"), true, __LINE__))
+	if (!aux_max_body_size("client_max_body_size 1K;", true, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size 1M;"), true, __LINE__))
+	if (!aux_max_body_size("client_max_body_size 1M;", true, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size 1G;"), true, __LINE__))
+	if (!aux_max_body_size("client_max_body_size 1G;", true, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size       1M;"), true, __LINE__))
+	if (!aux_max_body_size("client_max_body_size       1M;", true, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size\t\t1M;"), true, __LINE__))
+	if (!aux_max_body_size("client_max_body_size\t\t1M;", true, __LINE__))
 		return (false);
 	return (true);
 }
 
 bool	test_invalid_client_max_body_size()
 {
-	if (!equal_or_err_b(aux.get_client_max_body_size(""), false, __LINE__))
+	if (!aux_max_body_size("", false, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size 1K"), false, __LINE__))
+	if (!aux_max_body_size("client_max_body_size 1K", false, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size 1M"), false, __LINE__))
+	if (!aux_max_body_size("client_max_body_size 1M", false, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size 1G"), false, __LINE__))
+	if (!aux_max_body_size("client_max_body_size 1G", false, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size       1M"), false, __LINE__))
+	if (!aux_max_body_size("client_max_body_size       1M", false, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size\t\t1M"), false, __LINE__))
+	if (!aux_max_body_size("client_max_body_size\t\t1M", false, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size 1;"), false, __LINE__))
+	if (!aux_max_body_size("client_max_body_size 1;", false, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size 1W;"), false, __LINE__))
+	if (!aux_max_body_size("client_max_body_size 1W;", false, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size;"), false, __LINE__))
+	if (!aux_max_body_size("client_max_body_size;", false, __LINE__))
 		return (false);
-	if (!equal_or_err_b(aux.get_client_max_body_size("client_max_body_size        ;"), false, __LINE__))
+	if (!aux_max_body_size("client_max_body_size        ;", false, __LINE__))
 		return (false);
 	return (true);
 }
