@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:20:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 13:08:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,22 @@ static bool	is_end_server(std::string& line)
 		return (true);
 	}
 	return (false);
-
 }
 
 bool	Parser_configuration::handle_line_server(std::string& line)
 {
 	size_t	i = 0;
 
-	while (dictionary[i].f)
+	while (dictionary_server[i].f)
 	{
-		if (line.compare(0, dictionary[i].key.size(), dictionary[i].key) == 0)
-			return ((this->*dictionary[i].f)(line));
+		if (line.compare(0, dictionary_server[i].key.size(), dictionary_server[i].key) == 0)
+			return ((this->*dictionary_server[i].f)(line));
 		i++;
 	}
 	return (is_end_server(line));
 }
 
-bool	Parser_configuration::handle_server( std::string line )
+bool	Parser_configuration::handle_server( std::string& line )
 {
 	size_t	start = line.find_first_not_of(" \t");
 

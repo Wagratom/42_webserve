@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:39:44 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:35:54 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:59:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ bool	test_invalid_client_max_body_size()
 		return (false);
 	return (true);
 }
+
 int main( void )
 {
 	if (!test_valid_client_max_body_size())
 		return (1);
 	if (!test_invalid_client_max_body_size())
 		return (1);
+	std::cout << "Suscess!" << std::endl;
 	return (0);
 }

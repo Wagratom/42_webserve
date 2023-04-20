@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 14:09:01 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:34:47 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:57:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int main( void )
 		return (1);
 	if (!invalid_test_get_error())
 		return (1);
+	std::cout << "Suscess!" << std::endl;
 	return (0);
 }

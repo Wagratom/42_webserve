@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/20 09:33:30 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/20 13:06:16 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,9 @@ MAIN		=
 INCLUDE		=	-I./includes
 
 SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp\
-				client_max_body_size.cpp error_page.cpp dictionary_parser.cpp \
-				parser.cpp server.cpp index.cpp root.cpp\
+				client_max_body_size.cpp error_page.cpp dictionary_create.cpp \
+				parser.cpp check_server.cpp index.cpp root.cpp parser_location.cpp\
+				get_location.cpp \
 				add_back.cpp clear.cpp last.cpp new.cpp size.cpp delone.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
@@ -34,6 +35,7 @@ VPATH	=	./srcs \
 			./srcs/list \
 			./srcs/parser \
 			./srcs/parser/server \
+			./srcs/parser/location
 
 $(OBJECTS_DIR)/%.o:	%.cpp
 			@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)

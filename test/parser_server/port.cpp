@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:01:55 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:36:40 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:57:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ int main ( void )
 		return (1);
 	if (!test_random())
 		return (1);
+	std::cout << "Suscess!" << std::endl;
 	return (0);
 }

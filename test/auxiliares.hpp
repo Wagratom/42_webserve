@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:28:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:37:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:43:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Parser_configuration aux;
 
 bool	aux_server(std::string line, bool expected, int line_number)
 {
-	if (equal_or_err_b(aux.get_server(line), expected, line_number) == false)
+	if (equal_or_err_b(aux.check_server(line), expected, line_number) == false)
 		return (false);
 	return (true);
 }
@@ -50,3 +50,11 @@ bool	aux_port(std::string line, bool expected, int line_number)
 		return (false);
 	return (true);
 }
+
+bool	aux_location(std::string line, bool expected, int line_number)
+{
+	if (equal_or_err_b(aux.get_location(line), expected, line_number) == false)
+		return (false);
+	return (true);
+}
+

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:09:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:40:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,32 @@ bool	Parser_configuration::read_file(char* filename)
 	return (true);
 }
 
+bool	is_location(std::string& line)
+{
+	if (line.find("location") != std::string::npos)
+		return (true);
+	return (false);
+}
+
 bool	Parser_configuration::parser(char* filename)
 {
 	if (read_file(filename) == false)
 		return (false);
-	if (get_server(this->file->line) == false)
+	if (check_server(this->file->line) == false)
 		return (false);
 	while (this->file->next != NULL)
 	{
 		this->file = this->file->next;
-		// if (is_location())
-		// {
-		// 	if (handle_location() == false)
-		// 		return (false);
-		// }
-		// else
-		// {
+		if (is_location(this->file->line))
+		{
+			if (parser_location(this->file->line) == false)
+				return (false);
+		}
+		else
+		{
 			if (handle_server(this->file->line) == false)
 				return (false);
-		// }
+		}
 
 	}
 	std::cout << std::endl;

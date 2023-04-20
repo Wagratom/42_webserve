@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:52:20 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:31:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:57:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ int main( void )
 		return (1);
 	if (test_invalid_server() == false)
 		return (1);
+	std::cout << "Suscess!" << std::endl;
 	return (0);
 }

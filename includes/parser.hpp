@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:06:26 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/20 13:07:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,22 @@
 class	Parser_configuration
 {
 	public:
-		Parser_configuration( void ): dictionary(create_dictionary_parser()), file(NULL) {};
+		Parser_configuration( void ):	dictionary_server(create_dictionary_parser()),
+										dictionary_location(create_dictionary_location()),
+										file(NULL) {};
 		~Parser_configuration( void ) {};
 
 		t_dictionary_parser*	create_dictionary_parser( void );
+		t_dictionary_parser*	create_dictionary_location( void );
+
 
 		bool					parser( char* filename );
 		bool					read_file( char* filename );
-		bool					handle_server( std::string line );
-
-
-		bool					handle_line_server(std::string& line);
 		void					save_valid_line(std::string line);
 
-		bool					get_server( std::string& line );
+		bool					check_server( std::string& line );
+		bool					handle_server( std::string& line );
+		bool					handle_line_server(std::string& line);
 		bool					get_port( std::string& line );
 		bool					get_server_name( std::string& line );
 		bool					get_client_max_body_size( std::string& line );
@@ -39,9 +41,16 @@ class	Parser_configuration
 		bool					get_error_page( std::string& line );
 		bool					get_index(std::string& line);
 
+		bool					parser_location( std::string& line );
+		bool					handle_location_line(std::string& line);
+		bool					handle_line_location(std::string& line);
+		bool					get_location(std::string& line);
+
 	private:
-		t_dictionary_parser*	dictionary;
+		t_dictionary_parser*	dictionary_server;
+		t_dictionary_parser*	dictionary_location;
 		t_server				server;
+		t_location				location;
 		list_file*				file;
 };
 
