@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 13:36:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:57:26 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ class	Parser_configuration
 		Parser_configuration( int a ){
 				(void)a;
 	}
-		Parser_configuration( void ):	dictionary_server(create_server_dictionary()),
-										dictionary_universal(create_universal_dictionary()),
-										server(create_configuration_server()),
-										location(create_configuration_location()),
-										file(NULL) {};
+		Parser_configuration( void ):	_dictionary_server(create_server_dictionary()),
+										_dictionary_universal(create_universal_dictionary()),
+										_server(create_configuration_server()),
+										_location(create_configuration_location()),
+										_file(NULL) {};
 
 		virtual ~Parser_configuration( void ) {};
 
@@ -45,11 +45,13 @@ class	Parser_configuration
 
 		bool					parser( char* filename );
 		bool					read_file( char* filename );
+		bool					parser_file( void );
 		void					save_valid_line(std::string line);
 
 		bool					check_server( std::string& line );
 		bool					handle_server( std::string& line );
-		bool					handle_line_server(std::string& line);
+		bool					check_in_dict_server(std::string& line);
+		bool					check_in_dict_universal(std::string& line);
 
 		bool					get_port( std::string& line );
 		bool					get_server_name( std::string& line );
@@ -59,17 +61,17 @@ class	Parser_configuration
 		bool					get_error_page( std::string& line, Parser_configuration* dst );
 		bool					get_index(std::string& line , Parser_configuration* dst);
 
-		bool					parser_location( std::string& line );
+		bool					parser_location( void );
 		bool					handle_location_line(std::string& line);
 		bool					handle_line_location(std::string& line);
 		bool					get_location(std::string& line);
 
 	private:
-		t_server_dictionary*	dictionary_server;
-		t_universal_dictionary*	dictionary_universal;
-		configuration_server*	server;
-		configuration_location*	location;
-		list_file*				file;
+		t_server_dictionary*	_dictionary_server;
+		t_universal_dictionary*	_dictionary_universal;
+		configuration_server*	_server;
+		configuration_location*	_location;
+		list_file*				_file;
 };
 
 class configuration_server : public Parser_configuration

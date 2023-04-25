@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:26:29 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 13:55:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:52:27 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,15 @@ static bool	valid_root(std::string& line)
 
 static bool	save_data(std::string& line, Parser_configuration* dst)
 {
-	configuration_server* aux = dynamic_cast<configuration_server*>(dst);
+	configuration_server* server = dynamic_cast<configuration_server*>(dst);
+	configuration_location* location = dynamic_cast<configuration_location*>(dst);
 
-	if (aux != NULL)
-		aux->root = line;
-	else {
-		configuration_location* aux = dynamic_cast<configuration_location*>(dst);
-		if (aux == NULL)
-			return (write_error("Error casting server to configuration_location"));
-		aux->root = line;
-	}
+	if (server != NULL)
+		server->root = line;
+	else if (location != NULL)
+		location->root = line;
+	else
+		return (write_error("Error in cast configuration in get_root"));
 	return (true);
 }
 

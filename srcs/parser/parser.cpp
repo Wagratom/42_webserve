@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 13:52:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:57:40 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	Parser_configuration::save_valid_line(std::string line)
 		return ;
 	if (line[0] == '#' || line[0] == '\n')
 		return ;
-	ft_lstadd_back(&(this->file), ft_lstnew(line));
+	ft_lstadd_back(&(this->_file), ft_lstnew(line));
 }
 
 bool	Parser_configuration::read_file(char* filename)
@@ -27,6 +27,7 @@ bool	Parser_configuration::read_file(char* filename)
 	std::cout << "Lendo arquivo" << std::endl;
 	std::ifstream	file(filename);
 	std::string		line;
+
 	if (file.is_open() == false)
 		return (write_error("Error: File not found"));
 	while (getline(file, line))
@@ -42,30 +43,37 @@ bool	is_location(std::string& line)
 	return (false);
 }
 
-bool	Parser_configuration::parser(char* filename)
+bool	Parser_configuration::parser_file()
 {
-	if (read_file(filename) == false)
-		return (false);
-	std::cout << "Parseando" << std::endl;
-	if (check_server(this->file->line) == false)
-		return (false);
-	while (this->file->next != NULL)
+	while (this->_file->next != NULL)
 	{
-		this->file = this->file->next;
-		if (is_location(this->file->line))
+		this->_file = this->_file->next;
+		if (is_location(this->_file->line))
 		{
-			if (parser_location(this->file->line) == false)
+			if (parser_location() == false)
 				return (false);
 		}
 		else
 		{
-			if (handle_server(this->file->line) == false)
+			if (handle_server(this->_file->line) == false)
 				return (false);
 		}
 	}
+
+	return (true);
+}
+bool	Parser_configuration::parser(char* filename)
+{
+	if (read_file(filename) == false)
+		return (false);
+	if (check_server(this->_file->line) == false)
+		return (false);
+	if (parser_file() == false)
+		return (false);
+
 	std::cout << "Fim do parse" << std::endl;
 	std::cout << "\t Server conf" << std::endl;
-	configuration_server* aux = dynamic_cast<configuration_server*>(server);
+	configuration_server* aux = dynamic_cast<configuration_server*>(_server);
 
 	std::cout << std::endl;
 	std::cout << "Port: " << aux->port << std::endl;
@@ -77,7 +85,7 @@ bool	Parser_configuration::parser(char* filename)
 
 	std::cout << "\t location conf" << std::endl;
 
-	configuration_location* aux2 = dynamic_cast<configuration_location*>(location);
+	configuration_location* aux2 = dynamic_cast<configuration_location*>(_location);
 	std::cout << std::endl;
 	std::cout << "Client max body size: " << aux2->client_max_body_size << std::endl;
 	std::cout << "Error page: " << aux2->error_page << std::endl;

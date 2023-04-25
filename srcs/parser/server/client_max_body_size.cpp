@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 13:55:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:51:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,15 @@ static bool	valid_max_body_size(std::string& size)
 
 static bool	save_data(std::string& line, Parser_configuration* dst)
 {
-	configuration_server* aux = dynamic_cast<configuration_server*>(dst);
+	configuration_server* server = dynamic_cast<configuration_server*>(dst);
+	configuration_location* location = dynamic_cast<configuration_location*>(dst);
 
-	if (aux != NULL)
-		aux->client_max_body_size = line;
-	else {
-		configuration_location* aux = dynamic_cast<configuration_location*>(dst);
-		if (aux == NULL)
-			return (write_error("Error casting server to configuration_location"));
-		aux->client_max_body_size = line;
-	}
+	if (server != NULL)
+		server->client_max_body_size = line;
+	else if (location != NULL)
+		location->client_max_body_size = line;
+	else
+		return (write_error("Error in cast configuration in client_max_body_size"));
 	return (true);
 }
 

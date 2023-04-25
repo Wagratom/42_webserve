@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:19:25 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 13:56:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:45:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,15 @@ static bool	cut_error_page(std::string& aux)
 
 static bool	save_data(std::string& line, Parser_configuration* dst)
 {
-	configuration_server* aux = dynamic_cast<configuration_server*>(dst);
+	configuration_server* server = dynamic_cast<configuration_server*>(dst);
+	configuration_location* location = dynamic_cast<configuration_location*>(dst);
 
-	if (aux != NULL)
-		aux->error_page = line;
-	else {
-		configuration_location* aux = dynamic_cast<configuration_location*>(dst);
-		if (aux == NULL)
-			return (write_error("Error casting server to configuration_location"));
-		aux->error_page = line;
-	}
+	if (server != NULL)
+		server->error_page = line;
+	else if (location != NULL)
+		location->error_page = line;
+	else
+		return (write_error("Error in cast configuration in error_page"));
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 13:51:34 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:58:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,28 @@ static bool	is_end_server(std::string& line)
 	return (false);
 }
 
-bool	Parser_configuration::handle_line_server(std::string& line)
+bool	Parser_configuration::check_in_dict_server(std::string& line)
 {
-	for (size_t i = 0; dictionary_server[i].f; i++) {
-		if (line.compare(0, dictionary_server[i].key.size(), dictionary_server[i].key) == 0)
-			return ((this->*dictionary_server[i].f)(line));
+	size_t i = 0;
+
+	while (_dictionary_server[i].f)
+	{
+		if (line.compare(0, _dictionary_server[i].key.size(), _dictionary_server[i].key) == 0)
+			return ((this->*_dictionary_server[i].f)(line));
+		i++;
 	}
-	for (size_t i = 0; dictionary_universal[i].f; i++) {
-		if (line.compare(0, dictionary_universal[i].key.size(), dictionary_universal[i].key) == 0)
-			return ((this->*dictionary_universal[i].f)(line, this->server));
+	return (false);
+}
+
+bool	Parser_configuration::check_in_dict_universal(std::string& line)
+{
+	size_t	i = 0;
+
+	while (_dictionary_universal[i].f)
+	{
+		if (line.compare(0, _dictionary_universal[i].length, _dictionary_universal[i].key) == 0)
+			return ((this->*_dictionary_universal[i].f)(line, this->_server));
+		i++;
 	}
 	return (is_end_server(line));
 }
@@ -47,5 +60,7 @@ bool	Parser_configuration::handle_server( std::string& line )
 	if (start == std::string::npos)
 		return (write_error("Error: Invalid line server"));
 	line = line.substr(start);
-	return (handle_line_server(line));
+	if (check_in_dict_server(line))
+		return (true);
+	return (check_in_dict_universal(line));
 }

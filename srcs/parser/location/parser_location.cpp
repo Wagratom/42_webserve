@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 13:51:59 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:56:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,26 @@ bool	Parser_configuration::handle_location_line(std::string& line)
 {
 	size_t	i = 0;
 
-
-	while (dictionary_universal[i].f)
+	while (_dictionary_universal[i].f)
 	{
-		if (line.compare(0, dictionary_universal[i].key.length(), dictionary_universal[i].key) == 0)
-			return (this->*dictionary_universal[i].f)(line, this->location);
+		if (line.compare(0, _dictionary_universal[i].length, _dictionary_universal[i].key) == 0)
+			return (this->*_dictionary_universal[i].f)(line, this->_location);
 		i++;
 	}
 	return (false);
 }
 
-bool	Parser_configuration::parser_location( std::string& line )
+bool	Parser_configuration::parser_location( void )
 {
-	std::cout << "parser_location" << std::endl;
-	if (get_location(line) == false)
+	if (get_location(this->_file->line) == false)
 		return (false);
-	while (this->file->next != NULL)
+	while (this->_file->next != NULL)
 	{
-		this->file = this->file->next;
-		if (avant_line(this->file->line) == false)
+		this->_file = this->_file->next;
+		if (avant_line(this->_file->line) == false)
 			return (false);
-		if (handle_location_line(this->file->line) == false)
-			return (is_end_server(this->file->line));
+		if (handle_location_line(this->_file->line) == false)
+			return (is_end_server(this->_file->line));
 	}
 	return (true);
 }

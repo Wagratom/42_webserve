@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 13:02:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:55:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static bool	get_location_valid(std::string& line)
 
 bool	Parser_configuration::get_location(std::string& line)
 {
-	configuration_location* aux = dynamic_cast<configuration_location*>(location);
+	configuration_location* aux = dynamic_cast<configuration_location*>(_location);
 
 	size_t	start = line.find_first_not_of(" \t");
 
