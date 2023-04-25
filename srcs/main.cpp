@@ -6,11 +6,12 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 18:58:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:30:08 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
+
 
 bool	valid_arguments( int argc, char *argv[])
 {
@@ -24,6 +25,7 @@ bool	valid_arguments( int argc, char *argv[])
 
 int main ( int argc, char *argv[] )
 {
+
 	Parser_configuration	parser;
 
 	if (valid_arguments(argc, argv) == false)

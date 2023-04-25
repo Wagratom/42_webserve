@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:51:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:06:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:53:48 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ static bool	get_server_names(std::string& line)
 
 bool	Parser_configuration::get_server_name(std::string& line)
 {
+	configuration_server* aux = dynamic_cast<configuration_server*>(server);
+
+	if (aux == NULL)
+		return (write_error("Error casting server to configuration_server"));
 	if (has_semicolon_at_end(line) == false)
-		return (false);
+		return (write_error("Error: Invalid line server_name, not ';'"));
 	if (valid_word(line, "server_name") == false)
 		return (false);
 	if (get_server_names(line) == false)
 		return (false);
-	server.server_name = line;
+	aux->server_name = line;
 	return (true);
 }

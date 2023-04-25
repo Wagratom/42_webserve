@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/24 14:18:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:51:59 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ bool	Parser_configuration::handle_location_line(std::string& line)
 {
 	size_t	i = 0;
 
-	while (dictionary_location[i].f)
+
+	while (dictionary_universal[i].f)
 	{
-		if (line.compare(0, dictionary_location[i].key.length(), dictionary_location[i].key) == 0)
-			return (this->*dictionary_location[i].f)(line);
+		if (line.compare(0, dictionary_universal[i].key.length(), dictionary_universal[i].key) == 0)
+			return (this->*dictionary_universal[i].f)(line, this->location);
 		i++;
 	}
 	return (false);

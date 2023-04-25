@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:12:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:56:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,19 @@ static bool	get_valid_port(std::string& listen, std::string& aux_port)
 
 bool	Parser_configuration::get_port(std::string& listen)
 {
+	configuration_server* aux = dynamic_cast<configuration_server*>(server);
 	std::string	aux_port;
 
+	if (aux == NULL)
+		return (write_error("error in cast port"));
 	if (has_semicolon_at_end(listen) == false)
-		return (false);
+		return (write_error("Error: Invalid line listen, not ';'"));
 	if (valid_word(listen, "listen") == false)
 		return (false);
 	if (get_valid_port(listen, aux_port) == false)
 		return (false);
 	if (convert_port(aux_port) == false)
 		return (false);
-	server.port = std::strtol(aux_port.c_str(), NULL, 10);
+	aux->port = std::strtol(aux_port.c_str(), NULL, 10);
 	return (true);
 }

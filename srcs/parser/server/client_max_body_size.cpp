@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:06:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:55:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,32 @@ static bool	valid_max_body_size(std::string& size)
 	return (true);
 }
 
-bool	Parser_configuration::get_client_max_body_size(std::string& line)
+static bool	save_data(std::string& line, Parser_configuration* dst)
+{
+	configuration_server* aux = dynamic_cast<configuration_server*>(dst);
+
+	if (aux != NULL)
+		aux->client_max_body_size = line;
+	else {
+		configuration_location* aux = dynamic_cast<configuration_location*>(dst);
+		if (aux == NULL)
+			return (write_error("Error casting server to configuration_location"));
+		aux->client_max_body_size = line;
+	}
+	return (true);
+}
+
+bool	Parser_configuration::get_client_max_body_size(std::string& line, Parser_configuration* dst)
 {
 	if (has_semicolon_at_end(line) == false)
-		return (false);
+		return (write_error("Error: Invalid line client_max_body_size, not ';'"));
 	if (valid_word(line, "client_max_body_size") == false)
 		return (false);
 	if (get_max_body_size(line) == false)
 		return (false);
 	if (valid_max_body_size(line) == false)
 		return (false);
-	server.client_max_body_size = line;
+	if (save_data(line, dst) == false)
+		return (false);
 	return (true);
 }

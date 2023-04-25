@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 08:49:07 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:07:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:56:29 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,30 @@ static bool	valid_index(std::string& line)
 	return (true);
 }
 
-bool	Parser_configuration::get_index(std::string& line)
+static bool	save_data(std::string& line, Parser_configuration* dst)
+{
+	configuration_server* aux = dynamic_cast<configuration_server*>(dst);
+
+	if (aux != NULL)
+		aux->index = line;
+	else {
+		configuration_location* aux = dynamic_cast<configuration_location*>(dst);
+		if (aux == NULL)
+			return (write_error("Error casting server to configuration_location"));
+		aux->index = line;
+	}
+	return (true);
+}
+
+bool	Parser_configuration::get_index(std::string& line, Parser_configuration *dst)
 {
 	if (has_semicolon_at_end(line) == false)
-		return (false);
+		return (write_error("Error: Invalid line index, not ';'"));
 	if (valid_word(line, "index") == false)
 		return (false);
 	if (valid_index(line) == false)
 		return (false);
-	server.index = line;
+	if (save_data(line, dst) == false)
+		return (false);
 	return (true);
 }
