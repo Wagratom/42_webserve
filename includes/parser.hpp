@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 15:57:26 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:43:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ class configuration_location;
 
 class	Parser_configuration
 {
-
-
 	public:
 		Parser_configuration( int a ){
 				(void)a;

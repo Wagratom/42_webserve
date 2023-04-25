@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/20 13:06:16 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/25 17:36:05 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ TST_PATH		=	./test
 FILE_TST		=	$(TST_PATH)/$(t).cpp
 OJBS_TST		=	$(patsubst %.cpp, %.out, $(FILE_TST))
 
-FILE_TSTS		=	$(wildcard $(TST_PATH)/**/*.cpp);
+FILE_TSTS		=	$(wildcard $(TST_PATH)/*.cpp);
 OJBS_TSTS		=	$(patsubst %.cpp, %.out, $(FILE_TSTS))
 
 %.out:	%.cpp
