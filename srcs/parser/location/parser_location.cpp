@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 13:02:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:18:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,9 @@
 
 static bool	is_end_server(std::string& line)
 {
-	static bool end = false;
-
-	if (end == true)
-		return (false);
 	if (line[0] == '}' && line[1] == '\0')
-	{
-		end = true;
 		return (true);
-	}
+	std::cout << "Error: Invalid line location: " << line << std::endl;
 	return (false);
 }
 
@@ -32,11 +26,11 @@ static bool	avant_line(std::string& line)
 
 	if (start == std::string::npos)
 		return (write_error("Error: Invalid line location"));
-	line.substr(start);
+	line = line.substr(start);
 	return (true);
 }
 
-bool	Parser_configuration::handle_line_location(std::string& line)
+bool	Parser_configuration::handle_location_line(std::string& line)
 {
 	size_t	i = 0;
 
@@ -46,25 +40,21 @@ bool	Parser_configuration::handle_line_location(std::string& line)
 			return (this->*dictionary_location[i].f)(line);
 		i++;
 	}
-	return (is_end_server(line));
-}
-
-bool	Parser_configuration::handle_location_line(std::string& line)
-{
-	if (avant_line(line) == false)
-		return (false);
-	return (handle_line_location(line));
+	return (false);
 }
 
 bool	Parser_configuration::parser_location( std::string& line )
 {
+	std::cout << "parser_location" << std::endl;
 	if (get_location(line) == false)
 		return (false);
 	while (this->file->next != NULL)
 	{
 		this->file = this->file->next;
-		if (handle_location_line(this->file->line) == false)
+		if (avant_line(this->file->line) == false)
 			return (false);
+		if (handle_location_line(this->file->line) == false)
+			return (is_end_server(this->file->line));
 	}
 	return (true);
 }

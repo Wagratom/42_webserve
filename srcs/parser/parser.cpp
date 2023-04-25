@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 11:40:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:07:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ bool	Parser_configuration::parser(char* filename)
 			if (handle_server(this->file->line) == false)
 				return (false);
 		}
-
 	}
 	std::cout << std::endl;
 	std::cout << "Port: " << this->server.port << std::endl;

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:26:29 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 10:07:16 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/24 21:53:20 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static bool	valid_root(std::string& line)
 	return (true);
 }
 
-bool	Parser_configuration::get_root(std::string& line)
+template <typedef T>
+bool	Parser_configuration::get_root(std::string& line, T* dst)
 {
 	if (has_semicolon_at_end(line) == false)
 		return (false);
