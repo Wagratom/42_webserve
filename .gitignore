@@ -1,0 +1,3 @@
+objs/
+
+#git rm -r --cached objs/
