@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 13:53:33 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:58:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ bool	has_semicolon_at_end(std::string& line)
 {
 	size_t	end = line.length() - 1;
 
+	if (end == 0)
+		return (false);
 	if (line[end] != ';')
 		return (false);
 	if (line[end -1] == ' ' || line[end - 1] == '\t')
