@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 09:28:48 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:02:59 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,17 @@ bool	valid_arguments( int argc, char *argv[])
 bool	setup( char* filename )
 {
 	Parser_configuration	parser(filename);
+	Server	server(parser.get_server());
+
 	if (parser.parser() == false)
 		return (false);
-	Server	server(parser.get_server());
 	if (server.create_server_configured() == false)
 		return (false);
-
+	// if (server.start_server() == false)
+		// return (false);
 	return (true);
 }
+
 int main ( int argc, char *argv[] )
 {
 	if (valid_arguments(argc, argv) == false)
