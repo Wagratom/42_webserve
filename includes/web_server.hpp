@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 08:57:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:10:53 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ class Server
 
 		std::string**	create_verbs( void );
 
-		bool	setup( char* filename );
 		bool	create_server_configured( void );
 		bool	create_server( void );
 		bool	create_socket( void );
