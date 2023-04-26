@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 21:53:10 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:03:03 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,29 +69,56 @@ class configuration_server : public Parser_configuration
 		configuration_server( void ) : Parser_configuration() {};
 		~configuration_server( void ){};
 
-		int				port;
-		std::string		server_name;
-		std::string		client_max_body_size;
-		std::string		error_page;
-		std::string		index;
-		std::string		root;
+		int			get_port( void );
+		std::string	get_server_name( void );
+		std::string	get_root( void );
+		std::string	get_index( void );
+		std::string	get_error_page( void );
+		std::string	get_client_max_body_size( void );
+
+		void	set_port( int port );
+		void	set_server_name( std::string server_name );
+		void	set_root( std::string root );
+		void	set_index( std::string index );
+		void	set_error_page( std::string error_page );
+		void	set_client_max_body_size( std::string client_max_body_size );
+
+	private:
+		int				_port;
+		std::string		_server_name;
+		std::string		_root;
+		std::string		_index;
+		std::string		_client_max_body_size;
+		std::string		_error_page;
 };
 
 class configuration_location : public Parser_configuration
 {
 	public:
-	configuration_location( void ) :  Parser_configuration() {};
-	~configuration_location( void ){};
+		configuration_location( void ) :  Parser_configuration() {};
+		~configuration_location( void ){};
 
+		std::string	get_location( void );
+		std::string	get_root( void );
+		std::string	get_index( void );
+		std::string	get_error_page( void );
+		std::string	get_client_max_body_size( void );
 
-		std::string		location;
-		std::string		root;
-		std::string		index;
-		std::string		autoindex;
-		std::string		cgi;
-		std::string		cgi_path;
-		std::string		error_page;
-		std::string		client_max_body_size;
+		void	set_location( std::string location );
+		void	set_root( std::string root );
+		void	set_index( std::string index );
+		void	set_error_page( std::string error_page );
+		void	set_client_max_body_size( std::string client_max_body_size );
+
+	private:
+		std::string	_location;
+		std::string	_root;
+		std::string	_index;
+		std::string	_autoindex;
+		std::string	_cgi;
+		std::string	_cgi_path;
+		std::string	_error_page;
+		std::string	_client_max_body_size;
 };
 
 bool	write_error(std::string msg);

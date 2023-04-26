@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:19:25 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 15:45:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:53:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static bool	save_data(std::string& line, Parser_configuration* dst)
 	configuration_location* location = dynamic_cast<configuration_location*>(dst);
 
 	if (server != NULL)
-		server->error_page = line;
+		server->set_error_page(line);
 	else if (location != NULL)
-		location->error_page = line;
+		location->set_error_page(line);
 	else
 		return (write_error("Error in cast configuration in error_page"));
 	return (true);

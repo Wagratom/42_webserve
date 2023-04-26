@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 15:55:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:54:04 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ bool	Parser_configuration::get_location(std::string& line)
 		return (false);
 	if (get_location_valid(line) == false)
 		return (false);
-	aux->location = line;
+	aux->set_location(line);
 	return (true);
 }

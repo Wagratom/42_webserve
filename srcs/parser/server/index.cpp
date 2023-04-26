@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 08:49:07 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 15:47:26 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:53:25 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static bool	save_data(std::string& line, Parser_configuration* dst)
 	configuration_location* location = dynamic_cast<configuration_location*>(dst);
 
 	if (server != NULL)
-		server->index = line;
+		server->set_index(line);
 	else if (location != NULL)
-		location->index = line;
+		location->set_index(line);
 	else
 		return (write_error("Error in cast configuration in get_index"));
 	return (true);

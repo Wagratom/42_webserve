@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize.cpp                                     :+:      :+:    :+:   */
+/*   parser_initialize.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 21:27:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:27:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ Parser_configuration::Parser_configuration(std::string filename)
 
 Parser_configuration::Parser_configuration( Parser_configuration& src )
 {
-	*this = src;
+	if (this != &src)
+		*this = src;
 }
 
 

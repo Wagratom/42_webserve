@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:26:29 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 15:52:27 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:53:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static bool	save_data(std::string& line, Parser_configuration* dst)
 	configuration_location* location = dynamic_cast<configuration_location*>(dst);
 
 	if (server != NULL)
-		server->root = line;
+		server->set_root(line);
 	else if (location != NULL)
-		location->root = line;
+		location->set_root(line);
 	else
 		return (write_error("Error in cast configuration in get_root"));
 	return (true);
