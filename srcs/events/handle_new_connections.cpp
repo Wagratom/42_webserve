@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/16 15:59:08 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:22:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ bool	Server::is_new_connect(epoll_event& event)
 	int	event_socket;
 
 	event_socket = event.data.fd;
-	if (server_fd == event_socket)
+	if (_server_fd == event_socket)
 		return (true);
 	return (false);
 }
 
 bool	Server::accept_status( int& new_client )
 {
-	new_client = accept(server_fd, NULL, NULL);
+	new_client = accept(_server_fd, NULL, NULL);
 	if (new_client == -1)
 		return (write_error_prefix("accept_status"));
 	return (true);
@@ -53,7 +53,7 @@ bool	Server::save_connection( int& new_client )
 	event = (struct epoll_event){0,0};
 	event.data.fd = new_client;
 	event.events = EPOLLIN | EPOLLHUP | EPOLLRDHUP | EPOLLERR;
-	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
+	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
 		return (write_error_prefix("save_connection"));
 	return (true);
 }

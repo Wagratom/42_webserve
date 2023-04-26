@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/16 16:07:13 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:22:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	Server::clean_request(epoll_event& event)
 {
 	std::cout << "removendo fd do epoll" << std::endl;
-	if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
+	if (epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
 		return (write_error_prefix("remove_fd_from_epoll"));
 	close(event.data.fd);
 	return (true);
@@ -23,9 +23,9 @@ bool	Server::clean_request(epoll_event& event)
 
 bool	Server::capture_new_events(epoll_event* event)
 {
-	number_of_events = epoll_wait(epoll_fd, event, MAX_EVENTS, -1);
-	write_debug_number("Number of events received:: ", number_of_events);
-	if (number_of_events == -1)
+	_number_of_events = epoll_wait(_epoll_fd, event, MAX_EVENTS, -1);
+	write_debug_number("Number of events received:: ", _number_of_events);
+	if (_number_of_events == -1)
 		return (write_error_prefix("handle_new_connections"));
 	return (true);
 }
@@ -35,10 +35,10 @@ bool	Server::dispatch_events(epoll_event* event)
 	int	index;
 
 	index = 0;
-	while (index < number_of_events)
+	while (index < _number_of_events)
 	{
 		write_type_event_debug(event[index]);
-		if (event[index].data.fd == server_fd)
+		if (event[index].data.fd == _server_fd)
 		{
 			if (!handle_new_connections(event[index]))
 				return (false);

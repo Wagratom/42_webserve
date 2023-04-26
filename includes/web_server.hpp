@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 09:10:53 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:20:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ class Server
 		void	set_signal( void );
 
 	private:
-		int						server_fd;
-		int						epoll_fd;
-		int						number_of_events;
+		int						_server_fd;
+		int						_epoll_fd;
+		int						_number_of_events;
 		configuration_server*	_configurations_server;
 
 		std::string	**verbs;

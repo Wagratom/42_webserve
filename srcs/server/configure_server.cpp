@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/14 10:42:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:21:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ Level-triggered mode (default) - sinaliza um evento enquanto o estado for verdad
 */
 bool	Server::create_epoll( void )
 {
-	epoll_fd = epoll_create(5);
-	if (epoll_fd != -1)
+	_epoll_fd = epoll_create(5);
+	if (_epoll_fd != -1)
 		return (true);
 	return (write_error_prefix("Create_epoll"));
 }
@@ -35,10 +35,10 @@ bool	Server::add_mode_read()
 	struct epoll_event event;
 
 	memset(&event, 0, sizeof(event));
-	event.data.fd = server_fd;
+	event.data.fd = _server_fd;
 	event.events = EPOLLIN;
 
-	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, server_fd, &event) != -1)
+	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _server_fd, &event) != -1)
 		return (true);
 	return (write_error_prefix("Add_mod_read"));
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/18 11:42:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:22:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ bool	Server::configured_child(epoll_event& event)
 		return (write_error_prefix("configured_child"));
 	if (fcntl(event.data.fd, F_SETFL, flags | O_NONBLOCK) == -1) // setando o fd para nao bloquear
 		return (write_error_prefix("configured_child"));
-	if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, server_fd, &event) == -1) // removendo o serve do epoll
+	if (epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, _server_fd, &event) == -1) // removendo o serve do epoll
 		write_error_prefix("configured_child");
-	close(server_fd); // fechando o fd do server
+	close(_server_fd); // fechando o fd do server
 	return (true);
 }
 

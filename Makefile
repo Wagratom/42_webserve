@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/26 07:50:49 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/26 09:19:31 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,12 @@ SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp\
 				client_max_body_size.cpp error_page.cpp initialize.cpp \
 				parser.cpp check_server.cpp index.cpp root.cpp parser_location.cpp\
 				get_location.cpp get_server.cpp\
-				add_back.cpp clear.cpp last.cpp new.cpp size.cpp delone.cpp
+				add_back.cpp clear.cpp last.cpp new.cpp size.cpp delone.cpp \
+				create_server_conf.cpp create_server.cpp configure_server.cpp \
+				start_server.cpp handle_new_connections.cpp handle_events.cpp \
+				handle_request.cpp error.cpp fork_status.cpp \
+				sig_closed_server.cpp debug.cpp create_verbs.cpp parser_request.cpp \
+				parse_requesition_line.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs
@@ -32,10 +37,13 @@ CFLAGS	=	-Wall -Wextra -Werror
 RM		=	rm -rf
 
 VPATH	=	./srcs \
+			./srcs/events \
 			./srcs/list \
-			./srcs/parser \
-			./srcs/parser/server \
-			./srcs/parser/location
+			./srcs/parser ./srcs/parser/server ./srcs/parser/location \
+			./srcs/program \
+			./srcs/request \
+			./srcs/server \
+			./srcs/ults \
 
 $(OBJECTS_DIR)/%.o:	%.cpp
 			@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
