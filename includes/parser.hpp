@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 21:15:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:53:10 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ class	Parser_configuration
 {
 	public:
 		Parser_configuration( void );
+		Parser_configuration( Parser_configuration& src );
 		Parser_configuration( std::string filename );
 		virtual ~Parser_configuration( void );
 
@@ -50,6 +51,8 @@ class	Parser_configuration
 		bool					parser_location( void );
 		bool					handle_location_line(std::string& line);
 		bool					get_location(std::string& line);
+
+		configuration_server*	get_server( void );
 
 	private:
 		t_server_dictionary*	_dictionary_server;

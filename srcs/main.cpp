@@ -6,12 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 21:10:16 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 08:59:16 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
-
+#include <web_server.hpp>
 
 bool	valid_arguments( int argc, char *argv[])
 {
@@ -23,13 +22,22 @@ bool	valid_arguments( int argc, char *argv[])
 	return (true);
 }
 
+bool	Server::setup( char* filename )
+{
+	Parser_configuration	parser(filename);
+	if (parser.parser() == false)
+		return (false);
+
+	Server	server1(parser.get_server());
+
+	return (true);
+}
 int main ( int argc, char *argv[] )
 {
 	if (valid_arguments(argc, argv) == false)
 		return (false);
-
-	Parser_configuration	parser(argv[1]);
-	if (parser.parser() == false)
+	if (setup(argv[1]) == false)
 		return (false);
+
 	return (0);
 }

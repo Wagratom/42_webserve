@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 20:50:54 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:27:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ Parser_configuration::Parser_configuration(std::string filename)
   , _file(NULL)
   , _filename(filename)
 {}
+
+Parser_configuration::Parser_configuration( Parser_configuration& src )
+{
+	*this = src;
+}
 
 
 Parser_configuration::Parser_configuration( void ) {}

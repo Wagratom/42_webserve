@@ -6,11 +6,12 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/16 16:47:32 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 08:57:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
 
 # include <sys/socket.h>
 # include <cstdio>
@@ -23,9 +24,9 @@
 # include <fcntl.h>
 # include <signal.h>
 
+#include <parser.hpp>
 
 #include <stdlib.h>
-
 
 # define PORT 8080
 # define MAX_EVENTS 10
@@ -39,11 +40,13 @@
 class Server
 {
 	public:
-		Server();
-		~Server();
+		Server() {};
+		Server(configuration_server* src) : _configurations_server(src) {};
+		~Server() {};
 
 		std::string**	create_verbs( void );
 
+		bool	setup( char* filename );
 		bool	create_server_configured( void );
 		bool	create_server( void );
 		bool	create_socket( void );
@@ -83,12 +86,11 @@ class Server
 
 		void	set_signal( void );
 
-		static void	set_shutdown_server( int sig );
-
 	private:
-		int			server_fd;
-		int			epoll_fd;
-		int			number_of_events;
+		int						server_fd;
+		int						epoll_fd;
+		int						number_of_events;
+		configuration_server*	_configurations_server;
 
 		std::string	**verbs;
 		bool	shutdown_server;
