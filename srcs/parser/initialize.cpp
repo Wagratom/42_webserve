@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dictionary_create.cpp                              :+:      :+:    :+:   */
+/*   initialize.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 14:55:59 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 20:50:54 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
+
+Parser_configuration::Parser_configuration(std::string filename)
+  : _dictionary_server(create_server_dictionary())
+  , _dictionary_universal(create_universal_dictionary())
+  , _server(create_configuration_server())
+  , _location(create_configuration_location())
+  , _file(NULL)
+  , _filename(filename)
+{}
+
+
+Parser_configuration::Parser_configuration( void ) {}
+Parser_configuration::~Parser_configuration( void ) {}
 
 
 t_server_dictionary*	Parser_configuration::create_server_dictionary( void )

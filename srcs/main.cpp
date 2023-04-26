@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 19:03:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:10:16 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,11 @@ bool	valid_arguments( int argc, char *argv[])
 
 int main ( int argc, char *argv[] )
 {
-
-	Parser_configuration	parser;
-
 	if (valid_arguments(argc, argv) == false)
 		return (false);
-	if (parser.parser(argv[1]) == false)
+
+	Parser_configuration	parser(argv[1]);
+	if (parser.parser() == false)
 		return (false);
 	return (0);
 }

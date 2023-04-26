@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 16:43:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:15:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,20 @@
 class configuration_server;
 class configuration_location;
 
-
-
 class	Parser_configuration
 {
 	public:
-		Parser_configuration( int a ){
-				(void)a;
-	}
-		Parser_configuration( void ):	_dictionary_server(create_server_dictionary()),
-										_dictionary_universal(create_universal_dictionary()),
-										_server(create_configuration_server()),
-										_location(create_configuration_location()),
-										_file(NULL) {};
-
-		virtual ~Parser_configuration( void ) {};
+		Parser_configuration( void );
+		Parser_configuration( std::string filename );
+		virtual ~Parser_configuration( void );
 
 		t_server_dictionary*	create_server_dictionary( void );
 		configuration_server*	create_configuration_server( void );
 		t_universal_dictionary*	create_universal_dictionary( void );
 		configuration_location*	create_configuration_location( void );
 
-
-
-
-		bool					parser( char* filename );
-		bool					read_file( char* filename );
+		bool					parser( void );
+		bool					read_file( void );
 		bool					parser_file( void );
 		void					save_valid_line(std::string line);
 
@@ -61,7 +49,6 @@ class	Parser_configuration
 
 		bool					parser_location( void );
 		bool					handle_location_line(std::string& line);
-		bool					handle_line_location(std::string& line);
 		bool					get_location(std::string& line);
 
 	private:
@@ -70,12 +57,13 @@ class	Parser_configuration
 		configuration_server*	_server;
 		configuration_location*	_location;
 		list_file*				_file;
+		std::string				_filename;
 };
 
 class configuration_server : public Parser_configuration
 {
 	public:
-		configuration_server( void ) : Parser_configuration(10) {};
+		configuration_server( void ) : Parser_configuration() {};
 		~configuration_server( void ){};
 
 		int				port;
@@ -89,7 +77,7 @@ class configuration_server : public Parser_configuration
 class configuration_location : public Parser_configuration
 {
 	public:
-	configuration_location( void ) :  Parser_configuration(10) {};
+	configuration_location( void ) :  Parser_configuration() {};
 	~configuration_location( void ){};
 
 

@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/25 19:02:44 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/25 19:43:42 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ MAIN		=
 INCLUDE		=	-I./includes
 
 SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp\
-				client_max_body_size.cpp error_page.cpp dictionary_create.cpp \
+				client_max_body_size.cpp error_page.cpp initialize.cpp \
 				parser.cpp check_server.cpp index.cpp root.cpp parser_location.cpp\
 				get_location.cpp \
 				add_back.cpp clear.cpp last.cpp new.cpp size.cpp delone.cpp

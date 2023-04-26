@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 17:13:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:10:54 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	Parser_configuration::save_valid_line(std::string line)
 {
-
 	if (line.length() == 0)
 		return ;
 	if (line[0] == '#' || line[0] == '\n')
@@ -22,9 +21,9 @@ void	Parser_configuration::save_valid_line(std::string line)
 	ft_lstadd_back(&(this->_file), ft_lstnew(line));
 }
 
-bool	Parser_configuration::read_file(char* filename)
+bool	Parser_configuration::read_file( void )
 {
-	std::ifstream	file(filename);
+	std::ifstream	file(_filename.c_str());
 	std::string		line;
 
 	if (file.is_open() == false)
@@ -62,9 +61,9 @@ bool	Parser_configuration::parser_file()
 	return (true);
 }
 
-bool	Parser_configuration::parser(char* filename)
+bool	Parser_configuration::parser( void )
 {
-	if (read_file(filename) == false)
+	if (read_file() == false)
 		return (false);
 	if (check_server(this->_file->line) == false)
 		return (false);
