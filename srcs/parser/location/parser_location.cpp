@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 12:53:56 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:26:09 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@ static bool	avant_line(std::string& line)
 	return (true);
 }
 
+static bool	parser_location_err(t_location_settings* location)
+{
+	delete location->configuration;
+	delete location;
+	location = NULL;
+	return (false);
+}
+
 /*############################################################################*/
 /*                             INITIALIZE PARSER                              */
 /*############################################################################*/
@@ -55,9 +63,9 @@ bool	Parser_configuration::parser_location( void )
 	if (alloc_location(&location) == false)
 		return (false);
 	if (get_location(this->_file->line, location->locationName) == false)
-		return (false);
+		return (parser_location_err(location));
 	if (configure_location(*location) == false)
-		return (false);
+		return (parser_location_err(location));
 	l_ft_lstadd_back(&(this->_location), location);
 	return (true);
 }

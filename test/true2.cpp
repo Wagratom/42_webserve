@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 12:49:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:31:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	test_true( void )
 {
-	Parser_configuration	parser ("./confis/true_conf2.conf");
+	Parser_configuration	parser ("./confis/true2.conf");
 	Server					server(parser.get_server(), parser.get_location());
 
 	if (equal_or_err_b(parser.parser(), true, __LINE__) == false)
