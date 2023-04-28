@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 21:24:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:50:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static bool	get_valid_port(std::string& listen, std::string& aux_port)
 	return (true);
 }
 
-static bool	save_port(Parser_configuration* server, std::string& port)
+static bool	save_port(aux_configuration* server, std::string& port)
 {
 	server_configuration* tmp;
 

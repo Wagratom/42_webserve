@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/27 12:50:14 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/27 23:04:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ bool	alloc_location(t_location_settings **location)
 	*location = new t_location_settings();
 	if (*location == NULL)
 		return (write_error("Error: Memory allocation failed"));
+
 	(*location)->configuration = new location_configuration();
 	if ((*location)->configuration == NULL)
 		return (write_error("Error: Memory allocation failed"));
+	(*location)->next = NULL;
 	return (true);
 }
 
@@ -51,7 +53,7 @@ bool	Parser_configuration::parser_location( void )
 		return (false);
 	if (configure_location(*location) == false)
 		return (false);
-	l_ft_lstadd_back(&this->_location, location);
+	l_ft_lstadd_back(&(this->_location), location);
 	return (true);
 }
 

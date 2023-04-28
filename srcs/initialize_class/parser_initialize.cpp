@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 21:25:26 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:35:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 /*############################################################################*/
 /*                         Constructos / Destructors                          */
 /*############################################################################*/
+Parser_configuration::Parser_configuration( void ) {}
+
 Parser_configuration::Parser_configuration(std::string filename)
  	: _dictionary_server(create_server_dictionary())
 	, _dictionary_universal(create_universal_dictionary())
@@ -30,8 +32,10 @@ Parser_configuration::Parser_configuration( Parser_configuration& src )
 		*this = src;
 }
 
-Parser_configuration::Parser_configuration( void ) {}
-Parser_configuration::~Parser_configuration( void ) {}
+Parser_configuration::~Parser_configuration( void )
+{
+	r_ft_lstclear(&_save_init_file);
+}
 
 
 /*############################################################################*/

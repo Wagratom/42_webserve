@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/26 19:27:18 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/28 12:26:48 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp\
 				client_max_body_size.cpp error_page.cpp parser_initialize.cpp \
 				parser.cpp check_server.cpp index.cpp root.cpp parser_location.cpp\
 				get_location.cpp get_server.cpp\
-				r_add_back.cpp r_clear.cpp r_last.cpp r_new.cpp r_size.cpp r_delone.cpp \
-				l_add_back.cpp l_clear.cpp l_last.cpp l_size.cpp l_delone.cpp \
+				r_add_back.cpp r_clear.cpp r_last.cpp r_new.cpp r_size.cpp \
+				l_add_back.cpp l_clear.cpp l_last.cpp l_size.cpp \
 				create_server_conf.cpp create_server.cpp configure_server.cpp \
 				start_server.cpp handle_new_connections.cpp handle_events.cpp \
 				handle_request.cpp error.cpp fork_status.cpp \
@@ -103,14 +103,14 @@ tests: re_mandatory $(OJBS_TSTS)
 
 TST_PATH		=	./test
 
-VG_FILE_TST		=	$(TST_PATH)/$(t).c
-VG_OJBS_TST		=	$(patsubst %.c, %.vg.out, $(VG_FILE_TST))
+VG_FILE_TST		=	$(TST_PATH)/$(t).cpp
+VG_OJBS_TST		=	$(patsubst %.cpp, %.vg.out, $(VG_FILE_TST))
 
-VG_FILE_TSTS	=	$(wildcard $(TST_PATH)/**/*.c)
-VG_OJBS_TSTS	=	$(patsubst %.c, %.vg.out, $(VG_FILE_TSTS))
+VG_FILE_TSTS	=	$(wildcard $(TST_PATH)/*.cpp)
+VG_OJBS_TSTS	=	$(patsubst %.cpp, %.vg.out, $(VG_FILE_TSTS))
 
-%.vg.out:	%.c
-		@$(CC) $< $(LIB_FILO) -o $@ $(INCLUDE)
+%.vg.out:	%.cpp
+		@$(CC) $(OBJECTS) $< $(LIB_FILO) -o $@ $(INCLUDE)
 		@valgrind --leak-check=full ./$@
 		@$(RM) $@
 

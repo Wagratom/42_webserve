@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 21:26:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:51:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 class	Parser_configuration;
 class	location_configuration;
+class	aux_configuration;
 
 /*############################################################################*/
 /*                               File Lines                                   */
@@ -39,7 +40,7 @@ typedef struct s_universal_dictionary
 {
 	std::string		key;
 	int				length;
-	bool			(Parser_configuration::*f)(std::string&, Parser_configuration*);
+	bool			(Parser_configuration::*f)(std::string&, aux_configuration*);
 
 }	t_universal_dictionary;
 

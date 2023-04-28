@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 19:05:24 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:30:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ bool	Parser_configuration::read_file( void )
 		return (write_error("Error: File not found"));
 	while (getline(file, line))
 		save_valid_line(line);
+	this->_save_init_file = this->_file;
 	file.close();
 	return (true);
 }

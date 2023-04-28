@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 21:26:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:51:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static bool	valid_max_body_size(std::string& size)
 	return (true);
 }
 
-static bool	save_data(std::string& line, Parser_configuration* dst)
+static bool	save_data(std::string& line, aux_configuration* dst)
 {
 	server_configuration* server = dynamic_cast<server_configuration*>(dst);
 	location_configuration* location = dynamic_cast<location_configuration*>(dst);
@@ -71,7 +71,7 @@ static bool	save_data(std::string& line, Parser_configuration* dst)
 	return (true);
 }
 
-bool	Parser_configuration::get_client_max_body_size(std::string& line, Parser_configuration* dst)
+bool	Parser_configuration::get_client_max_body_size(std::string& line, aux_configuration* dst)
 {
 	if (has_semicolon_at_end(line) == false)
 		return (write_error("Error: Invalid line client_max_body_size, not ';'"));

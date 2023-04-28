@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/27 11:09:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:29:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ class	Parser_configuration
 		bool					get_port( std::string& line );
 		bool					get_server_name( std::string& line );
 
-		bool					get_client_max_body_size( std::string& line, Parser_configuration* dst );
-		bool					get_root(std::string& line, Parser_configuration* dst);
-		bool					get_error_page( std::string& line, Parser_configuration* dst );
-		bool					get_index(std::string& line , Parser_configuration* dst);
+		bool					get_root(std::string& line, aux_configuration* dst);
+		bool					get_index(std::string& line , aux_configuration* dst);
+		bool					get_client_max_body_size( std::string& line, aux_configuration* dst );
+		bool					get_error_page( std::string& line, aux_configuration* dst );
 
 		bool					parser_location( void );
 		bool					configure_location(t_location_settings& location);
@@ -66,16 +66,25 @@ class	Parser_configuration
 		server_configuration*	_server;
 		t_location_settings*	_location;
 		list_file*				_file;
+		list_file*				_save_init_file;
 		std::string				_filename;
 };
 
 /*############################################################################*/
 /*                         Server Configuration                               */
 /*############################################################################*/
-class server_configuration : public Parser_configuration
+
+class aux_configuration
 {
 	public:
-		server_configuration( void ) : Parser_configuration() {};
+		aux_configuration( void ){} ;
+		virtual ~aux_configuration( void ){} ;
+};
+
+class server_configuration : public aux_configuration
+{
+	public:
+		server_configuration( void ) : aux_configuration() {};
 		~server_configuration( void ){};
 
 		int			get_port( void );
@@ -105,10 +114,10 @@ class server_configuration : public Parser_configuration
 /*                         Location Configuration                             */
 /*############################################################################*/
 
-class location_configuration : public Parser_configuration
+class location_configuration : public aux_configuration
 {
 	public:
-		location_configuration( void ) :  Parser_configuration() {};
+		location_configuration( void ) :  aux_configuration() {};
 		~location_configuration( void ){};
 
 		std::string	get_location( void );
@@ -158,14 +167,12 @@ bool	equal_or_err_b(bool a, bool b, int line);
 bool	different_or_err_b(bool a, bool b, int line);
 
 void		r_ft_lstadd_back(list_file **lst, list_file *_new);
-void		r_ft_lstclear(list_file **lst, void (*del)(void*));
+void		r_ft_lstclear(list_file **lst);
 list_file*	r_ft_lstlast(list_file *lst);
 list_file*	r_ft_lstnew(std::string content);
 int			r_ft_lstsize(list_file *lst);
-void		r_ft_lstdelone(list_file *lst, void (*del)(void*));
 
 void					l_ft_lstadd_back(t_location_settings **lst, t_location_settings *_new);
-void					l_ft_lstclear(t_location_settings **lst, void (*del)(void*));
+void					l_ft_lstclear(t_location_settings **lst);
 t_location_settings*	l_ft_lstlast(t_location_settings *lst);
 int						l_ft_lstsize(t_location_settings *lst);
-void					l_ft_lstdelone(t_location_settings *lst, void (*del)(void*));

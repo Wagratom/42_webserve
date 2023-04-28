@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/27 11:44:03 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:24:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int main( void )
 {
 	if (test_true() == false)
 		return (1);
+	std::cout << "OK" << std::endl;
 	return (0);
 }
