@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 17:03:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:43:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,16 @@ class	Parser_configuration
 		bool					handle_location_line(std::string& line, t_location_settings& dst);
 		bool					get_location(std::string& line, std::string& location);
 
-		server_configuration*	get_server( void );
-		t_location_settings**	get_location( void );
+		server_configuration*	get_server_configuration( void );
+		t_location_settings*	get_location_configuration( void );
 
 	private:
 		t_server_dictionary*	_dictionary_server;
 		t_universal_dictionary*	_dictionary_universal;
-		server_configuration*	_server;
-		t_location_settings*	_location;
+
+		server_configuration*	_server_configuration;
+		t_location_settings*	_location_configuration;
+
 		list_file*				_file;
 		list_file*				_save_init_file;
 		std::string				_filename;

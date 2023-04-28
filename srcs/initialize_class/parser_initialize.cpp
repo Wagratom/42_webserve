@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 15:49:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:20:25 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ Parser_configuration::Parser_configuration( void ) {}
 Parser_configuration::Parser_configuration(std::string filename)
  	: _dictionary_server(create_server_dictionary())
 	, _dictionary_universal(create_universal_dictionary())
-	, _server(create_configuration_server())
-	, _location(NULL)
+	, _server_configuration(create_configuration_server())
+	, _location_configuration(NULL)
 	, _file(NULL)
 	, _save_init_file(NULL)
 	, _filename(filename)
@@ -36,8 +36,8 @@ Parser_configuration::Parser_configuration( Parser_configuration& src )
 Parser_configuration::~Parser_configuration( void )
 {
 	r_ft_lstclear(&_save_init_file);
-	delete _server;
-	l_ft_lstclear(&_location);
+	delete _server_configuration;
+	l_ft_lstclear(&_location_configuration);
 }
 
 

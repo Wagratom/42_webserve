@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/28 12:26:48 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/28 20:14:30 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,9 +110,9 @@ VG_FILE_TSTS	=	$(wildcard $(TST_PATH)/*.cpp)
 VG_OJBS_TSTS	=	$(patsubst %.cpp, %.vg.out, $(VG_FILE_TSTS))
 
 %.vg.out:	%.cpp
-		@$(CC) $(OBJECTS) $< $(LIB_FILO) -o $@ $(INCLUDE)
-		@valgrind --leak-check=full ./$@
-		@$(RM) $@
+		@$(CC) $(OBJECTS) $< $(LIB_FILO) -o vgteste $(INCLUDE)
+		@valgrind --leak-check=full ./vgteste
+		@$(RM) vgteste
 
 vgtest: re_mandatory $(VG_OJBS_TST)
 

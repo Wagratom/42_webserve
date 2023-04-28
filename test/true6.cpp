@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 14:29:32 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:18:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ bool	test_false( void )
 
 int main( void )
 {
+	std::cout << "\033[32mTrue 6 em verde!\033[0m" << std::endl;
 	if (test_false() == false)
 		return (1);
 	std::cout << "OK" << std::endl;

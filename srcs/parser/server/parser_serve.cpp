@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 15:58:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:19:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	Parser_configuration::check_in_dict_universal(std::string& line)
 	while (_dictionary_universal[i].f)
 	{
 		if (line.compare(0, _dictionary_universal[i].length, _dictionary_universal[i].key) == 0)
-			return ((this->*_dictionary_universal[i].f)(line, this->_server));
+			return ((this->*_dictionary_universal[i].f)(line, this->_server_configuration));
 		i++;
 	}
 	return (is_end_server(line));

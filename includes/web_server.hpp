@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 17:03:37 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:51:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@
 class 	Server
 {
 	public:
-		Server() {};
-		Server(server_configuration* src, t_location_settings* src2)
-			: _server_configuration(src)
-			, _locations_configuration(src2) {};
-		~Server() {};
+		Server(std::string filename) : _parser(new Parser_configuration(filename)) {};
+		~Server() {
+			delete this->_parser;
+		};
 
 		std::string**	create_verbs( void );
 
@@ -84,12 +83,19 @@ class 	Server
 		bool	write_error_prefix( std::string prefix );
 		bool	fork_staus( pid_t& pid );
 
-		server_configuration*	get_server_congifuration( void ) {
-			return (_server_configuration);
+		t_location_settings*	location( void ) {
+			return (this->_parser->get_location_configuration());
 		}
-		t_location_settings*	get_location_configuration( void ) {
-			return (_locations_configuration);
+		server_configuration*	server( void ) {
+			return (this->_parser->get_server_configuration());
 		}
+
+		Parser_configuration*	get_parser( void ) {
+			return (this->_parser);
+		}
+
+		bool	setup( void );
+
 
 		void	set_signal( void );
 
@@ -97,8 +103,7 @@ class 	Server
 		int						_server_fd;
 		int						_epoll_fd;
 		int						_number_of_events;
-		server_configuration*	_server_configuration;
-		t_location_settings*	_locations_configuration;
+		Parser_configuration*	_parser;
 
 		std::string	**verbs;
 		bool	shutdown_server;

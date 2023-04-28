@@ -6,23 +6,24 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 14:31:43 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:20:40 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <web_server.hpp>
 
 bool	test_false( void )
 {
-	Parser_configuration	parser("./confis/false8.conf");
+	Server	server("./confis/false8.conf");
 
-	if (equal_or_err_b(parser.parser(), false, __LINE__) == false)
+	if (equal_or_err_b(server.get_parser()->parser(), false, __LINE__) == false)
 		return (false);
 	return (true);
 }
 
 int main( void )
 {
+	std::cout << "\033[32mFalse 8 em verde!\033[0m" << std::endl;
 	if (test_false() == false)
 		return (1);
 	std::cout << "OK" << std::endl;

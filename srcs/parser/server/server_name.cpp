@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:51:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 21:24:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:19:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	get_server_names(std::string& line)
 
 bool	Parser_configuration::get_server_name(std::string& line)
 {
-	server_configuration* aux = dynamic_cast<server_configuration*>(_server);
+	server_configuration* aux = dynamic_cast<server_configuration*>(_server_configuration);
 
 	if (aux == NULL)
 		return (write_error("Error casting server to configuration_server"));

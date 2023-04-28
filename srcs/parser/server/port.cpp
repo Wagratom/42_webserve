@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 11:50:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:19:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ bool	Parser_configuration::get_port(std::string& listen)
 		return (false);
 	if (convert_port(aux_port) == false)
 		return (false);
-	if (save_port(_server, aux_port) == false)
+	if (save_port(_server_configuration, aux_port) == false)
 		return (false);
 	return (true);
 }
