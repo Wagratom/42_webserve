@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 12:46:43 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:28:18 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@ static bool	find_bar(std::string& line)
 		return (write_error("Error: Invalid line location not found bar"));
 	if (line[start] != '/')
 		return (write_error("Error: Invalid line location not found bar"));
+	line = line.substr(start + 1);
+	return (true);
+}
+
+static bool	get_locationName(std::string& line, std::string& locationName)
+{
+	size_t	start = line.find_first_not_of(" \t");
+
+	if (start == std::string::npos)
+		return (write_error("Error: Invalid line location"));
+	if (line[start] == '{')
+		locationName = "/";
+	else
+		locationName = line.substr(0, start);
 	line = line.substr(start);
 	return (true);
 }
@@ -39,10 +53,15 @@ static bool	find_key(std::string line)
 
 static bool	get_location_valid(std::string& line)
 {
+	std::string locationName;
+
 	if (find_bar(line) == false)
 		return (false);
-	if (find_key(&line[1]) == false)
+	if (get_locationName(line, locationName) == false)
 		return (false);
+	if (find_key(line) == false)
+		return (false);
+	line = locationName;
 	return (true);
 }
 

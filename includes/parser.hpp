@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 12:56:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:03:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,17 @@ class	Parser_configuration
 class aux_configuration
 {
 	public:
-		aux_configuration( void ){} ;
+		aux_configuration( void ) {} ;
 		virtual ~aux_configuration( void ){} ;
 };
 
 class server_configuration : public aux_configuration
 {
 	public:
-		server_configuration( void ) : aux_configuration() {};
+		server_configuration( void )
+			: aux_configuration()
+			, _port(-1)
+		{};
 		~server_configuration( void ){};
 
 		int			get_port( void );

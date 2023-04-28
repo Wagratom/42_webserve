@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 13:59:40 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:03:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@
 
 # define CHILD 0
 
-class Server
+class 	Server
 {
 	public:
 		Server() {};
-		Server(server_configuration* src, t_location_settings** src2)
+		Server(server_configuration* src, t_location_settings* src2)
 			: _server_configuration(src)
-			, _locations_configuration(*src2) {};
+			, _locations_configuration(src2) {};
 		~Server() {};
 
 		std::string**	create_verbs( void );
@@ -83,6 +83,13 @@ class Server
 
 		bool	write_error_prefix( std::string prefix );
 		bool	fork_staus( pid_t& pid );
+
+		server_configuration*	get_server_congifuration( void ) {
+			return (_server_configuration);
+		}
+		t_location_settings*	get_location_configuration( void ) {
+			return (_locations_configuration);
+		}
 
 		void	set_signal( void );
 

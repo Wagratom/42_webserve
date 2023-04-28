@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 12:30:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:30:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ bool	Parser_configuration::parser_file()
 				return (false);
 		}
 	}
-
 	return (true);
 }
 
