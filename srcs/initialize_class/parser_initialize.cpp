@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 12:35:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:00:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ Parser_configuration::Parser_configuration( Parser_configuration& src )
 Parser_configuration::~Parser_configuration( void )
 {
 	r_ft_lstclear(&_save_init_file);
+	delete _server;
+	l_ft_lstclear(&_location);
 }
 
 

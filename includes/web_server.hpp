@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/27 11:09:40 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:59:40 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ class Server
 		Server() {};
 		Server(server_configuration* src, t_location_settings** src2)
 			: _server_configuration(src)
-			, _location_configuration((*src2)) {};
+			, _locations_configuration(*src2) {};
 		~Server() {};
 
 		std::string**	create_verbs( void );
@@ -91,7 +91,7 @@ class Server
 		int						_epoll_fd;
 		int						_number_of_events;
 		server_configuration*	_server_configuration;
-		t_location_settings*	_location_configuration;
+		t_location_settings*	_locations_configuration;
 
 		std::string	**verbs;
 		bool	shutdown_server;
