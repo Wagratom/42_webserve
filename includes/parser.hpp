@@ -6,17 +6,21 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 10:03:03 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:09:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <structs.hpp>
+#include <cstring>
 
-class configuration_server;
-class configuration_location;
+class server_configuration;
+class location_configuration;
 
+/*############################################################################*/
+/*                           Parser_configuration                             */
+/*############################################################################*/
 class	Parser_configuration
 {
 	public:
@@ -26,9 +30,9 @@ class	Parser_configuration
 		virtual ~Parser_configuration( void );
 
 		t_server_dictionary*	create_server_dictionary( void );
-		configuration_server*	create_configuration_server( void );
+		server_configuration*	create_configuration_server( void );
 		t_universal_dictionary*	create_universal_dictionary( void );
-		configuration_location*	create_configuration_location( void );
+		t_location_settings*	create_configuration_location( void );
 
 		bool					parser( void );
 		bool					read_file( void );
@@ -49,25 +53,30 @@ class	Parser_configuration
 		bool					get_index(std::string& line , Parser_configuration* dst);
 
 		bool					parser_location( void );
-		bool					handle_location_line(std::string& line);
-		bool					get_location(std::string& line);
+		bool					configure_location(t_location_settings& location);
+		bool					handle_location_line(std::string& line, t_location_settings& dst);
+		bool					get_location(std::string& line, std::string& location);
 
-		configuration_server*	get_server( void );
+		server_configuration*	get_server( void );
+		t_location_settings**	get_location( void );
 
 	private:
 		t_server_dictionary*	_dictionary_server;
 		t_universal_dictionary*	_dictionary_universal;
-		configuration_server*	_server;
-		configuration_location*	_location;
+		server_configuration*	_server;
+		t_location_settings*	_location;
 		list_file*				_file;
 		std::string				_filename;
 };
 
-class configuration_server : public Parser_configuration
+/*############################################################################*/
+/*                         Server Configuration                               */
+/*############################################################################*/
+class server_configuration : public Parser_configuration
 {
 	public:
-		configuration_server( void ) : Parser_configuration() {};
-		~configuration_server( void ){};
+		server_configuration( void ) : Parser_configuration() {};
+		~server_configuration( void ){};
 
 		int			get_port( void );
 		std::string	get_server_name( void );
@@ -88,15 +97,19 @@ class configuration_server : public Parser_configuration
 		std::string		_server_name;
 		std::string		_root;
 		std::string		_index;
-		std::string		_client_max_body_size;
 		std::string		_error_page;
+		std::string		_client_max_body_size;
 };
 
-class configuration_location : public Parser_configuration
+/*############################################################################*/
+/*                         Location Configuration                             */
+/*############################################################################*/
+
+class location_configuration : public Parser_configuration
 {
 	public:
-		configuration_location( void ) :  Parser_configuration() {};
-		~configuration_location( void ){};
+		location_configuration( void ) :  Parser_configuration() {};
+		~location_configuration( void ){};
 
 		std::string	get_location( void );
 		std::string	get_root( void );
@@ -110,30 +123,49 @@ class configuration_location : public Parser_configuration
 		void	set_error_page( std::string error_page );
 		void	set_client_max_body_size( std::string client_max_body_size );
 
+		void	print_data( void ) {
+			std::cout << "location: " << _location << std::endl;
+			std::cout << "root: " << _root << std::endl;
+			std::cout << "index: " << _index << std::endl;
+			std::cout << "error_page: " << _error_page << std::endl;
+			std::cout << "client_max_body_size: " << _client_max_body_size << std::endl;
+		}
+
 	private:
 		std::string	_location;
 		std::string	_root;
 		std::string	_index;
+		std::string	_error_page;
+		std::string	_client_max_body_size;
 		std::string	_autoindex;
 		std::string	_cgi;
 		std::string	_cgi_path;
-		std::string	_error_page;
-		std::string	_client_max_body_size;
 };
+
+/*############################################################################*/
+/*                          Universal Functions                               */
+/*############################################################################*/
 
 bool	write_error(std::string msg);
 bool	valid_word(std::string& listen, std::string word);
 bool	has_semicolon_at_end(std::string& line);
 bool	equal_or_err_i(int a, int b, int line);
+
 bool	different_or_err_i(int a, int b, int line);
 bool	equal_or_err_s(std::string a, std::string b, int line);
 bool	different_or_err_s(std::string a, std::string b, int line);
 bool	equal_or_err_b(bool a, bool b, int line);
 bool	different_or_err_b(bool a, bool b, int line);
 
-void		ft_lstadd_back(list_file **lst, list_file *_new);
-void		ft_lstclear(list_file **lst, void (*del)(void*));
-list_file	*ft_lstlast(list_file *lst);
-list_file	*ft_lstnew(std::string content);
-int			ft_lstsize(list_file *lst);
-void		ft_lstdelone(list_file *lst, void (*del)(void*));
+void		r_ft_lstadd_back(list_file **lst, list_file *_new);
+void		r_ft_lstclear(list_file **lst, void (*del)(void*));
+list_file*	r_ft_lstlast(list_file *lst);
+list_file*	r_ft_lstnew(std::string content);
+int			r_ft_lstsize(list_file *lst);
+void		r_ft_lstdelone(list_file *lst, void (*del)(void*));
+
+void					l_ft_lstadd_back(t_location_settings **lst, t_location_settings *_new);
+void					l_ft_lstclear(t_location_settings **lst, void (*del)(void*));
+t_location_settings*	l_ft_lstlast(t_location_settings *lst);
+int						l_ft_lstsize(t_location_settings *lst);
+void					l_ft_lstdelone(t_location_settings *lst, void (*del)(void*));

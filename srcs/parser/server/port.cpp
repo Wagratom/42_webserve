@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 09:45:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:24:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ static bool	get_valid_port(std::string& listen, std::string& aux_port)
 
 static bool	save_port(Parser_configuration* server, std::string& port)
 {
-	configuration_server* tmp;
+	server_configuration* tmp;
 
-	tmp = dynamic_cast<configuration_server*>(server);
+	tmp = dynamic_cast<server_configuration*>(server);
 	if (tmp == NULL)
 		return (write_error("Error in cast configuration in get_port"));
 	tmp->set_port(std::strtol(port.c_str(), NULL, 10));

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 21:10:54 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 19:05:24 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	Parser_configuration::save_valid_line(std::string line)
 		return ;
 	if (line[0] == '#' || line[0] == '\n')
 		return ;
-	ft_lstadd_back(&(this->_file), ft_lstnew(line));
+	r_ft_lstadd_back(&(this->_file), r_ft_lstnew(line));
 }
 
 bool	Parser_configuration::read_file( void )

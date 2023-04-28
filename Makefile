@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/26 09:58:23 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/26 19:27:18 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp\
 				client_max_body_size.cpp error_page.cpp parser_initialize.cpp \
 				parser.cpp check_server.cpp index.cpp root.cpp parser_location.cpp\
 				get_location.cpp get_server.cpp\
-				add_back.cpp clear.cpp last.cpp new.cpp size.cpp delone.cpp \
+				r_add_back.cpp r_clear.cpp r_last.cpp r_new.cpp r_size.cpp r_delone.cpp \
+				l_add_back.cpp l_clear.cpp l_last.cpp l_size.cpp l_delone.cpp \
 				create_server_conf.cpp create_server.cpp configure_server.cpp \
 				start_server.cpp handle_new_connections.cpp handle_events.cpp \
 				handle_request.cpp error.cpp fork_status.cpp \
@@ -41,7 +42,8 @@ RM		=	rm -rf
 VPATH	=	./srcs \
 VPATH	=	./srcs/initialize_class \
 			./srcs/events \
-			./srcs/list \
+			./srcs/list/read_file \
+			./srcs/list/location \
 			./srcs/parser ./srcs/parser/server ./srcs/parser/location \
 			./srcs/program \
 			./srcs/request \

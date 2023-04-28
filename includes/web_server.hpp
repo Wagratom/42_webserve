@@ -6,18 +6,17 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 09:57:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:09:40 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-
 # include <sys/socket.h>
 # include <cstdio>
 # include <netinet/in.h>
 # include <iostream>
-# include <cstring>
+// # include <cstring>
 # include <sys/epoll.h>
 # include <errno.h>
 # include <unistd.h>
@@ -41,7 +40,9 @@ class Server
 {
 	public:
 		Server() {};
-		Server(configuration_server* src) : _configuration_server(src) {};
+		Server(server_configuration* src, t_location_settings** src2)
+			: _server_configuration(src)
+			, _location_configuration((*src2)) {};
 		~Server() {};
 
 		std::string**	create_verbs( void );
@@ -89,7 +90,8 @@ class Server
 		int						_server_fd;
 		int						_epoll_fd;
 		int						_number_of_events;
-		configuration_server*	_configuration_server;
+		server_configuration*	_server_configuration;
+		t_location_settings*	_location_configuration;
 
 		std::string	**verbs;
 		bool	shutdown_server;

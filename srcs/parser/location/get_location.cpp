@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 09:54:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:48:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,18 @@ static bool	get_location_valid(std::string& line)
 	return (true);
 }
 
-bool	Parser_configuration::get_location(std::string& line)
-{
-	configuration_location* aux = dynamic_cast<configuration_location*>(_location);
+	bool	Parser_configuration::get_location(std::string& line, std::string& location)
+	{
+		size_t	start = line.find_first_not_of(" \t");
 
-	size_t	start = line.find_first_not_of(" \t");
-
-	if (aux == NULL)
-		return (write_error("Error cast location"));
-	if (start == std::string::npos)
-		return (write_error("Error: Invalid line location"));
-	line = line.substr(start);
-	if (valid_word(line, "location") == false)
-		return (false);
-	if (get_location_valid(line) == false)
-		return (false);
-	aux->set_location(line);
-	return (true);
-}
+		if (start == std::string::npos)
+			return (write_error("Error: Invalid line location"));
+		line = line.substr(start);
+		if (valid_word(line, "location") == false)
+			return (false);
+		if (get_location_valid(line) == false)
+			return (false);
+		location = line;
+		this->_file = this->_file->next;
+		return (true);
+	}

@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   true2.cpp                                          :+:      :+:    :+:   */
+/*   get_server.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/27 11:43:31 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/25 21:49:01 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/27 10:07:59 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-bool	test_true( void )
-{
-	Parser_configuration	parser ("./confis/true_conf2.conf");
-
-	if (equal_or_err_b(parser.parser(), true, __LINE__) == false)
-		return (false);
-	return (true);
+server_configuration*	Parser_configuration::get_server( void ) {
+	return (this->_server);
 }
 
-int main( void )
+t_location_settings**	Parser_configuration::get_location( void )
 {
-	if (test_true() == false)
-		return (1);
-	return (0);
+	return (&(this->_location));
 }
+

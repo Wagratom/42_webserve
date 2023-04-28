@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear.cpp                                          :+:      :+:    :+:   */
+/*   last.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 11:55:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 12:08:47 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 12:03:17 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/26 19:03:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-void	ft_lstclear(list_file **lst, void (*del)(void*))
+list_file*	r_ft_lstlast(list_file *lst)
 {
-	list_file	*tmp;
-
-	while (*lst)
+	while (lst)
 	{
-		tmp = (*lst)->next;
-		ft_lstdelone(*lst, del);
-		*lst = tmp;
+		if (lst->next == NULL)
+			return (lst);
+		lst = lst->next;
 	}
+	return (lst);
 }

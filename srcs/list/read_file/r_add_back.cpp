@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   true2.cpp                                          :+:      :+:    :+:   */
+/*   add_back.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/27 11:43:31 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 12:00:34 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/26 19:06:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-bool	test_true( void )
+void	r_ft_lstadd_back(list_file **lst, list_file *_new)
 {
-	Parser_configuration	parser ("./confis/true_conf2.conf");
+	list_file	*end;
 
-	if (equal_or_err_b(parser.parser(), true, __LINE__) == false)
-		return (false);
-	return (true);
-}
-
-int main( void )
-{
-	if (test_true() == false)
-		return (1);
-	return (0);
+	if (lst == NULL)
+		return ;
+	if (*lst == 0)
+		(*lst) = _new;
+	else
+	{
+		end = r_ft_lstlast(*lst);
+		end->next = _new;
+	}
 }

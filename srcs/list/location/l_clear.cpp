@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delone.cpp                                         :+:      :+:    :+:   */
+/*   l_clear.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 12:13:21 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 12:35:44 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 11:55:53 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/26 19:32:24 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-void	ft_lstdelone(list_file *lst, void (*del)(void*))
+void	l_ft_lstclear(t_location_settings **lst, void (*del)(void*))
 {
-	del = del;
-	free(lst);
-	lst = NULL;
+	t_location_settings	*tmp;
+
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		l_ft_lstdelone(*lst, del);
+		*lst = tmp;
+	}
 }

@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   true2.cpp                                          :+:      :+:    :+:   */
+/*   size.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/27 11:43:31 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 12:05:48 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/26 19:03:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-bool	test_true( void )
+int	r_ft_lstsize(list_file *lst)
 {
-	Parser_configuration	parser ("./confis/true_conf2.conf");
+	int	count;
 
-	if (equal_or_err_b(parser.parser(), true, __LINE__) == false)
-		return (false);
-	return (true);
-}
-
-int main( void )
-{
-	if (test_true() == false)
-		return (1);
-	return (0);
+	count = 0;
+	while (lst && count++ >= 0)
+		lst = lst->next;
+	return (count);
 }

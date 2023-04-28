@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   size.cpp                                           :+:      :+:    :+:   */
+/*   new.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 12:05:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/19 12:10:27 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/19 11:57:46 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/26 19:03:40 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.hpp>
 
-int	ft_lstsize(list_file *lst)
+list_file*	r_ft_lstnew(std::string content)
 {
-	int	count;
+	list_file	*_new = new list_file;
 
-	count = 0;
-	while (lst && count++ >= 0)
-		lst = lst->next;
-	return (count);
+	if (!_new)
+		return (NULL);
+	_new->line = content;
+	_new->next = NULL;
+	return (_new);
 }

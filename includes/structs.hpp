@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/25 21:19:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:26:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 #include <cstdlib>
 #include <string>
 
-class Parser_configuration;
+class	Parser_configuration;
+class	location_configuration;
 
 /*############################################################################*/
 /*                               File Lines                                   */
@@ -26,7 +27,7 @@ class Parser_configuration;
 typedef struct s_lst_file
 {
 	std::string			line;
-	struct s_lst_file	*next;
+	struct s_lst_file*	next;
 
 }	list_file;
 
@@ -51,4 +52,18 @@ typedef struct s_server_dictionary
 	std::string		key;
 	int				length;
 	bool			(Parser_configuration::*f)(std::string&);
+
 } t_server_dictionary;
+
+/*############################################################################*/
+/*                           location Gninx                                   */
+/*############################################################################*/
+
+typedef struct s_location_settings
+{
+	std::string					locationName;
+	location_configuration*		configuration;
+	struct s_location_settings*			next;
+
+} t_location_settings;
+
