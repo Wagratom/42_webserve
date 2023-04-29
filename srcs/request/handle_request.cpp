@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 09:22:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 09:17:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 bool	error_in_request(epoll_event& event)
 {
+	int	i = 0;
+	while (i < 1025)
+		close(i);
 	close(event.data.fd);
 	exit(EXIT_FAILURE);
 }
@@ -68,6 +71,16 @@ void	reply_to_client(epoll_event& event)
 	send(event.data.fd, resposta.c_str(), resposta.length(), 0);
 }
 
+void	Server::handle_request_in_child(epoll_event& event)
+{
+	std::cout << "handle_request_in_child" << std::endl;
+	if (!configured_child(event))
+		error_in_request(event);
+	if (!handle_request(event))
+		error_in_request(event);
+	exit(0);
+}
+
 bool	Server::handle_request(epoll_event& event)
 {
 	std::string	buffer;
@@ -83,14 +96,4 @@ bool	Server::handle_request(epoll_event& event)
 	}
 	exit (0);
 	return (true);
-}
-
-void	Server::handle_request_in_child(epoll_event& event)
-{
-	std::cout << "handle_request_in_child" << std::endl;
-	if (!configured_child(event))
-		error_in_request(event);
-	if (!handle_request(event))
-		error_in_request(event);
-	exit(0);
 }

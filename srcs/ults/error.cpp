@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 13:59:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/16 16:46:18 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 09:19:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	Server::write_error_prefix(std::string prefix)
 	return (false);
 }
 
-bool	Parser::write_error_prefix(std::string prefix)
+bool	Parser_request::write_error_prefix(std::string prefix)
 {
 	std::cout << "\033[31m" << std::endl;
 	std::cout << prefix << ": ";

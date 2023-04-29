@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 11:51:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 09:23:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 class	Parser_configuration;
 class	location_configuration;
 class	aux_configuration;
+class	server_configuration;
+class	Parser_request;
+
 
 /*############################################################################*/
 /*                               File Lines                                   */

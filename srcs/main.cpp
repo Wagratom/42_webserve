@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 21:01:40 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 10:40:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ bool	valid_arguments( int argc, char *argv[])
 
 bool	Server::setup()
 {
-	if (_parser->parser() == false)
+	if (parser_file->parser() == false)
 		return (false);
 	if (create_server_configured() == false)
 		return (false);
-	// if (server.start_server() == false)
-		// return (false);
+	if (start_server() == false)
+		return (false);
 	std::cout << "LocationName: " << location()->locationName << std::endl;
 	_aux_list_location = location();
 	std::cout << "LocationName: " << _aux_list_location->next->locationName << std::endl;
@@ -41,6 +41,7 @@ int main ( int argc, char *argv[] )
 	if (valid_arguments(argc, argv) == false)
 		return (false);
 
+	set_debug(true);
 	Server	server(argv[1]);
 	if (server.setup() == false)
 		return (-1);

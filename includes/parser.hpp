@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 19:43:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 09:22:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include <structs.hpp>
 #include <cstring>
 
-class server_configuration;
-class location_configuration;
 
 /*############################################################################*/
 /*                           Parser_configuration                             */

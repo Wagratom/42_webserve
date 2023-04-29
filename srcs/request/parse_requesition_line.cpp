@@ -5,87 +5,86 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 21:30:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/16 16:54:56 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/29 09:25:37 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/04/29 10:39:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
 
-bool	Parser::get_requesition_line(std::string& requesition_line)
-{
-	size_t		pos;
-
-	pos = request.find("\n");
-	if (pos == std::string::npos)
-		return (write_error_prefix("Invalid requesition line: get_line"));
-	requesition_line = request.substr(0, pos);
-	request.erase(0, pos + 1);
-	write_debug_prefix("Requesition_line: ", requesition_line);
-	return (true);
-}
-
-bool	Parser::get_verb(std::string& requesition_line)
+bool	Parser_request::get_requesition_line( void )
 {
 	size_t	pos;
 
-	pos = requesition_line.find("/");
+	pos = _request.find("\n");
 	if (pos == std::string::npos)
-		return (write_error_prefix("Invalid requesition line: get_verb"));
-
-	verb = requesition_line.substr(0, (pos - 1));
-	requesition_line.erase(0, pos + 2);
-	write_debug_prefix("Verb: ", verb);
+		return (write_error_prefix("Error: Invalid request: not order request line"));
+	_order_request = _request.substr(0, pos);
+	_request.erase(0, pos + 1);
+	write_debug_prefix("Requesition_line: ", _order_request);
 	return (true);
 }
 
-bool	Parser::valid_verb(void)
+bool	Parser_request::get_verb( void )
+{
+	size_t	pos;
+
+	pos = _order_request.find("/");
+	if (pos == std::string::npos)
+		return (write_error_prefix("Invalid requesition line: get_verb"));
+
+	_verb = _order_request.substr(0, (pos - 1));
+	_order_request.erase(0, pos + 2);
+	write_debug_prefix("Verb: ", _verb);
+	return (true);
+}
+
+bool	Parser_request::valid_verb( std::string** verbs )
 {
 	for (int i = 0; verbs[i]; i++)
 	{
-		if (verb == *verbs[i])
+		if (_verb == *verbs[i])
 			return (true);
 	}
 	return (write_error_prefix("Invalid verb: valid_verb"));
 }
 
-bool	Parser::get_recurso(std::string& requesition_line)
+bool	Parser_request::get_recurso( void )
 {
 	size_t		pos;
 
-	pos = requesition_line.find(" ");
+	pos = _order_request.find(" ");
 	if (pos == std::string::npos)
 		return (true); // Defidir se falta de recurso é erro ou não
-	recurso = requesition_line.substr(0, pos);
-	requesition_line.erase(0, pos + 1);
-	write_debug_prefix("Recurso: ", recurso);
+	_recurso = _order_request.substr(0, pos);
+	_order_request.erase(0, pos + 1);
+	write_debug_prefix("Recurso: ", _recurso);
 	return (true);
 }
 
-bool	Parser::valid_htpp_version(std::string& requesition_line)
+bool	Parser_request::valid_htpp_version( void )
 {
-	std::cout << "requesition_line: " << requesition_line << std::endl;
-	if (requesition_line.size() != 9)
+	std::cout << "_order_request: " << _order_request << std::endl;
+	if (_order_request.size() != 9)
 		return (write_error_prefix("Invalid HTTP version: size"));
-	if (requesition_line != "HTTP/1.1\r")
+	if (_order_request != "HTTP/1.1\r")
 		return (write_error_prefix("Invalid  HTTP version: msg"));
 	return (true);
 }
 
-bool	Parser::parse_requesition_line( void )
+bool	Parser_request::parse_requesition_line( std::string** verbs )
 {
-	std::string	requesition_line;
 
-	if (!get_requesition_line(requesition_line))
+	if (!get_requesition_line())
 		return (false);
-	if (!get_verb(requesition_line))
+	if (!get_verb())
 		return (false);
-	if (!valid_verb())
+	if (!valid_verb(verbs))
 		return (false);
-	if (!get_recurso(requesition_line))
+	if (!get_recurso())
 		return (false);
-	if (!valid_htpp_version(requesition_line))
+	if (!valid_htpp_version())
 		return (false);
 	return (true);
 }

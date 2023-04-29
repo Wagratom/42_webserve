@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 20:59:35 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 09:22:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	Server::bind_socket( void )
 
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
-	server.sin_port = htons(_parser->get_server_configuration()->get_port());
+	server.sin_port = htons(parser_file->get_server_configuration()->get_port());
 
 	if (bind(_server_fd, (struct sockaddr *)&server, sizeof(server)) >= 0)
 		return (true);

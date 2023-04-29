@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 20:17:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 09:15:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,5 @@ int main( void )
 	std::cout << "\033[32mTrue 2 em verde!\033[0m" << std::endl;
 	if (test_true() == false)
 		return (1);
-	std::cout << "OK" << std::endl;
 	return (0);
 }

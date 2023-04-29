@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 07:52:52 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 20:57:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 09:22:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	Server::create_server_configured( void )
 {
-	std::cout << "port: " << _parser->get_server_configuration()->get_port() << std::endl;
+	std::cout << "port: " << parser_file->get_server_configuration()->get_port() << std::endl;
 
 	if (create_server() == false)
 		return (false);

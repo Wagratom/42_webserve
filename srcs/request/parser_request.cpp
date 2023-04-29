@@ -6,18 +6,19 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/16 16:43:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 10:33:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-Parser::Parser(std::string const* const* verbs, std::string& requesition) : verbs(verbs) {
-	this->request = std::string(requesition);
-}
-Parser::~Parser() {}
+Parser_request::Parser_request( std::string& request_client)
+	: _request(request_client)
+{};
 
-bool	Parser::write_msg_error(std::string message)
+Parser_request::~Parser_request() {}
+
+bool	Parser_request::write_msg_error(std::string message)
 {
 	std::cout << "Error: " << message << std::endl;
 	return (false);
@@ -28,10 +29,8 @@ bool	Server::parse_request(std::string& buffer)
 {
 	if (buffer.empty())
 		return (true);
-
-	Parser	parser(reinterpret_cast<std::string const* const*>(verbs), buffer);
-	if (!parser.parse_requesition_line())
-		return (false);
+	if (_parser_request->parse_requesition_line(_verbs))
+		return (true);
 	write_debug_prefix("Requesition: ", "Success");
 	return (true);
 }
