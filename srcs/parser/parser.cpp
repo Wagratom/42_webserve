@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:29:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:53:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,21 @@ bool	is_location(std::string& line)
 	return (false);
 }
 
+/*############################################################################*/
+/*                            Init Parser                                     */
+/*############################################################################*/
+
+bool	Parser_configuration::parser( void )
+{
+	if (read_file() == false)
+		return (false);
+	if (check_server(this->_file->line) == false)
+		return (false);
+	if (parser_file() == false)
+		return (false);
+	return (true);
+}
+
 bool	Parser_configuration::parser_file()
 {
 	while (this->_file->next != NULL)
@@ -60,15 +75,3 @@ bool	Parser_configuration::parser_file()
 	}
 	return (true);
 }
-
-bool	Parser_configuration::parser( void )
-{
-	if (read_file() == false)
-		return (false);
-	if (check_server(this->_file->line) == false)
-		return (false);
-	if (parser_file() == false)
-		return (false);
-	return (true);
-}
-
