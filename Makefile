@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/29 17:08:16 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/29 17:46:56 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,19 +17,19 @@ MAIN		=
 INCLUDE		=	-I./includes
 
 SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp\
-				client_max_body_size.cpp error_page.cpp parser_initialize.cpp \
+				client_max_body_size.cpp error_page.cpp init_Parser_configuration.cpp \
 				parser.cpp check_server.cpp index.cpp root.cpp parser_location.cpp\
-				get_location.cpp get_server.cpp\
+				get_location.cpp gets_server_configuration.cpp init_parser_request.cpp\
 				r_add_back.cpp r_clear.cpp r_last.cpp r_new.cpp r_size.cpp \
 				l_add_back.cpp l_clear.cpp l_last.cpp l_size.cpp \
 				create_server_conf.cpp create_server.cpp configure_server.cpp \
 				start_server.cpp handle_new_connections.cpp handle_events.cpp \
 				handle_request_in_cuild.cpp error.cpp fork_status.cpp \
-				sig_closed_server.cpp debug.cpp create_verbs.cpp parser_request.cpp \
+				sig_closed_server.cpp debug.cpp create_verbs.cpp \
 				parse_requesition_line.cpp \
-				gets_configuration_server.cpp sets_configuration_server.cpp \
-				gets_configuration_location.cpp sets_configuration_location.cpp \
-				read_request.cpp
+				gets_location_configuration.cpp sets_location_configuration.cpp \
+				gets_Parser_configuration.cpp sets_server_configuration.cpp \
+				read_request.cpp parser_request.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs
