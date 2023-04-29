@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 09:25:37 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 10:39:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:31:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,18 @@ bool	Parser_request::get_verb( void )
 	if (pos == std::string::npos)
 		return (write_error_prefix("Invalid requesition line: get_verb"));
 
-	_verb = _order_request.substr(0, (pos - 1));
-	_order_request.erase(0, pos + 2);
-	write_debug_prefix("Verb: ", _verb);
+	_metodo = _order_request.substr(0, (pos - 1));
+	_order_request.erase(0, pos);
+	write_debug_prefix("Verb: ", _metodo);
 	return (true);
 }
 
 bool	Parser_request::valid_verb( std::string** verbs )
 {
+	write_debug("Validando verb...");
 	for (int i = 0; verbs[i]; i++)
 	{
-		if (_verb == *verbs[i])
+		if (_metodo == *verbs[i])
 			return (true);
 	}
 	return (write_error_prefix("Invalid verb: valid_verb"));
@@ -56,16 +57,16 @@ bool	Parser_request::get_recurso( void )
 
 	pos = _order_request.find(" ");
 	if (pos == std::string::npos)
-		return (true); // Defidir se falta de recurso é erro ou não
-	_recurso = _order_request.substr(0, pos);
+		return (write_error_prefix("Error: Parser_request: Invalid orde_request line")); // Defidir se falta de recurso é erro ou não
+	_endPoint = _order_request.substr(0, pos);
 	_order_request.erase(0, pos + 1);
-	write_debug_prefix("Recurso: ", _recurso);
+	write_debug_prefix("Recurso: ", _endPoint);
 	return (true);
 }
 
 bool	Parser_request::valid_htpp_version( void )
 {
-	std::cout << "_order_request: " << _order_request << std::endl;
+	write_debug("Validando HTTP version...");
 	if (_order_request.size() != 9)
 		return (write_error_prefix("Invalid HTTP version: size"));
 	if (_order_request != "HTTP/1.1\r")
@@ -75,7 +76,6 @@ bool	Parser_request::valid_htpp_version( void )
 
 bool	Parser_request::parse_requesition_line( std::string** verbs )
 {
-
 	if (!get_requesition_line())
 		return (false);
 	if (!get_verb())

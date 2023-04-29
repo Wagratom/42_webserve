@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:52:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 21:26:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:31:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 std::string	location_configuration::get_location( void )
 {

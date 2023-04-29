@@ -6,16 +6,25 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 09:23:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:24:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <string>
+# include <fstream>
+# include <cstdlib>
+# include <string>
+# include <sys/socket.h>
+# include <cstdio>
+# include <netinet/in.h>
+# include <iostream>
+# include <sys/epoll.h>
+# include <errno.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <signal.h>
+# include <cstring>
 
 class	Parser_configuration;
 class	location_configuration;

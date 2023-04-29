@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 10:40:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:48:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	valid_arguments( int argc, char *argv[])
 
 bool	Server::setup()
 {
-	if (parser_file->parser() == false)
+	if (_parser_file->parser() == false)
 		return (false);
 	if (create_server_configured() == false)
 		return (false);

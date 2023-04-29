@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 21:37:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:29:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 bool	alloc_location(t_location_settings **location)
 {

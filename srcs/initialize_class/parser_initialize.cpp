@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 19:20:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:29:04 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 /*############################################################################*/
 /*                         Constructos / Destructors                          */

@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 22:03:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:29:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 static bool	find_bar(std::string& line)
 {

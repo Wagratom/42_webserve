@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 16:30:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:29:09 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 void	Parser_configuration::save_valid_line(std::string line)
 {

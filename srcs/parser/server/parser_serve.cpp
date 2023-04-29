@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 19:19:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:28:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 static bool	is_end_server(std::string& line)
 {

@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 11:51:35 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:28:53 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 static bool	get_max_body_size(std::string& aux)
 {

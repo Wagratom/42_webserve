@@ -6,26 +6,14 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 10:36:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:27:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-# include <sys/socket.h>
-# include <cstdio>
-# include <netinet/in.h>
-# include <iostream>
-// # include <cstring>
-# include <sys/epoll.h>
-# include <errno.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <signal.h>
-
-#include <parser.hpp>
-
-#include <stdlib.h>
+#include <Parser_request.hpp>
+#include <Parser_configuration.hpp>
 
 # define PORT 8080
 # define MAX_EVENTS 10
@@ -40,7 +28,8 @@ class 	Server
 {
 	public:
 		Server(std::string filename)
-			: parser_file(new Parser_configuration(filename))
+			: _parser_file(new Parser_configuration(filename))
+			, _parser_request(NULL)
 			, _aux_list_location(NULL)
 			, _server_fd(-1)
 		    , _epoll_fd(-1)
@@ -48,7 +37,9 @@ class 	Server
 			, _verbs(create_verbs())
 		{};
 		~Server() {
-			delete this->parser_file;
+			delete _parser_file;
+			if (_parser_request)
+				delete _parser_request;
 		};
 
 		std::string**	create_verbs( void );
@@ -79,11 +70,10 @@ class 	Server
 
 		void	handle_request_in_child( epoll_event& event );
 		bool	configured_child( epoll_event& event );
-		bool	handle_request(epoll_event& event);
+		bool	control_chuild(epoll_event& event);
 		bool	read_request( std::string& buffer,  epoll_event& event );
-
 		bool	parse_request(std::string& buffer);
-		bool	verift_error( int bytes_read );
+		bool	response_request( void );
 
 		bool	clean_request(epoll_event& event);
 
@@ -92,7 +82,7 @@ class 	Server
 
 		//				GETTERS to tests
 		t_location_settings*	location( void ) {
-			return (this->parser_file->get_location_configuration());
+			return (this->_parser_file->get_location_configuration());
 		}
 
 		t_location_settings*	get_aux_list_location( void ) {
@@ -103,11 +93,11 @@ class 	Server
 			this->_aux_list_location = tmp;
 		}
 		server_configuration*	server( void ) {
-			return (this->parser_file->get_server_configuration());
+			return (this->_parser_file->get_server_configuration());
 		}
 
 		Parser_configuration*	get_parser( void ) {
-			return (this->parser_file);
+			return (this->_parser_file);
 		}
 
 		bool	setup( void );
@@ -116,38 +106,15 @@ class 	Server
 		void	set_signal( void );
 
 	private:
-		Parser_configuration*	parser_file;
+		Parser_configuration*	_parser_file;
 		Parser_request*			_parser_request;
 		t_location_settings	*	_aux_list_location;
-		list_file				*client_request;
+
 		int						_server_fd;
 		int						_epoll_fd;
 		int						_number_of_events;
 
 		std::string				**_verbs;
-};
-
-class Parser_request
-{
-	public:
-		Parser_request( std::string& request_client );
-		~Parser_request();
-
-		bool	parse_requesition_line( std::string** verbs );
-
-		bool	parse_requisition_line( void );
-		bool	get_requesition_line( void );
-		bool	get_verb( void );
-		bool	valid_verb( std::string** verbs );
-		bool	get_recurso( void );
-		bool	valid_htpp_version( void );
-		bool	write_error_prefix( std::string prefix );
-		bool	write_msg_error(std::string message);
-	private:
-		std::string					_request;
-		std::string					_order_request;
-		std::string					_verb;
-		std::string					_recurso;
 };
 
 void	set_debug(bool	value);

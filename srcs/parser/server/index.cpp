@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 08:49:07 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 11:51:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:29:27 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 static bool	valid_index(std::string& line)
 {

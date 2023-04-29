@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 10:58:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:28:29 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 bool	write_error(std::string msg)
 {

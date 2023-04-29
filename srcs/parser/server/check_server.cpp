@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:05:07 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/20 11:22:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:29:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 bool	Parser_configuration::check_server( std::string& line )
 {

@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/04/28 20:14:30 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/04/29 17:08:16 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,12 @@ SOURCE		=	func_uni.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp\
 				l_add_back.cpp l_clear.cpp l_last.cpp l_size.cpp \
 				create_server_conf.cpp create_server.cpp configure_server.cpp \
 				start_server.cpp handle_new_connections.cpp handle_events.cpp \
-				handle_request.cpp error.cpp fork_status.cpp \
+				handle_request_in_cuild.cpp error.cpp fork_status.cpp \
 				sig_closed_server.cpp debug.cpp create_verbs.cpp parser_request.cpp \
 				parse_requesition_line.cpp \
 				gets_configuration_server.cpp sets_configuration_server.cpp \
 				gets_configuration_location.cpp sets_configuration_location.cpp \
+				read_request.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs

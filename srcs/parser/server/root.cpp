@@ -6,11 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:26:29 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 11:51:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:29:32 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.hpp>
+#include <Parser_configuration.hpp>
 
 static bool	valid_root(std::string& line)
 {

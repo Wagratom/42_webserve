@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_request.cpp                                 :+:      :+:    :+:   */
+/*   handle_request_in_cuild.cpp                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 09:17:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:31:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,6 @@ bool	Server::configured_child(epoll_event& event)
 	return (true);
 }
 
-bool	Server::verift_error(int bytes_read)
-{
-	if (bytes_read != -1)
-		return (false);
-	if (errno == EAGAIN || errno == EWOULDBLOCK) // Erros for not data to read // valid error
-		return (false);
-	return (true);
-}
-
-bool	Server::read_request(std::string& buffer, epoll_event& event)
-{
-	char	tmp[1024];
-	int		bytes_read;
-
-	while (true)
-	{
-		bytes_read = recv(event.data.fd, tmp, 1, 0);
-		if (verift_error(bytes_read))
-			return (write_error_prefix("read_request"));
-		if (bytes_read == 0 || bytes_read == -1)
-			break ;
-		buffer.append((char*)tmp, bytes_read);
-	}
-	return (true);
-}
-
 void	reply_to_client(epoll_event& event)
 {
 	std::cout << "reply_to_client" << std::endl;
@@ -71,29 +45,36 @@ void	reply_to_client(epoll_event& event)
 	send(event.data.fd, resposta.c_str(), resposta.length(), 0);
 }
 
+/*############################################################################*/
+/*                        Handle request in chuild                            */
+/*############################################################################*/
+
 void	Server::handle_request_in_child(epoll_event& event)
 {
 	std::cout << "handle_request_in_child" << std::endl;
 	if (!configured_child(event))
 		error_in_request(event);
-	if (!handle_request(event))
+	if (!control_chuild(event))
 		error_in_request(event);
 	exit(0);
 }
 
-bool	Server::handle_request(epoll_event& event)
+
+bool	Server::control_chuild(epoll_event& event)
 {
 	std::string	buffer;
 
-	reply_to_client(event);
 	while (true)
 	{
 		if (!read_request(buffer, event))
 			return (false);
 		if (!parse_request(buffer))
 			return (false);
+		// if (response_request() == false)
+			// return (false);
 		buffer.clear();
+		sleep(100);
 	}
-	exit (0);
+	exit(0);
 	return (true);
 }
