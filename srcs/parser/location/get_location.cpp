@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 21:45:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 22:03:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ static bool	find_bar(std::string& line)
 {
 	size_t	start = line.find_first_not_of(" \t", 8);
 
-	std::cout << "Line: " << line << std::endl;
 	if (start == std::string::npos)
 		return (write_error("Error: find_bar: Invalid line location: line empty"));
 	if (line[start] != '/')
 		return (write_error("Error: find_bar: Invalid line location: not found bar"));
-	if (isspace(line[start + 1]))
-		return (write_error("Error: find_bar: Invalid line location location not separate by bar"));
 	line = line.substr(start);
 	return (true);
 }
@@ -36,8 +33,6 @@ static bool	get_locationName(std::string& line, std::string& locationName)
 		return (write_error("Error: get_locationName: Invalid line location: line empty"));
 	if (endName == std::string::npos)
 		return (write_error("Error: get_locationName: Invalid line location"));
-	if (line[start] == '{')
-		locationName = "/";
 	else
 		locationName = line.substr(0, endName);
 	line = line.substr(endName);

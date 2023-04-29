@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 20:41:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 22:01:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,7 @@ bool	test_true( void )
 		return (false);
 	if (equal_or_err_s(server.location()->configuration->get_error_page(), "404 location.php", __LINE__) == false)
 		return (false);
-
-	//			location2
-	// server.set_aux_list_location(server.location()->next);
-	// if (equal_or_err_s(server.get_aux_list_location()->locationName, "wagratom", __LINE__) == false)
-	// 	return (false);
-	// if (equal_or_err_s(server.get_aux_list_location()->configuration->get_root(), "/var/www/location.com", __LINE__) == false)
-	// 	return (false);
-	// if (equal_or_err_s(server.get_aux_list_location()->configuration->get_index(), "location.php", __LINE__) == false)
-	// 	return (false);
-	// if (equal_or_err_s(server.get_aux_list_location()->configuration->get_client_max_body_size(), "20G", __LINE__) == false)
-	// 	return (false);
-	// if (equal_or_err_s(server.get_aux_list_location()->configuration->get_error_page(), "404 location.php", __LINE__) == false)
-	// 	return (false);
-	// return (true);
+	return (true);
 }
 
 int main( void )
