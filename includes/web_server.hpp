@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 19:51:35 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:57:29 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,13 @@
 class 	Server
 {
 	public:
-		Server(std::string filename) : _parser(new Parser_configuration(filename)) {};
+		Server(std::string filename)
+			: _parser(new Parser_configuration(filename))
+			, _aux_list_location(NULL)
+			, _server_fd(-1)
+		    , _epoll_fd(-1)
+			, _number_of_events(-1)
+		{};
 		~Server() {
 			delete this->_parser;
 		};
@@ -83,8 +89,17 @@ class 	Server
 		bool	write_error_prefix( std::string prefix );
 		bool	fork_staus( pid_t& pid );
 
+		//				GETTERS to tests
 		t_location_settings*	location( void ) {
 			return (this->_parser->get_location_configuration());
+		}
+
+		t_location_settings*	get_aux_list_location( void ) {
+			return (this->_aux_list_location);
+		}
+
+		void	set_aux_list_location( t_location_settings* tmp) {
+			this->_aux_list_location = tmp;
 		}
 		server_configuration*	server( void ) {
 			return (this->_parser->get_server_configuration());
@@ -100,10 +115,11 @@ class 	Server
 		void	set_signal( void );
 
 	private:
+		Parser_configuration*	_parser;
+		t_location_settings	*	_aux_list_location;
 		int						_server_fd;
 		int						_epoll_fd;
 		int						_number_of_events;
-		Parser_configuration*	_parser;
 
 		std::string	**verbs;
 		bool	shutdown_server;

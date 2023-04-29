@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/28 19:22:49 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:59:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ bool	Server::listen_socket( void )
 
 bool	Server::create_server( void )
 {
-	if (!create_socket())
+	if (create_socket() == false)
 		return (false);
-	if (!bind_socket())
+	std::cout << "Server created: socket: " << _server_fd << std::endl;
+	if (bind_socket() == false)
 		return (false);
-	if (!listen_socket())
+	std::cout << "Server binded" << std::endl;
+	if (listen_socket() == false)
 		return (false);
+	std::cout << "Listening socket..." << std::endl;
 	return (true);
 }
