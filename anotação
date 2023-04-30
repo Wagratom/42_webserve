@@ -1,3 +1,0 @@
-A função socket() cria o socket e retorna o seu descritor de arquivo (file descriptor - fd).
- Em seguida, a função bind() é utilizada para associar uma porta ao socket e, finalmente, a função listen() é
- utilizada para indicar que o socket está pronto para receber conexões.
