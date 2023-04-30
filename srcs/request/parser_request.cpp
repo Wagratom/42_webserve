@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:33:33 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/29 18:05:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ bool	Server::parse_request(std::string& buffer)
 		return (true);
 	if (_parser_request->parse_requesition_line(_verbs) == false)
 		return (false);
+	// if (_parser_request->parse_headers() == false)
+		// return (false);
 	return (true);
 }
 

@@ -6,14 +6,14 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 09:25:37 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 16:31:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/30 11:23:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
 
-bool	Parser_request::get_requesition_line( void )
+bool	Parser_request::save_requesition_line( void )
 {
 	size_t	pos;
 
@@ -26,7 +26,7 @@ bool	Parser_request::get_requesition_line( void )
 	return (true);
 }
 
-bool	Parser_request::get_verb( void )
+bool	Parser_request::save_verb( void )
 {
 	size_t	pos;
 
@@ -51,7 +51,7 @@ bool	Parser_request::valid_verb( std::string** verbs )
 	return (write_error_prefix("Invalid verb: valid_verb"));
 }
 
-bool	Parser_request::get_recurso( void )
+bool	Parser_request::save_endPoint( void )
 {
 	size_t		pos;
 
@@ -60,7 +60,7 @@ bool	Parser_request::get_recurso( void )
 		return (write_error_prefix("Error: Parser_request: Invalid orde_request line")); // Defidir se falta de recurso é erro ou não
 	_endPoint = _order_request.substr(0, pos);
 	_order_request.erase(0, pos + 1);
-	write_debug_prefix("Recurso: ", _endPoint);
+	write_debug_prefix("endPoint: ", _endPoint);
 	return (true);
 }
 
@@ -76,13 +76,13 @@ bool	Parser_request::valid_htpp_version( void )
 
 bool	Parser_request::parse_requesition_line( std::string** verbs )
 {
-	if (!get_requesition_line())
+	if (!save_requesition_line())
 		return (false);
-	if (!get_verb())
+	if (!save_verb())
 		return (false);
 	if (!valid_verb(verbs))
 		return (false);
-	if (!get_recurso())
+	if (!save_endPoint())
 		return (false);
 	if (!valid_htpp_version())
 		return (false);

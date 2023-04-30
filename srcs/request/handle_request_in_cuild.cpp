@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:31:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/30 11:24:20 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	Server::handle_request_in_child(epoll_event& event)
 	exit(0);
 }
 
-
 bool	Server::control_chuild(epoll_event& event)
 {
 	std::string	buffer;
@@ -70,8 +69,8 @@ bool	Server::control_chuild(epoll_event& event)
 			return (false);
 		if (!parse_request(buffer))
 			return (false);
-		// if (response_request() == false)
-			// return (false);
+		if (response_request() == false)
+			return (false);
 		buffer.clear();
 		sleep(100);
 	}
