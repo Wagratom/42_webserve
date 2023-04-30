@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/30 11:24:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/30 14:15:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ bool	Server::control_chuild(epoll_event& event)
 
 	while (true)
 	{
-		if (!read_request(buffer, event))
+		if (read_request(buffer, event) == false)
 			return (false);
-		if (!parse_request(buffer))
+		if (parse_request(buffer) == false)
 			return (false);
 		if (response_request() == false)
 			return (false);

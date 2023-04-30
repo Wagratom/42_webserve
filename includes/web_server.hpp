@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:27:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:40:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ class 	Server
 		bool	read_request( std::string& buffer,  epoll_event& event );
 		bool	parse_request(std::string& buffer);
 		bool	response_request( void );
+
+		bool	GET_requesition( void );
+		bool	open_file_index( std::ifstream& file );
+
+		bool	SET_requesition( void );
+		bool	DELETE_requesition( void );
 
 		bool	clean_request(epoll_event& event);
 
