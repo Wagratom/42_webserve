@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:07:54 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/16 16:48:30 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:28:44 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_debug(bool	value)
 {
 	debug() = value;
 	if (value == true)
-		std::cout << "\tDebug mode is on" << std::endl;
+		std::cout << "\t\033[0;31m\tDebug mode is on\033[0;37m" << std::endl;
 	else
 		std::cout << "\tDebug mode is off" << std::endl;
 }
@@ -55,11 +55,20 @@ void	write_debug_prefix(std::string prefix, std::string message)
 		return ;
 	std::cout << prefix << message << std::endl;
 }
+
+#include <arpa/inet.h>
+
 void	write_type_event_debug(epoll_event& event)
 {
+	struct sockaddr_in addr;
+	socklen_t addrlen = sizeof(addr);
+
+	getsockname(event.data.fd, (struct sockaddr*)&addr, &addrlen);
+
 	if (get_debug() == false)
 		return ;
-	std::cout << "FD: "<< std::cout << event.data.fd << std::endl;
+    std::cout << "Local IP address: " << inet_ntoa(addr.sin_addr) << std::endl;
+    std::cout << "Local port number: " << ntohs(addr.sin_port) << std::endl;
 	std::cout << "Type of event: ";
 	if (event.events & EPOLLERR)
 		std::cout << "EPOLLERR | ";
@@ -74,6 +83,6 @@ void	write_type_event_debug(epoll_event& event)
 	if (event.events & EPOLLHUP)
 		std::cout << "EPOLLHUP | ";
 	if (event.events & EPOLLPRI)
-		std::cout << "EPOLLPRI | ";
+		std::cout << "EPOLLPRI ";
 	std::cout << std::endl;
 }

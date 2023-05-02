@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 09:22:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:18:22 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	Server::handle_new_connections(epoll_event& event)
 		return (false); // error
 	if (!save_connection(new_client))
 		return (false); // error
-	std::cout << "New connection accepted!" << std::endl;
+	write_debug("New connection accepted");
 	return (true); // success in create new connection
 }
 

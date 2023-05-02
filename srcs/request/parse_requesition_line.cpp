@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 09:25:37 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/30 11:23:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/02 13:27:54 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	Parser_request::save_verb( void )
 
 	_metodo = _order_request.substr(0, (pos - 1));
 	_order_request.erase(0, pos);
-	write_debug_prefix("Verb: ", _metodo);
+	// write_debug_prefix("Verb: ", _metodo);
 	return (true);
 }
 
@@ -60,7 +60,7 @@ bool	Parser_request::save_endPoint( void )
 		return (write_error_prefix("Error: Parser_request: Invalid orde_request line")); // Defidir se falta de recurso é erro ou não
 	_endPoint = _order_request.substr(0, pos);
 	_order_request.erase(0, pos + 1);
-	write_debug_prefix("endPoint: ", _endPoint);
+	// write_debug_prefix("endPoint: ", _endPoint);
 	return (true);
 }
 

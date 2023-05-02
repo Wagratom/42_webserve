@@ -6,29 +6,35 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/26 09:22:30 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:05:07 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
+bool	Server::capture_new_events(epoll_event* event)
+{
+	write_debug("Waiting new events");
+	_number_of_events = epoll_wait(_epoll_fd, event, MAX_EVENTS, -1);
+	write_debug_number("Event captured : ", _number_of_events);
+	if (_number_of_events == -1)
+		return (write_error_prefix("handle_new_connections"));
+	return (true);
+}
+
 bool	Server::clean_request(epoll_event& event)
 {
-	std::cout << "removendo fd do epoll" << std::endl;
+	if ((int)event.data.fd == _server_fd)
+		return (true);
 	if (epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
 		return (write_error_prefix("remove_fd_from_epoll"));
 	close(event.data.fd);
 	return (true);
 }
 
-bool	Server::capture_new_events(epoll_event* event)
-{
-	_number_of_events = epoll_wait(_epoll_fd, event, MAX_EVENTS, -1);
-	write_debug_number("Number of events received:: ", _number_of_events);
-	if (_number_of_events == -1)
-		return (write_error_prefix("handle_new_connections"));
-	return (true);
-}
+/*############################################################################*/
+/*                           Dispatch events                                  */
+/*############################################################################*/
 
 bool	Server::dispatch_events(epoll_event* event)
 {
@@ -84,5 +90,6 @@ bool	Server::send_request_to_child(epoll_event& event)
 		return (false);
 	if (pid == CHILD)
 		handle_request_in_child(event);
+	std::cout << "Voltando pro pai" << std::endl;
 	return (true);
 }

@@ -6,18 +6,21 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/30 14:15:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:23:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-bool	error_in_request(epoll_event& event)
+bool	error_in_request()
 {
-	int	i = 0;
-	while (i < 1025)
+	int	i = -1;
+
+	while (++i < 1025)
+	{
 		close(i);
-	close(event.data.fd);
+		i++;
+	}
 	exit(EXIT_FAILURE);
 }
 
@@ -25,14 +28,15 @@ bool	Server::configured_child(epoll_event& event)
 {
 	int	flags;
 
-	flags = fcntl(event.data.fd, F_GETFL, 0); // pengando as propriedades do fd
+	_client_fd = event.data.fd;
+	flags = fcntl(event.data.fd, F_GETFL, 0);
 	if (flags == -1)
-		return (write_error_prefix("configured_child"));
-	if (fcntl(event.data.fd, F_SETFL, flags | O_NONBLOCK) == -1) // setando o fd para nao bloquear
-		return (write_error_prefix("configured_child"));
-	if (epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, _server_fd, &event) == -1) // removendo o serve do epoll
-		write_error_prefix("configured_child");
-	close(_server_fd); // fechando o fd do server
+		return (write_error_prefix("Error: configured_child: not get properties"));
+	if (fcntl(event.data.fd, F_SETFL, flags | O_NONBLOCK) == -1)
+		return (write_error_prefix("Error: configured_child: not set properties"));
+	if (epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, _server_fd, &event) == -1)
+		write_error_prefix("Error: configurad_child: not remove server from epoll");
+	close(_server_fd);
 	return (true);
 }
 
@@ -51,11 +55,11 @@ void	reply_to_client(epoll_event& event)
 
 void	Server::handle_request_in_child(epoll_event& event)
 {
-	std::cout << "handle_request_in_child" << std::endl;
+	write_debug("\tHandle_request_in_child");
 	if (!configured_child(event))
-		error_in_request(event);
+		error_in_request();
 	if (!control_chuild(event))
-		error_in_request(event);
+		error_in_request();
 	exit(0);
 }
 
@@ -67,12 +71,17 @@ bool	Server::control_chuild(epoll_event& event)
 	{
 		if (read_request(buffer, event) == false)
 			return (false);
+		if (buffer.empty())
+			continue ;
 		if (parse_request(buffer) == false)
 			return (false);
+		// if (cgi_response());
+			// return (false);
 		if (response_request() == false)
 			return (false);
+		if (capture_new_events(&event) == false)
+			return (false);
 		buffer.clear();
-		sleep(100);
 	}
 	exit(0);
 	return (true);

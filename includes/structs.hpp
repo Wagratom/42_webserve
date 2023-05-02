@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:24:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:15:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,12 @@ typedef struct s_server_dictionary
 
 typedef struct s_location_settings
 {
-	std::string					locationName;
+	std::string					locationName; // key
 	location_configuration*		configuration;
 	struct s_location_settings*			next;
 
 } t_location_settings;
 
+void	write_debug_number(std::string message, int number);
+void	write_debug_prefix(std::string prefix, std::string message);
+void	write_debug(std::string message);

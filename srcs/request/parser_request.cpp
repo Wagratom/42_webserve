@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 18:05:46 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:02:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ bool	Server::parse_request(std::string& buffer)
 {
 	_parser_request = new Parser_request(buffer);
 
+	write_debug("Parsing request...");
 	if (_parser_request == NULL)
 		return (write_error_prefix("Error: Server::parse_request: _parser_file is NULL"));
-	if (buffer.empty())
-		return (true);
 	if (_parser_request->parse_requesition_line(_verbs) == false)
 		return (false);
 	// if (_parser_request->parse_headers() == false)

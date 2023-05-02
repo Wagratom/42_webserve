@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 11:35:31 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/30 17:40:24 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/02 13:29:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static bool	open_file_status(std::string path, std::ifstream& file)
 {
 	file.open(path.c_str());
 
-	std::cout << "path: " << path << std::endl;
 	if (!file.is_open())
 		return (false);
+	write_debug_prefix("File opening: ", path);
 	return (true);
 }
 

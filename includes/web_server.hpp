@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/30 17:40:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:47:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ class 	Server
 		bool	parse_request(std::string& buffer);
 		bool	response_request( void );
 
-		bool	GET_requesition( void );
+		int		GET_requesition( void );
 		bool	open_file_index( std::ifstream& file );
+		bool	serv_webpage( std::ifstream& file);
 
 		bool	SET_requesition( void );
 		bool	DELETE_requesition( void );
@@ -117,7 +118,9 @@ class 	Server
 		t_location_settings	*	_aux_list_location;
 
 		int						_server_fd;
+		int						_client_fd;
 		int						_epoll_fd;
+
 		int						_number_of_events;
 
 		std::string				**_verbs;
