@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dispatch_events.cpp                                :+:      :+:    :+:   */
+/*   filter_event.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:24:21 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 21:37:53 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:31:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ bool	Server::filter_event(epoll_event* event)
 		{
 			if (!handle_events(event[index]))
 				return (false);
-			// closed_fd_epoll(event[index]);
 		}
 		index++;
 	}
 	return (true);
 }
 
+
 bool	Server::handle_events(epoll_event& event)
 {
 	if (is_closed_or_error_event(event))
-		return (true);
+		return (clean_request(event));
 	if (event.events & EPOLLIN)
 		return (handle_client_request(event));
 	return (true);

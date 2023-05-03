@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/05/02 21:39:12 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/05/03 12:16:05 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				gets_Parser_configuration.cpp sets_server_configuration.cpp \
 				read_request.cpp parser_request.cpp response_request.cpp \
 				GET_requesition.cpp SET_requesition.cpp DELETE_requesition.cpp \
-				open_file_index.cpp
+				open_file_index.cpp clean_request.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs

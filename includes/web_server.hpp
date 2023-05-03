@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 21:16:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/03 14:23:39 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ class 	Server
 		bool	closed_fd_epoll(epoll_event& event);
 
 		bool	write_error_prefix( std::string prefix );
+
+		bool	clean_request(epoll_event& event);
 
 		//				GETTERS to tests
 		t_location_settings*	location( void ) {
