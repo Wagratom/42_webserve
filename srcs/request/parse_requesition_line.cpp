@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_requesition_line.cpp                         :+:      :+:    :+:   */
+/*   parse_order_line.cpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -42,7 +42,6 @@ bool	Parser_request::save_verb( void )
 
 bool	Parser_request::valid_verb( std::string** verbs )
 {
-	write_debug("Validando verb...");
 	for (int i = 0; verbs[i]; i++)
 	{
 		if (_metodo == *verbs[i])
@@ -66,7 +65,6 @@ bool	Parser_request::save_endPoint( void )
 
 bool	Parser_request::valid_htpp_version( void )
 {
-	write_debug("Validando HTTP version...");
 	if (_order_request.size() != 9)
 		return (write_error_prefix("Invalid HTTP version: size"));
 	if (_order_request != "HTTP/1.1\r")
@@ -74,7 +72,7 @@ bool	Parser_request::valid_htpp_version( void )
 	return (true);
 }
 
-bool	Parser_request::parse_requesition_line( std::string** verbs )
+bool	Parser_request::parse_order_line( std::string** verbs )
 {
 	if (!save_requesition_line())
 		return (false);
@@ -86,5 +84,6 @@ bool	Parser_request::parse_requesition_line( std::string** verbs )
 		return (false);
 	if (!valid_htpp_version())
 		return (false);
+	write_debug("\033[32mOrder Ok XD\n\033[0;37m");
 	return (true);
 }

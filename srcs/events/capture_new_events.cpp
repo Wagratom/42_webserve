@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_request.cpp                                 :+:      :+:    :+:   */
+/*   capture_new_events.cpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 21:40:19 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/05/02 19:15:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-bool	Parser_request::write_msg_error(std::string message)
+bool	Server::capture_new_events(epoll_event* event)
 {
-	std::cout << "Error: " << message << std::endl;
-	return (false);
-}
-
-bool	Server::parse_request(std::string& buffer)
-{
-	_parser_request = new Parser_request(buffer);
-
-	write_debug("Parsing request...");
-	if (_parser_request == NULL)
-		return (write_error_prefix("Error: Server::parse_request: _parser_file is NULL"));
-	if (_parser_request->parse_order_line(_verbs) == false)
-		return (false);
+	write_debug("Waiting for events");
+	_number_of_events = epoll_wait(_epoll_fd, event, MAX_EVENTS, -1);
+	write_debug_number("Event captured : ", _number_of_events);
+	if (_number_of_events == -1)
+		return (write_error_prefix("handle_new_connections"));
 	return (true);
 }
-

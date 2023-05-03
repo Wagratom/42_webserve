@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 15:47:00 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/02 21:16:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ class 	Server
 		bool	create_server_configured( void );
 		bool	create_server( void );
 		bool	create_socket( void );
+		bool	set_socket_option( void );
 		bool	bind_socket( void );
 		bool	listen_socket( void );
 
@@ -57,7 +58,7 @@ class 	Server
 		int		start_server( void );
 
 		bool	capture_new_events( epoll_event* event );
-		bool	dispatch_events( epoll_event* event );
+		bool	filter_event( epoll_event* event );
 
 		bool	handle_new_connections( epoll_event& event );
 		bool	is_new_connect( epoll_event& event );
@@ -66,13 +67,11 @@ class 	Server
 
 		bool	handle_events( epoll_event& event );
 		bool	is_closed_or_error_event( epoll_event& event );
-		bool	send_request_to_child( epoll_event& event );
+		bool	handle_client_request( epoll_event& event );
 
-		void	handle_request_in_child( epoll_event& event );
-		bool	configured_child( epoll_event& event );
-		bool	control_chuild(epoll_event& event);
-		bool	read_request( std::string& buffer,  epoll_event& event );
-		bool	parse_request(std::string& buffer);
+		bool	set_client_no_block( void );
+		bool	read_request( std::string& buffer );
+		bool	parse_request( std::string& buffer );
 		bool	response_request( void );
 
 		int		GET_requesition( void );
@@ -82,10 +81,9 @@ class 	Server
 		bool	SET_requesition( void );
 		bool	DELETE_requesition( void );
 
-		bool	clean_request(epoll_event& event);
+		bool	closed_fd_epoll(epoll_event& event);
 
 		bool	write_error_prefix( std::string prefix );
-		bool	fork_staus( pid_t& pid );
 
 		//				GETTERS to tests
 		t_location_settings*	location( void ) {

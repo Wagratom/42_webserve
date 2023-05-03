@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_request.cpp                                 :+:      :+:    :+:   */
+/*   handle_client_request.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 21:40:19 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/05/02 19:24:21 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/05/02 21:36:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-bool	Parser_request::write_msg_error(std::string message)
+bool	Server::handle_client_request(epoll_event& event)
 {
-	std::cout << "Error: " << message << std::endl;
-	return (false);
-}
+	std::string	buffer;
 
-bool	Server::parse_request(std::string& buffer)
-{
-	_parser_request = new Parser_request(buffer);
-
-	write_debug("Parsing request...");
-	if (_parser_request == NULL)
-		return (write_error_prefix("Error: Server::parse_request: _parser_file is NULL"));
-	if (_parser_request->parse_order_line(_verbs) == false)
+	write_debug("\033[32m\n\t Parsing request");
+	_client_fd = event.data.fd;
+	if (set_client_no_block() == false)
+		return (false);
+	if (read_request(buffer) == false)
+		return (false);
+	if (parse_request(buffer) == false)
+		return (false);
+	if (response_request() == false)
 		return (false);
 	return (true);
 }
-
