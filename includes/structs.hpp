@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 11:15:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:44:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <cstring>
+# include <map>
 
 class	Parser_configuration;
 class	location_configuration;

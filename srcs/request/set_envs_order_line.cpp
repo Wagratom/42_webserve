@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_order_line.cpp                         :+:      :+:    :+:   */
+/*   parse_requesition_line.cpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/29 09:25:37 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 13:27:54 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/05/03 16:49:15 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/05/03 16:52:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
-
 
 bool	Parser_request::save_requesition_line( void )
 {
@@ -26,16 +25,16 @@ bool	Parser_request::save_requesition_line( void )
 	return (true);
 }
 
-bool	Parser_request::save_verb( void )
+bool	Parser_request::set_method( void )
 {
 	size_t	pos;
 
 	pos = _order_request.find("/");
 	if (pos == std::string::npos)
 		return (write_error_prefix("Invalid requesition line: get_verb"));
-
 	_metodo = _order_request.substr(0, (pos - 1));
 	_order_request.erase(0, pos);
+	setenv("REQUEST_METHOD", _metodo.c_str(), 1);
 	// write_debug_prefix("Verb: ", _metodo);
 	return (true);
 }
@@ -50,7 +49,7 @@ bool	Parser_request::valid_verb( std::string** verbs )
 	return (write_error_prefix("Invalid verb: valid_verb"));
 }
 
-bool	Parser_request::save_endPoint( void )
+bool	Parser_request::set_request_url( void )
 {
 	size_t		pos;
 
@@ -59,30 +58,32 @@ bool	Parser_request::save_endPoint( void )
 		return (write_error_prefix("Error: Parser_request: Invalid orde_request line")); // Defidir se falta de recurso é erro ou não
 	_endPoint = _order_request.substr(0, pos);
 	_order_request.erase(0, pos + 1);
+	setenv("REQUEST_URI", _endPoint.c_str(), 1);
 	// write_debug_prefix("endPoint: ", _endPoint);
 	return (true);
 }
 
-bool	Parser_request::valid_htpp_version( void )
+bool	Parser_request::set_server_protocol( void )
 {
 	if (_order_request.size() != 9)
 		return (write_error_prefix("Invalid HTTP version: size"));
 	if (_order_request != "HTTP/1.1\r")
 		return (write_error_prefix("Invalid  HTTP version: msg"));
+	setenv("SERVER_PROTOCOL", "HTTP/1.1", 1);
 	return (true);
 }
 
-bool	Parser_request::parse_order_line( std::string** verbs )
+bool	Parser_request::set_envs_order_line( std::string** verbs )
 {
 	if (!save_requesition_line())
 		return (false);
-	if (!save_verb())
+	if (!set_method())
 		return (false);
 	if (!valid_verb(verbs))
 		return (false);
-	if (!save_endPoint())
+	if (!set_request_url())
 		return (false);
-	if (!valid_htpp_version())
+	if (!set_server_protocol())
 		return (false);
 	write_debug("\033[32mOrder Ok XD\n\033[0;37m");
 	return (true);

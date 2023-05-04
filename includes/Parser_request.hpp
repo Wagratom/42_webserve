@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 19:44:44 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:16:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@ class Parser_request
 		Parser_request( std::string& request_client );
 		~Parser_request();
 
-		bool	parse_order_line( std::string** verbs );
+		bool	set_envs_order_line( std::string** verbs );
 
 		bool	parse_requisition_line( void );
 		bool	save_requesition_line( void );
-		bool	save_verb( void );
+		bool	set_method( void );
 		bool	valid_verb( std::string** verbs );
-		bool	save_endPoint( void );
-		bool	valid_htpp_version( void );
+		bool	set_request_url( void );
+		bool	set_server_protocol( void );
 		bool	write_error_prefix( std::string prefix );
-		bool	write_msg_error(std::string message);
+
+		bool	set_envs_header( void );
 
 		std::string get_request( void );
 		std::string get_order_request( void );

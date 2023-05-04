@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 21:15:48 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:48:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ bool	Server::read_request(std::string& buffer)
 	char	tmp[1024];
 	int		bytes_read;
 
-	write_debug("Reading request");
 	while (true)
 	{
 		bytes_read = recv(_client_fd, tmp, 1, 0);
