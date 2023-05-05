@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:04:00 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 10:36:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:16:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static std::string	path_file( std::string endPoint, std::string filename )
 	return (std::string("." + endPoint + "/" + filename));
 }
 
-static std::string	get_path(std::string listNames, std::string endPoint, std::string& dst)
+bool	get_path(std::string listNames, std::string endPoint, std::string& dst)
 {
 	size_t	pos;
 
@@ -40,16 +40,17 @@ static std::string	get_path(std::string listNames, std::string endPoint, std::st
 		{
 			dst = path_file(endPoint, listNames.substr(0, pos));
 			if (open_file_status(dst))
-				return (dst);
+				return (true);
 			listNames = listNames.substr((pos + 1));
 		}
 	}
-	if (open_file_status(path_file(endPoint, listNames)))
-		return (path_file(endPoint, listNames));
-	return ("");
+	if (!open_file_status(path_file(endPoint, listNames)))
+		return (false);
+	dst = path_file(endPoint, listNames);
+	return (true);
 }
 
-std::string Server::generete_path_to_response( std::string& dst )
+bool	Server::generete_path_to_response( std::string& dst )
 {
 	std::string		listNames;
 	std::string		endPoint;

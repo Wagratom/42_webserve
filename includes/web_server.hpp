@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 10:37:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:48:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@
 # define NEW_CONNECTION 1
 
 # define CHILD 0
+
+# define ERROR404 104
+# define ERROR_SERVE 100
+
+# define CHILD_PROCESS 0
+
+struct s_ChildProcessInfo;
 
 class 	Server
 {
@@ -71,14 +78,17 @@ class 	Server
 
 		bool	set_client_not_block( void );
 		bool	read_request( std::string& buffer );
-		bool	parse_request( std::string& buffer );
-		bool	response_request( void );
+		bool	response_request( std::string& buffer );
+		bool	parse_order_request( std::string& buffer );
 
-		int		GET_requesition( void );
-		std::string	generete_path_to_response( std::string& dst );
-		bool	send_cgi( int fd[] );
+		int		handle_GET_requesition( void );
+		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
+		void	execute_cgi( void );
+		bool	response_get( s_ChildProcessInfo& tools_chuild );
+
+		bool	generete_path_to_response( std::string& dst );
 		bool	send_response_to_client( int response );
-		bool	filter_error_cgi();
+		void	send_response_error_to_client( int status );
 
 		bool	SET_requesition( void );
 		bool	DELETE_requesition( void );

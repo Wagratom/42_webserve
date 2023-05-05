@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_requesition_line.cpp                         :+:      :+:    :+:   */
+/*   set_envs_order_line.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 16:49:15 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/03 16:52:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:05:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,5 @@ bool	Parser_request::set_envs_order_line( std::string** verbs )
 		return (false);
 	if (!set_server_protocol())
 		return (false);
-	write_debug("\033[32mOrder Ok XD\n\033[0;37m");
 	return (true);
 }

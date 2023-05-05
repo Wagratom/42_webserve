@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:24:21 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 10:37:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:22:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ bool	Server::handle_client_request(epoll_event& event)
 		return (false);
 	if (read_request(buffer) == false)
 		return (false);
-	std::cout << buffer << std::endl;
-	if (parse_request(buffer) == false)
-		return (false);
-	if (response_request() == false)
+	// std::cout << buffer << std::endl;
+	if (response_request(buffer) == false)
 		return (false);
 	return (true);
 }

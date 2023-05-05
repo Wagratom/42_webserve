@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/03 17:44:34 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:38:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,21 @@
 # include <fstream>
 # include <cstdlib>
 # include <string>
-# include <sys/socket.h>
 # include <cstdio>
 # include <netinet/in.h>
 # include <iostream>
-# include <sys/epoll.h>
 # include <errno.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <signal.h>
 # include <cstring>
 # include <map>
+# include <sys/socket.h>
+# include <sys/epoll.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+
+
 
 class	Parser_configuration;
 class	location_configuration;
