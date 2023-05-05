@@ -6,18 +6,18 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/04 20:32:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/05 08:57:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-//					iterator mapa
 typedef	std::map<std::string, std::string>::iterator iterator_map;
 typedef	std::map<std::string, iterator_map>::iterator iterator_head;
 
-//					pointer para funcao
-// typedef	bool (*p_functions)(std::string&, iterator_map&);
+/*############################################################################*/
+/*                       functions to get the value                           */
+/*############################################################################*/
 
 static bool	request_host(std::string& host, std::map<std::string, std::string>& data_request)
 {
@@ -30,9 +30,9 @@ static bool	request_host(std::string& host, std::map<std::string, std::string>& 
 	pos = host.find(":");
 	if (pos == std::string::npos)
 		return (write_error("400 Bad Request: Host"));
-	data_request.find("http_host")->second = host;
-	data_request.find("server_name")->second = host.substr(0, pos);
-	data_request.find("server_port")->second = host.substr(pos  + 1);
+	data_request.find("HTTP_HOST")->second = host;
+	data_request.find("SERVER_NAME")->second = host.substr(0, pos);
+	data_request.find("SERVER_PORT")->second = host.substr(pos  + 1);
 	return (true);
 }
 
@@ -46,41 +46,35 @@ static std::string	get_data_pos_double_point(std::string& line)
 	return (line.substr(pos + 2));
 }
 
+/*############################################################################*/
+/*                          auxiliary functions                               */
+/*############################################################################*/
+
 static void	fill_maps(std::map<std::string, std::string>& envs, std::map<std::string, iterator_map>& key_value)
 {
-	envs["server_name"] = "";
-	envs["server_port"] = "";
-	envs["http_host"] = "";
-	envs["http_connection"] = "";
-	envs["http_cache_control"] = "";
-	envs["http_sec_ch_ua"] = "";
-	envs["http_sec_ch_ua_mobile"] = "";
-	envs["http_sec_ch_ua_platform"] = "";
-	envs["http_upgrade_insecure_requests"] = "";
-	envs["http_user_agent"] = "";
-	envs["http_accept"] = "";
-	envs["http_accept_encoding"] = "";
-	envs["http_accept_language"] = "";
-	envs["http_cookie"] = "";
+	envs["SERVER_NAME"] = "";
+	envs["SERVER_PORT"] = "";
+	envs["HTTP_HOST"] = "";
+	envs["HTTP_USER_AGENT"] = "";
+	envs["HTTP_ACCEPT"] = "";
+	envs["HTTP_ACCEPT_ENCODING"] = "";
+	envs["HTTP_ACCEPT_LANGUAGE"] = "";
+	envs["HTTP_COOKIE"] = "";
 
-	key_value["Connection"] = envs.find("http_connection");
-	key_value["Cache-Control:"] = envs.find("http_cache_control");
-	key_value["sec-ch-ua"] = envs.find("http_sec_ch_ua");
-	key_value["sec-ch-ua-mobile:"] = envs.find("http_sec_ch_ua_mobile");
-	key_value["sec-ch-ua-platform:"] = envs.find("http_sec_ch_ua_platform");
-	key_value["Upgrade-Insecure-Requests:"] = envs.find("http_upgrade_insecure_requests");
-	key_value["User-Agent:"] = envs.find("http_user_agent");
-	key_value["Accept:"] = envs.find("http_accept");
-	key_value["Accept-Encoding:"] = envs.find("http_accept_encoding");
-	key_value["Accept-Language:"] = envs.find("http_accept_language");
-	key_value["Cookie:"] = envs.find("http_cookie");
+	key_value["User-Agent:"] = envs.find("HTTP_USER_AGENT");
+	key_value["Accept:"] = envs.find("HTTP_ACCEPT");
+	key_value["Accept-Encoding:"] = envs.find("HTTP_ACCEPT_ENCODING");
+	key_value["Accept-Language:"] = envs.find("HTTP_ACCEPT_LANGUAGE");
+	key_value["Cookie:"] = envs.find("HTTP_COOKIE");
 }
 
 static bool	get_line_request(std::string& dst, std::string& request)
 {
 	size_t	pos;
 
-	if (!request.empty())
+	if (request.empty())
+		return (false);
+	else
 	{
 		pos = request.find("\r\n");
 		if (pos == std::string::npos)
@@ -88,9 +82,27 @@ static bool	get_line_request(std::string& dst, std::string& request)
 		dst = request.substr(0, pos);
 		request = request.substr(pos + 2);
 	}
-	else
-		return (false);
 	return (true);
+}
+
+/*############################################################################*/
+/*                              SET ENVS HEADER                               */
+/*############################################################################*/
+
+static bool	handle_line(std::string line, std::map<std::string, iterator_map>& key_value);
+
+static void	set_envs(std::map<std::string, std::string>& envs)
+{
+	iterator_map	it;
+
+	it = envs.begin();
+	while (it != envs.end())
+	{
+		if (it->second.empty())
+			it->second = "null";
+		setenv(it->first.c_str(), it->second.c_str(), 1);
+		it++;
+	}
 }
 
 bool Parser_request::set_envs_header(void)
@@ -98,39 +110,40 @@ bool Parser_request::set_envs_header(void)
 	std::map<std::string, std::string> envs;
 	std::map<std::string, iterator_map> key_value;
 	std::string line;
-	std::string tmp;
 
 	fill_maps(envs, key_value);
-
-	std::cout << std::endl;
 	while (get_line_request(line, _request))
 	{
 		if (line.compare(0, 4, "Host") == 0)
 		{
 			if (!request_host(line, envs))
 				return (false);
-			continue;
 		}
-		for (iterator_head it = key_value.begin(); it != key_value.end(); it++)
-		{
-			if (line.compare(0, it->first.length(), it->first) == 0)
-			{
-				tmp = get_data_pos_double_point(line);
-				if (tmp.empty())
-					return (write_error("400 Bad Request: Header"));
-				std::cout << "tmp: " << tmp << std::endl << std::endl;
-				it->second->second = tmp;
-				break ;
-			}
-		}
+		else
+			handle_line(line, key_value);
 	}
-
-	for (iterator_map it = envs.begin(); it != envs.end(); it++)
-	{
-		std::cout << it->first << " : " << it->second << std::endl;
-	}
-
-	return true;
+	set_envs(envs);
+	return (true);
 }
 
+static bool handle_line(std::string line, std::map<std::string, iterator_map>& key_value)
+{
+	std::string tmp;
+	iterator_head it;
+
+	it = key_value.begin();
+	while (it != key_value.end())
+	{
+		if (line.compare(0, it->first.length(), it->first) == 0)
+		{
+			tmp = get_data_pos_double_point(line);
+			if (tmp.empty())
+				return (write_error("400 Bad Request: Header"));
+			it->second->second = tmp;
+			return (true);
+		}
+		it++;
+	}
+	return (false);
+}
 

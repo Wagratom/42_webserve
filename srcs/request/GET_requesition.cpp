@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 11:35:31 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/03 16:52:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:38:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,34 @@
 
 int	Server::GET_requesition( void )
 {
-	write_debug("GET request response");
+	int fd[2];
 
-	std::string end_point = _parser_request->get_endPoint();
-	std::string filename = server()->get_index();
-
+	if (pipe(fd) == -1)
+		write_error("Error: Server::GET_requesition: pipe");
 	int pid = fork();
+	if (pid == -1)
+		write_error("Error: Server::GET_requesition: fork");
 	if (pid == 0)
 	{
-		// setenv("REQUEST_METHOD", _parser_request->get_metodo().c_str(), 1);
-		setenv("CONTENT_TYPE", TYPE_HTML, 1);
+		char**	argv = new char*[3];
 
-		char** argv = new char*[3];
-
+		close(fd[0]);
+		dup2(fd[1], STDOUT_FILENO);
 		argv[0] = (char *)"/usr/bin/php-cgi";
-		argv[1] = (char *)"./wagratom/index.php";
+		argv[1] = (char *)_parser_request->get_endPoint().c_str();
 		argv[2] = NULL;
-		execve("/usr/bin/php-cgi", argv, NULL);
+		if (execve("/usr/bin/php-cgi", argv, NULL) == -1)
+		{
+			perror("execve");
+			exit(EXIT_FAILURE);
+		}
 	}
-	else
-	{
-		waitpid(pid, NULL, 0);
-	}
+	close(fd[1]);
+	waitpid(pid, NULL, 0);
+	char buffer[5000];
+
+	while (read(fd[0], buffer, 5000));
+	std::cout << buffer << std::endl;
 	return (true);
 }
 
