@@ -6,114 +6,131 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/04 18:57:54 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/04 20:32:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
+//					iterator mapa
+typedef	std::map<std::string, std::string>::iterator iterator_map;
+typedef	std::map<std::string, iterator_map>::iterator iterator_head;
 
-bool	request_host(std::string& host, std::map<std::string, std::string>& data_request)
+//					pointer para funcao
+// typedef	bool (*p_functions)(std::string&, iterator_map&);
+
+static bool	request_host(std::string& host, std::map<std::string, std::string>& data_request)
 {
 	size_t pos;
 
-	std::cout << "host: " << host << std::endl;
 	pos = host.find(":");
 	if (pos == std::string::npos)
-		return (write_error("400 Bad Request"));
+		return (write_error("400 Bad Request: Host"));
 	host = host.substr(pos + 2);
 	pos = host.find(":");
 	if (pos == std::string::npos)
-		return (write_error("400 Bad Request"));
+		return (write_error("400 Bad Request: Host"));
+	data_request.find("http_host")->second = host;
 	data_request.find("server_name")->second = host.substr(0, pos);
 	data_request.find("server_port")->second = host.substr(pos  + 1);
 	return (true);
 }
 
-bool	get_data_pos_double_point(std::string& line, std::map<std::string, std::string>& data_request)
+static std::string	get_data_pos_double_point(std::string& line)
 {
-	size_t	pos = line.find(":");
+	size_t	pos;
 
+	pos = line.find(":");
 	if (pos == std::string::npos)
-		return (write_error("400 Bad Request"));
-	line = line.substr(pos + 2);
-	return (true);
-}
-/*
- std::string request_method = "GET";
-    std::string request_uri = "/wagratom";
-    std::string http_version = "HTTP/1.1";
-    std::string server_name = "localhost";
-    std::string server_port = "8080";
-    std::string http_host = "localhost:8080";
-    std::string http_connection = "keep-alive";
-    std::string http_cache_control = "max-age=0";
-    std::string http_sec_ch_ua = "\"Chromium\";v=\"112\", \"Microsoft Edge\";v=\"112\", \"Not:A-Brand\";v=\"99\"";
-    std::string http_sec_ch_ua_mobile = "?0";
-    std::string http_sec_ch_ua_platform = "\"Windows\"";
-    std::string http_upgrade_insecure_requests = "1";
-    std::string http_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.39";
-    std::string http_accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,
-    std::string http
-*/
-
-static void	fill_map_envs(std::map<std::string, std::string>& data_request)
-{
-	data_request["server_name"] = "";
-	data_request["server_port"] = "";
-	data_request["http_host"] = "";
-	data_request["http_connection"] = "";
-	data_request["http_cache_control"] = "";
-	data_request["http_sec_ch_ua"] = "";
-	data_request["http_sec_ch_ua_mobile"] = "";
-	data_request["http_sec_ch_ua_platform"] = "";
-	data_request["http_upgrade_insecure_requests"] = "";
-	data_request["http_user_agent"] = "";
-	data_request["http_accept"] = ""; 
+		return ("");
+	return (line.substr(pos + 2));
 }
 
-typedef bool (*p_functions)(std::string&, std::map<std::string, std::string>&);
-
-static void	fill_map_functions(std::map<std::string, p_functions>& functions)
+static void	fill_maps(std::map<std::string, std::string>& envs, std::map<std::string, iterator_map>& key_value)
 {
-	functions["Host"] = &request_host;
-	functions["Connection"] = NULL;
-	functions["Cache-Control:"] = NULL;
-	functions["sec-ch-ua"] = NULL;
-	functions["sec-ch-ua-mobile:"] = NULL;
-	functions["sec-ch-ua-platform:"] = NULL;
-	functions["Upgrade-Insecure-Requests:"] = NULL;
-	functions["User-Agent:"] = NULL;
-	functions["Accept:"] = NULL;
-	functions["Accept-Encoding:"] = NULL;
-	functions["Accept-Language:"] = NULL;
-	functions["Cookie:"] = NULL;
+	envs["server_name"] = "";
+	envs["server_port"] = "";
+	envs["http_host"] = "";
+	envs["http_connection"] = "";
+	envs["http_cache_control"] = "";
+	envs["http_sec_ch_ua"] = "";
+	envs["http_sec_ch_ua_mobile"] = "";
+	envs["http_sec_ch_ua_platform"] = "";
+	envs["http_upgrade_insecure_requests"] = "";
+	envs["http_user_agent"] = "";
+	envs["http_accept"] = "";
+	envs["http_accept_encoding"] = "";
+	envs["http_accept_language"] = "";
+	envs["http_cookie"] = "";
+
+	key_value["Connection"] = envs.find("http_connection");
+	key_value["Cache-Control:"] = envs.find("http_cache_control");
+	key_value["sec-ch-ua"] = envs.find("http_sec_ch_ua");
+	key_value["sec-ch-ua-mobile:"] = envs.find("http_sec_ch_ua_mobile");
+	key_value["sec-ch-ua-platform:"] = envs.find("http_sec_ch_ua_platform");
+	key_value["Upgrade-Insecure-Requests:"] = envs.find("http_upgrade_insecure_requests");
+	key_value["User-Agent:"] = envs.find("http_user_agent");
+	key_value["Accept:"] = envs.find("http_accept");
+	key_value["Accept-Encoding:"] = envs.find("http_accept_encoding");
+	key_value["Accept-Language:"] = envs.find("http_accept_language");
+	key_value["Cookie:"] = envs.find("http_cookie");
 }
 
-bool	get_line_request(std::string& dst, std::string request)
+static bool	get_line_request(std::string& dst, std::string& request)
 {
-	size_t	pos = request.find("\r\n");
-	if (pos == std::string::npos)
+	size_t	pos;
+
+	if (!request.empty())
+	{
+		pos = request.find("\r\n");
+		if (pos == std::string::npos)
+			pos =  request.length();
+		dst = request.substr(0, pos);
+		request = request.substr(pos + 2);
+	}
+	else
 		return (false);
-	dst = request.substr(0, pos);
 	return (true);
 }
-
 
 bool Parser_request::set_envs_header(void)
 {
-	std::map<std::string, std::string> value_envs;
-	std::map<std::string, p_functions> functions;
+	std::map<std::string, std::string> envs;
+	std::map<std::string, iterator_map> key_value;
 	std::string line;
+	std::string tmp;
 
-	fill_map_envs(value_envs);
-	fill_map_functions(functions);
-	get_line_request(line, _request);
-	return (true);
-	for (typename std::map<std::string, std::string>::iterator it = value_envs.begin(); it != value_envs.end(); it++)
+	fill_maps(envs, key_value);
+
+	std::cout << std::endl;
+	while (get_line_request(line, _request))
 	{
-		std::string chave = it->first;
-		std::string valor = it->second;
+		if (line.compare(0, 4, "Host") == 0)
+		{
+			if (!request_host(line, envs))
+				return (false);
+			continue;
+		}
+		for (iterator_head it = key_value.begin(); it != key_value.end(); it++)
+		{
+			if (line.compare(0, it->first.length(), it->first) == 0)
+			{
+				tmp = get_data_pos_double_point(line);
+				if (tmp.empty())
+					return (write_error("400 Bad Request: Header"));
+				std::cout << "tmp: " << tmp << std::endl << std::endl;
+				it->second->second = tmp;
+				break ;
+			}
+		}
 	}
+
+	for (iterator_map it = envs.begin(); it != envs.end(); it++)
+	{
+		std::cout << it->first << " : " << it->second << std::endl;
+	}
+
 	return true;
 }
+
+
