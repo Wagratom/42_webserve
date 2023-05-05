@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 10:33:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:37:09 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ class 	Server
 		bool	is_closed_or_error_event( epoll_event& event );
 		bool	handle_client_request( epoll_event& event );
 
-		bool	set_client_no_block( void );
+		bool	set_client_not_block( void );
 		bool	read_request( std::string& buffer );
 		bool	parse_request( std::string& buffer );
 		bool	response_request( void );
