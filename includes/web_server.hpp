@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/03 14:23:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:33:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,10 @@ class 	Server
 		bool	response_request( void );
 
 		int		GET_requesition( void );
-		bool	open_file_index( std::ifstream& file );
-		bool	serv_webpage( std::ifstream& file);
+		std::string	generete_path_to_response( std::string& dst );
+		bool	send_cgi( int fd[] );
+		bool	send_response_to_client( int response );
+		bool	filter_error_cgi();
 
 		bool	SET_requesition( void );
 		bool	DELETE_requesition( void );
