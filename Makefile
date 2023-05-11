@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/05/05 17:52:39 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/05/09 10:37:53 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ CFLAGS	=	-Wall -Wextra -Werror
 RM		=	rm -rf
 
 VPATH	=	./srcs \
-VPATH	=	./srcs/initialize_class \
+			./srcs/initialize_class \
 			./srcs/events \
 			./srcs/list/read_file ./srcs/list/location \
 			./srcs/parser ./srcs/parser/server ./srcs/parser/location ./srcs/parser/universal \

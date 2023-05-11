@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:04:00 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 13:16:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/11 20:44:47 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static bool	open_file_status( std::string path )
 	return (true);
 }
 
-static std::string	path_file( std::string endPoint, std::string filename )
+static std::string	path_file( std::string root, std::string filename )
 {
-	if (endPoint == "/")
-		return (std::string("./" + filename));
-	return (std::string("." + endPoint + "/" + filename));
+	if (root[root.size() - 1] == '/')
+		return (std::string(root + filename));
+	return (std::string("." + root + "/" + filename));
 }
 
-bool	get_path(std::string listNames, std::string endPoint, std::string& dst)
+bool	get_path(std::string listNames, std::string root, std::string& dst)
 {
 	size_t	pos;
 
@@ -38,27 +38,28 @@ bool	get_path(std::string listNames, std::string endPoint, std::string& dst)
 		pos = listNames.find_first_of(" \t");
 		if (pos != std::string::npos)
 		{
-			dst = path_file(endPoint, listNames.substr(0, pos));
+			dst = path_file(root, listNames.substr(0, pos));
 			if (open_file_status(dst))
 				return (true);
 			listNames = listNames.substr((pos + 1));
 		}
 	}
-	if (!open_file_status(path_file(endPoint, listNames)))
+	if (!open_file_status(path_file(root, listNames)))
 		return (false);
-	dst = path_file(endPoint, listNames);
+	dst = path_file(root, listNames);
 	return (true);
 }
 
 bool	Server::generete_path_to_response( std::string& dst )
 {
 	std::string		listNames;
-	std::string		endPoint;
+	std::string		root;
 
 	listNames = server()->get_index();
-	endPoint = _parser_request->get_endPoint();
-	if (listNames.empty() || endPoint.empty())
+	root = server()->get_root();
+	std::cout << "root: " << root << std::endl;
+	if (listNames.empty() || root.empty())
 		return ("");
-	return (get_path(listNames, endPoint, dst));
+	return (get_path(listNames, root, dst));
 }
 

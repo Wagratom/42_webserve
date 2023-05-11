@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 18:04:49 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/11 20:44:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static bool	execute_fork( ChildProcessInfo& infos)
 /*############################################################################*/
 /*                         Executing cgi program                              */
 /*############################################################################*/
+
 bool	Server::execute_cgi_in_chuild( ChildProcessInfo& tools_chuild )
 {
 	if (execute_fork(tools_chuild) == false)
@@ -83,17 +84,19 @@ int	Server::handle_GET_requesition( void )
 /*                         response GET client                             */
 /*############################################################################*/
 
-bool	Server::response_get( ChildProcessInfo& tools_chuild )
+void	Server::response_get( ChildProcessInfo& tools_chuild )
 {
 	close(tools_chuild.fd[1]);
 	waitpid(tools_chuild.pid, &tools_chuild.status, 0);
 	tools_chuild.exit_status = WEXITSTATUS(tools_chuild.status);
 	write_debug_number("Status: ", tools_chuild.exit_status);
 	if (WEXITSTATUS(tools_chuild.status) == 0)
-		send_response_to_client(tools_chuild.fd[0]);
+	{
+		if (send_response_to_client(tools_chuild.fd[0]) == false)
+			send_response_error_to_client( ERROR_SERVE );
+	}
 	else
 		send_response_error_to_client( tools_chuild.exit_status );
-	return (true);
 }
 
 void	Server::send_response_error_to_client( int status )

@@ -17,6 +17,7 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
 Cookie: wp-settings-time-3=1680293779; wp-settings-time-1=1680607718
 
+
 POST /usr/bin/php-cgi HTTP/1.1
 Host: localhost:8080
 Connection: keep-alive

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 17:48:35 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:32:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ class 	Server
 		int		handle_GET_requesition( void );
 		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
 		void	execute_cgi( void );
-		bool	response_get( s_ChildProcessInfo& tools_chuild );
+		void	response_get( s_ChildProcessInfo& tools_chuild );
 
 		bool	generete_path_to_response( std::string& dst );
 		bool	send_response_to_client( int response );
