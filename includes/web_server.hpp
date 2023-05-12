@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 19:32:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/05/11 21:09:12 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@
 
 # define CHILD_PROCESS 0
 
-struct s_ChildProcessInfo;
+typedef struct s_ChildProcessInfo {
+	int	fd[2];
+	int	pid;
+	int	status;
+	int	exit_status;
+
+} ChildProcessInfo;
 
 class 	Server
 {
@@ -87,7 +93,7 @@ class 	Server
 		void	response_get( s_ChildProcessInfo& tools_chuild );
 
 		bool	generete_path_to_response( std::string& dst );
-		bool	send_response_to_client( int response );
+		bool	send_response_to_client( int& buffer_html );
 		void	send_response_error_to_client( int status );
 
 		bool	SET_requesition( void );
