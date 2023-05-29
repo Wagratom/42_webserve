@@ -12,63 +12,25 @@
 
 #include <web_server.hpp>
 
-static bool	verift_error(int bytes_read)
+bool	Server::read_request_status(char* tmp, int& bytes_read)
 {
-	if (bytes_read != -1)
-		return (false);
-	if (errno == EAGAIN || errno == EWOULDBLOCK) // Erros for not data to read // valid error
-		return (false);
-	return (true);
+	bytes_read = recv(_client_fd, tmp, 1024, 0);
+	if (std::string(tmp).find("\r\n\r\n") != std::string::npos)
+		return (true);
+	return (false);
 }
-
-// static long int	get_multiplier(std::string client_max_body_size)
-// {
-// 	int	end_string;
-
-// 	end_string = client_max_body_size.length() - 1;
-// 	if (client_max_body_size[end_string] == 'K')
-// 		return (1024);
-// 	else if (client_max_body_size[end_string] == 'M')
-// 		return (1024 * 1024);
-// 	else if (client_max_body_size[end_string] == 'G')
-// 		return (1024 * 1024 * 1024);
-// 	return (1);
-// }
-
-// static long int	generete_client_max_body_size(std::string client_max_body_size)
-// {
-// 	int long	max_body_size;
-// 	int			end_string;
-// 	int			multiplier;
-
-// 	end_string = client_max_body_size.length() - 1;
-// 	multiplier = get_multiplier(client_max_body_size);
-// 	if (!isdigit(client_max_body_size[end_string]))
-// 		client_max_body_size.erase(end_string);
-// 	max_body_size = std::atoi(client_max_body_size.c_str());
-// 	max_body_size *= multiplier;
-// 	return (max_body_size);
-// }
 
 bool	Server::read_request(std::string& buffer)
 {
-	char		tmp[1024];
-	int			bytes_read;
-	long int	bytes_total;
-	// long int	max_body_size;
+	int		bytes_read;
+	char	tmp[1024];
+	bool	is_end;
 
-	bytes_total = 0;
-	// max_body_size = generete_client_max_body_size(server()->get_client_max_body_size());
-	while (true)
+	is_end = false;
+	while (is_end == false)
 	{
-		bytes_read = recv(_client_fd, tmp, 1024, 0);
-		if (verift_error(bytes_read))
-			return (write_error_prefix("read_request"));
-		if (bytes_read == 0 || bytes_read == -1)
-			break ;
-		bytes_total += bytes_read;
-		// if (bytes_total > max_body_size)
-			// return (write_error_prefix("Error: read_request: 413 Payload Too Large"));
+		if (read_request_status(tmp, bytes_read))
+			is_end = true;
 		buffer.append((char*)tmp, bytes_read);
 	}
 	return (true);

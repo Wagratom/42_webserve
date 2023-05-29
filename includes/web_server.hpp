@@ -84,6 +84,7 @@ class 	Server
 
 		bool	set_client_not_block( void );
 		bool	read_request( std::string& buffer );
+		bool	read_request_status(char* tmp, int& bytes_read);
 		bool	response_request( std::string& buffer );
 		bool	parse_order_request( std::string& buffer );
 
