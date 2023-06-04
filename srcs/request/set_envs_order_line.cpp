@@ -34,8 +34,8 @@ bool	Parser_request::set_method( void )
 		return (write_error_prefix("Invalid requesition line: get_verb"));
 	_metodo = _order_request.substr(0, (pos - 1));
 	_order_request.erase(0, pos);
-	setenv("REQUEST_METHOD", _metodo.c_str(), 1);
-	// write_debug_prefix("Verb: ", _metodo);
+	std::string aux = "REQUEST_METHOD=" + _metodo;
+	_envs[_index_envs++] = strdup(aux.c_str());
 	return (true);
 }
 
@@ -58,8 +58,8 @@ bool	Parser_request::set_request_url( void )
 		return (write_error_prefix("Error: Parser_request: Invalid orde_request line")); // Defidir se falta de recurso é erro ou não
 	_endPoint = _order_request.substr(0, pos);
 	_order_request.erase(0, pos + 1);
-	setenv("REQUEST_URI", _endPoint.c_str(), 1);
-	// write_debug_prefix("endPoint: ", _endPoint);
+	// std::string aux = "REQUEST_URI=" + _endPoint;
+	// _envs[_index_envs++] = strdup(aux.c_str());
 	return (true);
 }
 
@@ -69,7 +69,8 @@ bool	Parser_request::set_server_protocol( void )
 		return (write_error_prefix("Invalid HTTP version: size"));
 	if (_order_request != "HTTP/1.1\r")
 		return (write_error_prefix("Invalid  HTTP version: msg"));
-	setenv("SERVER_PROTOCOL", "HTTP/1.1", 1);
+	std::string aux = "SERVER_PROTOCOL=" + _order_request.substr(0, 8);
+	_envs[_index_envs++] = strdup(aux.c_str());
 	return (true);
 }
 

@@ -30,7 +30,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				gets_location_configuration.cpp sets_location_configuration.cpp \
 				gets_Parser_configuration.cpp sets_server_configuration.cpp \
 				read_request.cpp parser_request.cpp response_request.cpp \
-				handle_GET_requesition.cpp SET_requesition.cpp DELETE_requesition.cpp \
+				handle_GET_requesition.cpp DELETE_requesition.cpp \
 				generete_path_to_response.cpp clean_request.cpp execute_cgi.cpp \
 				response_get.cpp
 

@@ -31,7 +31,6 @@ static bool	request_host(std::string& host, std::map<std::string, std::string>& 
 	if (pos == std::string::npos)
 		return (write_error("400 Bad Request: Host"));
 	data_request.find("HTTP_HOST")->second = host;
-	data_request.find("SERVER_NAME")->second = host.substr(0, pos);
 	data_request.find("SERVER_PORT")->second = host.substr(pos  + 1);
 	return (true);
 }
@@ -52,7 +51,7 @@ static std::string	get_data_pos_double_point(std::string& line)
 
 static void	fill_maps(std::map<std::string, std::string>& envs, std::map<std::string, iterator_map>& key_value)
 {
-	envs["SERVER_NAME"] = "";
+	// envs["SERVER_NAME"] = "";
 	envs["SERVER_PORT"] = "";
 	envs["HTTP_HOST"] = "";
 	envs["HTTP_USER_AGENT"] = "";
@@ -60,28 +59,36 @@ static void	fill_maps(std::map<std::string, std::string>& envs, std::map<std::st
 	envs["HTTP_ACCEPT_ENCODING"] = "";
 	envs["HTTP_ACCEPT_LANGUAGE"] = "";
 	envs["HTTP_COOKIE"] = "";
+	envs["CONTENT_LENGTH"] = "";
+	envs["CONTENT_TYPE"]= "";
+	envs["HTTP_CONNECTION"]= "";
 
+	key_value["Connection:"] = envs.find("HTTP_CONNECTION");
 	key_value["User-Agent:"] = envs.find("HTTP_USER_AGENT");
 	key_value["Accept:"] = envs.find("HTTP_ACCEPT");
 	key_value["Accept-Encoding:"] = envs.find("HTTP_ACCEPT_ENCODING");
 	key_value["Accept-Language:"] = envs.find("HTTP_ACCEPT_LANGUAGE");
 	key_value["Cookie:"] = envs.find("HTTP_COOKIE");
+	key_value["Content-Length:"] = envs.find("CONTENT_LENGTH");
+	key_value["Content-Type:"] = envs.find("CONTENT_TYPE");
 }
 
 static bool	get_line_request(std::string& dst, std::string& request)
 {
 	size_t	pos;
 
-	if (request.empty())
+	if (!request.length())
 		return (false);
 	else
 	{
 		pos = request.find("\r\n");
 		if (pos == std::string::npos)
-			pos =  request.length();
+			return (false);
 		dst = request.substr(0, pos);
 		request = request.substr(pos + 2);
 	}
+	if (dst.empty() || dst == "\r\n\r\n")
+		return (false);
 	return (true);
 }
 
@@ -91,7 +98,7 @@ static bool	get_line_request(std::string& dst, std::string& request)
 
 static bool	handle_line(std::string line, std::map<std::string, iterator_map>& key_value);
 
-static void	set_envs(std::map<std::string, std::string>& envs)
+void	Parser_request::set_envs(std::map<std::string, std::string>& envs)
 {
 	iterator_map	it;
 
@@ -100,9 +107,11 @@ static void	set_envs(std::map<std::string, std::string>& envs)
 	{
 		if (it->second.empty())
 			it->second = "null";
-		setenv(it->first.c_str(), it->second.c_str(), 1);
+		_envs[_index_envs++] = strdup((it->first + "=" + it->second).c_str());
 		it++;
 	}
+	_envs[_index_envs] = NULL;
+	std::cout << "----------------------------------------" << std::endl;
 }
 
 bool Parser_request::set_envs_header(void)
@@ -112,6 +121,7 @@ bool Parser_request::set_envs_header(void)
 	std::string line;
 
 	fill_maps(envs, key_value);
+	std::cout << _request << std::endl;
 	while (get_line_request(line, _request))
 	{
 		if (line.compare(0, 4, "Host") == 0)
@@ -123,6 +133,9 @@ bool Parser_request::set_envs_header(void)
 			handle_line(line, key_value);
 	}
 	set_envs(envs);
+	std::cout << "\n------------------ENV------------------" << std::endl;
+	for (int i = 0; _envs[i]; i++)
+		std::cout << _envs[i] << std::endl;
 	return (true);
 }
 
@@ -146,4 +159,3 @@ static bool handle_line(std::string line, std::map<std::string, iterator_map>& k
 	}
 	return (false);
 }
-

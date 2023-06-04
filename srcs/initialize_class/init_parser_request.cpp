@@ -14,6 +14,13 @@
 
 Parser_request::Parser_request( std::string& request_client)
 	: _request(request_client)
+	, _order_request("")
+	, _metodo("")
+	, _endPoint("")
+	, _envs(new char*[50])
+	, _index_envs(0)
 {};
 
-Parser_request::~Parser_request() {}
+Parser_request::~Parser_request() {
+	delete [] _envs;
+}

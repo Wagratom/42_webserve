@@ -43,6 +43,7 @@ bool	Server::accept_status( int& new_client )
 	new_client = accept(_server_fd, NULL, NULL);
 	if (new_client == -1)
 		return (write_error_prefix("accept_status"));
+	// write_debug("\n\nNew connection accepted");
 	return (true);
 }
 

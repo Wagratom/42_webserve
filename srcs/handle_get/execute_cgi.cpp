@@ -24,6 +24,7 @@ static bool	execute_fork( ChildProcessInfo& infos)
 
 bool	Server::execute_cgi_in_chuild( ChildProcessInfo& tools_chuild )
 {
+	std::cout << "execute_cgi_in_chuild" << std::endl;
 	if (execute_fork(tools_chuild) == false)
 		return (false);
 	if (tools_chuild.pid == CHILD_PROCESS)
@@ -45,7 +46,7 @@ void	Server::execute_cgi( void )
 	argv[0] = (char *)"/usr/bin/php-cgi";
 	argv[1] = (char *)path.c_str();
 	argv[2] = NULL;
-	if (execve("/usr/bin/php-cgi", argv, NULL) == -1)
+	if (execve("/usr/bin/php-cgi7.4", argv, NULL) == -1)
 		exit(ERROR_SERVE);
 	exit(ERROR_SERVE);
 }

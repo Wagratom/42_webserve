@@ -88,11 +88,12 @@ class 	Server
 		bool	response_request( std::string& buffer );
 		bool	parse_order_request( std::string& buffer );
 
-		int		handle_GET_requesition( void );
+		bool	handle_GET_requesition( void );
 		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
 		void	execute_cgi( void );
 		void	response_get( s_ChildProcessInfo& tools_chuild );
 
+		bool	handle_POST_requesition( void );
 		bool	generete_path_to_response( std::string& dst );
 		bool	send_response_to_client( int& buffer_html );
 		void	send_response_error_to_client( int status );

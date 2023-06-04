@@ -30,3 +30,13 @@ std::string	Parser_request::get_endPoint( void )
 {
 	return ( this->_endPoint );
 }
+
+char**	Parser_request::get_envs( void )
+{
+	return ( this->_envs );
+}
+
+int	Parser_request::get_index_envs( void )
+{
+	return ( this->_index_envs );
+}

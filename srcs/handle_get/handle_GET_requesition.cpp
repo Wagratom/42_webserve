@@ -17,13 +17,12 @@
 /*                         Handle GET requesition                             */
 /*############################################################################*/
 
-int	Server::handle_GET_requesition( void )
+bool	Server::handle_GET_requesition( void )
 {
 	ChildProcessInfo child_info;
 
 	child_info = (ChildProcessInfo){0, 0, 0, 0, 0}; // initialize struct with 0
-	if (_parser_request->set_envs_header() == false)
-		return (false);
+
 	if (execute_cgi_in_chuild(child_info) == false)
 		return (false);
 	close(child_info.fd[1]);

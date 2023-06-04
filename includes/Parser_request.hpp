@@ -31,15 +31,21 @@ class Parser_request
 		bool	write_error_prefix( std::string prefix );
 
 		bool	set_envs_header( void );
+		void	set_envs(std::map<std::string, std::string>& envs);
 
-		std::string get_request( void );
-		std::string get_order_request( void );
-		std::string get_metodo( void );
-		std::string get_endPoint( void );
+		std::string	get_request( void );
+		std::string	get_order_request( void );
+		std::string	get_metodo( void );
+		std::string	get_endPoint( void );
+		char**		get_envs( void );
+		int			get_index_envs( void );
+
 
 	private:
-		std::string					_request;
-		std::string					_order_request;
-		std::string					_metodo;
-		std::string					_endPoint;
+		std::string		_request;
+		std::string		_order_request;
+		std::string		_metodo;
+		std::string		_endPoint;
+		char**			_envs;
+		int				_index_envs;
 };

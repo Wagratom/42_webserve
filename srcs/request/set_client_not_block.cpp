@@ -14,11 +14,12 @@
 
 bool	Server::set_client_not_block( void )
 {
-	int	flags	= fcntl(_client_fd, F_GETFL, 0);
+	int	properties;
 
-	if (flags == -1)
+	properties = fcntl(_client_fd, F_GETFL, 0);
+	if (properties == -1)
 		return (write_error_prefix("Error: set_client_not_block: not get properties"));
-	if (fcntl(_client_fd, F_SETFL, flags | O_NONBLOCK) == -1)
+	if (fcntl(_client_fd, F_SETFL, properties | O_NONBLOCK) == -1)
 		return (write_error_prefix("Error: set_client_not_block: not set properties"));
 	return (true);
 }

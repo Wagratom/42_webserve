@@ -1,4 +1,4 @@
 #!/usr/bin/php-cgi
 <?php
-phpinfo();
+echo "Valor do login: "
 ?>
