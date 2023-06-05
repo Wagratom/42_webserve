@@ -13,10 +13,6 @@
 #include <web_server.hpp>
 #include <sstream>
 
-/*############################################################################*/
-/*                         Handle GET requesition                             */
-/*############################################################################*/
-
 struct aux_read_file
 {
 	std::string			content;
@@ -25,15 +21,6 @@ struct aux_read_file
 	std::ostringstream	oss;
 	std::string			header;
 };
-
-bool Server::handle_GET_requesition_html( std::string& path)
-{
-	if (path == "/")
-		return open_server_index();
-	else
-		return open_required_file(path);
-	return (true);
-}
 
 static bool	get_content_file(aux_read_file& dst)
 {
@@ -49,6 +36,61 @@ static bool	get_content_file(aux_read_file& dst)
 	return (true);
 }
 
+static std::map<std::string, std::string>	generete_dictionary_type()
+{
+	static std::map<std::string, std::string> types;
+
+	types[".html"] = "text/html";
+	types[".css"] = "text/css";
+	types[".js"] = "text/javascript";
+	types[".png"] = "image/png";
+	types[".jpg"] = "image/jpeg";
+	types[".gif"] = "image/gif";
+	types[".svg"] = "image/svg+xml";
+	types[".ico"] = "image/x-icon";
+	types[".txt"] = "text/plain";
+	return (types);
+}
+
+static const std::string	getContentType(const std::string& path)
+{
+	static	std::map<std::string, std::string> dictionary_types = generete_dictionary_type();
+
+	std::string extension = path.substr(path.find_last_of('.'));
+	if (dictionary_types.find(extension) != dictionary_types.end())
+		return (dictionary_types[extension]);
+	return ("text/plain");
+}
+
+static void	create_header(aux_read_file& tmp)
+{
+	tmp.oss << tmp.size;
+	tmp.header = "HTTP/1.1 200 OK\r\n";
+	tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n";
+	tmp.header += "Content-Length: " + tmp.oss.str() + "\r\n\r\n";
+
+}
+/*############################################################################*/
+/*                         Handle GET requesition                             */
+/*############################################################################*/
+
+bool Server::handle_GET_requesition_html( std::string& path)
+{
+	if (path == "/")
+		return open_server_index();
+	if	(open_required_file(path))
+		return (true);
+	else
+	{
+		std::string header = "HTTP/1.1 404 Not Found\r\n"
+							 "Content-Type: text/html\r\n";
+		std::string content = "<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p></body></html>";
+		send(_client_fd, header.c_str(), header.size(), 0);
+		send(_client_fd, content.c_str(), content.size(), 0);
+	}
+	return (true);
+}
+
 bool	Server::open_server_index( void )
 {
 	aux_read_file tmp;
@@ -57,10 +99,7 @@ bool	Server::open_server_index( void )
 		return (false);
 	if (!get_content_file(tmp))
 		return (false);
-	tmp.oss << tmp.size;
-	tmp.header = "HTTP/1.1 200 OK\r\n";
-	tmp.header += "Content-Type: text/html\r\n";
-	tmp.header += "Content-Length: " + tmp.oss.str() + "\r\n\r\n";
+	create_header(tmp);
 	send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
 	send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
 	return (true);
@@ -73,21 +112,10 @@ bool Server::open_required_file(std::string& path)
 
 	if (get_content_file(tmp))
 	{
-		execve("/usr/bin/php-cgi7.4", NULL, NULL);
-		tmp.header = "HTTP/1.1 200 OK\r\n";
-		tmp.header += "Content-Type: text/html\r\n";
-		tmp.header += "Content-Length: " + tmp.oss.str() + "\r\n\r\n";
-		tmp.oss << tmp.size;
+		create_header(tmp);
 		send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
 		send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
 	}
-	else
-	{
-		tmp.header = "HTTP/1.1 404 Not Found\r\n";
-		tmp.header += "Content-Type: image/x-icon\r\n";
-		tmp.content = "<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p></body></html>";
-		send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
-		send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
-	}
+
 	return (true);
 }
