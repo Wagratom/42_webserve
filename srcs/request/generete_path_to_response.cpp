@@ -55,6 +55,7 @@ bool	Server::generete_path_to_response( std::string& dst )
 	std::string		listNames;
 	std::string		root;
 
+	dst.clear();
 	listNames = server()->get_index();
 	root = server()->get_root();
 	std::cout << "root: " << root << std::endl;

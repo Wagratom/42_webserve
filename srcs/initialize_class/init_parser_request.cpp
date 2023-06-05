@@ -19,6 +19,7 @@ Parser_request::Parser_request( std::string& request_client)
 	, _endPoint("")
 	, _envs(new char*[50])
 	, _index_envs(0)
+	, need_cgi(false)
 {};
 
 Parser_request::~Parser_request() {

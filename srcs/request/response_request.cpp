@@ -42,7 +42,6 @@ bool	Server::response_request( std::string& buffer )
 bool	Server::handle_POST_requesition()
 {
 	char**		argv = new char*[4];
-	setenv("HELLO", "hello_world", 1);
 
 	argv[0] = (char *)"/usr/bin/php-cgi7.4";
 	argv[1] = (char *)"/home/wallas/42_webserve/script.cgi";

@@ -23,5 +23,6 @@ bool	Server::handle_client_request(epoll_event& event)
 		return (false);
 	if (response_request(buffer) == false)
 		return (false);
+	close(_client_fd);
 	return (true);
 }

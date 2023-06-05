@@ -89,6 +89,10 @@ class 	Server
 		bool	parse_order_request( std::string& buffer );
 
 		bool	handle_GET_requesition( void );
+		bool	handle_GET_requesition_html( std::string& path );
+		bool	open_server_index( void );
+		bool	open_required_file( std::string& path );
+		bool	handle_GET_requesition_php( void );
 		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
 		void	execute_cgi( void );
 		void	response_get( s_ChildProcessInfo& tools_chuild );
@@ -98,7 +102,6 @@ class 	Server
 		bool	send_response_to_client( int& buffer_html );
 		void	send_response_error_to_client( int status );
 
-		bool	SET_requesition( void );
 		bool	DELETE_requesition( void );
 
 		bool	closed_fd_epoll(epoll_event& event);

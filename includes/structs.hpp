@@ -29,8 +29,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-
-
 class	Parser_configuration;
 class	location_configuration;
 class	aux_configuration;

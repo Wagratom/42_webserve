@@ -48,4 +48,5 @@ class Parser_request
 		std::string		_endPoint;
 		char**			_envs;
 		int				_index_envs;
+		bool			need_cgi;
 };

@@ -12,12 +12,21 @@
 
 #include <web_server.hpp>
 
-
 /*############################################################################*/
 /*                         Handle GET requesition                             */
 /*############################################################################*/
 
 bool	Server::handle_GET_requesition( void )
+{
+	std::string path = _parser_request->get_endPoint();
+
+	if (path.find(".php") != std::string::npos)
+		return (handle_GET_requesition_php());
+	else
+		return (handle_GET_requesition_html(path));
+}
+
+bool	Server::handle_GET_requesition_php( void )
 {
 	ChildProcessInfo child_info;
 
