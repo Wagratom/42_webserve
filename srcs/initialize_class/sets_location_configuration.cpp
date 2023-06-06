@@ -12,11 +12,6 @@
 
 #include <Parser_configuration.hpp>
 
-void	location_configuration::set_location( std::string location )
-{
-	this->_location = location;
-}
-
 void	location_configuration::set_root( std::string root )
 {
 	this->_root = root;

@@ -17,8 +17,8 @@ bool	Server::handle_client_request(epoll_event& event)
 	std::string	buffer;
 
 	_client_fd = event.data.fd;
-	if (set_client_not_block() == false)
-		return (false);
+	// if (set_client_not_block() == false)
+		// return (false);
 	if (read_request(buffer) == false)
 		return (false);
 	if (response_request(buffer) == false)

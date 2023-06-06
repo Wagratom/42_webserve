@@ -92,13 +92,16 @@ class 	Server
 		bool	handle_GET_requesition_html( std::string& path );
 		bool	open_server_index( void );
 		bool	open_required_file( std::string& path );
+		bool	check_is_location( std::string& path );
+		bool	open_server_index(t_location_settings* location);
+
 		bool	handle_GET_requesition_php( void );
 		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
 		void	execute_cgi( void );
 		void	response_get( s_ChildProcessInfo& tools_chuild );
 
 		bool	handle_POST_requesition( void );
-		bool	generete_path_to_response( std::string& dst );
+		bool	generete_path_to_response( std::string& dst , std::string root, std::string listNames );
 		bool	send_response_to_client( int& buffer_html );
 		void	send_response_error_to_client( int status );
 
@@ -131,9 +134,6 @@ class 	Server
 		}
 
 		bool	setup( void );
-
-
-		void	set_signal( void );
 
 	private:
 		Parser_configuration*	_parser_file;

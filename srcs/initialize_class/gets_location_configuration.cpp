@@ -12,11 +12,6 @@
 
 #include <Parser_configuration.hpp>
 
-std::string	location_configuration::get_location( void )
-{
-	return (this->_location);
-}
-
 std::string location_configuration::get_root( void )
 {
 	return (this->_root);

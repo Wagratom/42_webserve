@@ -12,7 +12,16 @@
 
 #include <web_server.hpp>
 #include <sstream>
+#include <iostream>
+#include <sys/stat.h>
 
+static bool	isDirectory(const std::string& path) {
+	struct stat fileStat;
+	if (stat(path.c_str(), &fileStat) == 0) {
+		return (fileStat.st_mode & S_IFDIR) != 0;
+	}
+	return false;
+}
 struct aux_read_file
 {
 	std::string			content;
@@ -76,17 +85,26 @@ static void	create_header(aux_read_file& tmp)
 
 bool Server::handle_GET_requesition_html( std::string& path)
 {
+	bool		status;
+	std::string	full_path = "/var/www" + path;
+
 	if (path == "/")
 		return open_server_index();
-	if	(open_required_file(path))
-		return (true);
+	if (isDirectory(full_path))
+		status = check_is_location(path);
 	else
+		status = open_required_file(path);
+	if (!status)
 	{
-		std::string header = "HTTP/1.1 404 Not Found\r\n"
-							 "Content-Type: text/html\r\n";
-		std::string content = "<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p></body></html>";
-		send(_client_fd, header.c_str(), header.size(), 0);
-		send(_client_fd, content.c_str(), content.size(), 0);
+		std::ifstream file("error_pages/404.html");
+		std::string fileContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+		file.close();
+		std::cout << "Error: file not found" << std::endl;
+		std::string response = "HTTP/1.1 404 Not Found\r\n"
+							   "Content-Type: text/html\r\n\r\n";
+		response += fileContent;
+		send(_client_fd, response.c_str(), response.size(), 0);
+		std::cout << "enviei" << std::endl;
 	}
 	return (true);
 }
@@ -95,7 +113,7 @@ bool	Server::open_server_index( void )
 {
 	aux_read_file tmp;
 
-	if (!generete_path_to_response(tmp.path))
+	if (!generete_path_to_response(tmp.path, server()->get_root(), server()->get_index()))
 		return (false);
 	if (!get_content_file(tmp))
 		return (false);
@@ -108,14 +126,45 @@ bool	Server::open_server_index( void )
 bool Server::open_required_file(std::string& path)
 {
 	aux_read_file tmp;
+
 	tmp.path = path;
+	if (!get_content_file(tmp))
+		return false ;
+	create_header(tmp);
+	send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
+	send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
+	return (true);
+}
 
-	if (get_content_file(tmp))
+bool	Server::check_is_location(std::string& path)
+{
+	std::cout << "check_is_location" << std::endl;
+	t_location_settings* locations = location();
+
+	path = path;
+	while(locations)
 	{
-		create_header(tmp);
-		send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
-		send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
+		if (path == locations->locationName)
+			return open_server_index(locations);
+		locations = locations->next;
 	}
+	return (false);
+}
 
+bool	Server::open_server_index(t_location_settings* location)
+{
+	aux_read_file tmp;
+	std::string root = location->configuration->get_root();
+
+	if (root.empty())
+		root = "/var/www" + location->locationName + "/";
+	if (!generete_path_to_response(tmp.path, root, location->configuration->get_index()))
+		return (false);
+	std::cout << "path: " << tmp.path << std::endl;
+	if (!get_content_file(tmp))
+		return (false);
+	create_header(tmp);
+	send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
+	send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
 	return (true);
 }

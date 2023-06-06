@@ -41,7 +41,7 @@ void	Server::execute_cgi( void )
 	char**		argv = new char*[3];
 	std::string	path;
 
-	if (!generete_path_to_response(path))
+	if (!generete_path_to_response(path, server()->get_root(), server()->get_index()))
 		exit(ERROR404);
 	argv[0] = (char *)"/usr/bin/php-cgi";
 	argv[1] = (char *)path.c_str();

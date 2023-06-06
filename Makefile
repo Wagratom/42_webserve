@@ -32,7 +32,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				read_request.cpp response_request.cpp handle_GET_requesition_html.cpp \
 				handle_GET_requesition.cpp DELETE_requesition.cpp \
 				generete_path_to_response.cpp clean_request.cpp execute_cgi.cpp \
-				response_get.cpp
+				response_get.cpp main.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs
@@ -60,8 +60,8 @@ $(OBJECTS_DIR)/%.o:	%.cpp
 all:	$(NAME)
 
 $(NAME):	$(OBJECTS_DIR) $(OBJECTS)
-				$(CC) $(CFLAGS) ./srcs/main.cpp $(OBJECTS) -o $@ $(INCLUDE)
-
+				$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(INCLUDE)
+# main.cpp/main.cpp
 $(OBJECTS_DIR):
 				mkdir -p $@
 

@@ -51,7 +51,7 @@ class	Parser_configuration
 		bool					parser_location( void );
 		bool					configure_location(t_location_settings& location);
 		bool					handle_location_line(std::string& line, t_location_settings& dst);
-		bool					get_location(std::string& line, std::string& location);
+		bool					get_location(std::string& line, std::string& locationName);
 
 		server_configuration*	get_server_configuration( void );
 		t_location_settings*	get_location_configuration( void );
@@ -121,20 +121,17 @@ class location_configuration : public aux_configuration
 		location_configuration( void ) :  aux_configuration() {};
 		~location_configuration( void ){};
 
-		std::string	get_location( void );
 		std::string	get_root( void );
 		std::string	get_index( void );
 		std::string	get_error_page( void );
 		std::string	get_client_max_body_size( void );
 
-		void	set_location( std::string location );
 		void	set_root( std::string root );
 		void	set_index( std::string index );
 		void	set_error_page( std::string error_page );
 		void	set_client_max_body_size( std::string client_max_body_size );
 
 		void	print_data( void ) {
-			std::cout << "location: " << _location << std::endl;
 			std::cout << "root: " << _root << std::endl;
 			std::cout << "index: " << _index << std::endl;
 			std::cout << "error_page: " << _error_page << std::endl;
@@ -142,7 +139,6 @@ class location_configuration : public aux_configuration
 		}
 
 	private:
-		std::string	_location;
 		std::string	_root;
 		std::string	_index;
 		std::string	_error_page;

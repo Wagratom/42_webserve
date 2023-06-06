@@ -50,14 +50,10 @@ bool	get_path(std::string listNames, std::string root, std::string& dst)
 	return (true);
 }
 
-bool	Server::generete_path_to_response( std::string& dst )
+bool	Server::generete_path_to_response( std::string& dst , std::string root, std::string listNames )
 {
-	std::string		listNames;
-	std::string		root;
-
 	dst.clear();
-	listNames = server()->get_index();
-	root = server()->get_root();
+	if (root.length() == 0)
 	std::cout << "root: " << root << std::endl;
 	if (listNames.empty() || root.empty())
 		return ("");

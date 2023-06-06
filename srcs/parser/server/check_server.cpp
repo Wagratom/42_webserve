@@ -15,7 +15,7 @@
 bool	Parser_configuration::check_server( std::string& line )
 {
 	size_t	pos = line.find_first_not_of(" \t", 6);
-
+	write_debug("Checking Server.");
 	if (pos == std::string::npos)
 		return (write_error("Error: Invalid line server"));
 	if (line.compare(0, 6, "server") != 0)

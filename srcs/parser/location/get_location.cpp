@@ -66,7 +66,7 @@ static bool	get_location_valid(std::string& line)
 	return (true);
 }
 
-bool	Parser_configuration::get_location(std::string& line, std::string& location)
+bool	Parser_configuration::get_location(std::string& line, std::string& locationName)
 	{
 		size_t	start = line.find_first_not_of(" \t");
 
@@ -77,7 +77,7 @@ bool	Parser_configuration::get_location(std::string& line, std::string& location
 			return (false);
 		if (get_location_valid(line) == false)
 			return (false);
-		location = line;
+		locationName = line;
 		this->_file = this->_file->next;
 		return (true);
 	}

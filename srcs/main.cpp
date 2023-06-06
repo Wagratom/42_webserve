@@ -35,11 +35,9 @@ bool	Server::setup()
 
 int main ( int argc, char *argv[] )
 {
+	set_debug(true);
 	if (valid_arguments(argc, argv) == false)
 		return (false);
-
-
-	set_debug(true);
 	Server	server(argv[1]);
 	if (server.setup() == false)
 		return (-1);
