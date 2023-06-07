@@ -28,27 +28,20 @@ bool	alloc_location(t_location_settings **location)
 
 static bool	is_end_server(std::string& line)
 {
+	line.erase(0, 1);
 	erase_comments(line);
-	if (line[0] == '}' && line[1] == '\0')
-		return (true);
-	std::cout << "Error: Invalid line location: " << line << std::endl;
-	return (false);
-}
-
-static bool	avant_line(std::string& line)
-{
-	size_t	start = line.find_first_not_of(" \t");
-
-	if (start == std::string::npos)
-		return (write_error("Error: Invalid line location"));
-	line = line.substr(start);
+	std::cout << "line: " << line << std::endl;
+	if (line[0] != '}' ||
+		line.find_first_not_of(" \t", 1) != std::string::npos)
+		return (write_error("Location: Incorrect closing brace '}'"));
+	std::cout << "end location" << std::endl;
 	return (true);
 }
 
-static bool	parser_location_err(t_location_settings* location)
+static bool	parser_location_err(t_location_settings** location)
 {
-	delete location->configuration;
-	delete location;
+	delete (*location)->configuration;
+	delete (*location);
 	location = NULL;
 	return (false);
 }
@@ -64,9 +57,9 @@ bool	Parser_configuration::parser_location( void )
 	if (alloc_location(&location) == false)
 		return (false);
 	if (get_locationName(this->_file->line, location->locationName) == false)
-		return (parser_location_err(location));
+		return (parser_location_err(&location));
 	if (configure_location(*location) == false)
-		return (parser_location_err(location));
+		return (parser_location_err(&location));
 	l_ft_lstadd_back(&(this->_location_configuration), location);
 	return (true);
 }
@@ -75,7 +68,9 @@ bool	Parser_configuration::configure_location(t_location_settings& location)
 {
 	while (this->_file != NULL)
 	{
-		if (avant_line(this->_file->line) == false)
+		if ((this->_file->line)[1] == '}')
+			return (is_end_server(this->_file->line));
+		if (prepare_line(2, this->_file->line) == false)
 			return (false);
 		if (handle_location_line(this->_file->line, location) == false)
 			return (is_end_server(this->_file->line));

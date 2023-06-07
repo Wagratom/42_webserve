@@ -65,7 +65,6 @@ static bool	save_data(std::string& line, aux_configuration* dst)
 
 bool	Parser_configuration::get_error_page(std::string& line, aux_configuration* dst)
 {
-	erase_comments(line);
 	if (has_semicolon_at_end(line) == false)
 		return (write_error("Error: Invalid line error_page, not ';'"));
 	if (valid_word(line, "error_page") == false)

@@ -51,6 +51,10 @@ class 	Server
 		{};
 		~Server() {
 			delete _parser_file;
+			for (int i = 0; i < 10; i++) {
+				delete _verbs[i];
+			}
+			delete [] _verbs;
 			if (_parser_request)
 				delete _parser_request;
 		};

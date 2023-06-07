@@ -30,8 +30,7 @@ static bool	get_locationName(std::string& line, std::string& locationName)
 
 	if (endName == std::string::npos)
 		return (write_error("Error: get_locationName: Invalid line location"));
-	else
-		locationName = line.substr(0, endName);
+	locationName = line.substr(0, endName);
 	line = line.substr(endName);
 	return (true);
 }
@@ -44,8 +43,8 @@ static bool	find_key(std::string line)
 		return (write_error("Error: find_key: Invalid line location: line empty"));
 	if (line[start] != '{')
 		return (write_error("Error: find_key: Invalid line location: not found key"));
-	if (line[start + 1] != '\0')
-		return (write_error("Error: find_key: Invalid line location not terminate key"));
+	if (line.find_first_not_of(" \t", start + 1) != std::string::npos)
+		return (write_error("Error: find_key: Invalid line location: after key"));
 	return (true);
 }
 
@@ -59,6 +58,8 @@ static bool	get_location_valid(std::string& line)
 		return (false);
 	if (find_key(line) == false)
 		return (false);
+	if (locationName[locationName.length() - 1] != '/')
+		locationName.append("/");
 	line = locationName;
 	return (true);
 }

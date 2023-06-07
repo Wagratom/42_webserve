@@ -73,7 +73,6 @@ static bool	save_data(std::string& line, aux_configuration* dst)
 
 bool	Parser_configuration::get_client_max_body_size(std::string& line, aux_configuration* dst)
 {
-	erase_comments(line);
 	if (has_semicolon_at_end(line) == false)
 		return (write_error("Error: Invalid line client_max_body_size, not ';'"));
 	if (valid_word(line, "client_max_body_size") == false)

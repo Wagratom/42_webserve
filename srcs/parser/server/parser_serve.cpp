@@ -16,15 +16,14 @@ static bool	is_end_server(std::string& line)
 {
 	static bool end = false;
 
+	erase_comments(line);
 	if (end == true)
 		return (false);
-	if (line[0] == '}' && line[1] == '\0')
-	{
-		end = true;
-		return (true);
-	}
-	std::cout << "Error: Invalid line server: " << line << std::endl;
-	return (false);
+	if (line[0] != '}' ||
+		line.find_first_not_of(" \t", 1) != std::string::npos)
+		return (write_error("Server: Incorrect closing brace '}'"));
+	end = true;
+	return (true);
 }
 
 bool	Parser_configuration::check_in_dict_server(std::string& line)
@@ -50,17 +49,15 @@ bool	Parser_configuration::check_in_dict_universal(std::string& line)
 			return ((this->*_dictionary_universal[i].f)(line, this->_server_configuration));
 		i++;
 	}
-	return (is_end_server(line));
+	return (false);
 }
 
 bool	Parser_configuration::handle_server( std::string& line )
 {
-	size_t	start = line.find_first_not_of(" \t");
-
-	erase_comments(line);
-	if (start == std::string::npos)
-		return (write_error("Error: Invalid line server"));
-	line = line.substr(start);
+	if (line[0] == '}')
+		return (is_end_server(line));
+	if (prepare_line(1, line) == false)
+		return (false);
 	if (check_in_dict_server(line))
 		return (true);
 	return (check_in_dict_universal(line));
