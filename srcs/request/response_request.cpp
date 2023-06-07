@@ -61,9 +61,9 @@ bool	Server::handle_POST_requesition()
 	// envs[9] = strdup("HTTP_HOST=localhost:8080");
 	// envs[10] = strdup("HTTP_USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.37");
 	// envs[11] = strdup("SERVER_PORT=8080");
-	// envs[12] = strdup("REDIRECT_STATUS=1");
+	// envs[1] = strdup("REDIRECT_STATUS=1");
 	// envs[13] = strdup("SCRIPT_NAME=/home/wallas/42_webserve/script.cgi");
-	// envs[14] = NULL;
+	// envs[2] = NULL;
 	if (execve("/usr/bin/php-cgi7.4", argv, NULL) == -1)
 	std::cout << strerror(errno) << std::endl;
 	exit(ERROR_SERVE);

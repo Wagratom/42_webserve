@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_location.cpp                                   :+:      :+:    :+:   */
+/*   get_locationName.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -26,11 +26,8 @@ static bool	find_bar(std::string& line)
 
 static bool	get_locationName(std::string& line, std::string& locationName)
 {
-	size_t	start = line.find_first_not_of(" \t");
-	size_t	endName = line.find_first_of(" \t", start);
+	size_t	endName = line.find_first_of(" \t");
 
-	if (start == std::string::npos)
-		return (write_error("Error: get_locationName: Invalid line location: line empty"));
 	if (endName == std::string::npos)
 		return (write_error("Error: get_locationName: Invalid line location"));
 	else
@@ -66,18 +63,15 @@ static bool	get_location_valid(std::string& line)
 	return (true);
 }
 
-bool	Parser_configuration::get_location(std::string& line, std::string& locationName)
-	{
-		size_t	start = line.find_first_not_of(" \t");
-
-		if (start == std::string::npos)
-			return (write_error("Error: Invalid line location"));
-		line = line.substr(start);
-		if (valid_word(line, "location") == false)
-			return (false);
-		if (get_location_valid(line) == false)
-			return (false);
-		locationName = line;
-		this->_file = this->_file->next;
-		return (true);
-	}
+bool	Parser_configuration::get_locationName(std::string& line, std::string& locationName)
+{
+	if (prepare_line(1, line) == false)
+		return (false);
+	if (valid_word(line, "location") == false)
+		return (false);
+	if (get_location_valid(line) == false)
+		return (false);
+	locationName = line;
+	this->_file = this->_file->next;
+	return (true);
+}

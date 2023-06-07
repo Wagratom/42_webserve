@@ -14,6 +14,10 @@
 
 void	location_configuration::set_root( std::string root )
 {
+	if (this->_root != "")
+		return ;
+	if (root[root.length() - 1] != '/')
+		root.append("/");
 	this->_root = root;
 }
 

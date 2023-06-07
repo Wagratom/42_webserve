@@ -1,0 +1,2 @@
+se procurar um /wagratom e nao tiver ele ira atras do /wagratom/blabla
+Você não precisa usar poll() (ou equivalente) antes de ler seu arquivo de configuração.

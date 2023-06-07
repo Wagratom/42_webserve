@@ -31,14 +31,15 @@ struct aux_read_file
 	std::string			header;
 };
 
+
 static bool	get_content_file(aux_read_file& dst)
 {
 	std::ifstream file(dst.path.c_str(), std::ios::binary | std::ios::ate);
+
 	if (!file.is_open())
 		return (false);
 	dst.size = file.tellg();
 	file.seekg(0, std::ios::beg);
-	std::cout << "size: " << dst.size << std::endl;
 	dst.content.resize(dst.size);
 	if (!file.read(&dst.content[0], dst.size))
 		return (false);
@@ -77,8 +78,8 @@ static void	create_header(aux_read_file& tmp)
 	tmp.header = "HTTP/1.1 200 OK\r\n";
 	tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n";
 	tmp.header += "Content-Length: " + tmp.oss.str() + "\r\n\r\n";
-
 }
+
 /*############################################################################*/
 /*                         Handle GET requesition                             */
 /*############################################################################*/
@@ -96,15 +97,15 @@ bool Server::handle_GET_requesition_html( std::string& path)
 		status = open_required_file(path);
 	if (!status)
 	{
-		std::ifstream file("error_pages/404.html");
-		std::string fileContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-		file.close();
-		std::cout << "Error: file not found" << std::endl;
+		aux_read_file tmp;
+
+		tmp.path = "./error_pages/404_lufy_chorando.html";
+		if (!get_content_file(tmp))
+			return (false);
 		std::string response = "HTTP/1.1 404 Not Found\r\n"
-							   "Content-Type: text/html\r\n\r\n";
-		response += fileContent;
+							"Content-Type: text/html\r\n\r\n";
+		response += tmp.content;
 		send(_client_fd, response.c_str(), response.size(), 0);
-		std::cout << "enviei" << std::endl;
 	}
 	return (true);
 }
@@ -141,9 +142,12 @@ bool	Server::check_is_location(std::string& path)
 	std::cout << "check_is_location" << std::endl;
 	t_location_settings* locations = location();
 
-	path = path;
+	if (path[path.length() - 1] != '/')
+		path.append("/");
 	while(locations)
 	{
+		std::cout << "Path: " << path << std::endl;
+		std::cout << "locationName: " << locations->locationName << std::endl;
 		if (path == locations->locationName)
 			return open_server_index(locations);
 		locations = locations->next;
@@ -156,8 +160,12 @@ bool	Server::open_server_index(t_location_settings* location)
 	aux_read_file tmp;
 	std::string root = location->configuration->get_root();
 
+	std::cout << "open_server_index" << std::endl;
 	if (root.empty())
-		root = "/var/www" + location->locationName + "/";
+		root = server()->get_root() + "/";
+	if (root.empty())
+		return (false);
+	std::cout << "Root: " << root << std::endl;
 	if (!generete_path_to_response(tmp.path, root, location->configuration->get_index()))
 		return (false);
 	std::cout << "path: " << tmp.path << std::endl;

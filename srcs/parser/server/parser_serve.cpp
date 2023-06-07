@@ -57,6 +57,7 @@ bool	Parser_configuration::handle_server( std::string& line )
 {
 	size_t	start = line.find_first_not_of(" \t");
 
+	erase_comments(line);
 	if (start == std::string::npos)
 		return (write_error("Error: Invalid line server"));
 	line = line.substr(start);

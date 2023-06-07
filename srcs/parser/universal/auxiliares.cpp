@@ -21,15 +21,13 @@ bool	write_error(std::string msg)
 
 bool	has_semicolon_at_end(std::string& line)
 {
-	size_t	end = line.length() - 1;
+	size_t	semicolon = line.find(';');
 
-	if (end == 0)
+	if (semicolon == std::string::npos ||
+		line.find_first_not_of(" \t", semicolon + 1) != std::string::npos ||
+		isspace(line[semicolon -1]))
 		return (false);
-	if (line[end] != ';')
-		return (false);
-	if (line[end -1] == ' ' || line[end - 1] == '\t')
-		return (false);
-	line.erase(end);
+	line.erase(semicolon);
 	return (true);
 }
 
@@ -39,5 +37,41 @@ bool	valid_word(std::string& line, std::string word)
 		return (write_error("Invalid word: not " + word));
 	if (line[word.length()] != ' ' && line[word.length()] != '\t')
 		return (write_error("Invalid word: no space after " + word));
+	return (true);
+}
+
+/*                           PREPARE LINE                                     */
+bool	prepare_line(int indentation, std::string& line)
+{
+	if (line.empty() || !isspace(line[0]))
+		return (write_error("Error: get_locationName: Invalid line location"));
+	if (line[0] == ' ')
+		indentation *= 4;
+	erase_comments(line);
+	return (erase_isspaces(indentation, line));
+}
+
+void	erase_comments(std::string& line)
+{
+	size_t	pos = line.find('#');
+
+	if (pos != std::string::npos)
+		line.erase(pos);
+}
+
+bool	erase_isspaces(size_t indentation, std::string& line)
+{
+	size_t	i;
+	char	c;
+
+	i = 0;
+	c = line[i];
+	while (line[i] == c)
+		i++;
+	if (i != indentation)
+		return (write_error("Error: get_locationName: Invalid indentation location"));
+	if (isspace(line[i]))
+		return (write_error("Error: get_locationName: Invalid indentation location"));
+	line.erase(0, i);
 	return (true);
 }

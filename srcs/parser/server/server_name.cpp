@@ -27,6 +27,7 @@ bool	Parser_configuration::get_server_name(std::string& line)
 {
 	server_configuration* aux = dynamic_cast<server_configuration*>(_server_configuration);
 
+	erase_comments(line);
 	if (aux == NULL)
 		return (write_error("Error casting server to configuration_server"));
 	if (has_semicolon_at_end(line) == false)

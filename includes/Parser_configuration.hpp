@@ -51,7 +51,7 @@ class	Parser_configuration
 		bool					parser_location( void );
 		bool					configure_location(t_location_settings& location);
 		bool					handle_location_line(std::string& line, t_location_settings& dst);
-		bool					get_location(std::string& line, std::string& locationName);
+		bool					get_locationName(std::string& line, std::string& locationName);
 
 		server_configuration*	get_server_configuration( void );
 		t_location_settings*	get_location_configuration( void );
@@ -156,6 +156,9 @@ bool	write_error(std::string msg);
 bool	valid_word(std::string& listen, std::string word);
 bool	has_semicolon_at_end(std::string& line);
 bool	equal_or_err_i(int a, int b, int line);
+void	erase_comments(std::string& line);
+bool	erase_isspaces(size_t indentation, std::string& line);
+bool	prepare_line(int indentation, std::string& line);
 
 bool	different_or_err_i(int a, int b, int line);
 bool	equal_or_err_s(std::string a, std::string b, int line);

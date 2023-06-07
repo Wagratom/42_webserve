@@ -28,7 +28,7 @@ bool	test_true( void )
 		return (false);
 	if (equal_or_err_s(server.server()->get_index(), "sever.html", __LINE__) == false)
 		return (false);
-	if (equal_or_err_s(server.server()->get_root(), "/var/www/server.com", __LINE__) == false)
+	if (equal_or_err_s(server.server()->get_root(), "/var/www/server.com/", __LINE__) == false)
 		return (false);
 	return (true);
 }

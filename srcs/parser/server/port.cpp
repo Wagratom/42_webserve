@@ -78,6 +78,7 @@ bool	Parser_configuration::get_port(std::string& listen)
 {
 	std::string	aux_port;
 
+	erase_comments(listen);
 	if (has_semicolon_at_end(listen) == false)
 		return (write_error("Error: Invalid line listen, not ';'"));
 	if (valid_word(listen, "listen") == false)

@@ -28,6 +28,7 @@ bool	alloc_location(t_location_settings **location)
 
 static bool	is_end_server(std::string& line)
 {
+	erase_comments(line);
 	if (line[0] == '}' && line[1] == '\0')
 		return (true);
 	std::cout << "Error: Invalid line location: " << line << std::endl;
@@ -62,7 +63,7 @@ bool	Parser_configuration::parser_location( void )
 
 	if (alloc_location(&location) == false)
 		return (false);
-	if (get_location(this->_file->line, location->locationName) == false)
+	if (get_locationName(this->_file->line, location->locationName) == false)
 		return (parser_location_err(location));
 	if (configure_location(*location) == false)
 		return (parser_location_err(location));

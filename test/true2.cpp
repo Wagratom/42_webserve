@@ -28,14 +28,14 @@ bool	test_true( void )
 		return (false);
 	if (equal_or_err_s(server.get_parser()->get_server_configuration()->get_index(), "sever.html", __LINE__) == false)
 		return (false);
-	if (equal_or_err_s(server.get_parser()->get_server_configuration()->get_root(), "/var/www/server.com", __LINE__) == false)
+	if (equal_or_err_s(server.get_parser()->get_server_configuration()->get_root(), "/var/www/server.com/", __LINE__) == false)
 		return (false);
 
 	//			location
 
 	if (equal_or_err_s(server.location()->locationName, "/", __LINE__) == false)
 		return (false);
-	if (equal_or_err_s(server.location()->configuration->get_root(), "/var/www/location.com", __LINE__) == false)
+	if (equal_or_err_s(server.location()->configuration->get_root(), "/var/www/location.com/", __LINE__) == false)
 		return (false);
 	if (equal_or_err_s(server.location()->configuration->get_index(), "location.php", __LINE__) == false)
 		return (false);
