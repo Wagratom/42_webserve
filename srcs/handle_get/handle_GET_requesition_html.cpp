@@ -22,17 +22,8 @@ static bool	isDirectory(const std::string& path) {
 	}
 	return false;
 }
-struct aux_read_file
-{
-	std::string			content;
-	std::string			path;
-	std::streamsize		size;
-	std::ostringstream	oss;
-	std::string			header;
-};
 
-
-static bool	get_content_file(aux_read_file& dst)
+bool	get_content_file(aux_read_file& dst)
 {
 	std::ifstream file(dst.path.c_str(), std::ios::binary | std::ios::ate);
 
@@ -72,7 +63,7 @@ static const std::string	getContentType(const std::string& path)
 	return ("text/plain");
 }
 
-static void	create_header(aux_read_file& tmp)
+void	create_header(aux_read_file& tmp)
 {
 	tmp.oss << tmp.size;
 	tmp.header = "HTTP/1.1 200 OK\r\n";
@@ -90,7 +81,7 @@ bool Server::handle_GET_requesition_html( std::string& path)
 	std::string	full_path = "/var/www" + path;
 
 	if (path == "/")
-		return open_server_index();
+		return response_server();
 	if (isDirectory(full_path))
 		status = check_is_location(path);
 	else
@@ -110,7 +101,7 @@ bool Server::handle_GET_requesition_html( std::string& path)
 	return (true);
 }
 
-bool	Server::open_server_index( void )
+bool	Server::response_server( void )
 {
 	aux_read_file tmp;
 
@@ -146,33 +137,9 @@ bool	Server::check_is_location(std::string& path)
 		path.append("/");
 	while(locations)
 	{
-		std::cout << "Path: " << path << std::endl;
-		std::cout << "locationName: " << locations->locationName << std::endl;
 		if (path == locations->locationName)
-			return open_server_index(locations);
+			return response_location(locations);
 		locations = locations->next;
 	}
 	return (false);
-}
-
-bool	Server::open_server_index(t_location_settings* location)
-{
-	aux_read_file tmp;
-	std::string root = location->configuration->get_root();
-
-	std::cout << "open_server_index" << std::endl;
-	if (root.empty())
-		root = server()->get_root() + "/";
-	if (root.empty())
-		return (false);
-	std::cout << "Root: " << root << std::endl;
-	if (!generete_path_to_response(tmp.path, root, location->configuration->get_index()))
-		return (false);
-	std::cout << "path: " << tmp.path << std::endl;
-	if (!get_content_file(tmp))
-		return (false);
-	create_header(tmp);
-	send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
-	send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
-	return (true);
 }

@@ -16,6 +16,7 @@ static bool	open_file_status( std::string path )
 {
 	std::ifstream	file(path.c_str());
 
+	std::cout << "path: " << path << std::endl;
 	if (!file.is_open())
 		return (false);
 	write_debug_prefix("File opening: ", path);

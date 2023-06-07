@@ -86,3 +86,12 @@ typedef struct s_location_settings
 void	write_debug_number(std::string message, int number);
 void	write_debug_prefix(std::string prefix, std::string message);
 void	write_debug(std::string message);
+
+typedef struct aux_read_file
+{
+	std::string			content;
+	std::string			path;
+	std::streamsize		size;
+	std::ostringstream	oss;
+	std::string			header;
+};

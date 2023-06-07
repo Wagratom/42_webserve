@@ -34,7 +34,6 @@ static bool	is_end_server(std::string& line)
 	if (line[0] != '}' ||
 		line.find_first_not_of(" \t", 1) != std::string::npos)
 		return (write_error("Location: Incorrect closing brace '}'"));
-	std::cout << "end location" << std::endl;
 	return (true);
 }
 
@@ -68,12 +67,12 @@ bool	Parser_configuration::configure_location(t_location_settings& location)
 {
 	while (this->_file != NULL)
 	{
-		if ((this->_file->line)[1] == '}')
+		if (this->_file->line[1] == '}')
 			return (is_end_server(this->_file->line));
 		if (prepare_line(2, this->_file->line) == false)
 			return (false);
 		if (handle_location_line(this->_file->line, location) == false)
-			return (is_end_server(this->_file->line));
+			return (write_error("Location: Incorrect line: " + this->_file->line));
 		this->_file = this->_file->next;
 	}
 	return (true);

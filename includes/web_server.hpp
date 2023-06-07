@@ -94,10 +94,10 @@ class 	Server
 
 		bool	handle_GET_requesition( void );
 		bool	handle_GET_requesition_html( std::string& path );
-		bool	open_server_index( void );
+		bool	response_server( void );
 		bool	open_required_file( std::string& path );
 		bool	check_is_location( std::string& path );
-		bool	open_server_index(t_location_settings* location);
+		bool	response_location(t_location_settings* location);
 
 		bool	handle_GET_requesition_php( void );
 		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
@@ -159,3 +159,7 @@ void	write_debug_number(std::string message, int number);
 void	write_debug_prefix(std::string prefix, std::string message);
 void	write_type_event_debug(epoll_event& event);
 void	write_debug(std::string message);
+
+
+bool	get_content_file(aux_read_file& dst);
+void	create_header(aux_read_file& tmp);
