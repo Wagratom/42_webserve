@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 12:39:00 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/12 10:47:08 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ bool	Server::read_request(std::string& buffer)
 			is_end = true;
 		buffer.append((char*)tmp, bytes_read);
 	}
+	std::cout << "Request: " << std::endl << buffer << std::endl;
 	return (true);
 }

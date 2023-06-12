@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:29:36 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:35:09 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static bool	is_end_server(std::string& line)
 {
 	line.erase(0, 1);
 	erase_comments(line);
-	std::cout << "line: " << line << std::endl;
 	if (line[0] != '}' ||
 		line.find_first_not_of(" \t", 1) != std::string::npos)
 		return (write_error("Location: Incorrect closing brace '}'"));
@@ -69,12 +68,22 @@ bool	Parser_configuration::configure_location(t_location_settings& location)
 	{
 		if (this->_file->line[1] == '}')
 			return (is_end_server(this->_file->line));
-		if (prepare_line(2, this->_file->line) == false)
+		if (configure_location_line(this->_file->line, location) == false)
 			return (false);
-		if (handle_location_line(this->_file->line, location) == false)
-			return (write_error("Location: Incorrect line: " + this->_file->line));
 		this->_file = this->_file->next;
 	}
+	return (true);
+}
+
+bool	Parser_configuration::configure_location_line(std::string line, t_location_settings& location)
+{
+
+	if (prepare_line(2, line) == false)
+		return (false);
+	if (line.find_first_not_of(" \t") == std::string::npos)
+		return (true);
+	if (handle_location_line(line, location) == false)
+		return (write_error("Location: Incorrect line: " + line));
 	return (true);
 }
 

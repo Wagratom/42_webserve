@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:07:54 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 11:28:44 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/12 10:44:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ void	write_type_event_debug(epoll_event& event)
 		std::cout << "EPOLLHUP | ";
 	if (event.events & EPOLLPRI)
 		std::cout << "EPOLLPRI ";
-	std::cout << std::endl;
+	std::cout << std::endl << std::endl;
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:28:49 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:08:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ bool	Parser_configuration::handle_server( std::string& line )
 		return (is_end_server(line));
 	if (prepare_line(1, line) == false)
 		return (false);
+	if (line.find_first_not_of(" \t") == std::string::npos)
+		return (true);
 	if (check_in_dict_server(line))
 		return (true);
 	return (check_in_dict_universal(line));
