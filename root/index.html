@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
+	<meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<style>
+	:root {
+		--chocolate: #d2691e;
+		--darkSalmon: #e9967a;
+		--indianRed: #cd5c5c;
+		--seaShell: #fff5ee;
+		--yellow: #ffeb3b;
+		--wheat: #f5deb3;
+	}
+
+	/* Typography */
+	html {
+		font: 16px 'Indie Flower';
+	}
+
+	h1 {
+		font-size: 2.5em;
+	}
+
+	h2 {
+		font-size: 2.25em;
+	}
+
+	h3 {
+		font-size: 2em;
+	}
+
+	h4 {
+		font-size: 1.75em;
+	}
+
+	p {
+		font-size: 1.5em;
+	}
+
+	/* Base */
+	* {
+		box-sizing: border-box;
+	}
+
+	html, body {
+		width: 100%;
+		height: 100%;
+	}
+
+	/* Layout */
+	.wrapper {
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
+
+	.content {
+		width: 60%;
+	}
+
+	:target {
+		z-index: 2;
+		opacity: 1;
+	}
+
+	/* Sections */
+	section {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 0;
+		width: 100%;
+		min-height: 100%;
+		opacity: 0;
+		overflow: hidden;
+		transition: width 0.5s, opacity 0.5s;
+	}
+
+	.content {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		margin: auto;
+	}
+
+	/* Home */
+	.sec-home {
+		background-image: url("https://42.fr/wp-content/uploads/2021/07/Background-RM-2000x1132.jpg");
+		background-size: cover;
+		background-repeat: no-repeat;
+		overflow: hidden;
+		color: var(--darkSalmon);
+		opacity: 1;
+	}
+
+	.sec-home a {
+		color:#fff;
+		text-decoration-style: dashed;
+	}
+
+	.sec-home a:hover {
+		color: #e58564;
+	}
+	.sec-home a:active {
+		color: #eda790;
+	}
+
+	.sec-home .content {
+		height: 50%;
+		text-align: center;
+	}
+
+	/* About */
+	.sec-about {
+		background-image: url("https://42.fr/wp-content/uploads/2021/07/Background-RM-2000x1132.jpg");
+		background-size: cover;
+		background-repeat: no-repeat;
+		overflow: hidden;
+		color: #fff;
+	}
+
+	.sec-about .content {
+		height: 55%;
+		text-align: center;
+	}
+
+	/* Portfolio */
+	.sec-portfolio {
+		background-image: url("https://42.fr/wp-content/uploads/2021/07/Background-RM-2000x1132.jpg");
+		background-size: cover;
+		background-repeat: no-repeat;
+		overflow: hidden;
+	}
+
+	/* edit */
+	.project {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+
+	.project .description {
+		margin-bottom: 20px;
+	}
+
+	.project .name {
+		font-size: 1.5em;
+		font-weight: bold;
+		margin-bottom: 50px;
+		margin-top: 20px;
+	}
+
+	.project .flowchart {
+		width: 100%;
+		height: auto;
+		margin-bottom: 20px;
+	}
+
+	.project .explanation {
+		font-size: 1em;
+		color: #fff;
+	}
+
+	.color {
+		background-color: #000c18;
+	}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg p-0 color">
+	<img src="https://biolibre.fr/media/cache/articleMainImg/images/articles/school_42.jpeg" style="width: 60px; height: 50px;">
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		<div class="navbar-nav">
+		<a class="nav-item nav-link active" href="#sec-home" style="color: #fff;">Home</a>
+		<a class="nav-item nav-link" href="#sec-about" style="color: #fff;">Project</a>
+		<a class="nav-item nav-link" href="#sec-portfolio" style="color: #fff;">Apresentação</a>
+		</div>
+	</div>
+	</nav>
+	<div class="wrapper">
+		<section class="sec-about" id="sec-about">
+			<div class="content">
+				<h2> projeto </h2>
+				<p>O projeto foi construído usando funções proibidas pela 42.</p>
+				<p>Ele é uma biblioteca pública onde qualquer pessoa pode subir arquivos que acha que outras pessoas podem reutilizar.
+				   É tipo um mercado negro de códigos, mas totalmente legal! Não se preocupe, não vendemos drogas, apenas linhas de código!</p>
+				<p>Pensei nisso com o intuito de não precisar criar um banco de dados nem usuário, afinal, quem em sã consciência compartilharia
+				seus dados pessoais em um site suspeito como este?</p>
+			</div>
+		</section>
+		<section class="sec-portfolio" id="sec-portfolio">
+			<div class="project">
+				<div class="description">
+					<h1 class="name" style="color: #fff">Vai me passar né?</h1>
+				</div>
+				<div class="flowchart">
+					<div class="col-big"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHqmHbe2-voPeAGe00fNgtlSMtPUaT7A0s4g&usqp=CAU" alt="Project Paraguay snapshot" style="width: 85%;" /></div>
+				</div>
+			</div>
+		</section>
+		<section class="sec-home" id="sec-home">
+			<div class="content">
+				<h1> Bem vindo ao nosso WebServer.</h1>
+				<h2><a href="#sec-about">Oque</a> Fizemos?</h2>
+				<h2><a href="#sec-portfolio">Como</a> fizemos?</h2>
+				<h2><a href="#sec-contact" id="register-link">Realize</a> seu teste.</h2>
+			</div>
+		</section>
+	</div>
+</body>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var registerLink = document.getElementById("register-link");
+		registerLink.addEventListener("click", function(event) {
+			event.preventDefault(); // Impede o comportamento padrão do link
+			console.log("register-link clicked");
+			// Redireciona para o conteúdo do arquivo register.html no mesmo servidor
+			window.location.href = "./login.html";
+		});
+	});
+</script>

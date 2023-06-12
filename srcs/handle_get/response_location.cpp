@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_GET_requesition.cpp                         :+:      :+:    :+:   */
+/*   response_location.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/11 21:00:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:22:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 #include <sstream>
 #include <iostream>
 #include <sys/stat.h>
+
+bool	Server::get_root_location(std::string& root, const std::string& path)
+{
+	size_t	pos = path.find_last_of('/');
+	if (pos == std::string::npos)
+		return (false);
+	root = path.substr(0, pos);
+	return (true);
+}
 
 bool	Server::response_location(t_location_settings* location)
 {

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 15:38:46 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:13:16 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/epoll.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sstream>
 
 class	Parser_configuration;
 class	location_configuration;
@@ -87,11 +88,11 @@ void	write_debug_number(std::string message, int number);
 void	write_debug_prefix(std::string prefix, std::string message);
 void	write_debug(std::string message);
 
-typedef struct aux_read_file
+typedef struct s_aux_read_file
 {
 	std::string			content;
 	std::string			path;
 	std::streamsize		size;
 	std::ostringstream	oss;
 	std::string			header;
-};
+} aux_read_file;

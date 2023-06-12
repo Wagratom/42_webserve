@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/11 21:09:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/12 10:00:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,12 @@ class 	Server
 
 		bool	handle_GET_requesition( void );
 		bool	handle_GET_requesition_html( std::string& path );
+		void	prepare_path_server(std::string& dst, std::string& path);
 		bool	response_server( void );
 		bool	open_required_file( std::string& path );
 		bool	check_is_location( std::string& path );
 		bool	response_location(t_location_settings* location);
+		bool	get_root_location(std::string& root, const std::string& path);
 
 		bool	handle_GET_requesition_php( void );
 		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
@@ -163,3 +165,4 @@ void	write_debug(std::string message);
 
 bool	get_content_file(aux_read_file& dst);
 void	create_header(aux_read_file& tmp);
+bool	isDirectory(const std::string& path);
