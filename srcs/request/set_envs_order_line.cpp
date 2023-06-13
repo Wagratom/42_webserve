@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 16:49:15 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 15:05:35 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:23:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ bool	Parser_request::save_requesition_line( void )
 		return (write_error_prefix("Error: Invalid request: not order request line"));
 	_order_request = _request.substr(0, pos);
 	_request.erase(0, pos + 1);
-	write_debug_prefix("Requesition_line: ", _order_request);
 	return (true);
 }
 

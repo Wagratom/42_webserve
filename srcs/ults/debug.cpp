@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:07:54 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/12 10:44:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:20:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ void	write_debug_number(std::string message, int number)
 		std::cout << message << std::endl;
 }
 
-void	write_debug(std::string message)
+bool	write_debug(std::string message)
 {
 	if (!get_debug())
-		return ;
+		return true;
 	std::cout << message << std::endl;
+	return (false);
 }
 
 void	write_debug_prefix(std::string prefix, std::string message)
@@ -67,8 +68,6 @@ void	write_type_event_debug(epoll_event& event)
 
 	if (get_debug() == false)
 		return ;
-    std::cout << "Local IP address: " << inet_ntoa(addr.sin_addr) << std::endl;
-    std::cout << "Local port number: " << ntohs(addr.sin_port) << std::endl;
 	std::cout << "Type of event: ";
 	if (event.events & EPOLLERR)
 		std::cout << "EPOLLERR | ";
@@ -84,5 +83,5 @@ void	write_type_event_debug(epoll_event& event)
 		std::cout << "EPOLLHUP | ";
 	if (event.events & EPOLLPRI)
 		std::cout << "EPOLLPRI ";
-	std::cout << std::endl << std::endl;
+	std::cout << std::endl;
 }

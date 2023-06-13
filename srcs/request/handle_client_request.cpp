@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 19:24:21 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/11 20:08:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:22:22 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ bool	Server::handle_client_request(epoll_event& event)
 {
 	std::string	buffer;
 
+	write_debug("\nClient seed request");
 	_client_fd = event.data.fd;
 	if (set_client_not_block() == false)
 		return (false);

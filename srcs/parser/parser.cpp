@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 10:19:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:15:13 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	Parser_configuration::parser( void )
 
 bool	Parser_configuration::parser_file()
 {
-	write_debug("Starting parser file...");
+	write_debug("Parsing file...");
 	while (this->_file->next != NULL)
 	{
 		this->_file = this->_file->next;

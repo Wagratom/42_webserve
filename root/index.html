@@ -170,26 +170,33 @@
 	.color {
 		background-color: #000c18;
 	}
+	.send_file {
+		display: flex;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+	}
 	</style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg p-0 color">
-	<img src="https://biolibre.fr/media/cache/articleMainImg/images/articles/school_42.jpeg" style="width: 60px; height: 50px;">
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-		<div class="navbar-nav">
-		<a class="nav-item nav-link active" href="#sec-home" style="color: #fff;">Home</a>
-		<a class="nav-item nav-link" href="#sec-about" style="color: #fff;">Project</a>
-		<a class="nav-item nav-link" href="#sec-portfolio" style="color: #fff;">Apresentação</a>
-		<form action="/upload" method="post" enctype="multipart/form-data">
-			<input type="file" name="fileUpload">
-			<input type="submit" value="Enviar">
-		</form>
-	</div>
+	<nav class="navbar navbar-expand-lg p-0 color">
+		<img src="https://biolibre.fr/media/cache/articleMainImg/images/articles/school_42.jpeg" style="width: 60px; height: 50px;">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav me-auto">
+				<a class="nav-item nav-link active" href="#sec-home" style="color: #fff;">Home</a>
+				<a class="nav-item nav-link" href="#sec-about" style="color: #fff;">Project</a>
+				<a class="nav-item nav-link" href="#sec-portfolio" style="color: #fff;">Apresentação</a>
+			</div>
+			<form action="/upload" method="post" enctype="multipart/form-data" class="send_file ms-auto" style="margin: 10px;">
+				<input type="file" name="fileUpload">
+				<input type="submit" value="Enviar">
+			</form>
+		</div>
 	</nav>
-	<div class="wrapper">
+		<div class="wrapper">
 		<section class="sec-about" id="sec-about">
 			<div class="content">
 				<h2> projeto </h2>
@@ -231,3 +238,21 @@
 		});
 	});
 </script>
+
+<!-- <nav class="navbar navbar-expand-lg p-0 color">
+	<img src="https://biolibre.fr/media/cache/articleMainImg/images/articles/school_42.jpeg" style="width: 60px; height: 50px;">
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		<div class="navbar-nav">
+			<a class="nav-item nav-link active" href="#sec-home" style="color: #fff;">Home</a>
+			<a class="nav-item nav-link" href="#sec-about" style="color: #fff;">Project</a>
+			<a class="nav-item nav-link" href="#sec-portfolio" style="color: #fff;">Apresentação</a>
+			<form action="/upload" method="post" enctype="multipart/form-data" class="send_file ml-auto">
+				<input type="file" name="fileUpload">
+				<input type="submit" value="Enviar">
+			</form>
+		</div>
+	</div>
+</nav> -->

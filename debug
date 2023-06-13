@@ -1,0 +1,50 @@
+O Plugin "MyQueue" é uma biblioteca de manipulação do Amazon Simple Queue Service (SQS) que simplifica a criação e o gerenciamento de filas de mensagens. Com este plugin, você pode facilmente enviar, receber e excluir mensagens em uma fila SQS. Este documento fornecerá uma visão geral das principais funcionalidades e exemplos de uso do Plugin "MyQueue".
+
+Uso Básico
+Aqui está um exemplo básico de como usar o Plugin "MyQueue" para enviar e receber mensagens em uma fila SQS:
+
+from myqueue_plugin import MyQueue
+
+# Cria uma instância do MyQueue
+my_queue = MyQueue(queue_name="MinhaFila.fifo")
+
+# Envia uma mensagem para a fila SQS
+my_queue.send_message(message_body="Olá, mundo!")
+
+# Recebe a próxima mensagem disponível na fila SQS
+response = my_queue.receive_message()
+
+# Verifica se há mensagens na resposta
+if response:
+    message = response[0]
+    print("Mensagem recebida:", message["Body"])
+
+    # Deleta a mensagem da fila SQS
+    my_queue.delete_message(receipt_handle=message["ReceiptHandle"])
+else:
+    print("Não há mensagens na fila SQS.")
+
+Propriedades
+Aqui estão as principais propriedades do Plugin "MyQueue":
+
+queue_name (obrigatório): O nome da fila SQS.
+delay_seconds: O tempo de atraso, em segundos, para colocar mensagens na fila.
+message_retention_period: O período de retenção das mensagens na fila, em segundos.
+maximum_message_size: O tamanho máximo, em bytes, para uma mensagem.
+visibility_timeout: O tempo máximo, em segundos, que uma mensagem permanece invisível após ser recebida.
+fifo_queue: Indica se a fila é uma FIFO (First-In-First-Out).
+receive_message_wait_time_seconds: O tempo, em segundos, para esperar por uma mensagem disponível quando a fila está vazia.
+duplicate_message_detection: Indica se a detecção de mensagens duplicadas está ativada.
+content_based_deduplication: Indica se a deduplicação baseada em conteúdo está ativada.
+
+Métodos
+Aqui estão os principais métodos disponíveis no Plugin "MyQueue":
+
+send_message(message_body): Envia uma mensagem para a fila SQS.
+receive_message(): Recebe a próxima mensagem disponível na fila SQS.
+delete_message(receipt_handle): Exclui uma mensagem da fila SQS
+
+Exemplos Adicionais
+Enviando uma mensagem FIFO
+# Envia uma mensagem FIFO para a fila SQS
+my_queue.send_message_fifo(message_body="Olá, mundo!", deduplication_id="123", message_group_id="456")

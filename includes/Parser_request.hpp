@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/04 13:16:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:24:18 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ class Parser_request
 		std::string	get_endPoint( void );
 		char**		get_envs( void );
 		int			get_index_envs( void );
+		std::string get_envsMap(std::string key);
 
 
 	private:
@@ -47,6 +48,7 @@ class Parser_request
 		std::string		_metodo;
 		std::string		_endPoint;
 		char**			_envs;
+		std::map<std::string, std::string>	_envsMap;
 		int				_index_envs;
 		bool			need_cgi;
 };

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/12 21:29:43 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:36:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,6 @@ class 	Server
 
 void	set_debug(bool	value);
 int		get_debug( void );
-void	write_debug_number(std::string message, int number);
-void	write_debug_prefix(std::string prefix, std::string message);
-void	write_type_event_debug(epoll_event& event);
-void	write_debug(std::string message);
-
 
 bool	get_content_file(aux_read_file& dst);
 void	create_header(aux_read_file& tmp);

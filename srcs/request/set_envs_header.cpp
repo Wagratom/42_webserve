@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/11 21:39:49 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:25:25 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,10 @@ void	Parser_request::set_envs(std::map<std::string, std::string>& envs)
 		if (it->second.empty())
 			it->second = "null";
 		_envs[_index_envs++] = strdup((it->first + "=" + it->second).c_str());
+		_envsMap[it->first] = it->second;
 		it++;
 	}
 	_envs[_index_envs] = NULL;
-	std::cout << "----------------------------------------" << std::endl;
 }
 
 bool Parser_request::set_envs_header(void)
@@ -121,7 +121,6 @@ bool Parser_request::set_envs_header(void)
 	std::string line;
 
 	fill_maps(envs, key_value);
-	std::cout << _request << std::endl;
 	while (get_line_request(line, _request))
 	{
 		if (line.compare(0, 4, "Host") == 0)
@@ -133,7 +132,7 @@ bool Parser_request::set_envs_header(void)
 			handle_line(line, key_value);
 	}
 	set_envs(envs);
-	std::cout << "\n------------------ENV------------------" << std::endl;
+	std::cout << "Dados Extraidos: " << std::endl;
 	for (int i = 0; _envs[i]; i++)
 		std::cout << _envs[i] << std::endl;
 	return (true);
