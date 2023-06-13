@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 17:18:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/05 15:57:27 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:20:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ bool	Server::response_request( std::string& buffer )
 	return (true);
 }
 
-bool	Server::handle_POST_requesition()
-{
-	char**		argv = new char*[4];
+// bool	Server::handle_POST_requesition()
+// {
+// 	if (_parser_request->get_endPoint() == "/upload")
+// 	char**		argv = new char*[4];
 
-	argv[0] = (char *)"/usr/bin/php-cgi7.4";
-	argv[1] = (char *)"/home/wallas/42_webserve/script.cgi";
-	argv[2] = NULL;
+// 	argv[0] = (char *)"/usr/bin/php-cgi7.4";
+// 	argv[1] = (char *)"/home/wallas/42_webserve/script.cgi";
+// 	argv[2] = NULL;
 	// std::string hello_env = "HELLO=hello_world";
 	// char* envs[50];
 
@@ -64,8 +65,8 @@ bool	Server::handle_POST_requesition()
 	// envs[1] = strdup("REDIRECT_STATUS=1");
 	// envs[13] = strdup("SCRIPT_NAME=/home/wallas/42_webserve/script.cgi");
 	// envs[2] = NULL;
-	if (execve("/usr/bin/php-cgi7.4", argv, NULL) == -1)
-	std::cout << strerror(errno) << std::endl;
-	exit(ERROR_SERVE);
-	return (true);
-}
+// 	if (execve("/usr/bin/php-cgi7.4", argv, NULL) == -1)
+// 	std::cout << strerror(errno) << std::endl;
+// 	exit(ERROR_SERVE);
+// 	return (true);
+// }

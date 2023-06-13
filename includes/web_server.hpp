@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/12 10:00:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:29:43 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ class 	Server
 
 		bool	set_client_not_block( void );
 		bool	read_request( std::string& buffer );
-		bool	read_request_status(char* tmp, int& bytes_read);
 		bool	response_request( std::string& buffer );
 		bool	parse_order_request( std::string& buffer );
 
@@ -107,6 +106,7 @@ class 	Server
 		void	response_get( s_ChildProcessInfo& tools_chuild );
 
 		bool	handle_POST_requesition( void );
+		bool	handle_update( void );
 		bool	generete_path_to_response( std::string& dst , std::string root, std::string listNames );
 		bool	send_response_to_client( int& buffer_html );
 		void	send_response_error_to_client( int status );
