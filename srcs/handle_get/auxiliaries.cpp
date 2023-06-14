@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:08:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/07 14:12:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:20:25 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,19 @@ bool	get_content_file(aux_read_file& dst)
 	return (true);
 }
 
-void	create_header(aux_read_file& tmp)
+void	create_header_to_files(aux_read_file& tmp, std::string status_code)
 {
 	tmp.oss << tmp.size;
-	tmp.header = "HTTP/1.1 200 OK\r\n";
+	tmp.header = "HTTP/1.1 " + status_code +" OK\r\n";
 	tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n";
 	tmp.header += "Content-Length: " + tmp.oss.str() + "\r\n\r\n";
+}
+
+
+std::string	create_header_html(std::string status_code)
+{
+	std::string header =	"HTTP/1.1 " + status_code +" OK\r\n";
+	header += "Content-Type: text/html \r\n";
+	header += "\r\n";
+	return (header);
 }

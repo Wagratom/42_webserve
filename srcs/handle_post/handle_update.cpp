@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/13 15:10:43 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:20:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,8 @@ static bool saveFileInServer(const std::string& content, const std::string& file
 	std::string path = "./upload/" + filename;
 	std::ofstream file(path.c_str(), std::ios::binary);
 
-	// std::cout << "Filename: " << filename << std::endl;
-	// std::cout << "Content: " << content << std::endl;
-
+	std::cout << "path: " << path << std::endl;
+	std::cout << "content: " << content << std::endl;
 	if (!file.is_open())
 		return false;
 	file.write(content.data(), content.size());
@@ -110,16 +109,25 @@ static void	removeDelimiter(std::string& boby)
 	boby = boby.substr(0, pos);
 }
 
+
 bool	Server::handle_update()
 {
-	aux_upload data;
-
 	// TODO: check if the body is bigger than client_max_body_size
+	aux_upload	data;
+
 	data.request = _parser_request->get_request();
 	data.body_length = data.request.length();
 	data.fd = _client_fd;
 	data.content_length = std::strtol(_parser_request->get_envsMap("CONTENT_LENGTH").c_str(), NULL, 10);
+	if (processFileUpload(data) == false)
+		return response_server("500");
+	if (saveFileInServer(data.request, data.filename) == false)
+		return response_server("500");
+	return response_server("200");
+}
 
+bool	Server::processFileUpload(aux_upload& data)
+{
 	if (readRequestBody(data) == false)
 		return (false);
 	if (getFileNameBody(data.request, data.filename) == false)
@@ -127,8 +135,6 @@ bool	Server::handle_update()
 	if (avenceToContentBody(data.request) == false)
 		return (false);
 	removeDelimiter(data.request);
-	if (saveFileInServer(data.request, data.filename) == false)
-		return (false);
 	return (true);
 }
 

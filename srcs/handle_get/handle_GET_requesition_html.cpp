@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/12 10:01:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/14 13:23:44 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool Server::handle_GET_requesition_html( std::string& path)
 	std::string	full_path = "/var/www" + path;
 
 	if (path == "/")
-		return response_server();
+		return response_server("200");
 	if (isDirectory(full_path))
 		status = check_is_location(path);
 	else
@@ -42,7 +42,7 @@ bool Server::handle_GET_requesition_html( std::string& path)
 	return (true);
 }
 
-bool	Server::response_server( void )
+bool	Server::response_server(std::string status_code)
 {
 	aux_read_file tmp;
 
@@ -50,7 +50,7 @@ bool	Server::response_server( void )
 		return (false);
 	if (!get_content_file(tmp))
 		return (false);
-	create_header(tmp);
+	create_header_to_files(tmp, status_code);
 	send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
 	send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
 	return (true);
@@ -65,6 +65,7 @@ void	Server::prepare_path_server(std::string& dst, std::string& path)
 	path = server()->get_root() + path;
 	dst = path;
 }
+
 bool Server::open_required_file(std::string& path)
 {
 	aux_read_file tmp;
@@ -72,7 +73,7 @@ bool Server::open_required_file(std::string& path)
 	prepare_path_server(tmp.path, path);
 	if (!get_content_file(tmp))
 		return (false);
-	create_header(tmp);
+	create_header_to_files(tmp, "200");
 	send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
 	send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
 	return (true);

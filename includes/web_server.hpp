@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/12 21:36:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:17:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_ChildProcessInfo {
 	int	exit_status;
 
 } ChildProcessInfo;
+
+struct aux_upload;
 
 class 	Server
 {
@@ -94,7 +96,7 @@ class 	Server
 		bool	handle_GET_requesition( void );
 		bool	handle_GET_requesition_html( std::string& path );
 		void	prepare_path_server(std::string& dst, std::string& path);
-		bool	response_server( void );
+		bool	response_server( std::string status_code );
 		bool	open_required_file( std::string& path );
 		bool	check_is_location( std::string& path );
 		bool	response_location(t_location_settings* location);
@@ -102,11 +104,14 @@ class 	Server
 
 		bool	handle_GET_requesition_php( void );
 		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
-		void	execute_cgi( void );
 		void	response_get( s_ChildProcessInfo& tools_chuild );
 
 		bool	handle_POST_requesition( void );
 		bool	handle_update( void );
+		bool	response_Client_With_List_Files( std::string listFiles );
+		bool	processFileUpload( aux_upload& data );
+		bool	handle_delete( void );
+
 		bool	generete_path_to_response( std::string& dst , std::string root, std::string listNames );
 		bool	send_response_to_client( int& buffer_html );
 		void	send_response_error_to_client( int status );
@@ -158,6 +163,9 @@ class 	Server
 void	set_debug(bool	value);
 int		get_debug( void );
 
-bool	get_content_file(aux_read_file& dst);
-void	create_header(aux_read_file& tmp);
-bool	isDirectory(const std::string& path);
+bool		get_content_file(aux_read_file& dst);
+void		create_header_to_files(aux_read_file& tmp, std::string status_code);
+std::string	create_header_html(std::string status_code);
+bool		isDirectory(const std::string& path);
+bool		execute_fork( ChildProcessInfo& infos);
+void		execute_cgi(char** argv, char** envp);

@@ -192,7 +192,8 @@
 			</div>
 			<form action="/upload" method="post" enctype="multipart/form-data" class="send_file ms-auto" style="margin: 10px;">
 				<input type="file" name="fileUpload">
-				<input type="submit" value="Enviar">
+				<input type="submit" value="Enviar" id="enviarBtn">
+
 			</form>
 		</div>
 	</nav>
@@ -222,37 +223,17 @@
 				<h1> Bem vindo ao nosso WebServer.</h1>
 				<h2><a href="#sec-about">Oque</a> Fizemos?</h2>
 				<h2><a href="#sec-portfolio">Como</a> fizemos?</h2>
-				<h2><a href="#sec-contact" id="register-link">Realize</a> seu teste.</h2>
 			</div>
 		</section>
 	</div>
 </body>
 <script>
-	document.addEventListener("DOMContentLoaded", function() {
-		var registerLink = document.getElementById("register-link");
-		registerLink.addEventListener("click", function(event) {
-			event.preventDefault(); // Impede o comportamento padrão do link
-			console.log("register-link clicked");
-			// Redireciona para o conteúdo do arquivo register.html no mesmo servidor
-			window.location.href = "./login.html";
-		});
-	});
-</script>
+	// Selecione o botão "Enviar" pelo ID
+	var enviarBtn = document.getElementById("enviarBtn");
 
-<!-- <nav class="navbar navbar-expand-lg p-0 color">
-	<img src="https://biolibre.fr/media/cache/articleMainImg/images/articles/school_42.jpeg" style="width: 60px; height: 50px;">
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-		<div class="navbar-nav">
-			<a class="nav-item nav-link active" href="#sec-home" style="color: #fff;">Home</a>
-			<a class="nav-item nav-link" href="#sec-about" style="color: #fff;">Project</a>
-			<a class="nav-item nav-link" href="#sec-portfolio" style="color: #fff;">Apresentação</a>
-			<form action="/upload" method="post" enctype="multipart/form-data" class="send_file ml-auto">
-				<input type="file" name="fileUpload">
-				<input type="submit" value="Enviar">
-			</form>
-		</div>
-	</div>
-</nav> -->
+	// Adicione um w de clique ao botão
+	enviarBtn.addEventListener("click", function() {
+	  // Exiba a notificação de envio
+	  alert("O arquivo foi enviado com sucesso!");
+	});
+  </script>
