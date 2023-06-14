@@ -3,10 +3,9 @@
 <head>
   <title>Lista de Arquivos</title>
   <style>
-	body {
-		text-align: center;
-		backgroud-color: #f5f5f5;
-	}
+    body {
+      text-align: center;
+    }
     table {
       border-collapse: collapse;
       margin-left: auto;
@@ -20,8 +19,14 @@
       text-align: left;
     }
     td {
-      text-align: center;
       vertical-align: middle;
+    }
+    td.filename {
+      text-align: left;
+      margin-right: 10px;
+    }
+    td.button {
+      margin-right: 10px;
     }
     button {
       margin-top: 1px;
@@ -49,8 +54,8 @@
     // Exibe a lista de arquivos com botões de delete
     foreach ($files as $file) {
       echo "<tr>";
-      echo "<td>$file</td>";
-      echo "<td><button onclick=\"deleteFile('$file')\">Delete</button></td>";
+      echo "<td class=\"filename\">$file</td>";
+      echo "<td class=\"button\"><button onclick=\"deleteFile('$file')\">Delete</button></td>";
       echo "</tr>";
     }
     ?>
