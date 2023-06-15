@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/14 16:18:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:37:26 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	Server::handle_POST_requesition( void )
 {
 	if (_parser_request->get_endPoint() == "/upload")
 		return (handle_update());
-	if (_parser_request->get_endPoint() == "/delete")
+	if (_parser_request->get_endPoint().compare(0, 7, "/delete") == 0)
 		return (handle_delete());
 	return (true);
 }
@@ -67,7 +67,7 @@ static bool	execute_cgi_listFiles(ChildProcessInfo& tools_chuild, std::string li
 	return (true);
 }
 
-bool	create_response_to_client(ChildProcessInfo& tools_chuild, std::string& response)
+static bool	read_response_cgi(ChildProcessInfo& tools_chuild, std::string& response)
 {
 	char		buffer[1024];
 	int			bytes_read;
@@ -83,27 +83,55 @@ bool	create_response_to_client(ChildProcessInfo& tools_chuild, std::string& resp
 	return (true);
 }
 
-bool	Server::response_Client_With_List_Files(std::string listFiles)
+static bool	create_response_to_client(std::string listFiles, std::string& response)
 {
 	ChildProcessInfo	tools_chuild;
-	std::string			response;
 
-	listFiles = "listFiles=" + listFiles;
 	if (execute_cgi_listFiles(tools_chuild, listFiles) == false)
 		return (false);
-	if (create_response_to_client(tools_chuild, response) == false)
+	if (read_response_cgi(tools_chuild, response) == false)
 		return (false);
-	send(_client_fd, response.c_str(), response.size(), 0);
+	return (true);
+}
+
+static void	add_prefix_listFiles(std::string& listFiles)
+{
+	listFiles = "listFiles=" + listFiles;
+}
+
+bool	Server::response_client(std::string response)
+{
+	if (send(_client_fd, response.c_str(), response.size(), 0) == -1)
+		return (write_error("Error: handle_delete: send"));
+	return (true);
+}
+
+bool	Server::response_client_with_list_files()
+{
+	std::string	response;
+	std::string listFiles;
+
+	if (get_ListFiles(listFiles) == false)
+		return (false);
+	add_prefix_listFiles(response);
+	if (create_response_to_client(listFiles, response) == false)
+		return (false);
+	return (response_client(response));
+}
+
+static bool	delete_file_server(std::string fileName)
+{
+	std::string	pathFile = "./upload/" + fileName;
+
+	if (std::remove(pathFile.c_str()) != 0)
+		return (write_error("Error: handle_delete: Not possible to remove file"));
 	return (true);
 }
 
 bool	Server::handle_delete( void )
 {
-	std::string		listFiles;
 
-	if (get_ListFiles(listFiles) == false)
-		return (false);
-	if (response_Client_With_List_Files(listFiles) == false)
-		return (false);
-	return (true);
+	if (!_parser_request->get_endPoint()[7])
+		return (response_client_with_list_files());
+	return (delete_file_server(std::string(_parser_request->get_endPoint(), 8)));
 }

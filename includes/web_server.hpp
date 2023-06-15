@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/14 15:17:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:36:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ class 	Server
 
 		bool	handle_POST_requesition( void );
 		bool	handle_update( void );
-		bool	response_Client_With_List_Files( std::string listFiles );
+		bool	response_client_with_list_files( void );
 		bool	processFileUpload( aux_upload& data );
 		bool	handle_delete( void );
 
@@ -121,6 +121,8 @@ class 	Server
 		bool	closed_fd_epoll(epoll_event& event);
 
 		bool	write_error_prefix( std::string prefix );
+
+		bool	response_client( std::string response );
 
 		bool	clean_request(epoll_event& event);
 
