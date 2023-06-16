@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 17:18:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/12 17:20:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:55:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	Server::response_request( std::string& buffer )
 	if (_parser_request->get_metodo() == "POST")
 		return handle_POST_requesition();
 	if (_parser_request->get_metodo() == "DELETE")
-		std::cout << "Pediu DELETE" << std::endl;
+		return handle_DELETE_requesition();
 	write_debug("\n");
 	return (true);
 }

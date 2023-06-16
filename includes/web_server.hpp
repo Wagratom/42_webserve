@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/16 17:50:29 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:07:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ class 	Server
 
 		bool	handle_POST_requesition( void );
 		bool	handle_update( void );
-	
+
 		bool	handle_DELETE_requesition( void );
 		bool	response_client_with_list_files( void );
 		bool	processFileUpload( aux_upload& data );
@@ -118,6 +118,9 @@ class 	Server
 		void	send_response_error_to_client( int status );
 
 		bool	DELETE_requesition( void );
+
+		typedef	std::string(*header)( void );
+		bool	send_error_to_client( std::string path, header function );
 
 		bool	closed_fd_epoll(epoll_event& event);
 
@@ -169,6 +172,8 @@ int		get_debug( void );
 bool		get_content_file(aux_read_file& dst);
 void		create_header_to_files(aux_read_file& tmp, std::string status_code);
 std::string	create_header_html(std::string status_code);
+std::string	create_header_404(void);
+std::string	create_header_400( void );
 bool		isDirectory(const std::string& path);
 bool		execute_fork( ChildProcessInfo& infos);
 void		execute_cgi(char** argv, char** envp);

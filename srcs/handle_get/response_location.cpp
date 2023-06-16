@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/14 13:23:48 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:20:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sstream>
 #include <iostream>
 #include <sys/stat.h>
+
 
 bool	Server::get_root_location(std::string& root, const std::string& path)
 {
@@ -29,13 +30,13 @@ bool	Server::response_location(t_location_settings* location)
 	aux_read_file	tmp;
 	std::string		root = location->configuration->get_root();
 
-	std::cout << "root: " << root << std::endl;
 	if (root.empty())
 		root = server()->get_root();
 	if (root.empty())
 		return (false);
 	if (!generete_path_to_response(tmp.path, root, location->configuration->get_index()))
 		return (false);
+	std::cout << "root: " << root << std::endl;
 	std::cout << "path: " << tmp.path << std::endl;
 	if (!get_content_file(tmp))
 		return (false);

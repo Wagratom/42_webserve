@@ -3,6 +3,7 @@ Você não precisa usar poll() (ou equivalente) antes de ler seu arquivo de conf
 response_server universal
 colocar a função para lista diretorios como universal
 execute_cgi universal
+send error_404 universal
 mudar os send para response_client. universal
 
 
