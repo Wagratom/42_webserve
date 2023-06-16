@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/13 17:20:36 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/16 12:06:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,16 @@ struct aux_upload{
 	int			content_length;
 };
 
-static bool	readRequestBody_aux(aux_upload& data)
-{
-	data.bytes_read = recv(data.fd, data.buffer, 1024, 0);
-	if (data.bytes_read == -1)
-		return (write_error("Error reading body request"));
-	data.buffer[data.bytes_read] = '\0';
-	data.body_length += data.bytes_read;
-	data.request += data.buffer;
-	return (true);
-}
-
 static bool	readRequestBody(aux_upload& data)
 {
-	while (true)
+	while (data.body_length < data.content_length)
 	{
-		if (data.body_length >= data.content_length)
-			break ;
-		if (readRequestBody_aux(data) == false)
-			return (false);
+		data.bytes_read = recv(data.fd, data.buffer, 1024, 0);
+		if (data.bytes_read == -1)
+			return (write_error("Error reading body request"));
+		data.buffer[data.bytes_read] = '\0';
+		data.body_length += data.bytes_read;
+		data.request += data.buffer;
 	}
 	return (true);
 }
@@ -87,20 +78,6 @@ static bool	avenceToContentBody(std::string& request)
 	return true;
 }
 
-static bool saveFileInServer(const std::string& content, const std::string& filename)
-{
-	std::string path = "./upload/" + filename;
-	std::ofstream file(path.c_str(), std::ios::binary);
-
-	std::cout << "path: " << path << std::endl;
-	std::cout << "content: " << content << std::endl;
-	if (!file.is_open())
-		return false;
-	file.write(content.data(), content.size());
-	file.close();
-	return true;
-}
-
 static void	removeDelimiter(std::string& boby)
 {
 	size_t pos = boby.find("------WebKitFormBoundary");
@@ -109,6 +86,17 @@ static void	removeDelimiter(std::string& boby)
 	boby = boby.substr(0, pos);
 }
 
+static bool saveFileInServer(const std::string& content, const std::string& filename)
+{
+	std::string path = "./upload/" + filename;
+	std::ofstream file(path.c_str(), std::ios::binary);
+
+	if (!file.is_open())
+		return false;
+	file.write(content.data(), content.size());
+	file.close();
+	return true;
+}
 
 bool	Server::handle_update()
 {
@@ -128,6 +116,7 @@ bool	Server::handle_update()
 
 bool	Server::processFileUpload(aux_upload& data)
 {
+	std::cout << "processFileUpload" << std::endl;
 	if (readRequestBody(data) == false)
 		return (false);
 	if (getFileNameBody(data.request, data.filename) == false)
