@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/16 12:25:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:50:29 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,10 @@ class 	Server
 
 		bool	handle_POST_requesition( void );
 		bool	handle_update( void );
+	
+		bool	handle_DELETE_requesition( void );
 		bool	response_client_with_list_files( void );
 		bool	processFileUpload( aux_upload& data );
-		bool	handle_delete( void );
 
 		bool	generete_path_to_response( std::string& dst , std::string root, std::string listNames );
 		bool	send_response_to_client( int& buffer_html );

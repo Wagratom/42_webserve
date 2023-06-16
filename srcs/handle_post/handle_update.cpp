@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/16 12:06:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:46:27 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ static bool getFileNameBody(const std::string& body, std::string& filename)
 static bool	avenceToContentBody(std::string& request)
 {
 	const std::string	endOfHeader = "\r\n\r\n";
-	size_t				endOfHeaderPos;
+	size_t				endOfHeaderPos =  request.find(endOfHeader);
 
-	endOfHeaderPos = request.find(endOfHeader);
 	if (endOfHeaderPos == std::string::npos)
 		return write_error("Error parsing body request: end of header not found");
 	request = request.substr(endOfHeaderPos + 4);
@@ -80,7 +79,8 @@ static bool	avenceToContentBody(std::string& request)
 
 static void	removeDelimiter(std::string& boby)
 {
-	size_t pos = boby.find("------WebKitFormBoundary");
+	size_t	pos = boby.find("------WebKitFormBoundary");
+
 	if (pos == std::string::npos)
 		return ;
 	boby = boby.substr(0, pos);
@@ -88,8 +88,8 @@ static void	removeDelimiter(std::string& boby)
 
 static bool saveFileInServer(const std::string& content, const std::string& filename)
 {
-	std::string path = "./upload/" + filename;
-	std::ofstream file(path.c_str(), std::ios::binary);
+	std::string		path = "./upload/" + filename;
+	std::ofstream	file(path.c_str(), std::ios::binary);
 
 	if (!file.is_open())
 		return false;
