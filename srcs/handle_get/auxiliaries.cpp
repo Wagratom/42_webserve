@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:08:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/16 18:48:36 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:25:25 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static std::map<std::string, std::string>	generete_dictionary_type()
 	static std::map<std::string, std::string> types;
 
 	types[".html"] = "text/html";
+	types[".php"] = "text/html";
 	types[".css"] = "text/css";
 	types[".js"] = "text/javascript";
 	types[".png"] = "image/png";
@@ -46,20 +47,6 @@ bool	isDirectory(const std::string& path)
 		return (fileStat.st_mode & S_IFDIR) != 0;
 	}
 	return false;
-}
-
-bool	get_content_file(aux_read_file& dst)
-{
-	std::ifstream file(dst.path.c_str(), std::ios::binary | std::ios::ate);
-
-	if (!file.is_open())
-		return (false);
-	dst.size = file.tellg();
-	file.seekg(0, std::ios::beg);
-	dst.content.resize(dst.size);
-	if (!file.read(&dst.content[0], dst.size))
-		return (false);
-	return (true);
 }
 
 void	create_header_to_files(aux_read_file& tmp, std::string status_code)

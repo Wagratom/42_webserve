@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:04:00 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/11 20:44:47 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:40:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	open_file_status( std::string path )
 	std::cout << "path: " << path << std::endl;
 	if (!file.is_open())
 		return (false);
-	write_debug_prefix("File opening: ", path);
+	std::cout << "retornando true" << std::endl;
 	return (true);
 }
 
@@ -40,13 +40,17 @@ bool	get_path(std::string listNames, std::string root, std::string& dst)
 		if (pos != std::string::npos)
 		{
 			dst = path_file(root, listNames.substr(0, pos));
+
 			if (open_file_status(dst))
 				return (true);
 			listNames = listNames.substr((pos + 1));
 		}
 	}
+	std::cout << "Estou no if " << std::endl;
+	std::cout << "Open_file_status: " << open_file_status(path_file(root, listNames)) << std::endl;
 	if (!open_file_status(path_file(root, listNames)))
 		return (false);
+	std::cout << "Estou no if " << std::endl;
 	dst = path_file(root, listNames);
 	return (true);
 }
@@ -54,8 +58,6 @@ bool	get_path(std::string listNames, std::string root, std::string& dst)
 bool	Server::generete_path_to_response( std::string& dst , std::string root, std::string listNames )
 {
 	dst.clear();
-	if (root.length() == 0)
-	std::cout << "root: " << root << std::endl;
 	if (listNames.empty() || root.empty())
 		return ("");
 	return (get_path(listNames, root, dst));
