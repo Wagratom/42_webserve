@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 17:50:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:10:18 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,10 @@ class	Server
 
 		bool	handle_GET_requesition( void );
 		bool	handle_GET_requesition_html( std::string& endPoint );
-		void	prepare_path_server(std::string& dst, std::string& path);
-		bool	response_server( std::string status_code );
-		bool	response_file( std::string& path );
-		bool	response_location( std::string& path );
-		bool	response_location(t_location_settings* location);
+		bool	responseServer( std::string status_code );
+		bool	responseFile( std::string endpoint );
+		bool	responseLocation( std::string& path );
+		bool	responseLocation(t_location_settings* location);
 		bool	get_root_location(std::string& root, const std::string& path);
 
 		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );

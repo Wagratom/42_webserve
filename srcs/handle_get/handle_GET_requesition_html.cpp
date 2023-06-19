@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 17:50:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:10:26 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,18 @@ bool	Server::handle_GET_requesition_html( std::string& endPoint)
 
 	std::cout << "handle_GET_requesition_html" << std::endl;
 	if (endPoint == "/")
-		return response_server("200");
+		return responseServer("200");
 	if (isDirectory(full_path))
-		return (response_location(endPoint));
-	return (response_file(endPoint));
+		return (responseLocation(endPoint));
+	return (responseFile(endPoint));
 }
 
-void	Server::prepare_path_server(std::string& dst, std::string& path)
-{
-	if (path[0] == '.')
-		path.erase(0, 1);
-	if (path[0] == '/')
-		path.erase(0, 1);
-	path = server()->get_root() + path;
-	dst = path;
-}
-
-bool Server::response_file(std::string& path)
+bool Server::responseFile(std::string endpoint)
 {
 	aux_read_file tmp;
 
-	std::cout << "response_file" << std::endl;
-	prepare_path_server(tmp.path, path);
+	std::cout << "responseFile" << std::endl;
+	tmp.path = server()->get_root() + endpoint;
 	if (!get_content_file(tmp))
 		return (false);
 	create_header_to_files(tmp, "200");
@@ -53,9 +43,9 @@ bool Server::response_file(std::string& path)
 	return (true);
 }
 
-bool	Server::response_location(std::string& path)
+bool	Server::responseLocation(std::string& path)
 {
-	std::cout << "response_location" << std::endl;
+	std::cout << "responseLocation" << std::endl;
 	t_location_settings* locations = location();
 
 	if (path[path.length() - 1] != '/')
@@ -63,7 +53,7 @@ bool	Server::response_location(std::string& path)
 	while(locations)
 	{
 		if (path == locations->locationName)
-			return response_location(locations);
+			return responseLocation(locations);
 		locations = locations->next;
 	}
 	return (false);

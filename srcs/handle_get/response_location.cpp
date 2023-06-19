@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   response_location.cpp                              :+:      :+:    :+:   */
+/*   responseLocation.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -29,6 +29,7 @@ bool	get_content_file(aux_read_file& dst)
 {
 	std::ifstream file(dst.path.c_str(), std::ios::binary | std::ios::ate);
 
+	std::cout << "get_content_file" << std::endl;
 	if (!file.is_open())
 		return (false);
 	dst.size = file.tellg();
@@ -53,7 +54,7 @@ static std::string	create_root_location(std::string rootLocation, std::string ro
 	return (root);
 }
 
-bool	Server::response_location(t_location_settings* location)
+bool	Server::responseLocation(t_location_settings* location)
 {
 	aux_read_file	tmp;
 	std::string		root;
