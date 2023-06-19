@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/11 21:00:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:06:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ bool	Server::handle_GET_requesition_php( void )
 
 	child_info = (ChildProcessInfo){0, 0, 0, 0, 0}; // initialize struct with 0
 
+	std::string path = server()->get_root() + _parser_request->get_endPoint();
+	std::cout << "path: " << path << std::endl;
 	if (execute_cgi_in_chuild(child_info) == false)
 		return (false);
 	close(child_info.fd[1]);

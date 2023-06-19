@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/16 17:50:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:47:29 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ bool	Server::response_client_with_list_files()
 	std::string	response;
 	std::string listFiles;
 
+	std::cout << "response_client_with_list_files" << std::endl;
 	if (get_ListFiles(listFiles) == false)
 		return (false);
 	add_prefix_listFiles(listFiles);
@@ -143,6 +144,7 @@ bool	Server::response_client_with_list_files()
 
 bool	Server::handle_DELETE_requesition( void )
 {
+	std::cout << "DELETE" << std::endl;
 	if (!_parser_request->get_endPoint()[7])
 		return (response_client_with_list_files());
 	delete_file_server(std::string(_parser_request->get_endPoint(), 8));

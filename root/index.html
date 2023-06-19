@@ -193,7 +193,7 @@
 			<form action="/upload" method="post" enctype="multipart/form-data" class="send_file ms-auto" style="margin: 10px;">
 				<input type="file" name="fileUpload">
 				<input type="submit" value="Enviar" id="enviarBtn">
-
+				<button type="button" id="botao-excluir">Excluir</button>
 			</form>
 		</div>
 	</nav>
@@ -230,10 +230,15 @@
 <script>
 	// Selecione o botão "Enviar" pelo ID
 	var enviarBtn = document.getElementById("enviarBtn");
-
-	// Adicione um w de clique ao botão
 	enviarBtn.addEventListener("click", function() {
 	  // Exiba a notificação de envio
 	  alert("O arquivo foi enviado com sucesso!");
 	});
-  </script>
+</script>
+<script>
+	var botaoExcluir = document.getElementById("botao-excluir");
+
+	botaoExcluir.addEventListener("click", function() {
+		window.location.href = "/list";
+	});
+</script>

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/16 19:07:26 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:20:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ bool	Server::handle_POST_requesition()
 	data.fd = _client_fd;
 	data.content_length = std::strtol(_parser_request->get_envsMap("CONTENT_LENGTH").c_str(), NULL, 10);
 
-	if (_parser_request->get_envsMap("CONTENT_TYPE") != "multipart/form-data")
+	if (_parser_request->get_envsMap("CONTENT_TYPE").find("multipart/form-data"))
 		return (send_error_to_client("./error_pages/400_bad_request.html", &create_header_400));
 	if (processFileUpload(data) == false)
 		return response_server("500");
