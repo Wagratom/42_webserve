@@ -16,9 +16,9 @@ bool	Server::responseServer(std::string status_code)
 {
 	aux_read_file tmp;
 
-	if (!generete_path_to_response(tmp.path, server()->get_root(), server()->get_index()))
+	if (!generetePathToResponse(tmp.path, server()->get_root(), server()->get_index()))
 		return (false);
-	if (!get_content_file(tmp))
+	if (!getContentFile(tmp))
 		return (false);
 	create_header_to_files(tmp, status_code);
 	send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);

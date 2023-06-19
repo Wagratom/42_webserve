@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 18:10:18 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:02:10 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ class	Server
 		bool	handle_GET_requesition( void );
 		bool	handle_GET_requesition_html( std::string& endPoint );
 		bool	responseServer( std::string status_code );
-		bool	responseFile( std::string endpoint );
-		bool	responseLocation( std::string& path );
+		bool	responseFile( std::string endPoint );
+		bool	responseLocation( std::string endPoint );
 		bool	responseLocation(t_location_settings* location);
-		bool	get_root_location(std::string& root, const std::string& path);
+		bool	createRootLocation(std::string& dst, t_location_settings* location);
 
 		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
 		void	response_get( s_ChildProcessInfo& tools_chuild );
@@ -112,7 +112,7 @@ class	Server
 		bool	response_client_with_list_files( void );
 		bool	processFileUpload( aux_upload& data );
 
-		bool	generete_path_to_response( std::string& dst , std::string root, std::string listNames );
+		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
 		bool	send_response_to_client( int& buffer_html );
 		bool	sendErrorResponseToClient( int status );
 
@@ -168,7 +168,7 @@ class	Server
 void	set_debug(bool	value);
 int		get_debug( void );
 
-bool		get_content_file(aux_read_file& dst);
+bool		getContentFile(aux_read_file& dst);
 void		create_header_to_files(aux_read_file& tmp, std::string status_code);
 std::string	create_header_html(std::string status_code);
 std::string	create_header_404(void);
@@ -177,3 +177,6 @@ std::string	create_header_500( void );
 bool		isDirectory(const std::string& path);
 bool		execute_fork( ChildProcessInfo& infos);
 void		execute_cgi(char** argv, char** envp);
+bool		getContentFile(aux_read_file& dst);
+void		appendBar(std::string& str);
+bool		checkValidLocation(t_location_settings*& locations, std::string endPoint);

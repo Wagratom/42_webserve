@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 17:47:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:02:10 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	Server::sendErrorToClient( std::string path, header function_to_create_head
 	aux_read_file	aux;
 
 	aux.path = path;
-	if (!get_content_file(aux))
+	if (!getContentFile(aux))
 		return (false);
 	response += aux.content;
 	if (send(_client_fd, response.c_str(), response.size(), 0) == -1)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   generete_path_to_response.cpp                      :+:      :+:    :+:   */
+/*   generetePathToResponse.cpp                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:04:00 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 10:40:46 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:00:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	open_file_status( std::string path )
 	std::cout << "path: " << path << std::endl;
 	if (!file.is_open())
 		return (false);
-	std::cout << "retornando true" << std::endl;
+	std::cout << "File opened" << std::endl;
 	return (true);
 }
 
@@ -46,20 +46,17 @@ bool	get_path(std::string listNames, std::string root, std::string& dst)
 			listNames = listNames.substr((pos + 1));
 		}
 	}
-	std::cout << "Estou no if " << std::endl;
-	std::cout << "Open_file_status: " << open_file_status(path_file(root, listNames)) << std::endl;
 	if (!open_file_status(path_file(root, listNames)))
 		return (false);
-	std::cout << "Estou no if " << std::endl;
 	dst = path_file(root, listNames);
 	return (true);
 }
 
-bool	Server::generete_path_to_response( std::string& dst , std::string root, std::string listNames )
+bool	Server::generetePathToResponse(std::string& dst, std::string root, std::string listNames )
 {
 	dst.clear();
 	if (listNames.empty() || root.empty())
-		return ("");
+		return (write_error("Error: root or listNames is empty"));
 	return (get_path(listNames, root, dst));
 }
 

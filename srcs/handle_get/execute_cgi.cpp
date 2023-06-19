@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:50:06 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 16:53:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:01:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	Server::execute_cgi_in_chuild( ChildProcessInfo& tools_chuild )
 		return (false);
 	if (tools_chuild.pid == CHILD_PROCESS)
 	{
-		if (!generete_path_to_response(path, server()->get_root(), server()->get_index()))
+		if (!generetePathToResponse(path, server()->get_root(), server()->get_index()))
 			exit(ERROR404);
 
 		argv[0] = (char *)"/usr/bin/php-cgi";

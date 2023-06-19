@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/06/19 18:09:10 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/06/19 19:03:13 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,10 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				gets_Parser_configuration.cpp sets_server_configuration.cpp \
 				read_request.cpp response_request.cpp handle_GET_requesition_html.cpp \
 				handle_GET_requesition.cpp DELETE_requesition.cpp \
-				generete_path_to_response.cpp clean_request.cpp execute_cgi.cpp \
+				generetePathToResponse.cpp clean_request.cpp execute_cgi.cpp \
 				response_get.cpp response_location.cpp auxiliaries.cpp \
 				handle_POST_request.cpp handle_delete.cpp responseServer.cpp\
+				responseFile.cpp responseLocationAux.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs
