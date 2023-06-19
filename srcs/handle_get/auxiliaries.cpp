@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:08:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 10:25:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:51:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,15 @@ std::string	create_header_404( void )
 
 std::string	create_header_400( void )
 {
-	std::string	header = "HTTP/1.1 404 Bad Request\r\n";
+	std::string	header = "HTTP/1.1 400 Bad Request\r\n";
+	header += "Content-Type: text/html\r\n\r\n";
+	header += "\r\n";
+	return (header);
+}
+
+std::string	create_header_500( void )
+{
+	std::string	header = "HTTP/1.1 500 Internal Server\r\n";
 	header += "Content-Type: text/html\r\n\r\n";
 	header += "\r\n";
 	return (header);

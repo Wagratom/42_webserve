@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/16 19:07:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:50:20 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # define CHILD 0
 
 # define ERROR404 104
-# define ERROR_SERVE 100
+# define ERROR_BAD_REQUEST 100
+# define ERROR_INTERNAL 200
 
 # define CHILD_PROCESS 0
 
@@ -39,7 +40,7 @@ typedef struct s_ChildProcessInfo {
 
 struct aux_upload;
 
-class 	Server
+class	Server
 {
 	public:
 		Server(std::string filename)
@@ -47,7 +48,7 @@ class 	Server
 			, _parser_request(NULL)
 			, _aux_list_location(NULL)
 			, _server_fd(-1)
-		    , _epoll_fd(-1)
+			, _epoll_fd(-1)
 			, _number_of_events(-1)
 			, _verbs(create_verbs())
 		{};
@@ -94,15 +95,14 @@ class 	Server
 		bool	parse_order_request( std::string& buffer );
 
 		bool	handle_GET_requesition( void );
-		bool	handle_GET_requesition_html( std::string& path );
+		bool	handle_GET_requesition_html( std::string& endPoint );
 		void	prepare_path_server(std::string& dst, std::string& path);
 		bool	response_server( std::string status_code );
-		bool	open_required_file( std::string& path );
-		bool	check_is_location( std::string& path );
+		bool	response_file( std::string& path );
+		bool	response_location( std::string& path );
 		bool	response_location(t_location_settings* location);
 		bool	get_root_location(std::string& root, const std::string& path);
 
-		bool	handle_GET_requesition_php( void );
 		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
 		void	response_get( s_ChildProcessInfo& tools_chuild );
 
@@ -115,12 +115,12 @@ class 	Server
 
 		bool	generete_path_to_response( std::string& dst , std::string root, std::string listNames );
 		bool	send_response_to_client( int& buffer_html );
-		void	send_response_error_to_client( int status );
+		bool	sendErrorResponseToClient( int status );
 
 		bool	DELETE_requesition( void );
 
 		typedef	std::string(*header)( void );
-		bool	send_error_to_client( std::string path, header function );
+		bool	sendErrorToClient( std::string path, header function );
 
 		bool	closed_fd_epoll(epoll_event& event);
 
@@ -174,6 +174,7 @@ void		create_header_to_files(aux_read_file& tmp, std::string status_code);
 std::string	create_header_html(std::string status_code);
 std::string	create_header_404(void);
 std::string	create_header_400( void );
+std::string	create_header_500( void );
 bool		isDirectory(const std::string& path);
 bool		execute_fork( ChildProcessInfo& infos);
 void		execute_cgi(char** argv, char** envp);

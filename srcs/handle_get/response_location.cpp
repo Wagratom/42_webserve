@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 16:06:43 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:57:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static std::string	create_root_location(std::string rootLocation, std::string ro
 	root += locationName;
 	return (root);
 }
+
 bool	Server::response_location(t_location_settings* location)
 {
 	aux_read_file	tmp;
