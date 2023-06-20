@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 10:04:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:46:43 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	Server::sendErrorToClient( std::string path, std::string header)
 	return (true);
 }
 
-bool	Server::sendErrorResponseToClient( int status )
+bool	Server::responseClientError( int status )
 {
 	std::cout << "Status: " << status << std::endl;
 	if (status == ERROR404)
@@ -34,5 +34,8 @@ bool	Server::sendErrorResponseToClient( int status )
 		sendErrorToClient("./error_pages/500_internal_server.html", generateHeaderDynamicStatus("500 Internal Server Error"));
 	else if (status == ERROR_BAD_REQUEST)
 		sendErrorToClient("./error_pages/400_bad_request.html", generateHeaderDynamicStatus("400 Bad Request"));
-	return (false);
+	else if (status == ERROR415)
+		// enviar um error de formato do payload não é um formato suportado.
+		return (false);
+	return (true);
 }

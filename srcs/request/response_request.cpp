@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 17:18:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/16 17:55:36 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:27:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 bool	Server::parse_order_request( std::string& buffer )
 {
-	_parser_request = new Parser_request(buffer);
+	_parserRequest = new Parser_request(buffer);
 
-	if (_parser_request == NULL)
+	if (_parserRequest == NULL)
 		return (write_error_prefix("Error: Server::parse_request: _parser_file is NULL"));
-	if (_parser_request->set_envs_order_line(_verbs) == false)
+	if (_parserRequest->set_envs_order_line(_verbs) == false)
 		return (false);
 	return (true);
 }
@@ -27,13 +27,13 @@ bool	Server::response_request( std::string& buffer )
 {
 	if (parse_order_request(buffer) == false)
 		return (false);
-	if (_parser_request->set_envs_header() == false)
+	if (_parserRequest->set_envs_header() == false)
 		return (false);
-	if (_parser_request->get_metodo() == "GET")
+	if (_parserRequest->get_metodo() == "GET")
 		handle_GET_requesition();
-	if (_parser_request->get_metodo() == "POST")
+	if (_parserRequest->get_metodo() == "POST")
 		return handle_POST_requesition();
-	if (_parser_request->get_metodo() == "DELETE")
+	if (_parserRequest->get_metodo() == "DELETE")
 		return handle_DELETE_requesition();
 	write_debug("\n");
 	return (true);
@@ -41,7 +41,7 @@ bool	Server::response_request( std::string& buffer )
 
 // bool	Server::handle_POST_requesition()
 // {
-// 	if (_parser_request->get_endPoint() == "/upload")
+// 	if (_parserRequest->get_endPoint() == "/upload")
 // 	char**		argv = new char*[4];
 
 // 	argv[0] = (char *)"/usr/bin/php-cgi7.4";

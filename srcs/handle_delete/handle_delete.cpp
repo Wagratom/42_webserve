@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 10:14:03 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:46:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,9 @@ bool	Server::response_client_with_list_files()
 bool	Server::handle_DELETE_requesition( void )
 {
 	std::cout << "DELETE" << std::endl;
-	if (!_parser_request->get_endPoint()[7])
+	if (!_parserRequest->get_endPoint()[7])
 		return (response_client_with_list_files());
-	delete_file_server(std::string(_parser_request->get_endPoint(), 8));
+	delete_file_server(std::string(_parserRequest->get_endPoint(), 8));
 	std::cout << "File deleted" << std::endl;
 	return (response_client_with_list_files());
 }

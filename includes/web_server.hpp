@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 10:18:24 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:59:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define CHILD 0
 
 # define ERROR404 104
+# define ERROR415 115
 # define ERROR_BAD_REQUEST 100
 # define ERROR_INTERNAL 200
 
@@ -45,7 +46,7 @@ class	Server
 	public:
 		Server(std::string filename)
 			: _parser_file(new Parser_configuration(filename))
-			, _parser_request(NULL)
+			, _parserRequest(NULL)
 			, _aux_list_location(NULL)
 			, _server_fd(-1)
 			, _epoll_fd(-1)
@@ -58,8 +59,8 @@ class	Server
 				delete _verbs[i];
 			}
 			delete [] _verbs;
-			if (_parser_request)
-				delete _parser_request;
+			if (_parserRequest)
+				delete _parserRequest;
 		};
 
 		std::string**	create_verbs( void );
@@ -103,6 +104,7 @@ class	Server
 		bool	createRootLocation(std::string& dst, t_location_settings* location);
 
 		bool	handle_POST_requesition( void );
+		bool	responseClientPOST( aux_upload& data );
 		bool	handle_update( void );
 
 		bool	handle_DELETE_requesition( void );
@@ -110,7 +112,7 @@ class	Server
 		bool	processFileUpload( aux_upload& data );
 
 		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
-		bool	sendErrorResponseToClient( int status );
+		bool	responseClientError( int status );
 
 		bool	DELETE_requesition( void );
 
@@ -148,7 +150,7 @@ class	Server
 
 	private:
 		Parser_configuration*	_parser_file;
-		Parser_request*			_parser_request;
+		Parser_request*			_parserRequest;
 		t_location_settings	*	_aux_list_location;
 
 		int						_server_fd;

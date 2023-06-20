@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 10:18:24 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:27:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 bool	Server::handle_GET_requesition( void )
 {
-	std::string path = _parser_request->get_endPoint();
+	std::string path = _parserRequest->get_endPoint();
 
 	if (responseClientGET(path) == false)
-		return (sendErrorResponseToClient(ERROR404));
+		return (responseClientError(ERROR404));
 	return (true);
 }
 

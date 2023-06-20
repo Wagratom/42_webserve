@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 09:37:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:53:53 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,15 @@ typedef struct s_aux_read_file
 	std::string			header;
 } auxReadFiles;
 
+struct aux_upload{
+	std::string	request;
+	std::string	filename;
+	int			body_length;
+	char		buffer[1024];
+	int			bytes_read;
+	int			fd;
+	int			content_length;
+};
 
 void	write_debug_number(std::string message, int number);
 void	write_debug_prefix(std::string prefix, std::string message);
