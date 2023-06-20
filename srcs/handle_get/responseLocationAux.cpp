@@ -15,6 +15,7 @@
 #include <iostream>
 #include <sys/stat.h>
 
+
 bool	getContentFile(aux_read_file& dst)
 {
 	std::ifstream file(dst.path.c_str(), std::ios::binary | std::ios::ate);

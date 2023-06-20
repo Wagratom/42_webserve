@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 19:02:10 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 21:26:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,6 @@ class	Server
 		bool	responseLocation(t_location_settings* location);
 		bool	createRootLocation(std::string& dst, t_location_settings* location);
 
-		bool	execute_cgi_in_chuild( s_ChildProcessInfo& tools_chuild );
-		void	response_get( s_ChildProcessInfo& tools_chuild );
-
 		bool	handle_POST_requesition( void );
 		bool	handle_update( void );
 
@@ -113,7 +110,6 @@ class	Server
 		bool	processFileUpload( aux_upload& data );
 
 		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
-		bool	send_response_to_client( int& buffer_html );
 		bool	sendErrorResponseToClient( int status );
 
 		bool	DELETE_requesition( void );

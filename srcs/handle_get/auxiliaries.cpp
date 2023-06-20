@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:08:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 16:51:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/19 21:14:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,6 @@ static const std::string	getContentType(const std::string& path)
 	return ("text/plain");
 }
 
-bool	isDirectory(const std::string& path)
-{
-	struct stat fileStat;
-	if (stat(path.c_str(), &fileStat) == 0) {
-		return (fileStat.st_mode & S_IFDIR) != 0;
-	}
-	return false;
-}
-
 void	create_header_to_files(aux_read_file& tmp, std::string status_code)
 {
 	tmp.oss << tmp.size;
@@ -57,6 +48,14 @@ void	create_header_to_files(aux_read_file& tmp, std::string status_code)
 	tmp.header += "Content-Length: " + tmp.oss.str() + "\r\n\r\n";
 }
 
+bool	isDirectory(const std::string& path)
+{
+	struct stat fileStat;
+	if (stat(path.c_str(), &fileStat) == 0) {
+		return (fileStat.st_mode & S_IFDIR) != 0;
+	}
+	return false;
+}
 
 std::string	create_header_html(std::string status_code)
 {
