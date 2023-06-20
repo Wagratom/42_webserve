@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 21:26:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:18:24 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_ChildProcessInfo {
 	int	status;
 	int	exit_status;
 
-} ChildProcessInfo;
+} ChildProcessData;
 
 struct aux_upload;
 
@@ -95,7 +95,7 @@ class	Server
 		bool	parse_order_request( std::string& buffer );
 
 		bool	handle_GET_requesition( void );
-		bool	handle_GET_requesition_html( std::string& endPoint );
+		bool	responseClientGET( std::string& endPoint );
 		bool	responseServer( std::string status_code );
 		bool	responseFile( std::string endPoint );
 		bool	responseLocation( std::string endPoint );
@@ -114,8 +114,7 @@ class	Server
 
 		bool	DELETE_requesition( void );
 
-		typedef	std::string(*header)( void );
-		bool	sendErrorToClient( std::string path, header function );
+		bool	sendErrorToClient( std::string path, std::string header );
 
 		bool	closed_fd_epoll(epoll_event& event);
 
@@ -164,15 +163,13 @@ class	Server
 void	set_debug(bool	value);
 int		get_debug( void );
 
-bool		getContentFile(aux_read_file& dst);
-void		create_header_to_files(aux_read_file& tmp, std::string status_code);
-std::string	create_header_html(std::string status_code);
-std::string	create_header_404(void);
-std::string	create_header_400( void );
-std::string	create_header_500( void );
+bool		getContentFile(auxReadFiles& dst);
+void		generateDynamicHeader(auxReadFiles& tmp, std::string status_code);
+std::string	generateHeaderDynamicStatus(std::string status);
 bool		isDirectory(const std::string& path);
-bool		execute_fork( ChildProcessInfo& infos);
-void		execute_cgi(char** argv, char** envp);
-bool		getContentFile(aux_read_file& dst);
+bool		executeFork( ChildProcessData& infos);
+void		executeCGI(char** argv, char** envp);
+bool		getContentFile(auxReadFiles& dst);
 void		appendBar(std::string& str);
 bool		checkValidLocation(t_location_settings*& locations, std::string endPoint);
+bool		getContentFilePHP(auxReadFiles& dst);

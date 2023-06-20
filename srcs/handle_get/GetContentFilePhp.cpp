@@ -12,30 +12,43 @@
 
 #include <web_server.hpp>
 
-bool	Server::responseLocation(std::string endPoint)
+static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 {
-	t_location_settings* locations = location();
+	char*	argv[3];
 
-	std::cout << "responseLocation" << std::endl;
-	void (appendBar(endPoint));
-	if (checkValidLocation(locations, endPoint) == false)
-		return (false);
-	return (responseLocation(locations));
+	argv[0] = (char *)"/usr/bin/php-cgi7.4";
+	argv[1] = (char *)dst.path.c_str();
+	argv[2] = NULL;
+	dup2(infos.fd[1], STDOUT_FILENO);
+	close(infos.fd[0]);
+	close(infos.fd[1]);
+	executeCGI(argv, NULL);
 }
 
-bool	Server::responseLocation(t_location_settings* location)
+static bool	contentFilePHP(auxReadFiles& dst, ChildProcessData& infos)
 {
-	auxReadFiles	tmp;
-	std::string		root;
+	int		status;
+	char	buffer[1024];
+	int		bytes_read;
 
-	if (createRootLocation(root, location) == false)
+	close(infos.fd[1]);
+	waitpid(infos.pid, &status, 0);
+	if (WEXITSTATUS(status) != 0)
 		return (false);
-	if (!generetePathToResponse(tmp.path, root, location->configuration->get_index()))
-		return (false);
-	if (getContentFile(tmp) == false)
-		return (false);
-	generateDynamicHeader(tmp, "200");
-	send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
-	send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
+	while ((bytes_read = read(infos.fd[0], buffer, 1024)) > 0)
+		dst.content.append(buffer, bytes_read);
+	close(infos.fd[0]);
 	return (true);
+}
+
+bool	getContentFilePHP(auxReadFiles& dst)
+{
+	ChildProcessData	infos;
+
+	std::cout << "getContentFilePHP" << std::endl;
+	if (executeFork(infos) == false)
+		return (false);
+	if (infos.pid == CHILD)
+		callExecuteCgi(dst, infos);
+	return contentFilePHP(dst, infos);
 }

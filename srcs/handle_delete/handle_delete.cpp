@@ -6,14 +6,14 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/16 19:47:29 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:14:03 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 #include <dirent.h>
 
-static bool	execute_cgi_in_chuild(ChildProcessInfo& tools_chuild, std::string listFiles)
+static bool	callExecuteCgi(ChildProcessData& tools_chuild, std::string listFiles)
 {
 	char*	argv[3];
 	char	*envp[2];
@@ -29,22 +29,22 @@ static bool	execute_cgi_in_chuild(ChildProcessInfo& tools_chuild, std::string li
 	dup2(tools_chuild.fd[1], STDOUT_FILENO);
 	close(tools_chuild.fd[0]);
 	close(tools_chuild.fd[1]);
-	execute_cgi(argv, envp);
+	executeCGI(argv, envp);
 	return (true);
 }
 
-static bool	execute_cgi_listFiles(ChildProcessInfo& tools_chuild, std::string listFiles)
+static bool	execute_cgi_listFiles(ChildProcessData& tools_chuild, std::string listFiles)
 {
-	if (execute_fork(tools_chuild) == false)
+	if (executeFork(tools_chuild) == false)
 		return (false);
 	if (tools_chuild.pid == CHILD_PROCESS)
-		execute_cgi_in_chuild(tools_chuild, listFiles);
+		callExecuteCgi(tools_chuild, listFiles);
 	waitpid(tools_chuild.pid, NULL, 0);
 	close(tools_chuild.fd[1]);
 	return (true);
 }
 
-static bool	join_response_cgi(ChildProcessInfo& tools_chuild, std::string& response)
+static bool	join_response_cgi(ChildProcessData& tools_chuild, std::string& response)
 {
 	char		buffer[1024];
 	int			bytes_read;
@@ -65,7 +65,7 @@ static bool	join_response_cgi(ChildProcessInfo& tools_chuild, std::string& respo
 
 static bool	create_response_to_client(std::string listFiles, std::string& response)
 {
-	ChildProcessInfo	tools_chuild;
+	ChildProcessData	tools_chuild;
 
 	response.clear();
 	response = "HTTP/1.1 200 OK\r\n";

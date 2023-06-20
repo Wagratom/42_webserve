@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/12 21:36:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 09:37:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef struct s_aux_read_file
 	std::streamsize		size;
 	std::ostringstream	oss;
 	std::string			header;
-} aux_read_file;
+} auxReadFiles;
 
 
 void	write_debug_number(std::string message, int number);

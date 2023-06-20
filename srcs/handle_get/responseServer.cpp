@@ -14,13 +14,13 @@
 
 bool	Server::responseServer(std::string status_code)
 {
-	aux_read_file tmp;
+	auxReadFiles tmp;
 
 	if (!generetePathToResponse(tmp.path, server()->get_root(), server()->get_index()))
 		return (false);
 	if (!getContentFile(tmp))
 		return (false);
-	create_header_to_files(tmp, status_code);
+	generateDynamicHeader(tmp, status_code);
 	send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
 	send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
 	return (true);

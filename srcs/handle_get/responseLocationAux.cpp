@@ -11,25 +11,6 @@
 /* ************************************************************************** */
 
 #include <web_server.hpp>
-#include <sstream>
-#include <iostream>
-#include <sys/stat.h>
-
-
-bool	getContentFile(aux_read_file& dst)
-{
-	std::ifstream file(dst.path.c_str(), std::ios::binary | std::ios::ate);
-
-	std::cout << "getContentFile" << std::endl;
-	if (!file.is_open())
-		return (false);
-	dst.size = file.tellg();
-	file.seekg(0, std::ios::beg);
-	dst.content.resize(dst.size);
-	if (!file.read(&dst.content[0], dst.size))
-		return (false);
-	return (true);
-}
 
 bool	Server::createRootLocation(std::string& dst, t_location_settings* location)
 {
