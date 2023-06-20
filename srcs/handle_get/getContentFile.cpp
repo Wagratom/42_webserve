@@ -14,15 +14,16 @@
 
 bool	getContentFileHTML(auxReadFiles& dst)
 {
-	std::ifstream file(dst.path.c_str(), std::ios::ate);
+	std::ifstream	file(dst.path.c_str(), std::ios::ate);
+	std::streamsize	size;
 
 	std::cout << "getContentFileHTML" << std::endl;
 	if (!file.is_open())
 		return (false);
-	dst.size = file.tellg();
+	size = file.tellg();
 	file.seekg(0, std::ios::beg);
-	dst.content.resize(dst.size);
-	if (!file.read(&dst.content[0], dst.size))
+	dst.content.resize(size);
+	if (!file.read(&dst.content[0], size))
 		return (false);
 	return (true);
 }

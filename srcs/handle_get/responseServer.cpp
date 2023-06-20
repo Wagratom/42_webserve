@@ -21,7 +21,6 @@ bool	Server::responseServer(std::string status_code)
 	if (!getContentFile(tmp))
 		return (false);
 	generateDynamicHeader(tmp, status_code);
-	send(_client_fd, tmp.header.c_str(), tmp.header.size(), 0);
-	send(_client_fd, tmp.content.c_str(), tmp.content.size(), 0);
-	return (true);
+	tmp.response = tmp.header + tmp.content;
+	return (sendResponseClient(tmp.response));
 }

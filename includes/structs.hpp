@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 10:53:53 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:23:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,10 @@ typedef struct s_location_settings
 
 typedef struct s_aux_read_file
 {
-	std::string			content;
-	std::string			path;
-	std::streamsize		size;
-	std::ostringstream	oss;
 	std::string			header;
+	std::string			content;
+	std::string			response;
+	std::string			path;
 } auxReadFiles;
 
 struct aux_upload{

@@ -239,6 +239,18 @@
 	var botaoExcluir = document.getElementById("botao-excluir");
 
 	botaoExcluir.addEventListener("click", function() {
-		window.location.href = "/list";
+		var xhr = new XMLHttpRequest();
+		xhr.open("DELETE", "/delete", true);
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					// A solicitação DELETE foi bem-sucedida
+					window.location.href = "/list";
+				} else {
+					// Trate o erro da solicitação DELETE aqui
+				}
+			}
+		};
+		xhr.send();
 	});
 </script>

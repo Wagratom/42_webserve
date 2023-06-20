@@ -14,7 +14,7 @@
 
 bool	Server::responseClientGET( std::string& endPoint)
 {
-	std::string	full_path = server()->get_root() + endPoint;
+	std::string	full_path = server()->get_root() + &endPoint[1];
 
 	std::cout << "responseClientGET" << std::endl;
 	if (endPoint == "/")

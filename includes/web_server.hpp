@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 10:59:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:48:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ class	Server
 		bool	responseServer( std::string status_code );
 		bool	responseFile( std::string endPoint );
 		bool	responseLocation( std::string endPoint );
-		bool	responseLocation(t_location_settings* location);
 		bool	createRootLocation(std::string& dst, t_location_settings* location);
 
 		bool	handle_POST_requesition( void );
@@ -108,7 +107,7 @@ class	Server
 		bool	handle_update( void );
 
 		bool	handle_DELETE_requesition( void );
-		bool	response_client_with_list_files( void );
+		bool	responseClientDELETE( void );
 		bool	processFileUpload( aux_upload& data );
 
 		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
@@ -122,7 +121,7 @@ class	Server
 
 		bool	write_error_prefix( std::string prefix );
 
-		bool	response_client( std::string response );
+		bool	sendResponseClient( std::string response );
 
 		bool	clean_request(epoll_event& event);
 

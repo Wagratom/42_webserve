@@ -14,16 +14,19 @@
 
 bool	Server::createRootLocation(std::string& dst, t_location_settings* location)
 {
-	std::string	root = location->configuration->get_root();
-	std::string	name = location->locationName;
 
-	if (root.empty())
-		root = server()->get_root();
-	if (root.empty())
+	dst = location->configuration->get_root();
+	if (dst.empty())
+		dst = server()->get_root();
+	if (dst.empty())
 		return (write_error("Error: root not found"));
-	if (name[0] == '/')
-		name.erase(0, 1);
-	dst = root + name;
+	return (true);
+}
+
+bool	Server::sendResponseClient(std::string response)
+{
+	if (send(_client_fd, response.c_str(), response.size(), 0) == -1)
+		return (write_error("Error: handle_delete: send"));
 	return (true);
 }
 
