@@ -24,7 +24,7 @@ bool	Server::responseLocation(std::string endPoint)
 		return (false);
 	if (createRootLocation(root, locations) == false)
 		return (false);
-	if (!generetePathToResponse(tmp.path, root, locations->configuration->get_index()))
+	if (generetePathToResponse(tmp.path, root, locations->configuration->get_index()) == false)
 		return (false);
 	if (getContentFile(tmp) == false)
 		return (false);

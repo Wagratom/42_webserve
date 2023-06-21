@@ -19,6 +19,8 @@ bool	Server::responseClientGET( std::string& endPoint)
 	std::cout << "responseClientGET" << std::endl;
 	if (endPoint == "/")
 		return (responseServer("200"));
+	if (endPoint == "/list/files/server")
+		return (responseClientDELETE());
 	if (isDirectory(full_path))
 		return (responseLocation(endPoint));
 	return (responseFile(endPoint));

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 18:48:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:06:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,6 @@ class	Server
 		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
 		bool	responseClientError( int status );
 
-		bool	DELETE_requesition( void );
-
 		bool	sendErrorToClient( std::string path, std::string header );
 
 		bool	closed_fd_epoll(epoll_event& event);
@@ -174,3 +172,5 @@ bool		getContentFile(auxReadFiles& dst);
 void		appendBar(std::string& str);
 bool		checkValidLocation(t_location_settings*& locations, std::string endPoint);
 bool		getContentFilePHP(auxReadFiles& dst);
+bool		generateFilesList(std::string& listFiles);
+bool		generateResponse(std::string listFiles, std::string& response);

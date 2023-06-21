@@ -236,21 +236,9 @@
 	});
 </script>
 <script>
-	var botaoExcluir = document.getElementById("botao-excluir");
-
-	botaoExcluir.addEventListener("click", function() {
-		var xhr = new XMLHttpRequest();
-		xhr.open("DELETE", "/delete", true);
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState === 4) {
-				if (xhr.status === 200) {
-					// A solicitação DELETE foi bem-sucedida
-					window.location.href = "/list";
-				} else {
-					// Trate o erro da solicitação DELETE aqui
-				}
-			}
-		};
-		xhr.send();
+	var excluirBtn = document.getElementById("botao-excluir");
+	excluirBtn.addEventListener("click", function() {
+	  // Redirect to "/list/files/server"
+	  window.location.href = "/list/files/server";
 	});
-</script>
+  </script>

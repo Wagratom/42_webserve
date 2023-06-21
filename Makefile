@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/06/20 18:30:16 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/06/21 12:18:06 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,13 +30,13 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				gets_location_configuration.cpp sets_location_configuration.cpp \
 				gets_Parser_configuration.cpp sets_server_configuration.cpp \
 				read_request.cpp response_request.cpp responseClientGET.cpp \
-				handle_GET_requesition.cpp DELETE_requesition.cpp \
+				handle_GET_requesition.cpp handle_DELETE_requesition.cpp\
 				generetePathToResponse.cpp clean_request.cpp auxProcess.cpp \
-				response_get.cpp responseLocation.cpp generateHeaders.cpp \
-				handle_POST_request.cpp handle_delete.cpp responseServer.cpp\
+				responseClientError.cpp responseLocation.cpp generateHeaders.cpp \
+				handle_POST_request.cpp responseServer.cpp generateResponse.cpp\
 				responseFile.cpp responseLocationAux.cpp GetContentFilePhp.cpp \
 				getContentFile.cpp responseClientPOST.cpp processFileUpload.cpp \
-				responseClientDELETE.cpp
+				responseClientDELETE.cpp generateListFiles.cpp \
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs
