@@ -64,7 +64,7 @@
 	<script>
 		function deleteFile(filename) {
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "http://localhost:8080/delete/" + filename, true);
+			xhr.open("DELETE", "http://localhost:8080/delete/" + filename, true);
 			xhr.setRequestHeader('X-HTTP-Method-Override', 'DELETE');
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState === 4 && xhr.status === 200) {

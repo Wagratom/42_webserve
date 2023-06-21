@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 07:52:52 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/13 15:18:14 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:49:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ bool	Server::create_server_configured( void )
 	if (conf_serve_to_read() == false)
 		return (false);
 	write_debug("\tData Server");
-	write_debug_number("Port: ", _parser_file->get_server_configuration()->get_port());
-	write_debug_prefix("ServerName: ", _parser_file->get_server_configuration()->get_server_name());
+	write_debug_number("Port: ", _parserFile->get_server_configuration()->get_port());
+	write_debug_prefix("ServerName: ", _parserFile->get_server_configuration()->get_server_name());
 	write_debug("\033[32mOk XD\n\033[0;37m");
 	return (true);
 }

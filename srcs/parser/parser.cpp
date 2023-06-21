@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/13 15:15:13 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:14:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	Parser_configuration::save_valid_line(std::string line)
 	r_ft_lstadd_back(&(this->_file), r_ft_lstnew(line));
 }
 
-bool	Parser_configuration::read_file( void )
+bool	Parser_configuration::readConfigurationFile( void )
 {
 	std::ifstream	file(_filename.c_str());
 	std::string		line;
@@ -47,10 +47,10 @@ bool	is_location(std::string& line)
 /*                            Init Parser                                     */
 /*############################################################################*/
 
-bool	Parser_configuration::parser( void )
+bool	Parser_configuration::parseConfigurationFile( void )
 {
 	write_debug("\033[0;36m\tStarting parser\033[0;34m");
-	if (read_file() == false)
+	if (readConfigurationFile() == false)
 		return (false);
 	if (check_server(this->_file->line) == false)
 		return (false);

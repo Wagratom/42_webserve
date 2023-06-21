@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 11:50:14 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:30:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	readRequestBody(aux_upload& data)
 {
 	while (data.body_length < data.content_length)
 	{
-		data.bytes_read = recv(data.fd, data.buffer, 1024, 0);
+		data.bytes_read = recv(data.fd, data.buffer, 4096, 0);
 		if (data.bytes_read == -1)
 			return (write_error("Error reading body request"));
 		data.buffer[data.bytes_read] = '\0';

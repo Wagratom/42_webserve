@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/04 19:14:38 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:49:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ bool	valid_arguments( int argc, char *argv[])
 	return (true);
 }
 
-bool	Server::setup()
+bool	Server::startServer( void )
 {
-	if (_parser_file->parser() == false)
+	if (_parserFile->parseConfigurationFile() == false)
 		return (false);
 	if (create_server_configured() == false)
 		return (false);
@@ -39,7 +39,7 @@ int main ( int argc, char *argv[] )
 	if (valid_arguments(argc, argv) == false)
 		return (false);
 	Server	server(argv[1]);
-	if (server.setup() == false)
+	if (server.startServer() == false)
 		return (-1);
 	return (0);
 }

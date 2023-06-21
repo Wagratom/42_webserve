@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 17:18:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 10:27:14 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:49:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	Server::parse_order_request( std::string& buffer )
 	_parserRequest = new Parser_request(buffer);
 
 	if (_parserRequest == NULL)
-		return (write_error_prefix("Error: Server::parse_request: _parser_file is NULL"));
+		return (write_error_prefix("Error: Server::parse_request: _parserFile is NULL"));
 	if (_parserRequest->set_envs_order_line(_verbs) == false)
 		return (false);
 	return (true);

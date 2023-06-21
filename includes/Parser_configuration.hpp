@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/12 14:27:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:15:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ class	Parser_configuration
 		t_universal_dictionary*	create_universal_dictionary( void );
 		t_location_settings*	create_configuration_location( void );
 
-		bool					parser( void );
-		bool					read_file( void );
+		bool					parseConfigurationFile( void );
+		bool					readConfigurationFile( void );
 		bool					parser_file( void );
 		void					save_valid_line(std::string line);
 

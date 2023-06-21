@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 19:06:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:49:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class	Server
 {
 	public:
 		Server(std::string filename)
-			: _parser_file(new Parser_configuration(filename))
+			: _parserFile(new Parser_configuration(filename))
 			, _parserRequest(NULL)
 			, _aux_list_location(NULL)
 			, _server_fd(-1)
@@ -54,7 +54,7 @@ class	Server
 			, _verbs(create_verbs())
 		{};
 		~Server() {
-			delete _parser_file;
+			delete _parserFile;
 			for (int i = 0; i < 10; i++) {
 				delete _verbs[i];
 			}
@@ -125,7 +125,7 @@ class	Server
 
 		//				GETTERS to tests
 		t_location_settings*	location( void ) {
-			return (this->_parser_file->get_location_configuration());
+			return (this->_parserFile->get_location_configuration());
 		}
 
 		t_location_settings*	get_aux_list_location( void ) {
@@ -136,17 +136,17 @@ class	Server
 			this->_aux_list_location = tmp;
 		}
 		server_configuration*	server( void ) {
-			return (this->_parser_file->get_server_configuration());
+			return (this->_parserFile->get_server_configuration());
 		}
 
 		Parser_configuration*	get_parser( void ) {
-			return (this->_parser_file);
+			return (this->_parserFile);
 		}
 
-		bool	setup( void );
+		bool	startServer( void );
 
 	private:
-		Parser_configuration*	_parser_file;
+		Parser_configuration*	_parserFile;
 		Parser_request*			_parserRequest;
 		t_location_settings	*	_aux_list_location;
 

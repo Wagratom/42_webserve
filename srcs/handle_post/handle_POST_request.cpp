@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 11:46:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:22:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ bool	Server::handle_POST_requesition()
 	data.body_length = data.request.length();
 	data.fd = _client_fd;
 	data.content_length = std::strtol(_parserRequest->get_envsMap("CONTENT_LENGTH").c_str(), NULL, 10);
+	data.bytes_read = 0;
 
 	return (responseClientPOST(data));
 }
