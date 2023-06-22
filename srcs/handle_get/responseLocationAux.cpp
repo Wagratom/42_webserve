@@ -12,7 +12,7 @@
 
 #include <web_server.hpp>
 
-bool	Server::createRootLocation(std::string& dst, t_location_settings* location)
+bool	Server::createRootLocation(std::string& dst, t_location* location)
 {
 
 	dst = location->configuration->get_root();
@@ -36,7 +36,7 @@ void	appendBar(std::string& str)
 		str.append("/");
 }
 
-bool	checkValidLocation(t_location_settings*& locations, std::string endPoint)
+bool	checkValidLocation(t_location*& locations, std::string endPoint)
 {
 	while(locations)
 	{

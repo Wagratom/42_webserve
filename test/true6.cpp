@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 21:05:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 21:26:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	test_false( void )
 {
 	Parser_configuration	parser("./confis/true_conf6.conf");
 
-	if (equal_or_err_b(parser.parseConfigurationFile(), false, __LINE__) == false)
+	if (equal_or_err_b(parser.controlParserConfiguration(), false, __LINE__) == false)
 		return (false);
 	return (true);
 }

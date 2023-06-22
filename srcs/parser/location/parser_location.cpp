@@ -6,15 +6,15 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 20:53:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:09:33 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Parser_configuration.hpp>
 
-bool	alloc_location(t_location_settings **location)
+bool	alloc_location(t_location **location)
 {
-	*location = new t_location_settings();
+	*location = new t_location();
 	if (*location == NULL)
 		return (write_error("Error: Memory allocation failed"));
 
@@ -36,7 +36,7 @@ static bool	is_end_server(std::string& line)
 	return (true);
 }
 
-static bool	parser_location_err(t_location_settings** location)
+static bool	parser_location_err(t_location** location)
 {
 	delete (*location)->configuration;
 	delete (*location);
@@ -50,7 +50,7 @@ static bool	parser_location_err(t_location_settings** location)
 
 bool	Parser_configuration::parser_location( void )
 {
-	t_location_settings*	location = NULL;
+	t_location*	location = NULL;
 
 	if (alloc_location(&location) == false)
 		return (false);
@@ -62,7 +62,7 @@ bool	Parser_configuration::parser_location( void )
 	return (true);
 }
 
-bool	Parser_configuration::configure_location(t_location_settings& location)
+bool	Parser_configuration::configure_location(t_location& location)
 {
 	while (_file.size() > 0)
 	{
@@ -75,7 +75,7 @@ bool	Parser_configuration::configure_location(t_location_settings& location)
 	return (true);
 }
 
-bool	Parser_configuration::configure_location_line(std::string line, t_location_settings& location)
+bool	Parser_configuration::configure_location_line(std::string line, t_location& location)
 {
 
 	if (prepare_line(2, line) == false)
@@ -87,7 +87,7 @@ bool	Parser_configuration::configure_location_line(std::string line, t_location_
 	return (true);
 }
 
-bool	Parser_configuration::handle_location_line(std::string& line,  t_location_settings& location)
+bool	Parser_configuration::handle_location_line(std::string& line,  t_location& location)
 {
 	size_t	i = 0;
 

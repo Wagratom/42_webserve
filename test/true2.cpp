@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 21:05:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 21:26:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	test_true( void )
 {
 	Server					server("./confis/true2.conf");
 
-	if (equal_or_err_b(server.get_parser()->parseConfigurationFile(), true, __LINE__) == false)
+	if (equal_or_err_b(server.get_parser()->controlParserConfiguration(), true, __LINE__) == false)
 		return (false);
 	if (equal_or_err_i(server.get_parser()->get_server_configuration()->get_port() , 80, __LINE__) == false)
 		return (false);

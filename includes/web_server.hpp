@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 19:49:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:07:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ class	Server
 		bool	responseServer( std::string status_code );
 		bool	responseFile( std::string endPoint );
 		bool	responseLocation( std::string endPoint );
-		bool	createRootLocation(std::string& dst, t_location_settings* location);
+		bool	createRootLocation(std::string& dst, t_location* location);
 
 		bool	handle_POST_requesition( void );
 		bool	responseClientPOST( aux_upload& data );
@@ -124,15 +124,15 @@ class	Server
 		bool	clean_request(epoll_event& event);
 
 		//				GETTERS to tests
-		t_location_settings*	location( void ) {
+		t_location*	location( void ) {
 			return (this->_parserFile->get_location_configuration());
 		}
 
-		t_location_settings*	get_aux_list_location( void ) {
+		t_location*	get_aux_list_location( void ) {
 			return (this->_aux_list_location);
 		}
 
-		void	set_aux_list_location( t_location_settings* tmp) {
+		void	set_aux_list_location( t_location* tmp) {
 			this->_aux_list_location = tmp;
 		}
 		server_configuration*	server( void ) {
@@ -148,7 +148,7 @@ class	Server
 	private:
 		Parser_configuration*	_parserFile;
 		Parser_request*			_parserRequest;
-		t_location_settings	*	_aux_list_location;
+		t_location	*	_aux_list_location;
 
 		int						_server_fd;
 		int						_client_fd;
@@ -170,7 +170,7 @@ bool		executeFork( ChildProcessData& infos);
 void		executeCGI(char** argv, char** envp);
 bool		getContentFile(auxReadFiles& dst);
 void		appendBar(std::string& str);
-bool		checkValidLocation(t_location_settings*& locations, std::string endPoint);
+bool		checkValidLocation(t_location*& locations, std::string endPoint);
 bool		getContentFilePHP(auxReadFiles& dst);
 bool		generateFilesList(std::string& listFiles);
 bool		generateResponse(std::string listFiles, std::string& response);

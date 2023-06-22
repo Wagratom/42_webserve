@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 20:00:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:07:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,12 @@ class	Parser_configuration
 		t_server_dictionary*	create_server_dictionary( void );
 		server_configuration*	create_configuration_server( void );
 		t_universal_dictionary*	create_universal_dictionary( void );
-		t_location_settings*	create_configuration_location( void );
 
-		bool					parseConfigurationFile( void );
+		bool					controlParserConfiguration( void );
 		bool					readConfigurationFile( void );
-		bool					parser_file( void );
-		void					save_valid_line(std::string line);
+		bool					parserLineServer( std::string& line );
+		bool					parserRestFile( void );
 
-		bool					check_server( std::string& line );
 		bool					handle_server( std::string& line );
 		bool					check_in_dict_server(std::string& line);
 		bool					check_in_dict_universal(std::string& line);
@@ -49,24 +47,21 @@ class	Parser_configuration
 		bool					get_error_page( std::string& line, aux_configuration* dst );
 
 		bool					parser_location( void );
-		bool					configure_location(t_location_settings& location);
-		bool					configure_location_line(std::string line, t_location_settings& location);
-		bool					handle_location_line(std::string& line, t_location_settings& dst);
+		bool					configure_location(t_location& location);
+		bool					configure_location_line(std::string line, t_location& location);
+		bool					handle_location_line(std::string& line, t_location& dst);
 		bool					get_locationName(std::string& line, std::string& locationName);
 
 		server_configuration*	get_server_configuration( void );
-		t_location_settings*	get_location_configuration( void );
+		t_location*	get_location_configuration( void );
 
 	private:
 		t_server_dictionary*	_dictionary_server;
 		t_universal_dictionary*	_dictionary_universal;
 
 		server_configuration*	_server_configuration;
-		t_location_settings*	_location_configuration;
-
-		// list_file*				_file;
+		t_location*	_location_configuration;
 		std::vector<std::string>	_file;
-		// list_file*				_save_init_file;
 		std::string				_filename;
 };
 
@@ -174,7 +169,7 @@ list_file*	r_ft_lstlast(list_file *lst);
 list_file*	r_ft_lstnew(std::string content);
 int			r_ft_lstsize(list_file *lst);
 
-void					l_ft_lstadd_back(t_location_settings **lst, t_location_settings *_new);
-void					l_ft_lstclear(t_location_settings **lst);
-t_location_settings*	l_ft_lstlast(t_location_settings *lst);
-int						l_ft_lstsize(t_location_settings *lst);
+void					l_ft_lstadd_back(t_location **lst, t_location *_new);
+void					l_ft_lstclear(t_location **lst);
+t_location*	l_ft_lstlast(t_location *lst);
+int						l_ft_lstsize(t_location *lst);

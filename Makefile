@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/06/21 12:18:06 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/06/21 21:47:55 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				handle_POST_request.cpp responseServer.cpp generateResponse.cpp\
 				responseFile.cpp responseLocationAux.cpp GetContentFilePhp.cpp \
 				getContentFile.cpp responseClientPOST.cpp processFileUpload.cpp \
-				responseClientDELETE.cpp generateListFiles.cpp \
+				responseClientDELETE.cpp generateListFiles.cpp readConfigurationFile.cpp\
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs

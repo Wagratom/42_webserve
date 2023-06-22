@@ -6,15 +6,15 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:00:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:30:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:07:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Parser_configuration.hpp>
 
-void	l_ft_lstadd_back(t_location_settings **lst, t_location_settings *_new)
+void	l_ft_lstadd_back(t_location **lst, t_location *_new)
 {
-	t_location_settings	*end;
+	t_location	*end;
 
 	if (lst == NULL)
 		return ;

@@ -6,13 +6,13 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:03:17 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:30:32 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:07:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Parser_configuration.hpp>
 
-t_location_settings*	l_ft_lstlast(t_location_settings *lst)
+t_location*	l_ft_lstlast(t_location *lst)
 {
 	while (lst)
 	{

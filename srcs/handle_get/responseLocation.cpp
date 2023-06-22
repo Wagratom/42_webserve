@@ -14,7 +14,7 @@
 
 bool	Server::responseLocation(std::string endPoint)
 {
-	t_location_settings*	locations = location();
+	t_location*	locations = location();
 	auxReadFiles			tmp;
 	std::string				root;
 
