@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 14:11:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:20:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ Parser_configuration::Parser_configuration( void ) {}
 
 Parser_configuration::Parser_configuration(std::string filename)
  	: _dictionary_server(create_server_dictionary())
-	, _dictionary_universal(create_universal_dictionary())
 	, _server_configuration(create_configuration_server())
 	// , _locations(NULL)
 	// , _file(NULL)
 	// , _save_init_file(NULL)
 	, _filename(filename)
-{}
+{
+	initializeUniversalDictionary();
+}
 
 Parser_configuration::Parser_configuration( Parser_configuration& src )
 {
@@ -58,16 +59,12 @@ t_server_dictionary*	Parser_configuration::create_server_dictionary( void )
 	return (dictionary);
 }
 
-t_universal_dictionary*	Parser_configuration::create_universal_dictionary( void )
+void	Parser_configuration::initializeUniversalDictionary( void )
 {
-	t_universal_dictionary	static dictionary2[6] = {
-		{"root", 4, &Parser_configuration::get_root},
-		{"index", 5, &Parser_configuration::get_index},
-		{"client_max_body_size", 20, &Parser_configuration::get_client_max_body_size},
-		{"error_page", 10, &Parser_configuration::get_error_page},
-		{"", 0, NULL}
-	};
-	return (dictionary2);
+	_dictionary_universal["root"] = &Parser_configuration::get_root;
+	_dictionary_universal["index"] = &Parser_configuration::get_index;
+	_dictionary_universal["client_max_body_size"] = &Parser_configuration::get_client_max_body_size;
+	_dictionary_universal["error_page"] = &Parser_configuration::get_error_page;
 }
 
 server_configuration*	Parser_configuration::create_configuration_server( void )

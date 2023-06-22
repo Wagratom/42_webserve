@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 15:20:38 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:20:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class	Parser_configuration
 
 		t_server_dictionary*	create_server_dictionary( void );
 		server_configuration*	create_configuration_server( void );
-		t_universal_dictionary*	create_universal_dictionary( void );
+		void					initializeUniversalDictionary ( void );
 
 		bool					controlParserConfiguration( void );
 		bool					readConfigurationFile( void );
@@ -56,7 +56,10 @@ class	Parser_configuration
 
 	private:
 		t_server_dictionary*		_dictionary_server;
-		t_universal_dictionary*		_dictionary_universal;
+
+		typedef bool (Parser_configuration::*directiveNginxUniversal)(std::string&, aux_configuration*);
+		std::map<std::string, directiveNginxUniversal>			_dictionary_universal;
+		// t_universal_dictionary*		_dictionary_universal;
 
 		server_configuration*				_server_configuration;
 		std::map<std::string, t_location*>	_locations;

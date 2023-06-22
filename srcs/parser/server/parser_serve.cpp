@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 22:50:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:16:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,10 @@ bool	Parser_configuration::check_in_dict_server(std::string& line)
 
 bool	Parser_configuration::check_in_dict_universal(std::string& line)
 {
-	size_t	i = 0;
-
-	while (_dictionary_universal[i].f)
+	for (std::map<std::string, directiveNginxUniversal>::iterator it = _dictionary_universal.begin(); it != _dictionary_universal.end(); ++it )
 	{
-		if (line.compare(0, _dictionary_universal[i].length, _dictionary_universal[i].key) == 0)
-			return ((this->*_dictionary_universal[i].f)(line, this->_server_configuration));
-		i++;
+		if (line.compare(0, it->first.size(), it->first) == 0)
+			return (this->*(it->second))(line, _server_configuration);
 	}
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:31:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 15:15:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:16:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,13 @@ bool	Parser_configuration::saveLocationInfos(t_location& location)
 	return (true);
 }
 
+
 bool	Parser_configuration::handleLineLocation(std::string& line,  t_location& location)
 {
-	size_t	i = 0;
-
-	while (_dictionary_universal[i].f)
+	for (std::map<std::string, directiveNginxUniversal>::iterator it = _dictionary_universal.begin(); it != _dictionary_universal.end(); ++it )
 	{
-		if (line.compare(0, _dictionary_universal[i].length, _dictionary_universal[i].key) == 0)
-			return (this->*_dictionary_universal[i].f)(line, location.configuration);
-		i++;
+		if (line.compare(0, it->first.size(), it->first) == 0)
+			return (this->*(it->second))(line, location.configuration);
 	}
 	return (false);
 }
-
