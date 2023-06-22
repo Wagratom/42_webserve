@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 19:14:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:58:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	Parser_configuration::save_valid_line(std::string line)
 		return ;
 	if (line[0] == '#' || line[0] == '\n')
 		return ;
-	r_ft_lstadd_back(&(this->_file), r_ft_lstnew(line));
+	_file.push_back(line);
+	// r_ft_lstadd_back(&(this->_file), r_ft_lstnew(line));
 }
 
 bool	Parser_configuration::readConfigurationFile( void )
@@ -31,7 +32,7 @@ bool	Parser_configuration::readConfigurationFile( void )
 		return (write_error("Error: File not found"));
 	while (getline(file, line))
 		save_valid_line(line);
-	this->_save_init_file = this->_file;
+	// this->_save_init_file = this->_file;
 	file.close();
 	return (true);
 }
@@ -52,7 +53,7 @@ bool	Parser_configuration::parseConfigurationFile( void )
 	write_debug("\033[0;36m\tStarting parser\033[0;34m");
 	if (readConfigurationFile() == false)
 		return (false);
-	if (check_server(this->_file->line) == false)
+	if (check_server(_file[0]) == false)
 		return (false);
 	if (parser_file() == false)
 		return (false);
@@ -63,19 +64,20 @@ bool	Parser_configuration::parseConfigurationFile( void )
 bool	Parser_configuration::parser_file()
 {
 	write_debug("Parsing file...");
-	while (this->_file->next != NULL)
+	_file.erase(_file.begin());
+	while (_file.size() != 0)
 	{
-		this->_file = this->_file->next;
-		if (is_location(this->_file->line))
+		if (is_location(_file[0]))
 		{
 			if (parser_location() == false)
 				return (false);
 		}
 		else
 		{
-			if (handle_server(this->_file->line) == false)
+			if (handle_server(_file[0]) == false)
 				return (false);
 		}
+		_file.erase(_file.begin());
 	}
 	return (true);
 }

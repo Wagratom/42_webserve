@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 18:22:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:54:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sstream>
+# include <vector>
 
 class	Parser_configuration;
 class	location_configuration;

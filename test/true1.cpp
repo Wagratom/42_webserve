@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:06:40 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 09:15:47 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 21:05:10 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	test_true( void )
 {
 	Server	server("./confis/true1.conf");
 
-	if (equal_or_err_b(server.get_parser()->parser(), true, __LINE__) == false)
+	if (equal_or_err_b(server.get_parser()->parseConfigurationFile(), true, __LINE__) == false)
 		return (false);
 	if (equal_or_err_i(server.server()->get_port(), 8080, __LINE__) == false)
 		return (false);

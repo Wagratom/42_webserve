@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 19:15:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:00:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ class	Parser_configuration
 		server_configuration*	_server_configuration;
 		t_location_settings*	_location_configuration;
 
-		list_file*				_file;
-		list_file*				_save_init_file;
+		// list_file*				_file;
+		std::vector<std::string>	_file;
+		// list_file*				_save_init_file;
 		std::string				_filename;
 };
 

@@ -73,6 +73,6 @@ bool	Parser_configuration::get_locationName(std::string& line, std::string& loca
 	if (get_location_valid(line) == false)
 		return (false);
 	locationName = line;
-	this->_file = this->_file->next;
+	_file.erase(_file.begin());
 	return (true);
 }

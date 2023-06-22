@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/12 14:35:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:53:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	Parser_configuration::parser_location( void )
 
 	if (alloc_location(&location) == false)
 		return (false);
-	if (get_locationName(this->_file->line, location->locationName) == false)
+	if (get_locationName(_file[0], location->locationName) == false)
 		return (parser_location_err(&location));
 	if (configure_location(*location) == false)
 		return (parser_location_err(&location));
@@ -64,13 +64,13 @@ bool	Parser_configuration::parser_location( void )
 
 bool	Parser_configuration::configure_location(t_location_settings& location)
 {
-	while (this->_file != NULL)
+	while (_file.size() > 0)
 	{
-		if (this->_file->line[1] == '}')
-			return (is_end_server(this->_file->line));
-		if (configure_location_line(this->_file->line, location) == false)
+		if (_file[0][1] == '}')
+			return (is_end_server(_file[0]));
+		if (configure_location_line(_file[0], location) == false)
 			return (false);
-		this->_file = this->_file->next;
+		_file.erase(_file.begin());
 	}
 	return (true);
 }
