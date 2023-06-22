@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 10:49:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:14:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ class	Parser_configuration
 		bool					get_error_page( std::string& line, aux_configuration* dst );
 
 		bool					parserLocation( void );
-		bool					configure_location(t_location& location);
-		bool					configure_location_line(std::string line, t_location& location);
-		bool					handle_location_line(std::string& line, t_location& dst);
+		bool					saveLocationInfos(t_location& location);
+		bool					handleLineLocation(std::string& line, t_location& dst);
 		bool					saveLocationName(std::string& locationName);
 
 		server_configuration*				get_server_configuration( void );

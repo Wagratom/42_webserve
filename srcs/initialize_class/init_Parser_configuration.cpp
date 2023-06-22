@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 10:09:08 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 14:11:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ Parser_configuration::Parser_configuration( Parser_configuration& src )
 
 Parser_configuration::~Parser_configuration( void )
 {
-	// r_ft_lstclear(&_save_init_file);
 	delete _server_configuration;
+	for (std::map<std::string, t_location*>::iterator it = _locations.begin(); it != _locations.end(); it++)
+	{
+		delete it->second->configuration;
+		delete it->second;
+	}
 }
 
 
