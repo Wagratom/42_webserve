@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:31:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 16:16:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:03:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ bool	Parser_configuration::saveLocationInfos(t_location& location)
 	}
 	return (true);
 }
-
 
 bool	Parser_configuration::handleLineLocation(std::string& line,  t_location& location)
 {

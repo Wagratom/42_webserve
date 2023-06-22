@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 18:54:07 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:52:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool	is_end_server(std::string& line)
 	return (true);
 }
 
-bool	Parser_configuration::check_in_dict_server(std::string& line)
+bool	Parser_configuration::checkDirectiveServer(std::string& line)
 {
 	for(std::map<std::string, directiveNginxServer>::iterator it = _dictionary_server.begin(); it != _dictionary_server.end(); ++it )
 	{
@@ -36,7 +36,7 @@ bool	Parser_configuration::check_in_dict_server(std::string& line)
 	return (false);
 }
 
-bool	Parser_configuration::check_in_dict_universal(std::string& line)
+bool	Parser_configuration::checkDirectiveUniversal(std::string& line)
 {
 	for (std::map<std::string, directiveNginxUniversal>::iterator it = _dictionary_universal.begin(); it != _dictionary_universal.end(); ++it )
 	{
@@ -46,15 +46,20 @@ bool	Parser_configuration::check_in_dict_universal(std::string& line)
 	return (false);
 }
 
+static bool	isNotEmptyLine(std::string line)
+{
+	return (line.find_first_not_of(" \t") != std::string::npos);
+}
+
 bool	Parser_configuration::handle_server( std::string& line )
 {
 	if (line[0] == '}')
 		return (is_end_server(line));
 	if (removeIndentationAndComments(1, line) == false)
 		return (false);
-	if (line.find_first_not_of(" \t") == std::string::npos)
+	if (isNotEmptyLine(line) == false)
 		return (true);
-	if (check_in_dict_server(line))
+	if (checkDirectiveServer(line))
 		return (true);
-	return (check_in_dict_universal(line));
+	return (checkDirectiveUniversal(line));
 }

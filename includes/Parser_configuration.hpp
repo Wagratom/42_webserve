@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 18:52:24 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:52:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ class	Parser_configuration
 		bool					parserRestFile( void );
 
 		bool					handle_server( std::string& line );
-		bool					check_in_dict_server(std::string& line);
-		bool					check_in_dict_universal(std::string& line);
+		bool					checkDirectiveServer(std::string& line);
+		bool					checkDirectiveUniversal(std::string& line);
 
 		bool					get_port( std::string& line );
 		bool					get_server_name( std::string& line );
@@ -58,10 +58,8 @@ class	Parser_configuration
 		std::map<std::string, t_location*>	get_location_configuration( void );
 
 	private:
-		// t_server_dictionary*		_dictionary_server;
 		std::map<std::string, directiveNginxServer>				_dictionary_server;
 		std::map<std::string, directiveNginxUniversal>			_dictionary_universal;
-		// t_universal_dictionary*		_dictionary_universal;
 
 		server_configuration*				_server_configuration;
 		std::map<std::string, t_location*>	_locations;
