@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 09:59:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:42:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,10 @@ class	Server
 		bool	responseServer( std::string status_code );
 		bool	responseFile( std::string endPoint );
 		bool	responseLocation( std::string endPoint );
-		bool	createRootLocation(std::string& dst, std::vector<t_location*> location);
+		bool	createRootLocation(std::string& dst, const t_location* location);
 
 		bool	handle_POST_requesition( void );
 		bool	responseClientPOST( aux_upload& data );
-		bool	handle_update( void );
 
 		bool	handle_DELETE_requesition( void );
 		bool	responseClientDELETE( void );
@@ -170,7 +169,6 @@ bool		executeFork( ChildProcessData& infos);
 void		executeCGI(char** argv, char** envp);
 bool		getContentFile(auxReadFiles& dst);
 void		appendBar(std::string& str);
-bool		checkValidLocation(std::vector<t_location*>& locations, std::string endPoint);
 bool		getContentFilePHP(auxReadFiles& dst);
 bool		generateFilesList(std::string& listFiles);
 bool		generateResponse(std::string listFiles, std::string& response);

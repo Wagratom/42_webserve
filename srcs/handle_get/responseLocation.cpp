@@ -12,19 +12,44 @@
 
 #include <web_server.hpp>
 
+struct	auxGetLocation {
+	std::string		endPoint;
+	int				positionLocation;
+};
+
+bool	findLocationVector(const std::vector<t_location*>& locations, auxGetLocation& aux)
+{
+	size_t	interator = 0;
+
+	while(interator < locations.size())
+	{
+		if (aux.endPoint != locations[interator]->endPoint)
+		{
+			interator++;
+			continue;
+		}
+		aux.positionLocation = interator;
+		return true;
+	}
+	return false;
+}
+
 bool	Server::responseLocation(std::string endPoint)
 {
-	std::vector<t_location*>	locations = location();
-	auxReadFiles				tmp;
-	std::string					root;
+	static const std::vector<t_location*>	locations = location();
+	auxReadFiles							tmp;
+	auxGetLocation							tmp2;
+	std::string								root;
 
 	std::cout << "responseLocation" << std::endl;
 	appendBar(endPoint);
-	if (checkValidLocation(locations, endPoint) == false)
+	tmp2.endPoint = endPoint;
+	tmp2.positionLocation = -1;
+	if (findLocationVector(locations, tmp2) == false)
 		return (false);
-	if (createRootLocation(root, locations) == false)
+	if (createRootLocation(root, locations[tmp2.positionLocation]) == false)
 		return (false);
-	if (generetePathToResponse(tmp.path, root, locations[0]->configuration->get_index()) == false)
+	if (generetePathToResponse(tmp.path, root, locations[tmp2.positionLocation]->configuration->get_index()) == false)
 		return (false);
 	if (getContentFile(tmp) == false)
 		return (false);
