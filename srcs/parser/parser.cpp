@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 22:03:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:31:44 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	Parser_configuration::parserRestFile( void )
 	{
 		if (is_location(_file[0]))
 		{
-			if (parser_location() == false)
+			if (parserLocation() == false)
 				return (false);
 		}
 		else

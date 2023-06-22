@@ -40,7 +40,7 @@ bool	checkValidLocation(t_location*& locations, std::string endPoint)
 {
 	while(locations)
 	{
-		if (endPoint == locations->locationName)
+		if (endPoint == locations->endPoint)
 			return (true);
 		locations = locations->next;
 	}

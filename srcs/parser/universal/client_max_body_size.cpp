@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:28:53 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:41:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	Parser_configuration::get_client_max_body_size(std::string& line, aux_confi
 {
 	if (has_semicolon_at_end(line) == false)
 		return (write_error("Error: Invalid line client_max_body_size, not ';'"));
-	if (valid_word(line, "client_max_body_size") == false)
+	if (startsWithWord(line, "client_max_body_size") == false)
 		return (false);
 	erase_comments(line);
 	if (get_max_body_size(line) == false)

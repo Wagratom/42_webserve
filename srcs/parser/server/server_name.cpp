@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:51:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:28:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:41:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	Parser_configuration::get_server_name(std::string& line)
 		return (write_error("Error casting server to configuration_server"));
 	if (has_semicolon_at_end(line) == false)
 		return (write_error("Error: Invalid line server_name, not ';'"));
-	if (valid_word(line, "server_name") == false)
+	if (startsWithWord(line, "server_name") == false)
 		return (false);
 	if (get_server_names(line) == false)
 		return (false);

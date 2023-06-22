@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 22:07:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:24:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_server_dictionary
 
 typedef struct s_location
 {
-	std::string					locationName; // key
+	std::string					endPoint; // key
 	location_configuration*		configuration;
 	struct s_location*			next;
 

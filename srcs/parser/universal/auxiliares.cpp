@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_uni.cpp                                       :+:      :+:    :+:   */
+/*   auxiliares.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:28:29 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:50:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,22 @@ bool	has_semicolon_at_end(std::string& line)
 	return (true);
 }
 
-bool	valid_word(std::string& line, std::string word)
+bool	startsWithWord(std::string& line, std::string word)
 {
-	if (line.compare(0, word.length(), word) != 0)
+	size_t	lenghtWord = word.length();
+
+	if (line.compare(0, lenghtWord, word) != 0)
 		return (write_error("Invalid word: not " + word));
-	if (line[word.length()] != ' ' && line[word.length()] != '\t')
+	if (line[lenghtWord] != ' ' && line[lenghtWord] != '\t')
 		return (write_error("Invalid word: no space after " + word));
 	return (true);
 }
 
 /*                           PREPARE LINE                                     */
-bool	prepare_line(int indentation, std::string& line)
+bool	removeIndentationAndComments(int indentation, std::string& line)
 {
 	if (line.empty() || !isspace(line[0]))
-		return (write_error("Error: get_locationName: Invalid line location"));
+		return (write_error("Error: saveLocationName: Invalid line location"));
 	if (line[0] == ' ')
 		indentation *= 4;
 	erase_comments(line);
@@ -69,9 +71,9 @@ bool	erase_isspaces(size_t indentation, std::string& line)
 	while (line[i] == c)
 		i++;
 	if (i != indentation)
-		return (write_error("Error: get_locationName: Invalid indentation location"));
+		return (write_error("Error: saveLocationName: Invalid indentation location"));
 	if (isspace(line[i]))
-		return (write_error("Error: get_locationName: Invalid indentation location"));
+		return (write_error("Error: saveLocationName: Invalid indentation location"));
 	line.erase(0, i);
 	return (true);
 }

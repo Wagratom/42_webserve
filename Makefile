@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/06/21 21:47:55 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/06/21 22:32:08 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INCLUDE		=	-I./includes
 
 SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				client_max_body_size.cpp error_page.cpp init_Parser_configuration.cpp \
-				parser.cpp check_server.cpp index.cpp root.cpp parser_location.cpp \
+				parser.cpp check_server.cpp index.cpp root.cpp parserLocation.cpp \
 				get_location.cpp gets_server_configuration.cpp init_parser_request.cpp \
 				r_add_back.cpp r_clear.cpp r_last.cpp r_new.cpp r_size.cpp \
 				l_add_back.cpp l_clear.cpp l_last.cpp l_size.cpp closed_fd_epoll.cpp \

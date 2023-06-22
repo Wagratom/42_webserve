@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:19:25 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:29:00 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:41:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool	Parser_configuration::get_error_page(std::string& line, aux_configuration* 
 {
 	if (has_semicolon_at_end(line) == false)
 		return (write_error("Error: Invalid line error_page, not ';'"));
-	if (valid_word(line, "error_page") == false)
+	if (startsWithWord(line, "error_page") == false)
 		return (false);
 	if (cut_error_page(line) == false)
 		return (false);

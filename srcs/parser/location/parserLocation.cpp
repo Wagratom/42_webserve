@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_location.cpp                                :+:      :+:    :+:   */
+/*   parserLocation.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 10:38:30 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 22:09:33 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/06/21 22:31:50 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/06/21 22:50:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <Parser_configuration.hpp>
 
 bool	alloc_location(t_location **location)
 {
 	*location = new t_location();
+
 	if (*location == NULL)
 		return (write_error("Error: Memory allocation failed"));
 
@@ -48,13 +50,13 @@ static bool	parser_location_err(t_location** location)
 /*                             INITIALIZE PARSER                              */
 /*############################################################################*/
 
-bool	Parser_configuration::parser_location( void )
+bool	Parser_configuration::parserLocation( void )
 {
 	t_location*	location = NULL;
 
 	if (alloc_location(&location) == false)
 		return (false);
-	if (get_locationName(_file[0], location->locationName) == false)
+	if (saveLocationName(location->endPoint) == false)
 		return (parser_location_err(&location));
 	if (configure_location(*location) == false)
 		return (parser_location_err(&location));
@@ -78,7 +80,7 @@ bool	Parser_configuration::configure_location(t_location& location)
 bool	Parser_configuration::configure_location_line(std::string line, t_location& location)
 {
 
-	if (prepare_line(2, line) == false)
+	if (removeIndentationAndComments(2, line) == false)
 		return (false);
 	if (line.find_first_not_of(" \t") == std::string::npos)
 		return (true);

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 08:49:07 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:29:27 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:41:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	Parser_configuration::get_index(std::string& line, aux_configuration *dst)
 {
 	if (has_semicolon_at_end(line) == false)
 		return (write_error("Error: Invalid line index, not ';'"));
-	if (valid_word(line, "index") == false)
+	if (startsWithWord(line, "index") == false)
 		return (false);
 	if (valid_index(line) == false)
 		return (false);

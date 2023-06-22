@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:28:35 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:41:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ bool	Parser_configuration::get_port(std::string& listen)
 
 	if (has_semicolon_at_end(listen) == false)
 		return (write_error("Error: Invalid line listen, not ';'"));
-	if (valid_word(listen, "listen") == false)
+	if (startsWithWord(listen, "listen") == false)
 		return (false);
 	if (get_valid_port(listen, aux_port) == false)
 		return (false);
