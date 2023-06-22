@@ -14,9 +14,9 @@
 
 bool	Server::responseLocation(std::string endPoint)
 {
-	t_location*	locations = location();
-	auxReadFiles			tmp;
-	std::string				root;
+	std::vector<t_location*>	locations = location();
+	auxReadFiles				tmp;
+	std::string					root;
 
 	std::cout << "responseLocation" << std::endl;
 	appendBar(endPoint);
@@ -24,7 +24,7 @@ bool	Server::responseLocation(std::string endPoint)
 		return (false);
 	if (createRootLocation(root, locations) == false)
 		return (false);
-	if (generetePathToResponse(tmp.path, root, locations->configuration->get_index()) == false)
+	if (generetePathToResponse(tmp.path, root, locations[0]->configuration->get_index()) == false)
 		return (false);
 	if (getContentFile(tmp) == false)
 		return (false);

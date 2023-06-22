@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 22:07:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 09:59:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ class	Server
 		bool	responseServer( std::string status_code );
 		bool	responseFile( std::string endPoint );
 		bool	responseLocation( std::string endPoint );
-		bool	createRootLocation(std::string& dst, t_location* location);
+		bool	createRootLocation(std::string& dst, std::vector<t_location*> location);
 
 		bool	handle_POST_requesition( void );
 		bool	responseClientPOST( aux_upload& data );
@@ -124,7 +124,7 @@ class	Server
 		bool	clean_request(epoll_event& event);
 
 		//				GETTERS to tests
-		t_location*	location( void ) {
+		std::vector<t_location*>	location( void ) {
 			return (this->_parserFile->get_location_configuration());
 		}
 
@@ -170,7 +170,7 @@ bool		executeFork( ChildProcessData& infos);
 void		executeCGI(char** argv, char** envp);
 bool		getContentFile(auxReadFiles& dst);
 void		appendBar(std::string& str);
-bool		checkValidLocation(t_location*& locations, std::string endPoint);
+bool		checkValidLocation(std::vector<t_location*>& locations, std::string endPoint);
 bool		getContentFilePHP(auxReadFiles& dst);
 bool		generateFilesList(std::string& listFiles);
 bool		generateResponse(std::string listFiles, std::string& response);

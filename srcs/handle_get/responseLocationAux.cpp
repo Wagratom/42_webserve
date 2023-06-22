@@ -12,10 +12,10 @@
 
 #include <web_server.hpp>
 
-bool	Server::createRootLocation(std::string& dst, t_location* location)
+bool	Server::createRootLocation(std::string& dst, std::vector<t_location*> location)
 {
 
-	dst = location->configuration->get_root();
+	dst = location[0]->configuration->get_root();
 	if (dst.empty())
 		dst = server()->get_root();
 	if (dst.empty())
@@ -36,13 +36,13 @@ void	appendBar(std::string& str)
 		str.append("/");
 }
 
-bool	checkValidLocation(t_location*& locations, std::string endPoint)
+bool	checkValidLocation(std::vector<t_location*>& locations, std::string endPoint)
 {
-	while(locations)
+	while(locations.size() != 0)
 	{
-		if (endPoint == locations->endPoint)
+		if (endPoint == locations[0]->endPoint)
 			return (true);
-		locations = locations->next;
+		locations.erase(locations.begin());
 	}
 	return (false);
 }
