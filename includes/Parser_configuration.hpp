@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 15:14:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:20:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,14 +161,3 @@ bool	equal_or_err_s(std::string a, std::string b, int line);
 bool	different_or_err_s(std::string a, std::string b, int line);
 bool	equal_or_err_b(bool a, bool b, int line);
 bool	different_or_err_b(bool a, bool b, int line);
-
-void		r_ft_lstadd_back(list_file **lst, list_file *_new);
-void		r_ft_lstclear(list_file **lst);
-list_file*	r_ft_lstlast(list_file *lst);
-list_file*	r_ft_lstnew(std::string content);
-int			r_ft_lstsize(list_file *lst);
-
-void					l_ft_lstadd_back(t_location **lst, t_location *_new);
-void					l_ft_lstclear(t_location **lst);
-t_location*	l_ft_lstlast(t_location *lst);
-int						l_ft_lstsize(t_location *lst);
