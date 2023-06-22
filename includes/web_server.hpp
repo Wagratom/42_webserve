@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 10:42:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:49:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ class	Server
 		bool	clean_request(epoll_event& event);
 
 		//				GETTERS to tests
-		std::vector<t_location*>	location( void ) {
+		std::map<std::string, t_location*>	location( void ) {
 			return (this->_parserFile->get_location_configuration());
 		}
 
