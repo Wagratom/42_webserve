@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 16:20:30 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:52:24 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 /*############################################################################*/
 /*                           Parser_configuration                             */
 /*############################################################################*/
+typedef bool (Parser_configuration::*directiveNginxServer)(std::string&);
+typedef bool (Parser_configuration::*directiveNginxUniversal)(std::string&, aux_configuration*);
+
 class	Parser_configuration
 {
 	public:
@@ -25,9 +28,9 @@ class	Parser_configuration
 		Parser_configuration( std::string filename );
 		virtual ~Parser_configuration( void );
 
-		t_server_dictionary*	create_server_dictionary( void );
 		server_configuration*	create_configuration_server( void );
-		void					initializeUniversalDictionary ( void );
+		void	initializeServerDictionary( void );
+		void	initializeUniversalDictionary ( void );
 
 		bool					controlParserConfiguration( void );
 		bool					readConfigurationFile( void );
@@ -55,9 +58,8 @@ class	Parser_configuration
 		std::map<std::string, t_location*>	get_location_configuration( void );
 
 	private:
-		t_server_dictionary*		_dictionary_server;
-
-		typedef bool (Parser_configuration::*directiveNginxUniversal)(std::string&, aux_configuration*);
+		// t_server_dictionary*		_dictionary_server;
+		std::map<std::string, directiveNginxServer>				_dictionary_server;
 		std::map<std::string, directiveNginxUniversal>			_dictionary_universal;
 		// t_universal_dictionary*		_dictionary_universal;
 

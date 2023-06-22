@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 16:20:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:53:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,11 @@
 Parser_configuration::Parser_configuration( void ) {}
 
 Parser_configuration::Parser_configuration(std::string filename)
- 	: _dictionary_server(create_server_dictionary())
-	, _server_configuration(create_configuration_server())
-	// , _locations(NULL)
-	// , _file(NULL)
-	// , _save_init_file(NULL)
+ 	:  _server_configuration(create_configuration_server())
 	, _filename(filename)
 {
 	initializeUniversalDictionary();
+	initializeServerDictionary();
 }
 
 Parser_configuration::Parser_configuration( Parser_configuration& src )
@@ -49,14 +46,10 @@ Parser_configuration::~Parser_configuration( void )
 /*                            Constructos structs                             */
 /*############################################################################*/
 
-t_server_dictionary*	Parser_configuration::create_server_dictionary( void )
+void	Parser_configuration::initializeServerDictionary( void )
 {
-	t_server_dictionary	static dictionary[3] = {
-		{"listen", 6, &Parser_configuration::get_port},
-		{"server_name", 11, &Parser_configuration::get_server_name},
-		{"", 0, NULL}
-	};
-	return (dictionary);
+	_dictionary_server["listen"] = &Parser_configuration::get_port;
+	_dictionary_server["server_name"] = &Parser_configuration::get_server_name;
 }
 
 void	Parser_configuration::initializeUniversalDictionary( void )

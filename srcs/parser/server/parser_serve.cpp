@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 16:16:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:54:07 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,10 @@ static bool	is_end_server(std::string& line)
 
 bool	Parser_configuration::check_in_dict_server(std::string& line)
 {
-	size_t i = 0;
-
-	while (_dictionary_server[i].f)
+	for(std::map<std::string, directiveNginxServer>::iterator it = _dictionary_server.begin(); it != _dictionary_server.end(); ++it )
 	{
-		if (line.compare(0, _dictionary_server[i].key.size(), _dictionary_server[i].key) == 0)
-			return ((this->*_dictionary_server[i].f)(line));
-		i++;
+		if (line.compare(0, it->first.size(), it->first) == 0)
+			return (this->*(it->second))(line);
 	}
 	return (false);
 }
