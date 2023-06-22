@@ -79,7 +79,7 @@ bool	Parser_configuration::saveLocationName(std::string& locationName)
 		return (false);
 	if (extractLocationName(locationLine) == false)
 		return (false);
-	ensureTrailingSlash(locationName, locationLine);
+	saveAndAppendSlash(locationName, locationLine);
 	_file.erase(_file.begin());
 	return (true);
 }
