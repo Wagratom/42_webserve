@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 10:48:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:30:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ class	Server
 
 		bool	create_server_configured( void );
 		bool	create_server( void );
-		bool	create_socket( void );
-		bool	set_socket_option( void );
+		bool	createSockeConfigured( void );
 		bool	bind_socket( void );
 		bool	listen_socket( void );
 
@@ -82,7 +81,7 @@ class	Server
 		bool	filterEvent( epoll_event* event );
 
 		bool	handle_new_connections( epoll_event& event );
-		bool	is_new_connect( epoll_event& event );
+		bool	is_newConnect( epoll_event& event );
 		bool	accept_status( int& new_client );
 		bool	save_connection( int& new_client );
 
@@ -90,7 +89,7 @@ class	Server
 		bool	is_closed_or_error_event( epoll_event& event );
 		bool	handle_client_request( epoll_event& event );
 
-		bool	set_client_not_block( void );
+		bool	set_fdNotBlock( int& fd );
 		bool	read_request( std::string& buffer );
 		bool	response_request( std::string& buffer );
 		bool	parse_order_request( std::string& buffer );
@@ -152,6 +151,8 @@ class	Server
 		int						_server_fd;
 		int						_client_fd;
 		int						_epoll_fd;
+
+		bool					_write;
 
 		int						_number_of_events;
 

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 17:18:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 19:49:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:13:33 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,12 @@ bool	Server::response_request( std::string& buffer )
 	if (_parserRequest->set_envs_header() == false)
 		return (false);
 	if (_parserRequest->get_metodo() == "GET")
-		handle_GET_requesition();
+		return handle_GET_requesition();
 	if (_parserRequest->get_metodo() == "POST")
 		return handle_POST_requesition();
 	if (_parserRequest->get_metodo() == "DELETE")
 		return handle_DELETE_requesition();
-	write_debug("\n");
-	return (true);
+	return (false);
 }
 
 // bool	Server::handle_POST_requesition()

@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   responseLocation.cpp                              :+:      :+:    :+:   */
+/*   set_client_not_block.cpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/19 16:57:15 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/05/05 10:37:17 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/06/23 14:22:47 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-bool	Server::createRootLocation(std::string& dst, const t_location* location)
+bool	Server::set_fdNotBlock( int& fd )
 {
-	dst = location->configuration->get_root();
-	if (dst.empty())
-		dst = server()->get_root();
-	if (dst.empty())
-		return (write_error("Error: root not found"));
-	return (true);
-}
+	int	properties;
 
-void	appendBar(std::string& str)
-{
-	if (str[str.length() - 1] != '/')
-		str.append("/");
+	properties = fcntl(fd, F_GETFL, 0);
+	if (properties == -1)
+		return (write_error_prefix("Error: set_fdNotBlock: not get properties"));
+	if (fcntl(fd, F_SETFL, properties | O_NONBLOCK) == -1)
+		return (write_error_prefix("Error: set_fdNotBlock: not set properties"));
+	return (true);
 }

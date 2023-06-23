@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 10:44:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:35:09 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ mas ainda há dados para ler. Isso pode acontecer, por exemplo, quando a outra e
 mas ainda permitindo a leitura dos dados que já foram enviados.
 */
 
-bool	Server::is_new_connect(epoll_event& event)
+bool	Server::is_newConnect(epoll_event& event)
 {
 	int	event_socket;
 
@@ -43,7 +43,6 @@ bool	Server::accept_status( int& new_client )
 	new_client = accept(_server_fd, NULL, NULL);
 	if (new_client == -1)
 		return (write_error_prefix("accept_status"));
-	// write_debug("\n\nNew connection accepted");
 	return (true);
 }
 
@@ -63,7 +62,7 @@ bool	Server::handle_new_connections(epoll_event& event)
 {
 	int	new_client;
 
-	if (!is_new_connect(event))
+	if (!is_newConnect(event))
 		return (false);
 	if (!accept_status(new_client))
 		return (false);

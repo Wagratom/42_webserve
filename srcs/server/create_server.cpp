@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 19:49:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:34:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,17 @@ o que significa que o servidor aceitará conexões em qualquer endereço IP.
 sin_zero: é um campo de preenchimento para garantir que a estrutura tenha o mesmo tamanho que a sockaddr,
 usada para compatibilidade com sistemas mais antigos.Esse campo não é usado atualmente.     */
 
-bool	Server::create_socket( void )
+bool	Server::createSockeConfigured( void )
 {
+	int	on = 1;
+
 	_server_fd = socket(AF_INET, SOCK_STREAM, 0);
-	if (_server_fd != -1)
-		return (true);
-	return (write_error_prefix("Error: Create_socket"));
-}
-
-bool	Server::set_socket_option( void )
-{
-	int on = 1;
-
+	if (_server_fd == -1)
+		return (write_error_prefix("Error: Not create socket"));
+	if (set_fdNotBlock(_server_fd) == false)
+		return (write_error_prefix("Error: Not set socket non-blocking"));
 	if (setsockopt(_server_fd, SOL_SOCKET, SO_REUSEADDR, (char *)&on, sizeof(on)) == -1)
-		return (write_error_prefix("Error: Setting socket options"));
+		return (write_error_prefix("Error: Not set socket option"));
 	return (true);
 }
 
@@ -64,10 +61,7 @@ bool	Server::listen_socket( void )
 bool	Server::create_server( void )
 {
 	write_debug("Creating server...");
-	if (create_socket() == false)
-		return (false);
-	write_debug("Setting socket options...");
-	if (set_socket_option() == false)
+	if (createSockeConfigured() == false)
 		return (false);
 	write_debug("Binding server...");
 	if (bind_socket() == false)

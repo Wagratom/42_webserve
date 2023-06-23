@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 11:16:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 11:43:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ bool	Server::responseClientDELETE()
 	addPrefixListFiles(listFiles);
 	if (generateResponse(listFiles, response) == false)
 		return (false);
-	std::cout << "response: " << response << std::endl;
 	return (sendResponseClient(response));
 }
