@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 14:30:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 19:00:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ class	Server
 		bool	processFileUpload( aux_upload& data );
 
 		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
-		bool	responseClientError( int status );
+		bool	responseClientError( int status, std::string pathFileError );
 
 		bool	sendErrorToClient( std::string path, std::string header );
 
@@ -121,6 +121,7 @@ class	Server
 
 		bool	clean_request(epoll_event& event);
 
+		std::string	GetErrorPageMapServer(std::string Error);
 		//				GETTERS to tests
 		std::map<std::string, t_location*>	location( void ) {
 			return (this->_parserFile->get_location_configuration());

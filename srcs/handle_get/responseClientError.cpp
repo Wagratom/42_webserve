@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   response_get.cpp                                   :+:      :+:    :+:   */
+/*   responseClientError.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 11:46:43 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 19:03:04 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,16 @@ bool	Server::sendErrorToClient( std::string path, std::string header)
 	return (true);
 }
 
-bool	Server::responseClientError( int status )
+bool	Server::responseClientError( int status, std::string pathFileError )
 {
-	std::cout << "Status: " << status << std::endl;
+	std::cout << "responseClientError" << std::endl;
+	if (pathFileError.empty())
+		pathFileError = "./error_pages/login.html";
+	std::cout << "pathFileError: " << pathFileError << std::endl;
 	if (status == ERROR404)
-		sendErrorToClient("./error_pages/404_lufy_chorando.html", generateHeaderDynamicStatus("404 Not Found"));
+		sendErrorToClient(pathFileError, generateHeaderDynamicStatus("404 Not Found"));
 	else if (status == ERROR_INTERNAL)
-		sendErrorToClient("./error_pages/500_internal_server.html", generateHeaderDynamicStatus("500 Internal Server Error"));
+		sendErrorToClient(pathFileError, generateHeaderDynamicStatus("500 Internal Server Error"));
 	else if (status == ERROR_BAD_REQUEST)
 		sendErrorToClient("./error_pages/400_bad_request.html", generateHeaderDynamicStatus("400 Bad Request"));
 	else if (status == ERROR415)

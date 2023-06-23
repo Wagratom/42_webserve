@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gets_configuration_server.cpp                      :+:      :+:    :+:   */
+/*   gets_server_configuration.cpp                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:33:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:30:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:51:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ std::string server_configuration::get_index( void )
 	return (this->_index);
 }
 
-std::string server_configuration::get_error_page( void )
+std::map<std::string, std::string*>	server_configuration::get_error_page( void )
 {
 	return (this->_error_page);
 }

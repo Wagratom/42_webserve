@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 18:53:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:38:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,11 @@
 Parser_configuration::Parser_configuration( void ) {}
 
 Parser_configuration::Parser_configuration(std::string filename)
- 	:  _server_configuration(create_configuration_server())
+ 	:  _server_configuration(new server_configuration)
 	, _filename(filename)
 {
 	initializeUniversalDictionary();
 	initializeServerDictionary();
-}
-
-Parser_configuration::Parser_configuration( Parser_configuration& src )
-{
-	if (this != &src)
-		*this = src;
 }
 
 Parser_configuration::~Parser_configuration( void )
@@ -58,9 +52,4 @@ void	Parser_configuration::initializeUniversalDictionary( void )
 	_dictionary_universal["index"] = &Parser_configuration::get_index;
 	_dictionary_universal["client_max_body_size"] = &Parser_configuration::get_client_max_body_size;
 	_dictionary_universal["error_page"] = &Parser_configuration::get_error_page;
-}
-
-server_configuration*	Parser_configuration::create_configuration_server( void )
-{
-	return (new server_configuration);
 }

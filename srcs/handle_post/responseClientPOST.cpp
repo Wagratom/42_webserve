@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 18:30:35 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 19:00:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ bool	Server::responseClientPOST(aux_upload& data)
 {
 	std::cout << "responseClientPOST" << std::endl;
 	if (TypeIsFile(_parserRequest->get_envsMap("CONTENT_TYPE")) == false)
-		return (responseClientError(ERROR415)); // verificar como vai ficar depois
+		return (responseClientError(ERROR415, GetErrorPageMapServer("415"))); // verificar como vai ficar depois
 	if (readRequestBody(data) == false)
-		return (responseClientError(ERROR_BAD_REQUEST));
+		return (responseClientError(ERROR_BAD_REQUEST, GetErrorPageMapServer("400")));
 	if (processFileUpload(data) == false)
-		return (responseClientError(ERROR_BAD_REQUEST));
+		return (responseClientError(ERROR_BAD_REQUEST, GetErrorPageMapServer("400")));
 	removeDelimiterRequest(data.request);
 	if (saveFileInServer(data.request, data.filename) == false)
-		return (responseClientError(ERROR_INTERNAL));
+		return (responseClientError(ERROR_INTERNAL, GetErrorPageMapServer("500")));
 	return responseServer("200");
 }

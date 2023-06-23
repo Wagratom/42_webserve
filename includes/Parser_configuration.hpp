@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 19:52:34 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:51:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@ class	Parser_configuration
 {
 	public:
 		Parser_configuration( void );
-		Parser_configuration( Parser_configuration& src );
 		Parser_configuration( std::string filename );
 		virtual ~Parser_configuration( void );
 
-		server_configuration*	create_configuration_server( void );
-		void	initializeServerDictionary( void );
-		void	initializeUniversalDictionary ( void );
+		void					initializeServerDictionary( void );
+		void					initializeUniversalDictionary ( void );
 
 		bool					controlParserConfiguration( void );
 		bool					readConfigurationFile( void );
@@ -47,7 +45,7 @@ class	Parser_configuration
 		bool					get_root(std::string& line, aux_configuration* dst);
 		bool					get_index(std::string& line , aux_configuration* dst);
 		bool					get_client_max_body_size( std::string& line, aux_configuration* dst );
-		bool					get_error_page( std::string& line, aux_configuration* dst );
+		bool					get_error_page( std::string& LineErrorPage, aux_configuration* dst );
 
 		bool					parserLocation( void );
 		bool					saveLocationInfos(t_location& location);
@@ -91,23 +89,23 @@ class server_configuration : public aux_configuration
 		std::string	get_server_name( void );
 		std::string	get_root( void );
 		std::string	get_index( void );
-		std::string	get_error_page( void );
 		std::string	get_client_max_body_size( void );
+		std::map<std::string, std::string*>	get_error_page( void );
 
 		void	set_port( int port );
 		void	set_server_name( std::string server_name );
 		void	set_root( std::string root );
 		void	set_index( std::string index );
-		void	set_error_page( std::string error_page );
+		void	set_error_page( std::string number, std::string error_page );
 		void	set_client_max_body_size( std::string client_max_body_size );
 
 	private:
-		int				_port;
-		std::string		_server_name;
-		std::string		_root;
-		std::string		_index;
-		std::string		_error_page;
-		std::string		_client_max_body_size;
+		int									_port;
+		std::string							_server_name;
+		std::string							_root;
+		std::string							_index;
+		std::map<std::string, std::string*>	_error_page;
+		std::string							_client_max_body_size;
 };
 
 /*############################################################################*/
@@ -122,25 +120,24 @@ class location_configuration : public aux_configuration
 
 		std::string	get_root( void );
 		std::string	get_index( void );
-		std::string	get_error_page( void );
 		std::string	get_client_max_body_size( void );
+		std::map<std::string, std::string*>	get_error_page( void );
 
 		void	set_root( std::string root );
 		void	set_index( std::string index );
-		void	set_error_page( std::string error_page );
+		void	set_error_page( std::string number, std::string error_page );
 		void	set_client_max_body_size( std::string client_max_body_size );
 
 		void	print_data( void ) {
 			std::cout << "root: " << _root << std::endl;
 			std::cout << "index: " << _index << std::endl;
-			std::cout << "error_page: " << _error_page << std::endl;
 			std::cout << "client_max_body_size: " << _client_max_body_size << std::endl;
 		}
 
 	private:
 		std::string	_root;
 		std::string	_index;
-		std::string	_error_page;
+		std::map<std::string, std::string*>	_error_page;
 		std::string	_client_max_body_size;
 		std::string	_autoindex;
 		std::string	_cgi;

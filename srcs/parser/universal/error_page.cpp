@@ -6,72 +6,80 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:19:25 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 22:41:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 19:32:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Parser_configuration.hpp>
 
-static bool	is_digit_valid(std::string number)
+static bool	extractErrorNumber(std::string& LineErrorPage, std::string& number)
 {
-	int	n_error;
+	size_t	sizeNumber = LineErrorPage.find_first_of(" \t");
+	int		n_error;
 
+	if (sizeNumber == std::string::npos)
+		return (write_error("Invalid error_page: no number error"));
+	number = LineErrorPage.substr(0, sizeNumber);
 	n_error = std::strtol(number.c_str(), NULL, 10);
 	if (n_error < 400 || n_error > 599)
 		return (write_error("Invalid error_page: invalid number error"));
+	LineErrorPage.erase(0, sizeNumber);
 	return (true);
 }
 
-static bool	valid_number_err(std::string aux)
+static bool	extractPathErrorPage(std::string& LineErrorPage)
 {
-	size_t	size_world;
-	std::string	number;
+	size_t	initInfos = LineErrorPage.find_first_not_of(" \t");
 
-	size_world = aux.find(" ");
-	number = aux.substr(0, size_world);
-	if (is_digit_valid(number) == false)
-		return (false);
-	if (aux.find(".") == std::string::npos)
+	if (initInfos == std::string::npos)
+		return (write_error("Invalid error_page: no error_page"));
+	LineErrorPage.erase(0, initInfos);
+	if (LineErrorPage.empty())
+		return (write_error("Invalid error_page: no path error_page"));
+	if (LineErrorPage.find(".") == std::string::npos)
 		return (write_error("Invalid error_page: no extension in page"));
 	return (true);
 }
 
-static bool	cut_error_page(std::string& aux)
+static bool	removeErrorPagePrefix(std::string& LineErrorPage)
 {
-	size_t	start;
+	size_t	initInfos = LineErrorPage.find_first_not_of(" \t", 10);
 
-	start = aux.find_first_not_of(" \t", 10);
-	if (start == std::string::npos)
+	if (initInfos == std::string::npos)
 		return (write_error("Invalid error_page: no error_page"));
-	aux = aux.substr(start);
-	if (valid_number_err(aux) == false)
-		return (false);
+	LineErrorPage.erase(0, initInfos);
 	return (true);
 }
 
-static bool	save_data(std::string& line, aux_configuration* dst)
+static bool	save_data(aux_configuration* dst, std::string number, std::string pathFileError)
 {
-	server_configuration* server = dynamic_cast<server_configuration*>(dst);
-	location_configuration* location = dynamic_cast<location_configuration*>(dst);
+	server_configuration*	server = dynamic_cast<server_configuration*>(dst);
+	location_configuration*	location = dynamic_cast<location_configuration*>(dst);
 
 	if (server != NULL)
-		server->set_error_page(line);
+		server->set_error_page(number, pathFileError);
 	else if (location != NULL)
-		location->set_error_page(line);
+		location->set_error_page(number, pathFileError);
 	else
 		return (write_error("Error in cast configuration in error_page"));
 	return (true);
 }
 
-bool	Parser_configuration::get_error_page(std::string& line, aux_configuration* dst)
+bool	Parser_configuration::get_error_page(std::string& LineErrorPage, aux_configuration* dst)
 {
-	if (has_semicolon_at_end(line) == false)
-		return (write_error("Error: Invalid line error_page, not ';'"));
-	if (startsWithWord(line, "error_page") == false)
+	std::string	number;
+
+	if (has_semicolon_at_end(LineErrorPage) == false)
+		return (write_error("Error: Invalid LineErrorPage error_page, not ';'"));
+	if (startsWithWord(LineErrorPage, "error_page") == false)
 		return (false);
-	if (cut_error_page(line) == false)
+	if (removeErrorPagePrefix(LineErrorPage) == false)
 		return (false);
-	if (save_data(line, dst) == false)
+	if (extractErrorNumber(LineErrorPage, number) == false)
+		return (false);
+	if (extractPathErrorPage(LineErrorPage) == false)
+		return (false);
+	if (save_data(dst, number, LineErrorPage) == false)
 		return (false);
 	return (true);
 }

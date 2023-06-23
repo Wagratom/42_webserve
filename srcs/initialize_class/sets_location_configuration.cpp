@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sets_configuration_location.cpp                    :+:      :+:    :+:   */
+/*   sets_location_configuration.cpp                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:52:42 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/04/29 17:31:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:51:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ void	location_configuration::set_index( std::string index  )
 	this->_index = index;
 }
 
-void	location_configuration::set_error_page( std::string error_page  )
+void	location_configuration::set_error_page( std::string number, std::string error_page  )
 {
-	this->_error_page = error_page;
+	if (_error_page.find(number) != _error_page.end())
+		return ;
+	_error_page[number] = new std::string(error_page);
 }
 
 void	location_configuration::set_client_max_body_size( std::string client_max_body_size )

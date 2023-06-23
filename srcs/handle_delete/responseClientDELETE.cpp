@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 11:43:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 19:01:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ bool	Server::responseClientDELETE()
 	std::string	listFiles;
 
 	if (generateFilesList(listFiles) == false)
-		return (false);
+		return (responseClientError(ERROR_INTERNAL, GetErrorPageMapServer("500")));
 	addPrefixListFiles(listFiles);
 	if (generateResponse(listFiles, response) == false)
-		return (false);
+		return (responseClientError(ERROR_INTERNAL, GetErrorPageMapServer("500")));
 	return (sendResponseClient(response));
 }

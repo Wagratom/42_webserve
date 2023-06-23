@@ -28,16 +28,18 @@ bool	Server::responseLocation(std::string endPoint)
 	auxReadFiles									tmp;
 	std::string										root;
 	const t_location* const							location = locations.at(endPoint);
+	std::map<std::string, std::string*>				ErrorPages;
 
 	std::cout << "responseLocation" << std::endl;
+	ErrorPages = location->configuration->get_error_page();
 	if (findLocationVector(locations, endPoint) == false)
-		return (false);
+		return (responseClientError(ERROR404, *(ErrorPages.find("404")->second)));
 	if (createRootLocation(root, location) == false)
-		return (false);
+		return (responseClientError(ERROR_INTERNAL, *(ErrorPages.find("500")->second)));
 	if (generetePathToResponse(tmp.path, root, location->configuration->get_index()) == false)
-		return (false);
+		return (responseClientError(ERROR404, *(ErrorPages.find("500")->second)));
 	if (getContentFile(tmp) == false)
-		return (false);
+		return (responseClientError(ERROR_INTERNAL, *(ErrorPages.find("500")->second)));
 	generateDynamicHeader(tmp, "200");
 	tmp.response = tmp.header + tmp.content;
 	return (sendResponseClient(tmp.response));
