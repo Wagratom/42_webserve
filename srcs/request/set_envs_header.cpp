@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/13 15:25:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:41:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static std::string	get_data_pos_double_point(std::string& line)
 
 static void	fill_maps(std::map<std::string, std::string>& envs, std::map<std::string, iterator_map>& key_value)
 {
-	// envs["SERVER_NAME"] = "";
 	envs["SERVER_PORT"] = "";
 	envs["HTTP_HOST"] = "";
 	envs["HTTP_USER_AGENT"] = "";

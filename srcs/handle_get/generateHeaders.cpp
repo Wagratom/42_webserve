@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:08:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 18:21:03 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:06:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static const std::string	getContentType(const std::string& path)
 void	generateDynamicHeader(auxReadFiles& tmp, std::string status_code)
 {
 	tmp.header = "HTTP/1.1 " + status_code +" OK\r\n";
-	tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n\r\n";
+	tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n";
+	tmp.header += "Connection: close\r\n\r\n";
 }
 
 /*############################################################################*/
@@ -70,6 +71,7 @@ std::string	generateHeaderDynamicStatus(std::string status)
 {
 	std::string	header = "HTTP/1.1 " + status + " \r\n";
 	header += "Content-Type: text/html\r\n\r\n";
+	header += "Connection: close\r\n";
 	header += "\r\n";
 	return (header);
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 10:49:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:48:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ class	Server
 
 		int		start_server( void );
 
-		bool	capture_new_events( epoll_event* event );
-		bool	filter_event( epoll_event* event );
+		bool	captureNewEvents( epoll_event* event );
+		bool	filterEvent( epoll_event* event );
 
 		bool	handle_new_connections( epoll_event& event );
 		bool	is_new_connect( epoll_event& event );

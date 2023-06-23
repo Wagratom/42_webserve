@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 12:47:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 11:04:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	callExecuteCgi(ChildProcessData& tools_chuild, std::string listFiles
 	char*	argv[3];
 	char	*envp[2];
 
-	std::cout <<listFiles << std::endl;
+	std::cout << listFiles << std::endl;
 	envp[0] = (char*)listFiles.c_str();
 	envp[1] = (char*)NULL;
 

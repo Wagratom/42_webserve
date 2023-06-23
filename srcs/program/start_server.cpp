@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 07:47:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 19:24:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/23 10:48:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	Server::start_server( void )
 	write_debug("\033[0;36m\tStarting server\033[0;34m");
 	while (true)
 	{
-		if (!capture_new_events(event))
+		if (!captureNewEvents(event))
 			return (-1);
-		if (!filter_event(event))
+		if (!filterEvent(event))
 			return (-1);
 		write_debug("\n");
 	}
