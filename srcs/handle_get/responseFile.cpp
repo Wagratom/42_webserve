@@ -1,39 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   responseFile.cpp                                   :+:      :+:    :+:   */
+/*   responseFileServer.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 19:02:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:45:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-std::string	Server::GetErrorPageMapServer(std::string Error)
-{
-	std::map<std::string, std::string*>::iterator it;
-
-	it = server()->get_error_page().find(Error);
-	if (it == server()->get_error_page().end())
-		return ("");
-	return (*(it->second));
-}
-
-bool Server::responseFile(std::string endPoint)
+bool Server::responseFileServer(std::string endPoint)
 {
 	auxReadFiles	tmp;
 
-	std::cout << "responseFile" << std::endl;
+	std::cout << "responseFileServer" << std::endl;
 	endPoint.erase(0, 1);
+	if (endPoint.find(".") == std::string::npos)
+		return (responseClientError(ERROR404, getErrorPageMapServer("404")));
 	tmp.path = server()->get_root() + endPoint;
 	if (getContentFile(tmp) == false)
-		return (responseClientError(ERROR404, GetErrorPageMapServer("404")));
+		return (responseClientError(ERROR404, getErrorPageMapServer("404")));
 	generateDynamicHeader(tmp, "200");
 	tmp.response = tmp.header + tmp.content;
 	if (sendResponseClient(tmp.response) == false)
-		return (responseClientError(ERROR_INTERNAL, GetErrorPageMapServer("500")));
+		return (responseClientError(ERROR_INTERNAL, getErrorPageMapServer("500")));
+	return true;
+}
+
+bool Server::responseFileLocation(t_location* location, std::string endPoint)
+{
+	auxReadFiles	tmp;
+
+	endPoint.erase(0, location->endPoint.length());
+	tmp.path = location->configuration->get_root() + endPoint;
+	if (getContentFile(tmp) == false)
+		return (responseClientError(ERROR404, getErrorPageMapLocation(location, "404")));
+	generateDynamicHeader(tmp, "200");
+	tmp.response = tmp.header + tmp.content;
+	if (sendResponseClient(tmp.response) == false)
+		return (responseClientError(ERROR_INTERNAL, getErrorPageMapLocation(location, "500")));
 	return true;
 }

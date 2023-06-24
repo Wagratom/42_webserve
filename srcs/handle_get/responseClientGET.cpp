@@ -12,16 +12,31 @@
 
 #include <web_server.hpp>
 
+static bool findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint)
+{
+	size_t lastSlashPos;
+
+	while (true)
+	{
+		if (locations.find(endPoint) != locations.end())
+			return true;
+		lastSlashPos = endPoint.find_last_of('/', endPoint.length() - 2);
+		if (lastSlashPos == std::string::npos || lastSlashPos == 0)
+			return false;
+		endPoint.erase((lastSlashPos + 1));
+	}
+}
+
 bool	Server::responseClientGET( std::string& endPoint)
 {
-	std::string	full_path = server()->get_root() + &endPoint[1];
+	std::string	LocationsNames = endPoint + "/";
 
 	std::cout << "responseClientGET" << std::endl;
 	if (endPoint == "/")
 		return (responseServer("200"));
 	if (endPoint == "/list/files/server")
-		return (responseClientDELETE());
-	if (isDirectory(full_path))
-		return (responseLocation(endPoint));
-	return (responseFile(endPoint));
+		return (responseClientListFiles());
+	if (findLocationVector(location(), LocationsNames))
+		return (responseLocation(endPoint, LocationsNames));
+	return (responseFileServer(endPoint));
 }

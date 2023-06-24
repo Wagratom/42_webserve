@@ -6,25 +6,12 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:08:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 10:06:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/24 18:58:43 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 #include <sys/stat.h>
-
-/*############################################################################*/
-/*                               isDirectory                                  */
-/*############################################################################*/
-
-bool	isDirectory(const std::string& path)
-{
-	struct stat fileStat;
-	if (stat(path.c_str(), &fileStat) == 0) {
-		return (fileStat.st_mode & S_IFDIR) != 0;
-	}
-	return false;
-}
 
 /*############################################################################*/
 /*                           createDinamicHeader                              */
@@ -60,7 +47,8 @@ void	generateDynamicHeader(auxReadFiles& tmp, std::string status_code)
 {
 	tmp.header = "HTTP/1.1 " + status_code +" OK\r\n";
 	tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n";
-	tmp.header += "Connection: close\r\n\r\n";
+	tmp.header += "\r\n";
+
 }
 
 /*############################################################################*/
@@ -70,8 +58,7 @@ void	generateDynamicHeader(auxReadFiles& tmp, std::string status_code)
 std::string	generateHeaderDynamicStatus(std::string status)
 {
 	std::string	header = "HTTP/1.1 " + status + " \r\n";
-	header += "Content-Type: text/html\r\n\r\n";
-	header += "Connection: close\r\n";
+	header += "Content-Type: text/html\r\n";
 	header += "\r\n";
 	return (header);
 }

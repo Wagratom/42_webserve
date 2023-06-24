@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 19:00:35 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/24 19:31:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,17 @@ class	Server
 		bool	handle_GET_requesition( void );
 		bool	responseClientGET( std::string& endPoint );
 		bool	responseServer( std::string status_code );
-		bool	responseFile( std::string endPoint );
-		bool	responseLocation( std::string endPoint );
+		bool	responseFileServer( std::string endPoint );
+		bool	responseFileLocation(t_location* location, std::string endPoint);
+		bool	responseLocation( std::string endPoint, std::string locationName );
+		bool	returnIndexLocation(t_location* _location );
 		bool	createRootLocation(std::string& dst, const t_location* location);
 
 		bool	handle_POST_requesition( void );
 		bool	responseClientPOST( aux_upload& data );
 
 		bool	handle_DELETE_requesition( void );
-		bool	responseClientDELETE( void );
+		bool	responseClientListFiles( void );
 		bool	processFileUpload( aux_upload& data );
 
 		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
@@ -121,7 +123,8 @@ class	Server
 
 		bool	clean_request(epoll_event& event);
 
-		std::string	GetErrorPageMapServer(std::string Error);
+		std::string	getErrorPageMapServer(std::string Error);
+		std::string	getErrorPageMapLocation(t_location* _location, std::string Error);
 		//				GETTERS to tests
 		std::map<std::string, t_location*>	location( void ) {
 			return (this->_parserFile->get_location_configuration());
@@ -166,7 +169,6 @@ int		get_debug( void );
 bool		getContentFile(auxReadFiles& dst);
 void		generateDynamicHeader(auxReadFiles& tmp, std::string status_code);
 std::string	generateHeaderDynamicStatus(std::string status);
-bool		isDirectory(const std::string& path);
 bool		executeFork( ChildProcessData& infos);
 void		executeCGI(char** argv, char** envp);
 bool		getContentFile(auxReadFiles& dst);

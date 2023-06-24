@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   responseClientDELETE.cpp                           :+:      :+:    :+:   */
+/*   responseClientListFiles.cpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -18,15 +18,15 @@ static void	addPrefixListFiles(std::string& listFiles)
 	listFiles = "listFiles=" + listFiles;
 }
 
-bool	Server::responseClientDELETE()
+bool	Server::responseClientListFiles()
 {
 	std::string	response;
 	std::string	listFiles;
 
 	if (generateFilesList(listFiles) == false)
-		return (responseClientError(ERROR_INTERNAL, GetErrorPageMapServer("500")));
+		return (responseClientError(ERROR_INTERNAL, getErrorPageMapServer("500")));
 	addPrefixListFiles(listFiles);
 	if (generateResponse(listFiles, response) == false)
-		return (responseClientError(ERROR_INTERNAL, GetErrorPageMapServer("500")));
+		return (responseClientError(ERROR_INTERNAL, getErrorPageMapServer("500")));
 	return (sendResponseClient(response));
 }

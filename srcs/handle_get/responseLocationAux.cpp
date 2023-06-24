@@ -12,16 +12,6 @@
 
 #include <web_server.hpp>
 
-bool	Server::createRootLocation(std::string& dst, const t_location* location)
-{
-	dst = location->configuration->get_root();
-	if (dst.empty())
-		dst = server()->get_root();
-	if (dst.empty())
-		return (write_error("Error: root not found"));
-	return (true);
-}
-
 void	appendBar(std::string& str)
 {
 	if (str[str.length() - 1] != '/')

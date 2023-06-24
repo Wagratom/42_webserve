@@ -12,35 +12,43 @@
 
 #include <web_server.hpp>
 
-bool findLocationVector(const std::map<std::string, t_location*> &locations, std::string endPoint)
+bool	Server::createRootLocation(std::string& dst, const t_location* location)
 {
-	if (locations.find(endPoint) != locations.end())
-		return true;
-	if (locations.begin()->second->endPoint == endPoint)
-		return true;
-	return false;
+	dst = location->configuration->get_root();
+	if (dst.empty())
+		dst = server()->get_root();
+	if (dst.empty())
+		return (write_error("Error: root not found"));
+	return (true);
 }
 
-bool	Server::responseLocation(std::string endPoint)
+bool	Server::returnIndexLocation(t_location* location)
 {
-	appendBar(endPoint);
-	static const std::map<std::string, t_location*>	locations = location();
-	auxReadFiles									tmp;
-	std::string										root;
-	const t_location* const							location = locations.at(endPoint);
-	std::map<std::string, std::string*>				ErrorPages;
+	auxReadFiles						tmp;
+	std::string							root;
 
-	std::cout << "responseLocation" << std::endl;
-	ErrorPages = location->configuration->get_error_page();
-	if (findLocationVector(locations, endPoint) == false)
-		return (responseClientError(ERROR404, *(ErrorPages.find("404")->second)));
+	std::cout << "returnIndexLocation" << std::endl;
 	if (createRootLocation(root, location) == false)
-		return (responseClientError(ERROR_INTERNAL, *(ErrorPages.find("500")->second)));
+		return (responseClientError(ERROR_INTERNAL, getErrorPageMapLocation(location, "500")));
 	if (generetePathToResponse(tmp.path, root, location->configuration->get_index()) == false)
-		return (responseClientError(ERROR404, *(ErrorPages.find("500")->second)));
+		return (responseClientError(ERROR404, getErrorPageMapLocation(location, "500")));
 	if (getContentFile(tmp) == false)
-		return (responseClientError(ERROR_INTERNAL, *(ErrorPages.find("500")->second)));
+		return (responseClientError(ERROR_INTERNAL, getErrorPageMapLocation(location, "500")));
 	generateDynamicHeader(tmp, "200");
 	tmp.response = tmp.header + tmp.content;
 	return (sendResponseClient(tmp.response));
+}
+
+bool	Server::responseLocation(std::string endPoint, std::string locationName)
+{
+	t_location*							_location = location().at(locationName);
+
+	std::cout << "responseLocation" << std::endl;
+	if (endPoint.find(".") != std::string::npos)
+		return (responseFileLocation(_location, endPoint));
+	if (endPoint[endPoint.length() - 1] != '/')
+		endPoint += "/";
+	if (endPoint == locationName)
+		return (returnIndexLocation(_location));
+	return (responseClientError(ERROR404, getErrorPageMapLocation(_location, "404")));
 }

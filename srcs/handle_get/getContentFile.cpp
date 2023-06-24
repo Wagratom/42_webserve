@@ -21,7 +21,6 @@ bool	getContentAllFile(auxReadFiles& dst)
 	std::cout << "dst.path: " << dst.path << std::endl;
 	if (!file.is_open())
 		return (perror("Error: getContentAllFile: file.is_open()"), false);
-	std::cout << "file.is_open()" << std::endl;
 	size = file.tellg();
 	file.seekg(0, std::ios::beg);
 	dst.content.resize(size);
@@ -32,7 +31,6 @@ bool	getContentAllFile(auxReadFiles& dst)
 
 bool	getContentFile(auxReadFiles& dst)
 {
-	std::cout << "GetContentFile" << std::endl;
 	if (dst.path.find(".php") != std::string::npos)
 		return (getContentFilePHP(dst));
 	if (dst.path.find(".") != std::string::npos)
