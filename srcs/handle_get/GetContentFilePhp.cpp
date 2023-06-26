@@ -34,7 +34,7 @@ static bool	contentFilePHP(auxReadFiles& dst, ChildProcessData& infos)
 	close(infos.fd[1]);
 	waitpid(infos.pid, &status, 0);
 	if (WEXITSTATUS(status) != 0)
-		return (false);
+		return (write_error("Error: Server::handle_GET_requesition: php-cgi7.4"));
 	while ((bytes_read = read(infos.fd[0], buffer, 1024)) > 0)
 		dst.content.append(buffer, bytes_read);
 	close(infos.fd[0]);

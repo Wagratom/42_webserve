@@ -26,7 +26,7 @@ bool Server::responseFileServer(std::string endPoint)
 	generateDynamicHeader(tmp, "200");
 	tmp.response = tmp.header + tmp.content;
 	if (sendResponseClient(tmp.response) == false)
-		return (responseClientError(ERROR_INTERNAL, getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	return true;
 }
 
@@ -41,6 +41,6 @@ bool Server::responseFileLocation(t_location* location, std::string endPoint)
 	generateDynamicHeader(tmp, "200");
 	tmp.response = tmp.header + tmp.content;
 	if (sendResponseClient(tmp.response) == false)
-		return (responseClientError(ERROR_INTERNAL, getErrorPageMapLocation(location, "500")));
+		return (responseClientError(ERROR500, getErrorPageMapLocation(location, "500")));
 	return true;
 }

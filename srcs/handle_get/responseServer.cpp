@@ -19,12 +19,12 @@ bool	Server::responseServer(std::string status_code)
 
 	errorPages = server()->get_error_page();
 	if (!generetePathToResponse(tmp.path, server()->get_root(), server()->get_index()))
-		return (responseClientError(ERROR_INTERNAL, *(errorPages.find("500")->second)));
+		return (responseClientError(ERROR500, *(errorPages.find("500")->second)));
 	if (!getContentFile(tmp))
-		return (responseClientError(ERROR_INTERNAL, *(errorPages.find("500")->second)));
+		return (responseClientError(ERROR500, *(errorPages.find("500")->second)));
 	generateDynamicHeader(tmp, status_code);
 	tmp.response = tmp.header + tmp.content + "\r\n";
 	if (sendResponseClient(tmp.response) == false)
-		return (responseClientError(ERROR_INTERNAL, *(errorPages.find("500")->second)));
+		return (responseClientError(ERROR500, *(errorPages.find("500")->second)));
 	return (true);
 }

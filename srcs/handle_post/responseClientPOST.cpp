@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 12:04:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:31:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ bool	Server::responseClientPOST(aux_upload& data)
 	if (TypeIsFile(_parserRequest->get_envsMap("CONTENT_TYPE")) == false)
 		return (responseClientError(ERROR415, getErrorPageMapServer("415"))); // verificar como vai ficar depois
 	if (readRequestBody(data) == false)
-		return (responseClientError(ERROR_BAD_REQUEST, getErrorPageMapServer("400")));
+		return (responseClientError(ERROR400, getErrorPageMapServer("400")));
 	if (processFileUpload(data) == false)
-		return (responseClientError(ERROR_BAD_REQUEST, getErrorPageMapServer("400")));
+		return (responseClientError(ERROR400, getErrorPageMapServer("400")));
 	removeDelimiterRequest(data.request);
 	if (saveFileInServer(data.request, data.filename) == false)
-		return (responseClientError(ERROR_INTERNAL, getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	return responseServer("200");
 }

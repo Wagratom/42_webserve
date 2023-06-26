@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 11:51:36 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:31:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 # define ERROR404 104
 # define ERROR415 115
-# define ERROR_BAD_REQUEST 100
-# define ERROR_INTERNAL 200
+# define ERROR400 100
+# define ERROR500 200
 
 # define CHILD_PROCESS 0
 
@@ -44,26 +44,11 @@ struct aux_upload;
 class	Server
 {
 	public:
-		Server(std::string filename)
-			: _parserFile(new Parser_configuration(filename))
-			, _parserRequest(NULL)
-			, _aux_list_location(NULL)
-			, _server_fd(-1)
-			, _epoll_fd(-1)
-			, _number_of_events(-1)
-			, _verbs(create_verbs())
-		{};
-		~Server() {
-			delete _parserFile;
-			for (int i = 0; i < 10; i++) {
-				delete _verbs[i];
-			}
-			delete [] _verbs;
-			if (_parserRequest)
-				delete _parserRequest;
-		};
+		Server(std::string filename);
+		~Server( void );
 
 		std::string**	create_verbs( void );
+		void			initializeDefaultErrorPage( void );
 
 		bool	create_server_configured( void );
 		bool	create_server( void );
@@ -150,7 +135,7 @@ class	Server
 	private:
 		Parser_configuration*	_parserFile;
 		Parser_request*			_parserRequest;
-		t_location	*	_aux_list_location;
+		t_location*				_aux_list_location;
 
 		int						_server_fd;
 		int						_client_fd;
@@ -161,6 +146,7 @@ class	Server
 		int						_number_of_events;
 
 		std::string				**_verbs;
+		std::map<int, std::string>	_defaultErrorPage;
 };
 
 void	set_debug(bool	value);

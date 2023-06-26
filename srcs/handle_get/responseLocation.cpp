@@ -29,11 +29,11 @@ bool	Server::returnIndexLocation(t_location* location)
 
 	std::cout << "returnIndexLocation" << std::endl;
 	if (createRootLocation(root, location) == false)
-		return (responseClientError(ERROR_INTERNAL, getErrorPageMapLocation(location, "500")));
+		return (responseClientError(ERROR500, getErrorPageMapLocation(location, "500")));
 	if (generetePathToResponse(tmp.path, root, location->configuration->get_index()) == false)
 		return (responseClientError(ERROR404, getErrorPageMapLocation(location, "500")));
 	if (getContentFile(tmp) == false)
-		return (responseClientError(ERROR_INTERNAL, getErrorPageMapLocation(location, "500")));
+		return (responseClientError(ERROR500, getErrorPageMapLocation(location, "500")));
 	generateDynamicHeader(tmp, "200");
 	tmp.response = tmp.header + tmp.content;
 	return (sendResponseClient(tmp.response));

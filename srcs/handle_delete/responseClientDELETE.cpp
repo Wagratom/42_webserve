@@ -24,9 +24,9 @@ bool	Server::responseClientListFiles()
 	std::string	listFiles;
 
 	if (generateFilesList(listFiles) == false)
-		return (responseClientError(ERROR_INTERNAL, getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	addPrefixListFiles(listFiles);
 	if (generateResponse(listFiles, response) == false)
-		return (responseClientError(ERROR_INTERNAL, getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	return (sendResponseClient(response));
 }
