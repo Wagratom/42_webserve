@@ -18,6 +18,6 @@ bool	Server::captureNewEvents(epoll_event* event)
 	_number_of_events = epoll_wait(_epoll_fd, event, MAX_EVENTS, -1);
 	write_debug_number("Number of captured events: ", _number_of_events);
 	if (_number_of_events == -1)
-		return (write_error_prefix("handle_new_connections"));
+		return (write_error_prefix("handleNewConnections"));
 	return (true);
 }

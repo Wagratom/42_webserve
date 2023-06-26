@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_new_connections.cpp                         :+:      :+:    :+:   */
+/*   handleNewConnections.cpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -52,13 +52,13 @@ bool	Server::save_connection( int& new_client )
 
 	event = (struct epoll_event){0,0};
 	event.data.fd = new_client;
-	event.events = EPOLLIN | EPOLLOUT | EPOLLHUP | EPOLLRDHUP | EPOLLERR;
+	event.events = EPOLLIN | EPOLLHUP | EPOLLRDHUP | EPOLLERR;
 	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
 		return (write_error_prefix("save_connection"));
 	return (true);
 }
 
-bool	Server::handle_new_connections(epoll_event& event)
+bool	Server::handleNewConnections(epoll_event& event)
 {
 	int	new_client;
 

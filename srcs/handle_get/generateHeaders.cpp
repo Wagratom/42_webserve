@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:08:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/24 18:58:43 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 11:57:10 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ static const std::string	getContentType(const std::string& path)
 void	generateDynamicHeader(auxReadFiles& tmp, std::string status_code)
 {
 	tmp.header = "HTTP/1.1 " + status_code +" OK\r\n";
-	tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n";
-	tmp.header += "\r\n";
+	tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n\r\n";
 
 }
 

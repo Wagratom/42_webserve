@@ -22,7 +22,7 @@ bool	Server::filterEvent(epoll_event* event)
 		write_type_event_debug(event[index]);
 		if (event[index].data.fd == _server_fd)
 		{
-			if (!handle_new_connections(event[index]))
+			if (!handleNewConnections(event[index]))
 				return (false);
 		}
 		else
@@ -39,11 +39,11 @@ bool	Server::filterEvent(epoll_event* event)
 bool	Server::handle_events(epoll_event& event)
 {
 	if (is_closed_or_error_event(event))
-		return (clean_request(event));
+		return (cleanupFd(event));
 	if (event.events & EPOLLIN)
 		return (handle_client_request(event));
 	else if (event.events & EPOLLOUT)
-		return (clean_request(event));
+		return (cleanupFd(event));
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/24 19:31:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 11:51:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ class	Server
 		bool	captureNewEvents( epoll_event* event );
 		bool	filterEvent( epoll_event* event );
 
-		bool	handle_new_connections( epoll_event& event );
+		bool	handleNewConnections( epoll_event& event );
 		bool	is_newConnect( epoll_event& event );
 		bool	accept_status( int& new_client );
 		bool	save_connection( int& new_client );
@@ -121,7 +121,7 @@ class	Server
 
 		bool	sendResponseClient( std::string response );
 
-		bool	clean_request(epoll_event& event);
+		bool	cleanupFd(epoll_event& event);
 
 		std::string	getErrorPageMapServer(std::string Error);
 		std::string	getErrorPageMapLocation(t_location* _location, std::string Error);

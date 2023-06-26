@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/24 19:50:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:04:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	TypeIsFile(std::string content_type)
 {
 	if (content_type.find("multipart/form-data") == std::string::npos)
-		return (false);
+		return (write_error("Error: Content-Type is not multipart/form-data"));
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 11:53:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:05:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ static bool extractFileNameFromBody(const std::string& body, std::string& filena
 
 static bool	skipToContentBody(std::string& request)
 {
-	const std::string	endOfHeader = "\r\n\r\n";
-	size_t				endOfHeaderPos =  request.find(endOfHeader);
+	size_t	endOfHeaderPos =  request.find("\r\n\r\n");
 
 	if (endOfHeaderPos == std::string::npos)
 		return write_error("Error parsing body request: end of header not found");
@@ -52,19 +51,12 @@ static bool	skipToContentBody(std::string& request)
 	return true;
 }
 
-static bool	isValidName(std::string filename)
-{
-	if (filename.empty())
-		return write_error("Error extractFileNameFromBody: filename is empty");
-	return (true);
-}
-
 bool	Server::processFileUpload(aux_upload& data)
 {
 	if (extractFileNameFromBody(data.request, data.filename) == false)
 		return (false);
-	if (isValidName(data.filename) == false)
-		return (false);
+	if (data.filename.empty())
+		return write_error("Error extractFileNameFromBody: filename is empty");
 	if (skipToContentBody(data.request) == false)
 		return (false);
 	replaceSpacesInFilename(data.filename);

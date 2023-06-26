@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/06/24 18:19:34 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/06/26 11:51:54 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				parser.cpp check_server.cpp index.cpp root.cpp parserLocation.cpp \
 				get_location.cpp gets_server_configuration.cpp init_parser_request.cpp \
 				create_server_conf.cpp create_server.cpp configure_server.cpp \
-				start_server.cpp handle_new_connections.cpp filterEvent.cpp \
+				start_server.cpp handleNewConnections.cpp filterEvent.cpp \
 				set_fdNotBlock.cpp error.cpp captureNewEvents.cpp \
 				debug.cpp create_verbs.cpp handle_client_request.cpp sendResponseClient.cpp \
 				set_envs_order_line.cpp gets_Parser_request.cpp set_envs_header.cpp\
@@ -29,7 +29,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				gets_Parser_configuration.cpp sets_server_configuration.cpp \
 				read_request.cpp response_request.cpp responseClientGET.cpp \
 				handle_GET_requesition.cpp handle_DELETE_requesition.cpp\
-				generetePathToResponse.cpp clean_request.cpp auxProcess.cpp \
+				generetePathToResponse.cpp cleanupFd.cpp auxProcess.cpp \
 				responseClientError.cpp responseLocation.cpp generateHeaders.cpp \
 				handle_POST_request.cpp responseServer.cpp generateResponse.cpp\
 				responseFile.cpp responseLocationAux.cpp GetContentFilePhp.cpp \
