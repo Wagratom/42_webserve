@@ -23,11 +23,6 @@ static bool	open_file_status( std::string path )
 	return (true);
 }
 
-static std::string	GeneratePathFile( std::string root, std::string filename )
-{
-	return (std::string(root + filename));
-}
-
 static bool	saveValidPathFile(std::string& pathFile, std::string currentPath)
 {
 	if (!open_file_status(currentPath))
@@ -38,16 +33,17 @@ static bool	saveValidPathFile(std::string& pathFile, std::string currentPath)
 
 static bool getValidPath(std::string listNames, std::string root, std::string& pathFile)
 {
-	size_t	pos;
+	std::string	currentPath;
+	size_t		endWorld;
 
-	while ((pos = listNames.find_first_of(" \t")) != std::string::npos)
+	while ((endWorld = listNames.find_first_of(" \t")) != std::string::npos)
 	{
-		std::string currentPath = GeneratePathFile(root, listNames.substr(0, pos));
+		currentPath = root + listNames.substr(0, endWorld);
 		if (saveValidPathFile(pathFile, currentPath))
 			return true;
-		listNames.erase(0, (pos + 1));
+		listNames.erase(0, (endWorld + 1));
 	}
-	pathFile = GeneratePathFile(root, listNames);
+	pathFile = root + listNames;
 	return (saveValidPathFile(pathFile, pathFile));
 }
 
@@ -56,6 +52,8 @@ bool	Server::generetePathToResponse(std::string& dst, std::string root, std::str
 	dst.clear();
 	if (listNames.empty() || root.empty())
 		return (write_error("Error: root or listNames is empty"));
-	return (getValidPath(listNames, root, dst));
+	if (getValidPath(listNames, root, dst) == false)
+		return (write_error("Error: path not found"));
+	return (true);
 }
 

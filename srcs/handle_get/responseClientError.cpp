@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 19:03:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:20:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	Server::responseClientError( int status, std::string pathFileError )
 {
 	std::cout << "responseClientError" << std::endl;
 	if (pathFileError.empty())
-		pathFileError = "./error_pages/login.html";
+		pathFileError = "./error_pages/404_lufy_pensativo.html";
 	std::cout << "pathFileError: " << pathFileError << std::endl;
 	if (status == ERROR404)
 		sendErrorToClient(pathFileError, generateHeaderDynamicStatus("404 Not Found"));
