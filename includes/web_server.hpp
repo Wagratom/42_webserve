@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 13:31:46 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 21:12:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,6 @@ class	Server
 			return (this->_parserFile->get_location_configuration());
 		}
 
-		t_location*	get_aux_list_location( void ) {
-			return (this->_aux_list_location);
-		}
-
-		void	set_aux_list_location( t_location* tmp) {
-			this->_aux_list_location = tmp;
-		}
 		server_configuration*	server( void ) {
 			return (this->_parserFile->get_server_configuration());
 		}
@@ -135,7 +128,7 @@ class	Server
 	private:
 		Parser_configuration*	_parserFile;
 		Parser_request*			_parserRequest;
-		t_location*				_aux_list_location;
+		// t_location*				_aux_list_location;
 
 		int						_server_fd;
 		int						_client_fd;

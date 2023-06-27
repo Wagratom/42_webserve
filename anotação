@@ -12,5 +12,12 @@ conserta o while do update
 
 coloca auto index e caso nao tenha nad apegar op de fora
 
-
 usar as paginas de error passas pelo usuario
+
+#Servidor A: Configurado como o primeiro servidor.
+#Servidor B: Configurado como o segundo servidor.
+#Servidor C: Configurado como o terceiro servidor.
+#Quando uma solicitação é feita para esse host:porta, os servidores são consultados na ordem em que estão configurados.
+
+#Se a solicitação corresponder às configurações de qualquer um dos servidores B ou C, eles serão responsáveis por lidar com a solicitação específica.
+#No entanto, se a solicitação não corresponder a nenhum dos servidores B ou C, o servidor A, que é definido como o primeiro servidor, será o responsável por lidar com essa solicitação.

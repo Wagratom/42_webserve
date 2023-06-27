@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:40:49 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 18:49:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 20:06:56 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	server_configuration::set_error_page( std::string number, std::string error
 	_error_page[number] = new std::string(error_page);
 }
 
-void	server_configuration::set_client_max_body_size( std::string client_max_body_size )
+void	server_configuration::set_client_max_body_size( int maxSize )
 {
-	if (this->_client_max_body_size != "")
+	if (this->_client_max_body_size != 0)
 		return ;
-	this->_client_max_body_size = client_max_body_size;
+	this->_client_max_body_size = maxSize;
 }

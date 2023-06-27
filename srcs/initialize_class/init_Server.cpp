@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 13:31:37 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 21:18:33 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	Server::initializeDefaultErrorPage()
 Server::Server(std::string filename)
 			: _parserFile(new Parser_configuration(filename))
 			, _parserRequest(NULL)
-			, _aux_list_location(NULL)
 			, _server_fd(-1)
 			, _epoll_fd(-1)
 			, _number_of_events(-1)
@@ -36,8 +35,8 @@ Server::~Server() {
 	if (_parserRequest)
 		delete _parserRequest;
 	delete	_parserFile;
-	delete [] _verbs;
 	for (int i = 0; i < 10; i++) {
 		delete _verbs[i];
 	}
+	delete [] _verbs;
 };

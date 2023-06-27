@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 18:22:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 20:18:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ bool	Server::handle_POST_requesition()
 	// TODO: check if the body is bigger than client_max_body_size
 	aux_upload	data;
 
+	std::cout << server()->get_client_max_body_size() << std::endl;
 	data.request = _parserRequest->get_request();
 	data.body_length = data.request.length();
 	data.fd = _client_fd;
