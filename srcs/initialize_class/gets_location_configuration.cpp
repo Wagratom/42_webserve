@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:52:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 09:33:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:27:54 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ std::string	location_configuration::get_root( void )
 std::string	location_configuration::get_index( void )
 {
 	return (this->_index);
+}
+
+std::string	location_configuration::get_return( void )
+{
+	return (this->_return);
 }
 
 std::map<std::string, std::string*>	location_configuration::get_error_page( void )

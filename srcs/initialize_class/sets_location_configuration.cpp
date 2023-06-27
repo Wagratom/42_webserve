@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:52:42 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 20:07:54 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:27:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ void	location_configuration::set_index( std::string index  )
 	if (this->_index != "")
 		return ;
 	this->_index = index;
+}
+
+void	location_configuration::set_return( std::string index  )
+{
+	if (this->_return != "")
+		return ;
+	this->_return = index;
 }
 
 void	location_configuration::set_error_page( std::string number, std::string error_page  )

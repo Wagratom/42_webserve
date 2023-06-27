@@ -44,6 +44,10 @@ bool	Server::responseLocation(std::string endPoint, std::string locationName)
 	t_location*							_location = location().at(locationName);
 
 	std::cout << "responseLocation" << std::endl;
+	if (_location == NULL)
+		return (responseClientError(ERROR404, getErrorPageMapLocation(_location, "404")));
+	if (_location->configuration->get_return().empty() == false)
+		return (responseRedirect(_location->configuration->get_return()));
 	if (endPoint.find(".") != std::string::npos)
 		return (responseFileLocation(_location, endPoint));
 	if (endPoint[endPoint.length() - 1] != '/')

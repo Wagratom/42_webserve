@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:40:49 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 20:06:56 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:53:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	server_configuration::set_error_page( std::string number, std::string error
 {
 	if (_error_page.find(number) != _error_page.end())
 		return ;
-	std::cout << "number: " << number << std::endl;
-	std::cout << "error_page: " << error_page << std::endl;
 	_error_page[number] = new std::string(error_page);
 }
 
@@ -56,4 +54,11 @@ void	server_configuration::set_client_max_body_size( int maxSize )
 	if (this->_client_max_body_size != 0)
 		return ;
 	this->_client_max_body_size = maxSize;
+}
+
+void	server_configuration::set_return( std::string return_ )
+{
+	if (this->_return != "")
+		return ;
+	this->_return = return_;
 }

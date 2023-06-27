@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 09:26:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:37:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ class	Server
 
 		bool	sendResponseClient( std::string response );
 
+		bool	responseRedirect(std::string endPoint);
 		bool	cleanupFd(epoll_event& event);
 
 		std::string	getErrorPageMapServer(std::string Error);
