@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/06/27 14:38:26 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/06/27 17:54:22 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				getContentFile.cpp responseClientPOST.cpp processFileUpload.cpp \
 				responseClientDELETE.cpp generateListFiles.cpp readConfigurationFile.cpp\
 				saveLocationInfos.cpp getErrosPage.cpp init_Server.cpp get_return.cpp \
-				responseRedirect.cpp
+				responseRedirect.cpp get_autoIndex.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs

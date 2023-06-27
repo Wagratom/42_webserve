@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 14:12:03 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:54:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	Parser_configuration::initializeUniversalDictionary( void )
 	_dictionary_universal["client_max_body_size"] = &Parser_configuration::get_clientMaxBodySize;
 	_dictionary_universal["error_page"] = &Parser_configuration::get_error_page;
 	_dictionary_universal["return"] = &Parser_configuration::get_return;
+	_dictionary_universal["autoindex"] = &Parser_configuration::get_autoIndex;
 }
 
 /*############################################################################*/

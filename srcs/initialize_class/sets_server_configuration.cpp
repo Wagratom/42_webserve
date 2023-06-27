@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:40:49 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 14:53:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:01:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ void	server_configuration::set_index( std::string index  )
 	this->_index = index;
 }
 
+
+void	server_configuration::set_autoIndex( bool autoIndex )
+{
+	this->_autoIndex = autoIndex;
+}
+
+
 void	server_configuration::set_error_page( std::string number, std::string error_page)
 {
 	if (_error_page.find(number) != _error_page.end())
@@ -51,9 +58,9 @@ void	server_configuration::set_error_page( std::string number, std::string error
 
 void	server_configuration::set_client_max_body_size( int maxSize )
 {
-	if (this->_client_max_body_size != 0)
+	if (this->_clientMaxBodySize != 0)
 		return ;
-	this->_client_max_body_size = maxSize;
+	this->_clientMaxBodySize = maxSize;
 }
 
 void	server_configuration::set_return( std::string return_ )

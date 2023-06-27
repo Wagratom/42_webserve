@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 14:27:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:04:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ class	Parser_configuration
 		bool					get_clientMaxBodySize( std::string& line, aux_configuration* dst );
 		bool					get_error_page( std::string& LineErrorPage, aux_configuration* dst );
 		bool					get_return( std::string& LineErrorPage, aux_configuration* dst );
+		bool					get_autoIndex( std::string& LineErrorPage, aux_configuration* dst );
 
 		bool					parserLocation( void );
 		bool					saveLocationInfos(t_location& location);
@@ -89,7 +90,7 @@ class server_configuration : public aux_configuration
 		server_configuration( void )
 			: aux_configuration()
 			, _port(-1)
-			, _client_max_body_size(0)
+			, _clientMaxBodySize(0)
 			, _server_name("")
 			, _root("")
 			, _index("")
@@ -98,6 +99,7 @@ class server_configuration : public aux_configuration
 
 		int			get_port( void );
 		int			get_clientMaxBodySize( void );
+		bool		get_autoIndex( void );
 		std::string	get_server_name( void );
 		std::string	get_root( void );
 		std::string	get_index( void );
@@ -111,10 +113,12 @@ class server_configuration : public aux_configuration
 		void	set_error_page( std::string number, std::string error_page );
 		void	set_client_max_body_size( int size );
 		void	set_return( std::string return_ );
+		void	set_autoIndex( bool autoIndex );
 
 	private:
 		int									_port;
-		int									_client_max_body_size;
+		int									_clientMaxBodySize;
+		bool								_autoIndex;
 		std::string							_server_name;
 		std::string							_root;
 		std::string							_index;
@@ -133,7 +137,7 @@ class location_configuration : public aux_configuration
 			:  aux_configuration()
 			, _root("")
 			, _index("")
-			, _client_max_body_size(0)
+			, _clientMaxBodySize(0)
 			, _autoindex("")
 			{};
 		~location_configuration( void ){};
@@ -142,6 +146,7 @@ class location_configuration : public aux_configuration
 		std::string	get_index( void );
 		std::string	get_return( void );
 		int			get_clientMaxBodySize( void );
+		bool		get_autoIndex( void );
 		std::map<std::string, std::string*>	get_error_page( void );
 
 		void	set_root( std::string root );
@@ -149,11 +154,14 @@ class location_configuration : public aux_configuration
 		void	set_return( std::string index );
 		void	set_error_page( std::string number, std::string error_page );
 		void	set_client_max_body_size( int maxSize );
+		void	set_autoIndex( bool autoIndex );
+
 
 	private:
 		std::string							_root;
 		std::string							_index;
-		int									_client_max_body_size;
+		int									_clientMaxBodySize;
+		bool								_autoIndex;
 		std::string							_autoindex;
 		std::string							_return;
 		std::map<std::string, std::string*>	_error_page;
