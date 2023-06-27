@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 21:18:33 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 09:27:29 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	Server::initializeDefaultErrorPage()
 	_defaultErrorPage[ERROR400] = "./error_pages/400_bad_request.html";
 	_defaultErrorPage[ERROR415] = "./error_pages/415_unsupported_media.html";
 	_defaultErrorPage[ERROR500] = "./error_pages/500_internal_server.html";
+	_defaultErrorPage[ERROR413] = "./error_pages/413_payload_too_large.html";
 }
 
 Server::Server(std::string filename)

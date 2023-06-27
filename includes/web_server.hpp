@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 21:12:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 09:26:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@
 
 # define CHILD 0
 
-# define ERROR404 104
-# define ERROR415 115
 # define ERROR400 100
+# define ERROR404 104
+# define ERROR413 113
+# define ERROR415 115
 # define ERROR500 200
 
 # define CHILD_PROCESS 0

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 13:31:37 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 10:16:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ bool	Server::responseClientError( int status, std::string pathFileError )
 	else if (status == ERROR415)
 		// enviar um error de formato do payload não é um formato suportado.
 		return (false);
+	else if (status == ERROR413)
+		return sendErrorToClient(pathFileError, generateHeaderDynamicStatus("413 Payload Too Large"));
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 13:31:37 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 09:45:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static bool	saveFileInServer(const std::string& content, const std::string& file
 
 static bool	readRequestBody(aux_upload& data)
 {
-	while (data.body_length < data.content_length)
+	while (data.bodySize < data.contentLength)
 	{
 		data.bytes_read = recv(data.fd, data.buffer, 4096, 0);
 		if (data.bytes_read == -1)
 			return (write_error("Error reading body request"));
 		data.buffer[data.bytes_read] = '\0';
-		data.body_length += data.bytes_read;
+		data.bodySize += data.bytes_read;
 		data.request += data.buffer;
 	}
 	return (true);

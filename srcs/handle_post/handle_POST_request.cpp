@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 20:18:30 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 10:15:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 bool	Server::handle_POST_requesition()
 {
-	// TODO: check if the body is bigger than client_max_body_size
-	aux_upload	data;
+	aux_upload	dataRequest;
+	std::string	contentLength = _parserRequest->get_envsMap("CONTENT_LENGTH");
+	int			contentLenght = std::strtol(contentLength.c_str(), NULL, 10);
 
-	std::cout << server()->get_client_max_body_size() << std::endl;
-	data.request = _parserRequest->get_request();
-	data.body_length = data.request.length();
-	data.fd = _client_fd;
-	data.content_length = std::strtol(_parserRequest->get_envsMap("CONTENT_LENGTH").c_str(), NULL, 10);
-	data.bytes_read = 0;
-
-	return (responseClientPOST(data));
+	std::cout << "handle_POST_requesition" << std::endl;
+	if (server()->get_clientMaxBodySize() < contentLenght)
+		return (responseClientError(ERROR413, getErrorPageMapServer("413")));
+	dataRequest.request = _parserRequest->get_request();
+	dataRequest.fd = _client_fd;
+	dataRequest.bodySize = dataRequest.request.length();
+	dataRequest.contentLength = contentLenght;
+	dataRequest.bytes_read = 0;
+	return (responseClientPOST(dataRequest));
 }

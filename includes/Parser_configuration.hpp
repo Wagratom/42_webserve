@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 21:26:48 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 09:33:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ class server_configuration : public aux_configuration
 		~server_configuration( void ){};
 
 		int			get_port( void );
-		int			get_client_max_body_size( void );
+		int			get_clientMaxBodySize( void );
 		std::string	get_server_name( void );
 		std::string	get_root( void );
 		std::string	get_index( void );
@@ -138,7 +138,7 @@ class location_configuration : public aux_configuration
 
 		std::string	get_root( void );
 		std::string	get_index( void );
-		int			get_client_max_body_size( void );
+		int			get_clientMaxBodySize( void );
 		std::map<std::string, std::string*>	get_error_page( void );
 
 		void	set_root( std::string root );

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:33:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 20:02:26 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 09:33:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ std::map<std::string, std::string*>	server_configuration::get_error_page( void )
 	return (this->_error_page);
 }
 
-int	server_configuration::get_client_max_body_size( void )
+int	server_configuration::get_clientMaxBodySize( void )
 {
 	return (this->_client_max_body_size);
 }
