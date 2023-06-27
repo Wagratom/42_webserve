@@ -18,12 +18,13 @@ static void	addPrefixListFiles(std::string& listFiles)
 	listFiles = "listFiles=" + listFiles;
 }
 
-bool	Server::responseClientListFiles()
+bool	Server::responseClientListFiles( std::string pathDir)
 {
 	std::string	response;
 	std::string	listFiles;
 
-	if (generateFilesList(listFiles) == false)
+	std::cout << "responseClientListFiles" << std::endl;
+	if (generateFilesList(listFiles, pathDir.c_str()) == false)
 		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	addPrefixListFiles(listFiles);
 	if (generateResponse(listFiles, response) == false)

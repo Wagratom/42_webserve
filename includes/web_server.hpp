@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 14:37:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 19:34:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ class	Server
 		bool	handle_GET_requesition( void );
 		bool	responseClientGET( std::string& endPoint );
 		bool	responseServer( std::string status_code );
+		bool	responseAutoIndexOrError( void );
+
 		bool	responseFileServer( std::string endPoint );
 		bool	responseFileLocation(t_location* location, std::string endPoint);
 		bool	responseLocation( std::string endPoint, std::string locationName );
@@ -93,7 +95,7 @@ class	Server
 		bool	responseClientPOST( aux_upload& data );
 
 		bool	handle_DELETE_requesition( void );
-		bool	responseClientListFiles( void );
+		bool	responseClientListFiles( std::string pathDir );
 		bool	processFileUpload( aux_upload& data );
 
 		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
@@ -155,5 +157,5 @@ void		executeCGI(char** argv, char** envp);
 bool		getContentFile(auxReadFiles& dst);
 void		appendBar(std::string& str);
 bool		getContentFilePHP(auxReadFiles& dst);
-bool		generateFilesList(std::string& listFiles);
+bool		generateFilesList(std::string& listFiles, const char* pathDir);
 bool		generateResponse(std::string listFiles, std::string& response);

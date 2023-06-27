@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:26:29 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 17:49:29 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:58:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	Parser_configuration::get_root(std::string& line, aux_configuration* dst)
 {
 	if (has_semicolon_at_end(line) == false)
 		return (write_error("Error: Invalid line root, not ';'"));
-	if (startsWithWord(line, "autoindex") == false)
+	if (startsWithWord(line, "root") == false)
 		return (false);
 	if (extractRootPrefix(line) == false)
 		return (false);

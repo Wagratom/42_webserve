@@ -35,7 +35,7 @@ bool	Server::responseClientGET( std::string& endPoint)
 	if (endPoint == "/")
 		return (responseServer("200"));
 	if (endPoint == "/list/files/server")
-		return (responseClientListFiles());
+		return (responseClientListFiles("uploads/"));
 	if (findLocationVector(location(), LocationsNames))
 		return (responseLocation(endPoint, LocationsNames));
 	return (responseFileServer(endPoint));

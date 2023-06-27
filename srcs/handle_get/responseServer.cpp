@@ -12,6 +12,15 @@
 
 #include <web_server.hpp>
 
+bool	Server::responseAutoIndexOrError( void )
+{
+	if (server()->get_autoIndex() == false)
+		return (responseClientError(ERROR500, *(server()->get_error_page().find("500")->second)));
+	if (responseClientListFiles(server()->get_root().c_str()) == false)
+		return (responseClientError(ERROR500, *(server()->get_error_page().find("500")->second)));
+	return (true);
+
+}
 bool	Server::responseServer(std::string status_code)
 {
 	auxReadFiles						tmp;
@@ -19,7 +28,7 @@ bool	Server::responseServer(std::string status_code)
 
 	errorPages = server()->get_error_page();
 	if (!generetePathToResponse(tmp.path, server()->get_root(), server()->get_index()))
-		return (responseClientError(ERROR500, *(errorPages.find("500")->second)));
+		return (responseAutoIndexOrError());
 	if (!getContentFile(tmp))
 		return (responseClientError(ERROR500, *(errorPages.find("500")->second)));
 	generateDynamicHeader(tmp, status_code);

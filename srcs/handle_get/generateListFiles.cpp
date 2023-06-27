@@ -6,16 +6,17 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/20 19:08:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/27 19:34:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 #include <dirent.h>
 
-static bool	openDirectorUpdate(DIR*& dir)
+static bool	openDirectorUpdate(DIR*& dir, const char* pathDir)
 {
-	dir = opendir("./upload");
+	dir = opendir(pathDir);
+	std::cout << "pathDir: '" << pathDir << "'" <<std::endl;
 	return (dir != NULL);
 }
 
@@ -33,11 +34,11 @@ static bool	createFileList(DIR*& dir, std::string& listFiles)
 	return (true);
 }
 
-bool	generateFilesList(std::string& listFiles)
+bool	generateFilesList(std::string& listFiles, const char* pathDir)
 {
 	DIR	*dir;
 
-	if (openDirectorUpdate(dir) == false)
+	if (openDirectorUpdate(dir, pathDir) == false)
 		return (write_error("Error: handle_delete: opening directory"));
 	return (createFileList(dir, listFiles));
 }
