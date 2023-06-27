@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:50:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/13 15:37:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/26 21:30:27 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static bool read_request_aux(char* tmp, int& bytes_read, int fd)
 {
 	bytes_read = recv(fd, tmp, 1024, 0);
+	tmp[bytes_read] = '\0';
 	if (std::string(tmp).find("\r\n\r\n") != std::string::npos)
 		return (true);
 	return (false);
