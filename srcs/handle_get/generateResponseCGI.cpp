@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   generateResponse.cpp                               :+:      :+:    :+:   */
+/*   generateResponseCGI.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/28 11:29:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:54:12 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,20 @@
 
 static bool	callExecuteCgi(ChildProcessData& tools_chuild, std::string listFiles)
 {
-	char*	argv[3];
-	char	*envp[2];
+	char*		argv[3];
+	char		*envp[3];
+	std::string	pathDir = "PATHDIR=" + std::string(getenv("PATHDIR"));
 
 	envp[0] = (char*)listFiles.c_str();
-	envp[1] = (char*)NULL;
+	envp[1] = (char*)pathDir.c_str();
+	envp[2] = (char*)NULL;
 
-	std::cout << "PATHFILE: " << getenv("PATHFILE") << std::endl;
 	argv[0] = (char *)"/usr/bin/php-cgi";
 	argv[1] = (char *)getenv("PATHFILE");
 	argv[2] = NULL;
 
+	if (argv[1] == NULL || argv[1][0] == '\0')
+		exit(ERROR500);
 	dup2(tools_chuild.fd[1], STDOUT_FILENO);
 	close(tools_chuild.fd[0]);
 	close(tools_chuild.fd[1]);
@@ -35,11 +38,15 @@ static bool	callExecuteCgi(ChildProcessData& tools_chuild, std::string listFiles
 
 static bool	executeCGI_ListFiles(ChildProcessData& tools_chuild, std::string listFiles)
 {
+	int status;
+
 	if (executeFork(tools_chuild) == false)
 		return (false);
 	if (tools_chuild.pid == CHILD_PROCESS)
 		callExecuteCgi(tools_chuild, listFiles);
-	waitpid(tools_chuild.pid, NULL, 0);
+	waitpid(tools_chuild.pid, &status, 0);
+	if (status != 0)
+		return (false);
 	close(tools_chuild.fd[1]);
 	return (true);
 }

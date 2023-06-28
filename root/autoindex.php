@@ -1,3 +1,5 @@
+#!/usr/bin/php
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,27 +36,35 @@
 <body>
 	<h1>Lista de Arquivos</h1>
 	<ul>
-		<?php
-		// Obtém o valor da variável de ambiente "listFiles"
-		$listFiles = getenv('listFiles');
+	<?php
+	// Obtém o valor da variável de ambiente "PATHDIR"
+	$pathDir = getenv('PATHDIR');
 
-		// Divide a string em uma matriz de arquivos
-		$files = explode("\n", $listFiles);
+	// Verifica se o diretório existe
+	if (!is_dir($pathDir)) {
+	    echo "Diretório inválido";
+	    exit;
+	}
 
-		// Remove o último elemento vazio da matriz
-		array_pop($files);
+	// Obtém a lista de arquivos e diretórios no diretório especificado
+	$files = scandir($pathDir);
 
-		// Ordena a matriz alfabeticamente
-		sort($files);
+	// Remove os diretórios "." e ".." da lista
+	$files = array_diff($files, array('.', '..'));
 
-		// Exibe a lista de arquivos e diretórios como links
-		foreach ($files as $file) {
-			$isDirectory = is_dir($file);
-			$fileType = $isDirectory ? "directory" : "file";
-			$fileIcon = $isDirectory ? "directory-icon" : "file-icon";
-			echo "<li><span class=\"$fileIcon\"></span><a href=\"$file\">$file</a></li>";
-		}
-		?>
+	// Ordena a lista alfabeticamente
+	sort($files);
+
+	// Exibe a lista de arquivos e diretórios como links
+	foreach ($files as $file) {
+	    $filePath = $pathDir . '/' . $file;
+	    $isDirectory = is_dir($filePath);
+	    $fileType = $isDirectory ? "directory" : "file";
+	    $fileIcon = $isDirectory ? "directory-icon" : "file-icon";
+	    echo "<li><span class=\"$fileIcon\"></span><a href=\"$filePath\">$file</a></li>";
+	}
+	?>
+
 	</ul>
 </body>
 </html>

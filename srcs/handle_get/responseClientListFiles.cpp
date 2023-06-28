@@ -13,11 +13,6 @@
 #include <web_server.hpp>
 #include <dirent.h>
 
-static void	addPrefixListFiles(std::string& listFiles)
-{
-	listFiles = "listFiles=" + listFiles;
-}
-
 bool	Server::responseClientListFiles( std::string pathDir, std::string pathFile)
 {
 	std::string	response;
@@ -25,9 +20,10 @@ bool	Server::responseClientListFiles( std::string pathDir, std::string pathFile)
 
 	std::cout << "responseClientListFiles" << std::endl;
 	setenv("PATHFILE", pathFile.c_str(), 1);
-	if (generateFilesList(listFiles, pathDir.c_str()) == false)
-		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
-	addPrefixListFiles(listFiles);
+	setenv("PATHDIR", pathDir.c_str(), 1);
+	pathFile = pathFile;
+	// if (generateFilesList(listFiles, pathDir.c_str()) == false)
+		// return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	if (generateResponse(listFiles, response) == false)
 		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	return (sendResponseClient(response));

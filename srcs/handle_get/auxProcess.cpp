@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:50:06 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 13:31:37 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:55:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,4 @@ void	executeCGI(char** argv, char** envp)
 	execve("/usr/bin/php-cgi7.4", argv, envp);
 	exit(ERROR500);
 }
+

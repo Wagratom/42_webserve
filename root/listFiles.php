@@ -42,23 +42,26 @@
 			<th>Excluir</th>
 		</tr>
 		<?php
-		// Obtém o valor da variável de ambiente "listFiles"
-		$listFiles = getenv('listFiles');
+		// Obtém o valor da variável de ambiente "PATHDIR"
+		$pathDir = getenv('PATHDIR');
 
-		// Divide a string em uma matriz de arquivos
-		$files = explode("\n", $listFiles);
-
-		// Remove o último elemento vazio da matriz
-		array_pop($files);
+		// Obtém a lista de arquivos no caminho especificado
+		$files = scandir($pathDir);
 
 		// Exibe a lista de arquivos com botões de delete
 		foreach ($files as $file) {
-			echo "<tr>";
-			echo "<td class=\"filename\">$file</td>";
-			echo "<td class=\"button\"><button onclick=\"deleteFile('$file')\">Delete</button></td>";
-			echo "</tr>";
+		// Ignora os diretórios "." e ".."
+		if ($file === "." || $file === "..") {
+			continue;
+		}
+
+		echo "<tr>";
+		echo "<td class=\"filename\">$file</td>";
+		echo "<td class=\"button\"><button onclick=\"deleteFile('$file')\">Delete</button></td>";
+		echo "</tr>";
 		}
 		?>
+
 	</table>
 
 	<script>
