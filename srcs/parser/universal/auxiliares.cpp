@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 22:50:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:35:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ bool	erase_isspaces(size_t indentation, std::string& line)
 	while (line[i] == c)
 		i++;
 	if (i != indentation)
-		return (write_error("Error: saveLocationName: Invalid indentation location"));
+		return (write_error("Error: erase_isspaces: Invalid indentation"));
 	if (isspace(line[i]))
-		return (write_error("Error: saveLocationName: Invalid indentation location"));
+		return (write_error("Error: erase_isspaces: Invalid indentation"));
 	line.erase(0, i);
 	return (true);
 }

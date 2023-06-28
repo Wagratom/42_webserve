@@ -66,10 +66,21 @@ bool	Server::returnIndexLocation(t_location* location)
 	if (createRootLocation(root, location) == false)
 		return (responseClientError(ERROR500, getErrorPageMapLocation(location, "500")));
 	if (generetePathToResponse(tmp.path, root, location->configuration->get_index()) == false)
-		return (responseClientError(ERROR404, getErrorPageMapLocation(location, "500")));
+		return (responseAutoIndexOrErrorLocation(location));
 	if (getContentFile(tmp) == false)
 		return (responseClientError(ERROR500, getErrorPageMapLocation(location, "500")));
 	generateDynamicHeader(tmp, "200");
 	tmp.response = tmp.header + tmp.content;
 	return (sendResponseClient(tmp.response));
+}
+
+bool	Server::responseAutoIndexOrErrorLocation( t_location* location )
+{
+	std::cout << "responseAutoIndexOrErrorLocation" << std::endl;
+	if (location->configuration->get_autoIndex() == false)
+		return (responseClientError(ERROR500, *(location->configuration->get_error_page().find("404")->second)));
+	if (responseClientListFiles(location->configuration->get_root().c_str(), "./root/autoindex.php") == false)
+		return (responseClientError(ERROR500, *(location->configuration->get_error_page().find("404")->second)));
+	return (true);
+
 }

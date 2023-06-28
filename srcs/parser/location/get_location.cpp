@@ -73,6 +73,7 @@ bool	Parser_configuration::saveLocationName(std::string& locationName)
 {
 	std::string	locationLine = _file[0];
 
+	std::cout << "locationLine: " << locationLine << std::endl;
 	if (removeIndentationAndComments(1, locationLine) == false)
 		return (false);
 	if (startsWithWord(locationLine, "location") == false)

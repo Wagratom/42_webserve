@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:31:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 19:03:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/28 11:56:40 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ bool	Parser_configuration::saveLocationInfos(t_location& location)
 			return (isEndServer(lineLocation));
 		if (removeIndentationAndComments(2, lineLocation) == false)
 			return (false);
-		if (isNotEmptyLine(lineLocation) == false)
-			return (true);
 		if (handleLineLocation(lineLocation, location) == false)
 			return (write_error("Location: Incorrect line: " + lineLocation));
 		_file.erase(_file.begin());
@@ -48,6 +46,8 @@ bool	Parser_configuration::saveLocationInfos(t_location& location)
 
 bool	Parser_configuration::handleLineLocation(std::string& line,  t_location& location)
 {
+	if (isNotEmptyLine(line) == false)
+		return (true);
 	for (std::map<std::string, directiveNginxUniversal>::iterator it = _dictionary_universal.begin(); it != _dictionary_universal.end(); ++it )
 	{
 		if (line.compare(0, it->first.size(), it->first) == 0)

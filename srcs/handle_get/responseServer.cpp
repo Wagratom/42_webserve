@@ -12,9 +12,9 @@
 
 #include <web_server.hpp>
 
-bool	Server::responseAutoIndexOrError( void )
+bool	Server::responseAutoIndexOrErrorServer( void )
 {
-	std::cout<< "responseAutoIndexOrError" << std::endl;
+	std::cout<< "responseAutoIndexOrErrorServer" << std::endl;
 	if (server()->get_autoIndex() == false)
 		return (responseClientError(ERROR500, *(server()->get_error_page().find("500")->second)));
 	if (responseClientListFiles(server()->get_root().c_str(), "./root/autoindex.php") == false)
@@ -22,6 +22,7 @@ bool	Server::responseAutoIndexOrError( void )
 	return (true);
 
 }
+
 bool	Server::responseServer(std::string status_code)
 {
 	std::map<std::string, std::string*>	errorPages;
@@ -30,7 +31,7 @@ bool	Server::responseServer(std::string status_code)
 	std::cout << "responseServer" << std::endl;
 	errorPages = server()->get_error_page();
 	if (!generetePathToResponse(tmp.path, server()->get_root(), server()->get_index()))
-		return (responseAutoIndexOrError());
+		return (responseAutoIndexOrErrorServer());
 	if (!getContentFile(tmp))
 		return (responseClientError(ERROR500, *(errorPages.find("500")->second)));
 	generateDynamicHeader(tmp, status_code);
