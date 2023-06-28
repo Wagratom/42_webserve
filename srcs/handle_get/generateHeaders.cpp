@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:08:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 11:57:10 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/28 10:55:56 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,14 @@ std::string	generateHeaderDynamicStatus(std::string status)
 	std::string	header = "HTTP/1.1 " + status + " \r\n";
 	header += "Content-Type: text/html\r\n";
 	header += "\r\n";
+	return (header);
+}
+
+std::string	generateHeaderRedirect(std::string status, std::string endPoint)
+{
+	std::string	header = "HTTP/1.1 " + status + " Moved Permanently\r\n";
+	header += "Location: " + endPoint + "\r\n";
+	header += "Content-Length: 0\r\n";
+	header += "Connection: close\r\n\r\n";
 	return (header);
 }

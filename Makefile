@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/06/27 17:54:22 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/06/28 11:30:38 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,10 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				handle_GET_requesition.cpp handle_DELETE_requesition.cpp\
 				generetePathToResponse.cpp cleanupFd.cpp auxProcess.cpp \
 				responseClientError.cpp responseLocation.cpp generateHeaders.cpp \
-				handle_POST_request.cpp responseServer.cpp generateResponse.cpp\
+				handle_POST_request.cpp responseServer.cpp generateResponseCGI.cpp\
 				responseFile.cpp responseLocationAux.cpp GetContentFilePhp.cpp \
 				getContentFile.cpp responseClientPOST.cpp processFileUpload.cpp \
-				responseClientDELETE.cpp generateListFiles.cpp readConfigurationFile.cpp\
+				responseClientListFiles.cpp generateListFiles.cpp readConfigurationFile.cpp\
 				saveLocationInfos.cpp getErrosPage.cpp init_Server.cpp get_return.cpp \
 				responseRedirect.cpp get_autoIndex.cpp
 

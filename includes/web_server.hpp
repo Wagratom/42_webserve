@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 19:34:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/28 11:33:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ class	Server
 		bool	responseClientPOST( aux_upload& data );
 
 		bool	handle_DELETE_requesition( void );
-		bool	responseClientListFiles( std::string pathDir );
+		bool	responseClientListFiles( std::string pathDir, std::string pathFile );
 		bool	processFileUpload( aux_upload& data );
 
 		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
@@ -132,15 +132,14 @@ class	Server
 	private:
 		Parser_configuration*	_parserFile;
 		Parser_request*			_parserRequest;
-		// t_location*				_aux_list_location;
 
 		int						_server_fd;
 		int						_client_fd;
 		int						_epoll_fd;
+		int						_number_of_events;
 
 		bool					_write;
 
-		int						_number_of_events;
 
 		std::string				**_verbs;
 		std::map<int, std::string>	_defaultErrorPage;
@@ -159,3 +158,4 @@ void		appendBar(std::string& str);
 bool		getContentFilePHP(auxReadFiles& dst);
 bool		generateFilesList(std::string& listFiles, const char* pathDir);
 bool		generateResponse(std::string listFiles, std::string& response);
+std::string	generateHeaderRedirect(std::string status, std::string endPoint);

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 19:34:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/28 11:26:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 static bool	openDirectorUpdate(DIR*& dir, const char* pathDir)
 {
 	dir = opendir(pathDir);
-	std::cout << "pathDir: '" << pathDir << "'" <<std::endl;
 	return (dir != NULL);
 }
 
@@ -38,7 +37,8 @@ bool	generateFilesList(std::string& listFiles, const char* pathDir)
 {
 	DIR	*dir;
 
+	std::cout << "generateFilesList" << std::endl;
 	if (openDirectorUpdate(dir, pathDir) == false)
-		return (write_error("Error: handle_delete: opening directory"));
+		return (write_error("Error: generateFilesList: opening directory"));
 	return (createFileList(dir, listFiles));
 }

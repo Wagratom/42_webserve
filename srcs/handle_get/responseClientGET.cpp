@@ -31,11 +31,10 @@ bool	Server::responseClientGET( std::string& endPoint)
 {
 	std::string	LocationsNames = endPoint + "/";
 
-	std::cout << "responseClientGET" << std::endl;
 	if (endPoint == "/")
 		return (responseServer("200"));
 	if (endPoint == "/list/files/server")
-		return (responseClientListFiles("uploads/"));
+		return (responseClientListFiles("uploads/", "./root/listFiles.php"));
 	if (findLocationVector(location(), LocationsNames))
 		return (responseLocation(endPoint, LocationsNames));
 	return (responseFileServer(endPoint));

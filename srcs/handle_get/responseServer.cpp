@@ -14,18 +14,20 @@
 
 bool	Server::responseAutoIndexOrError( void )
 {
+	std::cout<< "responseAutoIndexOrError" << std::endl;
 	if (server()->get_autoIndex() == false)
 		return (responseClientError(ERROR500, *(server()->get_error_page().find("500")->second)));
-	if (responseClientListFiles(server()->get_root().c_str()) == false)
+	if (responseClientListFiles(server()->get_root().c_str(), "./root/autoindex.php") == false)
 		return (responseClientError(ERROR500, *(server()->get_error_page().find("500")->second)));
 	return (true);
 
 }
 bool	Server::responseServer(std::string status_code)
 {
-	auxReadFiles						tmp;
 	std::map<std::string, std::string*>	errorPages;
+	auxReadFiles						tmp;
 
+	std::cout << "responseServer" << std::endl;
 	errorPages = server()->get_error_page();
 	if (!generetePathToResponse(tmp.path, server()->get_root(), server()->get_index()))
 		return (responseAutoIndexOrError());

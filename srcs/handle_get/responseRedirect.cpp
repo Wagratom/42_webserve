@@ -15,15 +15,12 @@
 bool	Server::responseRedirect(std::string endPoint)
 {
 	size_t spacePos = endPoint.find(" ");
+	std::string header;
 
 	if (spacePos == std::string::npos)
 		return (write_error("Error: responseRedirect"));
-	std::string	response = "HTTP/1.1 " + endPoint.substr(0,3) + " Moved Permanently\r\n";
-	response += "Location: " + endPoint.substr(spacePos + 1) + "\r\n";
-	response += "Content-Length: 0\r\n";
-	response += "Connection: close\r\n\r\n";
-	std::cout << "responseRedirect: " << response << std::endl;
-	if (send(_client_fd, response.c_str(), response.length(), 0) == -1)
-		return (write_error("Error: send responseRedirect"));
+	header = generateHeaderRedirect(endPoint.substr(0, spacePos), endPoint.substr(spacePos + 1));
+	if (sendResponseClient(header) == false)
+		return (write_error("Error: responseRedirect"));
 	return (true);
 }
