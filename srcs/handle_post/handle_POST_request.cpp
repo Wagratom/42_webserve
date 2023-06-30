@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 10:15:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/29 11:05:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ bool	Server::handle_POST_requesition()
 	std::cout << "handle_POST_requesition" << std::endl;
 	if (server()->get_clientMaxBodySize() < contentLenght)
 		return (responseClientError(ERROR413, getErrorPageMapServer("413")));
-	dataRequest.request = _parserRequest->get_request();
+	dataRequest.resquestString = _parserRequest->get_request();
 	dataRequest.fd = _client_fd;
-	dataRequest.bodySize = dataRequest.request.length();
 	dataRequest.contentLength = contentLenght;
-	dataRequest.bytes_read = 0;
 	return (responseClientPOST(dataRequest));
 }

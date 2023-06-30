@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/28 12:42:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/29 10:46:25 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ class	Server
 
 		bool	handle_DELETE_requesition( void );
 		bool	responseClientListFiles( std::string pathDir, std::string pathFile );
-		bool	processFileUpload( aux_upload& data );
+		bool	extractFileNameFromBody( aux_upload& data );
 
 		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
 		bool	responseClientError( int status, std::string pathFileError );

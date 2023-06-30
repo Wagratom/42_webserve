@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   processFileUpload.cpp                              :+:      :+:    :+:   */
+/*   extractFileNameFromBody.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 12:05:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/06/29 10:45:48 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	replaceSpacesInFilename(std::string& filename)
 	}
 }
 
-static bool extractFileNameFromBody(const std::string& body, std::string& filename)
+static bool extractFileName(const std::string& body, std::string& filename)
 {
 	const std::string	filenameTag = "filename=";
 	const std::string	lineBreak = "\r\n";
@@ -41,24 +41,13 @@ static bool extractFileNameFromBody(const std::string& body, std::string& filena
 	return true;
 }
 
-static bool	skipToContentBody(std::string& request)
+bool	Server::extractFileNameFromBody(aux_upload& data)
 {
-	size_t	endOfHeaderPos =  request.find("\r\n\r\n");
-
-	if (endOfHeaderPos == std::string::npos)
-		return write_error("Error parsing body request: end of header not found");
-	request = request.substr(endOfHeaderPos + 4);
-	return true;
-}
-
-bool	Server::processFileUpload(aux_upload& data)
-{
-	if (extractFileNameFromBody(data.request, data.filename) == false)
+	std::cout << "extractFileNameFromBody" << std::endl;
+	if (extractFileName(data.resquestString, data.filename) == false)
 		return (false);
 	if (data.filename.empty())
 		return write_error("Error extractFileNameFromBody: filename is empty");
-	if (skipToContentBody(data.request) == false)
-		return (false);
 	replaceSpacesInFilename(data.filename);
 	return (true);
 }
