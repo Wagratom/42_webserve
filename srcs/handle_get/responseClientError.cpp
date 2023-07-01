@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 10:16:49 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/01 10:24:09 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	Server::sendErrorToClient( std::string path, std::string header)
 
 bool	Server::responseClientError( int status, std::string pathFileError )
 {
+	std::cout << "responseClientError: " << status << std::endl;
 	if (pathFileError.empty())
 		pathFileError = _defaultErrorPage[status];
 	if (status == ERROR404)

@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/06/28 11:30:38 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/01 11:17:30 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,9 @@ $(OBJECTS_DIR):
 
 clean:
 				$(RM) $(OBJECTS_DIR)
+
+PDF:
+	pip install PyPDF2
 
 fclean:		clean
 				$(RM) $(NAME)

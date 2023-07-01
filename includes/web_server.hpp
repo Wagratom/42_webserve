@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/29 10:46:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/01 13:51:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ class	Server
 		bool	set_fdNotBlock( int& fd );
 		bool	read_request( std::string& buffer );
 		bool	response_request( std::string& buffer );
-		bool	parse_order_request( std::string& buffer );
+		bool	deleteParserRequest(bool status);
 
 		bool	handle_GET_requesition( void );
 		bool	responseClientGET( std::string& endPoint );

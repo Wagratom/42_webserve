@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 18:04:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/01 13:21:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,14 @@ class server_configuration : public aux_configuration
 			, _root("")
 			, _index("")
 		{};
-		~server_configuration( void ){};
+		~server_configuration( void ){
+			std::map<std::string, std::string*>::iterator it = _error_page.begin();
+			while (it != _error_page.end())
+			{
+				delete it->second;
+				it++;
+			}
+		};
 
 		int			get_port( void );
 		int			get_clientMaxBodySize( void );
@@ -140,7 +147,14 @@ class location_configuration : public aux_configuration
 			, _clientMaxBodySize(0)
 			, _autoindex("")
 			{};
-		~location_configuration( void ){};
+		~location_configuration( void ){
+			std::map<std::string, std::string*>::iterator it = _error_page.begin();
+			while (it != _error_page.end())
+			{
+				delete it->second;
+				it++;
+			}
+		};
 
 		std::string	get_root( void );
 		std::string	get_index( void );

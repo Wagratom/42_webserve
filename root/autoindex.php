@@ -42,8 +42,8 @@
 
 	// Verifica se o diretório existe
 	if (!is_dir($pathDir)) {
-	    echo "Diretório inválido";
-	    exit;
+		echo "Diretório inválido";
+		exit;
 	}
 
 	// Obtém a lista de arquivos e diretórios no diretório especificado
@@ -57,14 +57,13 @@
 
 	// Exibe a lista de arquivos e diretórios como links
 	foreach ($files as $file) {
-	    $filePath = $pathDir . '/' . $file;
-	    $isDirectory = is_dir($filePath);
-	    $fileType = $isDirectory ? "directory" : "file";
-	    $fileIcon = $isDirectory ? "directory-icon" : "file-icon";
-	    echo "<li><span class=\"$fileIcon\"></span><a href=\"$filePath\">$file</a></li>";
+		$filePath = $pathDir . '/' . $file;
+		$isDirectory = is_dir($filePath);
+		$fileType = $isDirectory ? "directory" : "file";
+		$fileIcon = $isDirectory ? "directory-icon" : "file-icon";
+		echo "<li><span class=\"$fileIcon\"></span><a href=\"$file\">$file</a></li>";
 	}
 	?>
-
 	</ul>
 </body>
 </html>

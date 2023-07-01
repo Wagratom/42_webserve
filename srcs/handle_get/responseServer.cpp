@@ -16,9 +16,9 @@ bool	Server::responseAutoIndexOrErrorServer( void )
 {
 	std::cout<< "responseAutoIndexOrErrorServer" << std::endl;
 	if (server()->get_autoIndex() == false)
-		return (responseClientError(ERROR500, *(server()->get_error_page().find("500")->second)));
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	if (responseClientListFiles(server()->get_root().c_str(), "./root/autoindex.php") == false)
-		return (responseClientError(ERROR500, *(server()->get_error_page().find("500")->second)));
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	return (true);
 
 }

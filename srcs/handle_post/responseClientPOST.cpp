@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/30 20:35:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/01 13:56:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static bool	skipToContentBody(std::string& request, std::vector<char>& requestCh
 	size_t	offset = endOfHeaderPos + 4;
 	requestChar.erase(requestChar.begin(), requestChar.begin() + offset);
 	request = request.substr(offset);
-	return (true);
+	return true;
 }
 
 bool	readRequestBody(aux_upload& data, std::vector<char>& requestChar)
@@ -77,11 +77,11 @@ bool	Server::responseClientPOST(aux_upload& data)
 	if (TypeIsFile(_parserRequest->get_envsMap("CONTENT_TYPE")) == false)
 		return (responseClientError(ERROR415, getErrorPageMapServer("415"))); // verificar como vai ficar depois
 	if (readRequestBody(data, requestChar) == false)
-		return (false);
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	if (extractFileNameFromBody(data) == false)
 		return (responseClientError(ERROR400, getErrorPageMapServer("400")));
 	if (skipToContentBody(data.resquestString, requestChar) == false)
-		return (false);
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	removeDelimiterBody(data.resquestString, requestChar);
 	if (saveFileInServer(requestChar, data.filename) == false)
 		return (responseClientError(ERROR500, getErrorPageMapServer("500")));

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 16:49:15 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/13 15:23:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/01 13:13:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ bool	Parser_request::set_method( void )
 	pos = _order_request.find("/");
 	if (pos == std::string::npos)
 		return (write_error_prefix("Invalid requesition line: get_verb"));
+
 	_metodo = _order_request.substr(0, (pos - 1));
 	_order_request.erase(0, pos);
 	std::string aux = "REQUEST_METHOD=" + _metodo;
-	_envs[_index_envs++] = strdup(aux.c_str());
+	_envs[_index_envs] = new char[aux.size() + 1];
+	std::strcpy(_envs[_index_envs], aux.c_str());
+	_index_envs++;
 	return (true);
 }
 
@@ -69,7 +72,9 @@ bool	Parser_request::set_server_protocol( void )
 	if (_order_request != "HTTP/1.1\r")
 		return (write_error_prefix("Invalid  HTTP version: msg"));
 	std::string aux = "SERVER_PROTOCOL=" + _order_request.substr(0, 8);
-	_envs[_index_envs++] = strdup(aux.c_str());
+	_envs[_index_envs] = new char[aux.size() + 1];
+	std::strcpy(_envs[_index_envs], aux.c_str());
+	_index_envs++;
 	return (true);
 }
 

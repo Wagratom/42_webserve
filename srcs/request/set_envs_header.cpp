@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 10:41:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/01 13:18:04 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,27 @@ static bool	get_line_request(std::string& dst, std::string& request)
 
 static bool	handle_line(std::string line, std::map<std::string, iterator_map>& key_value);
 
-void	Parser_request::set_envs(std::map<std::string, std::string>& envs)
+void Parser_request::set_envs(std::map<std::string, std::string>& envs)
 {
-	iterator_map	it;
+	iterator_map	it = envs.begin();
+	std::string		env;
+	size_t			size;
 
-	it = envs.begin();
 	while (it != envs.end())
 	{
 		if (it->second.empty())
 			it->second = "null";
-		_envs[_index_envs++] = strdup((it->first + "=" + it->second).c_str());
+
+		env = it->first + "=" + it->second;
+		size = env.length() + 1;
+		_envs[_index_envs] = new char[size];
+		std::copy(env.begin(), env.end(), _envs[_index_envs]);
+	
 		_envsMap[it->first] = it->second;
 		it++;
+		_index_envs++;
 	}
+
 	_envs[_index_envs] = NULL;
 }
 

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:40:49 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 18:01:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/01 13:21:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	server_configuration::set_autoIndex( bool autoIndex )
 {
 	this->_autoIndex = autoIndex;
 }
-
 
 void	server_configuration::set_error_page( std::string number, std::string error_page)
 {
