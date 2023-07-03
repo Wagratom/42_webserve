@@ -1,9 +1,16 @@
 #!/usr/bin/php-cgi
-<?php
-echo "\nGET\n";
 
-$get = $_GET;
-foreach ($get as $key => $value) {
-	echo "$key => $value\n";
-}
-?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Seu input</title>
+	</head>
+	<body>
+	<?php
+	$get = $_GET;
+	foreach ($get as $key => $value) {
+		echo "<p><strong>Sua entrada:</strong> <strong>$key</strong><br><strong>Seu input:</strong> <strong>$value</strong></p>\n";
+	}
+	?>
+	</body>
+</html>
