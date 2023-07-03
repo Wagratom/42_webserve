@@ -1,14 +1,19 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Meu formulário</title>
-	</head>
-	<body>
-		<h1>Olá mundo!</h1>
-		<h1>Esse é meu formulário</h1>
-		<form action="cgi-bin/programa.cgi" method="get">
-			<input type="text" name="minhaEntrada">
-			<input type="submit" value="Enviar">
-		</form>
-	</body>
+<body>
+
+<h2>HTML Forms</h2>
+
+<form action="/root/handleGET.php">
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname" value="John"><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname" value="Doe"><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+
+</body>
 </html>
+

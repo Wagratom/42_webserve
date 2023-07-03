@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/01 13:18:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:39:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void Parser_request::set_envs(std::map<std::string, std::string>& envs)
 		size = env.length() + 1;
 		_envs[_index_envs] = new char[size];
 		std::copy(env.begin(), env.end(), _envs[_index_envs]);
-	
+		_envs[_index_envs][size - 1] = '\0';
 		_envsMap[it->first] = it->second;
 		it++;
 		_index_envs++;

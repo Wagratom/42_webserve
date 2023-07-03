@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/28 17:54:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 10:32:47 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,18 @@
 
 static bool	callExecuteCgi(ChildProcessData& tools_chuild, std::string listFiles)
 {
-	char*		argv[3];
-	char		*envp[3];
+	char*		script = getenv("PATHFILE");
 	std::string	pathDir = "PATHDIR=" + std::string(getenv("PATHDIR"));
 
-	envp[0] = (char*)listFiles.c_str();
-	envp[1] = (char*)pathDir.c_str();
-	envp[2] = (char*)NULL;
-
-	argv[0] = (char *)"/usr/bin/php-cgi";
-	argv[1] = (char *)getenv("PATHFILE");
-	argv[2] = NULL;
-
-	if (argv[1] == NULL || argv[1][0] == '\0')
-		exit(ERROR500);
+	std::cout << "callExecuteCgi" << std::endl;
+	listFiles = listFiles;
 	dup2(tools_chuild.fd[1], STDOUT_FILENO);
 	close(tools_chuild.fd[0]);
 	close(tools_chuild.fd[1]);
-	executeCGI(argv, envp);
-	return (true);
+	setenv("REDIRECT_STATUS", "200", 1);
+	execlp(script, script, NULL);
+	std::cerr << strerror(errno) << std::endl;
+	exit(ERROR500);
 }
 
 static bool	executeCGI_ListFiles(ChildProcessData& tools_chuild, std::string listFiles)
@@ -45,8 +38,9 @@ static bool	executeCGI_ListFiles(ChildProcessData& tools_chuild, std::string lis
 	if (tools_chuild.pid == CHILD_PROCESS)
 		callExecuteCgi(tools_chuild, listFiles);
 	waitpid(tools_chuild.pid, &status, 0);
+	std::cout << "status: " << status << std::endl;
 	if (status != 0)
-		return (false);
+		return (write_error("Error: handle_delete: waitpid"));
 	close(tools_chuild.fd[1]);
 	return (true);
 }

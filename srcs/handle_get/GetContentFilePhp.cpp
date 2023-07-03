@@ -14,15 +14,12 @@
 
 static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 {
-	char*	argv[3];
+	char*	scrptName = (char *)dst.path.c_str();
 
-	argv[0] = (char *)"/usr/bin/php-cgi7.4";
-	argv[1] = (char *)dst.path.c_str();
-	argv[2] = NULL;
 	dup2(infos.fd[1], STDOUT_FILENO);
 	close(infos.fd[0]);
 	close(infos.fd[1]);
-	executeCGI(argv, NULL);
+	execlp(scrptName, scrptName, NULL);
 }
 
 static bool	contentFilePHP(auxReadFiles& dst, ChildProcessData& infos)

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:50:06 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/28 17:55:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/02 18:45:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ bool	executeFork( ChildProcessData& infos)
 	return(true);
 }
 
-void	executeCGI(char** argv, char** envp)
-{
-	execve("/usr/bin/php-cgi7.4", argv, envp);
-	exit(ERROR500);
-}
+// void	executeCGI(char** argv, char** envp)
+// {
+// 	execve("/usr/bin/php-cgi7.4", argv, envp);
+// 	exit(ERROR500);
+// }
 

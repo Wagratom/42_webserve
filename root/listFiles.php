@@ -1,3 +1,5 @@
+#!/usr/bin/php-cgi
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +55,7 @@
 		// Ignora os diretórios "." e ".."
 		if ($file === "." || $file === "..") {
 			continue;
-		}	
+		}
 		echo "<tr>";
 		echo "<td class=\"filename\">$file</td>";
 		echo "<td class=\"button\"><button onclick=\"deleteFile('$file')\">Delete</button></td>";

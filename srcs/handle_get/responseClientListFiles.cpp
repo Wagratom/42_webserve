@@ -21,10 +21,10 @@ bool	Server::responseClientListFiles( std::string pathDir, std::string pathFile)
 	std::cout << "responseClientListFiles" << std::endl;
 	setenv("PATHFILE", pathFile.c_str(), 1);
 	setenv("PATHDIR", pathDir.c_str(), 1);
-	pathFile = pathFile;
 	// if (generateFilesList(listFiles, pathDir.c_str()) == false)
 		// return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	if (generateResponse(listFiles, response) == false)
 		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
+	std::cout << "response: " << response << std::endl;
 	return (sendResponseClient(response));
 }
