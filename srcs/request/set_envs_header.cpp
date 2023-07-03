@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/03 11:39:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:50:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,25 +100,14 @@ static bool	handle_line(std::string line, std::map<std::string, iterator_map>& k
 void Parser_request::set_envs(std::map<std::string, std::string>& envs)
 {
 	iterator_map	it = envs.begin();
-	std::string		env;
-	size_t			size;
 
 	while (it != envs.end())
 	{
 		if (it->second.empty())
 			it->second = "null";
-
-		env = it->first + "=" + it->second;
-		size = env.length() + 1;
-		_envs[_index_envs] = new char[size];
-		std::copy(env.begin(), env.end(), _envs[_index_envs]);
-		_envs[_index_envs][size - 1] = '\0';
-		_envsMap[it->first] = it->second;
+		setenv(it->first.c_str(), it->second.c_str(), 1);
 		it++;
-		_index_envs++;
 	}
-
-	_envs[_index_envs] = NULL;
 }
 
 bool Parser_request::set_envs_header(void)
@@ -140,8 +129,6 @@ bool Parser_request::set_envs_header(void)
 	}
 	set_envs(envs);
 	std::cout << "Dados Extraidos: " << std::endl;
-	for (int i = 0; _envs[i]; i++)
-		std::cout << _envs[i] << std::endl;
 	return (true);
 }
 

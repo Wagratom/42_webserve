@@ -38,7 +38,7 @@
 	<ul>
 	<?php
 	// Obtém o valor da variável de ambiente "PATHDIR"
-	$pathDir = getenv('PATHDIR');
+	$pathDir = getenv('DOCUMENT_ROOT');
 
 	// Verifica se o diretório existe
 	if (!is_dir($pathDir)) {

@@ -13,14 +13,15 @@
 #include <web_server.hpp>
 #include <dirent.h>
 
-bool	Server::responseClientListFiles( std::string pathDir, std::string pathFile)
+bool	Server::responseClientListFiles( std::string pathDir, std::string script)
 {
 	std::string	response;
 	std::string	listFiles;
 
 	std::cout << "responseClientListFiles" << std::endl;
-	setenv("PATHFILE", pathFile.c_str(), 1);
-	setenv("PATHDIR", pathDir.c_str(), 1);
+	setenv("SCRIPT_FILENAME", script.c_str(), 1);
+	setenv("SCRIPT_NAME", " /usr/bin/php-cgi", 1);
+	setenv("DOCUMENT_ROOT", pathDir.c_str(), 1);
 	// if (generateFilesList(listFiles, pathDir.c_str()) == false)
 		// return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	if (generateResponse(listFiles, response) == false)

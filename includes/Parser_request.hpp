@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 18:57:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:48:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,5 @@ class Parser_request
 		std::string		_order_request;
 		std::string		_metodo;
 		std::string		_endPoint;
-		char**			_envs;
-		std::map<std::string, std::string>	_envsMap;
-		int				_index_envs;
 		bool			need_cgi;
 };

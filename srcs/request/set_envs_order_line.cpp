@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 16:49:15 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/03 11:44:27 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:49:03 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ bool	Parser_request::set_method( void )
 
 	_metodo = _order_request.substr(0, (pos - 1));
 	_order_request.erase(0, pos);
-	std::string aux = "REQUEST_METHOD=" + _metodo;
-	size_t size = aux.size();
-	_envs[_index_envs] = new char[size + 1];
-	std::copy(aux.begin(), aux.end(), _envs[_index_envs]);
-	_envs[_index_envs][size] = '\0';
-	_index_envs++;
+	setenv("REQUEST_METHOD", _metodo.c_str(), 1);
+	// std::string aux = "REQUEST_METHOD=" + _metodo;
+	// size_t size = aux.size();
+	// _envs[_index_envs] = new char[size + 1];
+	// std::copy(aux.begin(), aux.end(), _envs[_index_envs]);
+	// _envs[_index_envs][size] = '\0';
+	// _index_envs++;
 	return (true);
 }
 
@@ -73,12 +74,7 @@ bool	Parser_request::set_server_protocol( void )
 		return (write_error_prefix("Invalid HTTP version: size"));
 	if (_order_request != "HTTP/1.1\r")
 		return (write_error_prefix("Invalid  HTTP version: msg"));
-	std::string aux = "SERVER_PROTOCOL=" + _order_request.substr(0, 8);
-	int	len = aux.size();
-	_envs[_index_envs] = new char[len + 1];
-	std::copy(aux.begin(), aux.end(), _envs[_index_envs]);
-	_envs[_index_envs][len] = '\0';
-	_index_envs++;
+	setenv("SERVER_PROTOCOL", _order_request.c_str(), 1);
 	return (true);
 }
 

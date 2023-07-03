@@ -37,7 +37,6 @@ bool	Server::responseClientWithInput(std::string endPoint)
 	std::string	scriptHandler	= "." + endPoint.substr(0, questionMarkPos);
 	std::string query_string	= endPoint.substr(questionMarkPos + 1);
 
-	setenv("REQUEST_METHOD", "GET", 1);
 	setenv("QUERY_STRING", query_string.c_str(), 1);
 	setenv("SCRIPT_FILENAME", scriptHandler.c_str(), 1);
 	setenv("SCRIPT_NAME", "#!/usr/bin/php-cgi", 1);

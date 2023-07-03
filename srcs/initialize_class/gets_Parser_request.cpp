@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 17:48:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/12 22:28:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:49:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,4 @@ std::string	Parser_request::get_metodo( void )
 std::string	Parser_request::get_endPoint( void )
 {
 	return ( this->_endPoint );
-}
-
-char**	Parser_request::get_envs( void )
-{
-	return ( this->_envs );
-}
-
-int	Parser_request::get_index_envs( void )
-{
-	return ( this->_index_envs );
-}
-
-std::string	Parser_request::get_envsMap(std::string key)
-{
-	return ( this->_envsMap[key] );
 }

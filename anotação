@@ -21,3 +21,6 @@ usar as paginas de error passas pelo usuario
 
 #Se a solicitação corresponder às configurações de qualquer um dos servidores B ou C, eles serão responsáveis por lidar com a solicitação específica.
 #No entanto, se a solicitação não corresponder a nenhum dos servidores B ou C, o servidor A, que é definido como o primeiro servidor, será o responsável por lidar com essa solicitação.
+
+
+document root fazer

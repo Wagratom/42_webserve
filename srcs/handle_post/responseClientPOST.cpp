@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/02 14:42:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:51:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ bool	Server::responseClientPOST(aux_upload& data)
 	std::vector<char>	requestChar(data.contentLength);
 
 	std::cout << "responseClientPOST" << std::endl;
-	if (TypeIsFile(_parserRequest->get_envsMap("CONTENT_TYPE")) == false)
+	if (TypeIsFile(getenv("CONTENT_TYPE")) == false)
 		return (responseClientError(ERROR415, getErrorPageMapServer("415"))); // verificar como vai ficar depois
 	if (readRequestBody(data, requestChar) == false)
 		return (responseClientError(ERROR500, getErrorPageMapServer("500")));

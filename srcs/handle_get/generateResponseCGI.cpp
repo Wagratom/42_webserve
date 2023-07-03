@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/03 10:32:47 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 12:08:25 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 
 static bool	callExecuteCgi(ChildProcessData& tools_chuild, std::string listFiles)
 {
-	char*		script = getenv("PATHFILE");
-	std::string	pathDir = "PATHDIR=" + std::string(getenv("PATHDIR"));
+	char*		script = getenv("SCRIPT_FILENAME");
 
-	std::cout << "callExecuteCgi" << std::endl;
 	listFiles = listFiles;
 	dup2(tools_chuild.fd[1], STDOUT_FILENO);
 	close(tools_chuild.fd[0]);
