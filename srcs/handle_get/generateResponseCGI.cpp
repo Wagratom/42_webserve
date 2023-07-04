@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/03 12:08:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 22:08:56 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static bool	executeCGI_ListFiles(ChildProcessData& tools_chuild, std::string lis
 	if (tools_chuild.pid == CHILD_PROCESS)
 		callExecuteCgi(tools_chuild, listFiles);
 	waitpid(tools_chuild.pid, &status, 0);
-	std::cout << "status: " << status << std::endl;
 	if (status != 0)
 		return (write_error("Error: handle_delete: waitpid"));
 	close(tools_chuild.fd[1]);

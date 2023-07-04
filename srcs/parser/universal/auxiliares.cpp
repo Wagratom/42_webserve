@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/28 12:35:46 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 21:38:25 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	write_error(std::string msg)
 {
-	std::cout << "\033[1;31mError: " << msg << std::endl;
-	std::cout << "\033[1;37m" << std::endl;
+	std::cerr << "\033[1;31mError: " << msg << std::endl;
+	std::cerr << "\033[1;37m" << std::endl;
 	return (false);
 }
 

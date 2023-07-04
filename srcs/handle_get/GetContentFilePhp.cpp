@@ -24,13 +24,12 @@ static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 
 static bool	contentFilePHP(auxReadFiles& dst, ChildProcessData& infos)
 {
-	int		status;
 	char	buffer[1024];
 	int		bytes_read;
 
 	close(infos.fd[1]);
-	waitpid(infos.pid, &status, 0);
-	if (WEXITSTATUS(status) != 0)
+	waitpid(infos.pid, &infos.status, 0);
+	if (infos.status != 0)
 		return (write_error("Error: Server::handle_GET_requesition: php-cgi7.4"));
 	while ((bytes_read = read(infos.fd[0], buffer, 1024)) > 0)
 		dst.content.append(buffer, bytes_read);
