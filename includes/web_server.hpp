@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/03 21:29:49 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/03 22:15:32 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 
 # define CHILD_PROCESS 0
 
+# define PATH_CGI "/usr/bin/php-cgi"
 typedef struct s_ChildProcessInfo {
 	int	fd[2];
 	int	pid;

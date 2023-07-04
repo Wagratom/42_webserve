@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/03 11:50:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/04 09:34:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static bool	request_host(std::string& host, std::map<std::string, std::string>& 
 		return (write_error("400 Bad Request: Host"));
 	data_request.find("HTTP_HOST")->second = host;
 	data_request.find("SERVER_PORT")->second = host.substr(pos  + 1);
+	write_debug_prefix("SERVER_PORT", data_request.find("SERVER_PORT")->second);
+	write_debug_prefix("HTTP_HOST", data_request.find("HTTP_HOST")->second);
 	return (true);
 }
 
@@ -106,6 +108,7 @@ void Parser_request::set_envs(std::map<std::string, std::string>& envs)
 		if (it->second.empty())
 			it->second = "null";
 		setenv(it->first.c_str(), it->second.c_str(), 1);
+		write_debug_prefix((it->first + "="), it->second);
 		it++;
 	}
 }

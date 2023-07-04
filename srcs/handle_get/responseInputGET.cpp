@@ -20,8 +20,8 @@ static void	responseWithInputCGI(std::string endPoint, size_t questionMarkPos)
 	std::cout << "HTTP/1.1 200 OK\r\n";
 	setenv("QUERY_STRING", query_string.c_str(), 1);
 	setenv("SCRIPT_FILENAME", scriptHandler.c_str(), 1);
-	setenv("SCRIPT_NAME", "/usr/bin/php-cgi", 1);
-	setenv("REDIRECT_STATUS", "200", 1);
+	setenv("SCRIPT_NAME", PATH_CGI, 1);
+	setenv("REDIRECT_STATUS", "true", 1);
 	execlp(scriptHandler.c_str(), scriptHandler.c_str(), NULL);
 	std::cerr << strerror(errno) << std::endl;
 	exit(ERROR500);
@@ -43,6 +43,6 @@ bool	Server::responseInputGET(std::string endPoint)
 	}
 	waitpid(aux.pid, &aux.status, 0);
 	if (aux.status != 0)
-		return (write_error("Error: Server::responseInputGET: WIFEXITED"));
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	return (true);
 }
