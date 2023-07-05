@@ -24,3 +24,5 @@ usar as paginas de error passas pelo usuario
 
 
 document root fazer
+
+dar um jeito de concatenar o responseInput com o responseClentListFiles

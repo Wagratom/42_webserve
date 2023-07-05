@@ -11,19 +11,45 @@
 /* ************************************************************************** */
 
 #include <web_server.hpp>
-#include <dirent.h>
+
+static void	callCGI(ChildProcessData& auxProcess)
+{
+	char*		script = getenv("SCRIPT_FILENAME");
+
+	dup2(auxProcess.fd[1], STDOUT_FILENO);
+	close(auxProcess.fd[0]);
+	close(auxProcess.fd[1]);
+	execlp(script, script, NULL);
+	std::cerr << strerror(errno) << std::endl;
+	exit(ERROR500);
+}
+
+static void	setenvs(std::string pathDir, std::string script)
+{
+	setenv("SCRIPT_FILENAME", script.c_str(), 1);
+	setenv("SCRIPT_NAME", " /usr/bin/php-cgi", 1);
+	setenv("PATHDIR", pathDir.c_str(), 1);
+	setenv("REDIRECT_STATUS", "200", 1);
+	setenv("SERVER_SOFTWARE", "TDD/4.0", 1);
+	setenv("SERVER_PROTOCOL", "HTTP/1.1", 1);
+}
 
 bool	Server::responseClientListFiles( std::string pathDir, std::string script)
 {
-	std::string	response;
-	std::string	listFiles;
+	std::ostringstream	oss;
+	ChildProcessData	auxProcess;
+	std::string			content;
 
 	std::cout << "responseClientListFiles" << std::endl;
-	setenv("SCRIPT_FILENAME", script.c_str(), 1);
-	setenv("SCRIPT_NAME", " /usr/bin/php-cgi", 1);
-	setenv("DOCUMENT_ROOT", pathDir.c_str(), 1);
-	if (generateResponse(response) == false)
+	setenvs(pathDir, script);
+	if (executeFork(auxProcess) == false)
 		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
-	std::cout << "response: " << response << std::endl;
-	return (sendResponseClient(response));
+	if (auxProcess.pid == CHILD_PROCESS)
+		callCGI(auxProcess);
+	waitpid(auxProcess.pid, &auxProcess.status, 0);
+	if (auxProcess.status != 0)
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
+	if (readOuputFormatedCGI(auxProcess, content) == false)
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
+	return (sendResponseClient(content));
 }

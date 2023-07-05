@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/04 21:03:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:35:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,3 +165,4 @@ bool		getContentFilePHP(auxReadFiles& dst);
 bool		generateFilesList(std::string& listFiles, const char* pathDir);
 bool		generateResponse(std::string& response);
 std::string	generateHeaderRedirect(std::string status, std::string endPoint);
+bool		readOuputFormatedCGI(ChildProcessData& auxProcess, std::string& oss);

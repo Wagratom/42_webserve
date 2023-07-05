@@ -1,5 +1,14 @@
 #!/usr/bin/php-cgi
 
+<?php
+	$pathDir = getenv('PATHDIR');
+
+	if (!is_dir($pathDir)) {
+		http_response_code(500);
+		exit();
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,23 +46,23 @@
 </head>
 <body>
 	<h1>Lista de Arquivos</h1>
-
 	<table>
 		<tr>
 			<th>Nome do Arquivo</th>
 			<th>Excluir</th>
 		</tr>
 		<?php
-		// Obtém o valor da variável de ambiente "PATHDIR"
-		$pathDir = getenv('PATHDIR');
-
 		// Obtém a lista de arquivos no caminho especificado
 		$files = scandir($pathDir);
+		// http_response_code(200);
+		// http_response_code(300);
+		// header("HTTP/1.1 300 OK");
+		// header("wagratom 200 OK");
+
 
 		// Exibe a lista de arquivos com botões de delete
 		foreach ($files as $file) {
-		// Ignora os diretórios "." e ".."
-		if ($file === "." || $file === "..") {
+			if ($file === "." || $file === "..") {
 			continue;
 		}
 		echo "<tr>";

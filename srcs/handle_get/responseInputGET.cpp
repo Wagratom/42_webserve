@@ -12,37 +12,44 @@
 
 #include <web_server.hpp>
 
-static void	responseWithInputCGI(std::string endPoint, size_t questionMarkPos)
+static void	callCGI(ChildProcessData& auxProcess)
 {
-	std::string	scriptHandler	= "." + endPoint.substr(0, questionMarkPos);
-	std::string query_string	= endPoint.substr(questionMarkPos + 1);
+	char*		script = getenv("SCRIPT_FILENAME");
 
-	std::cout << "HTTP/1.1 200 OK\r\n";
-	setenv("QUERY_STRING", query_string.c_str(), 1);
-	setenv("SCRIPT_FILENAME", scriptHandler.c_str(), 1);
-	setenv("SCRIPT_NAME", PATH_CGI, 1);
-	setenv("REDIRECT_STATUS", "true", 1);
-	execlp(scriptHandler.c_str(), scriptHandler.c_str(), NULL);
+	dup2(auxProcess.fd[1], STDOUT_FILENO);
+	close(auxProcess.fd[0]);
+	close(auxProcess.fd[1]);
+	execlp(script, script, NULL);
 	std::cerr << strerror(errno) << std::endl;
 	exit(ERROR500);
 }
 
+static void	setEnvs(std::string endPoint)
+{
+	size_t				questionMarkPos = endPoint.find("?");
+	std::string			scriptHandler	= "." + endPoint.substr(0, questionMarkPos);
+	std::string			query_string	= endPoint.substr(questionMarkPos + 1);
+
+	setenv("QUERY_STRING", query_string.c_str(), 1);
+	setenv("SCRIPT_FILENAME", scriptHandler.c_str(), 1);
+	setenv("SCRIPT_NAME", PATH_CGI, 1);
+	setenv("REDIRECT_STATUS", "200", 1);
+}
+
 bool	Server::responseInputGET(std::string endPoint)
 {
-	size_t				questionMarkPos	= endPoint.find("?");
-	ChildProcessData	aux;
+	ChildProcessData	auxProcess;
+	std::string			content;
 
-	std::cout << "responseInputGET" << std::endl;
-	if (questionMarkPos == std::string::npos)
-		return (write_error("Error: questionMarkPos not found"));
-	if (executeFork(aux) == false)
+	setEnvs(endPoint);
+	if (executeFork(auxProcess) == false)
 		return (write_error("Error: Server::responseInputGET: executeFork"));
-	if (aux.pid == CHILD_PROCESS) {
-		dup2(_client_fd, STDOUT_FILENO);
-		responseWithInputCGI(endPoint, questionMarkPos);
-	}
-	waitpid(aux.pid, &aux.status, 0);
-	if (aux.status != 0)
+	if (auxProcess.pid == CHILD_PROCESS)
+		callCGI(auxProcess);
+	waitpid(auxProcess.pid, &auxProcess.status, 0);
+	if (auxProcess.status != 0)
 		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
-	return (true);
+	if (readOuputFormatedCGI(auxProcess, content) == false)
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
+	return (sendResponseClient(content));
 }
