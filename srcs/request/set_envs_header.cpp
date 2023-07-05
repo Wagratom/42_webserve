@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:05:05 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/04 09:34:36 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:05:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ bool Parser_request::set_envs_header(void)
 			handle_line(line, key_value);
 	}
 	set_envs(envs);
-	std::cout << "Dados Extraidos: " << std::endl;
 	return (true);
 }
 

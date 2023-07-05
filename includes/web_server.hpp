@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/03 22:15:32 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/04 21:03:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 # define CHILD_PROCESS 0
 
 # define PATH_CGI "/usr/bin/php-cgi"
+# define PATH_UPLOAD "/uploads/"
+
+#define MAXSIZEREQUEST 1000000
+
 typedef struct s_ChildProcessInfo {
 	int	fd[2];
 	int	pid;
@@ -40,8 +44,6 @@ typedef struct s_ChildProcessInfo {
 	int	exit_status;
 
 } ChildProcessData;
-
-struct aux_upload;
 
 class	Server
 {
@@ -96,11 +98,11 @@ class	Server
 		bool	createRootLocation(std::string& dst, const t_location* location);
 
 		bool	handle_POST_requesition( void );
-		bool	responseClientPOST( aux_upload& data );
+		bool	redirectBodyCGI( void );
 
 		bool	handle_DELETE_requesition( void );
 		bool	responseClientListFiles( std::string pathDir, std::string pathFile );
-		bool	extractFileNameFromBody( aux_upload& data );
+		// bool	extractFileNameFromBody( aux_upload& data );
 
 		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
 		bool	responseClientError( int status, std::string pathFileError );
@@ -161,5 +163,5 @@ bool		getContentFile(auxReadFiles& dst);
 void		appendBar(std::string& str);
 bool		getContentFilePHP(auxReadFiles& dst);
 bool		generateFilesList(std::string& listFiles, const char* pathDir);
-bool		generateResponse(std::string listFiles, std::string& response);
+bool		generateResponse(std::string& response);
 std::string	generateHeaderRedirect(std::string status, std::string endPoint);

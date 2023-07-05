@@ -22,9 +22,7 @@ bool	Server::responseClientListFiles( std::string pathDir, std::string script)
 	setenv("SCRIPT_FILENAME", script.c_str(), 1);
 	setenv("SCRIPT_NAME", " /usr/bin/php-cgi", 1);
 	setenv("DOCUMENT_ROOT", pathDir.c_str(), 1);
-	// if (generateFilesList(listFiles, pathDir.c_str()) == false)
-		// return (responseClientError(ERROR500, getErrorPageMapServer("500")));
-	if (generateResponse(listFiles, response) == false)
+	if (generateResponse(response) == false)
 		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	std::cout << "response: " << response << std::endl;
 	return (sendResponseClient(response));

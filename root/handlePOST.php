@@ -3,21 +3,22 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "SERVER";
+$uploadDirectory = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['PATH_DIR']; // Diretório de upload
+$fileName = $_FILES['fileUpload']['name']; // Nome original do arquivo
 
-$envs = $_SERVER;
-foreach ($envs as $key => $value) {
-	echo "$key => $value\n";
+// Verifique se o diretório de upload existe, caso contrário, crie-o
+if (!file_exists($uploadDirectory)) {
+    mkdir($uploadDirectory, 0777, true);
 }
 
-echo "\nFILES\n";
-echo "name: " . $_FILES['fileUpload']['name']. "\n";     // Output: Novo Documento de Texto.txt
-echo "type: " . $_FILES['fileUpload']['type']. "\n";     // Output: text/plain
-echo "tmp_name: " . $_FILES['fileUpload']['tmp_name']. "\n"; // Output: /tmp/phpahYR1V
-echo "error: " . $_FILES['fileUpload']['error']. "\n";    // Output: 0
-echo "size: " . $_FILES['fileUpload']['size']. "\n";     // Output: 11
-$fileContent = file_get_contents($_FILES['fileUpload']['tmp_name']);
-echo $fileContent;
+// Caminho completo do arquivo de destino
+$destination = $uploadDirectory . $fileName;
 
-echo "\nsair\n"
+// Move o arquivo temporário para o diretório de destino
+if (move_uploaded_file($_FILES['fileUpload']['tmp_name'], $destination)) {
+    echo 'Arquivo salvo com sucesso em ' . $destination;
+} else {
+    echo 'Ocorreu um erro ao salvar o arquivo.';
+}
+
 ?>
