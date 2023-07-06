@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/05 12:35:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:45:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ class	Server
 		bool	createRootLocation(std::string& dst, const t_location* location);
 
 		bool	handle_POST_requesition( void );
-		bool	redirectBodyCGI( void );
+		void	handleProcessPOST(ChildProcessData& auxProcess, std::vector<char>& content);
+		bool	redirectBodyCGI( int& contentLenght );
+
 
 		bool	handle_DELETE_requesition( void );
 		bool	responseClientListFiles( std::string pathDir, std::string pathFile );
