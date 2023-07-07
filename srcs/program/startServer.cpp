@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_server.cpp                                   :+:      :+:    :+:   */
+/*   startServer.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include <web_server.hpp>
 
-int	Server::start_server( void )
+int	Server::startServer( void )
 {
 	struct	epoll_event event[MAX_EVENTS];
 

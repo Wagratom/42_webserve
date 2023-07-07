@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   response_request.cpp                               :+:      :+:    :+:   */
+/*   responseRequest.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,7 +19,7 @@ bool	Server::deleteParserRequest(bool status)
 	return (status);
 }
 
-bool	Server::response_request( std::string& buffer )
+bool	Server::responseRequest( std::string& buffer )
 {
 	bool	status = false;
 

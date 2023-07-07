@@ -26,7 +26,7 @@ bool	Server::handleClientRequest(epoll_event& event)
 		return (false);
 	if (readRequest(buffer) == false)
 		return (false);
-	if (response_request(buffer) == false)
+	if (responseRequest(buffer) == false)
 		return (false);
 	// cleanupFd(event);
 	return (true);

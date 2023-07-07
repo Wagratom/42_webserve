@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 13:13:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:21:44 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ class	Server
 		// void			initializeResponses( void );
 
 
+		bool	initializeServer( void );
 		bool	create_server_configured( void );
 		bool	create_server( void );
 		bool	createSockeConfigured( void );
@@ -68,8 +69,7 @@ class	Server
 		bool	create_epoll( void );
 		bool	add_mode_read( void );
 
-		int		start_server( void );
-
+		int		startServer( void );
 		bool	captureNewEvents( epoll_event* event );
 		bool	filterEvent( epoll_event* event );
 
@@ -84,7 +84,7 @@ class	Server
 
 		bool	set_fdNotBlock( int& fd );
 		bool	readRequest( std::string& buffer );
-		bool	response_request( std::string& buffer );
+		bool	responseRequest( std::string& buffer );
 		bool	deleteParserRequest(bool status);
 
 		bool	handle_GET_requesition( void );
@@ -140,8 +140,6 @@ class	Server
 		Parser_configuration*	get_parser( void ) {
 			return (this->_parserFile);
 		}
-
-		bool	startServer( void );
 
 	private:
 		Parser_configuration*	_parserFile;
