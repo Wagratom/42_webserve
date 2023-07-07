@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/06 10:45:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/07 09:53:12 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ class	Server
 		bool	createRootLocation(std::string& dst, const t_location* location);
 
 		bool	handle_POST_requesition( void );
+		bool	checkClientMaxSize( int& contentLenght);
 		void	handleProcessPOST(ChildProcessData& auxProcess, std::vector<char>& content);
 		bool	redirectBodyCGI( int& contentLenght );
 
@@ -160,7 +161,7 @@ bool		getContentFile(auxReadFiles& dst);
 void		generateDynamicHeader(auxReadFiles& tmp, std::string status_code);
 std::string	generateHeaderDynamicStatus(std::string status);
 bool		executeFork( ChildProcessData& infos);
-void		executeCGI(char** argv, char** envp);
+// void		executeCGI(char** argv, char** envp);
 bool		getContentFile(auxReadFiles& dst);
 void		appendBar(std::string& str);
 bool		getContentFilePHP(auxReadFiles& dst);
