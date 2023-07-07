@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/04 18:11:32 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:02:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@ typedef struct s_aux_read_file
 	std::string			response;
 	std::string			path;
 } auxReadFiles;
+
+typedef struct s_ChildProcessInfo {
+	int	fd[2];
+	int	pid;
+	int	status;
+	// int	exit_status;
+
+} ChildProcessData;
 
 // struct aux_upload{
 // 	std::string	filename;

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 09:47:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:01:29 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,14 @@ void	Server::handleProcessPOST(ChildProcessData& auxProcess, std::vector<char>& 
 	close(auxProcess.fd[1]);
 }
 
-bool	Server::redirectBodyCGI( int& contentLenght )
+bool	Server::redirectBodyCGI( void )
 {
 	ChildProcessData	auxProcess;
-	std::vector<char>	buffer(contentLenght);
 
 	setenvs();
-	if ((read(_client_fd, buffer.data(), contentLenght) == -1))
-		return (write_error(strerror(errno)));
-	write(1, buffer.data(), contentLenght);
+	std::cout << "redirectBodyCGI" << std::endl;
 	if (executeFork(auxProcess) == false)
 		return (write_error("redirectBodyCGI: executing fork"));
-	handleProcessPOST(auxProcess, buffer);
+	handleProcessPOST(auxProcess, _response[_client_fd]->content);
 	return true;
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 09:53:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:13:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@
 
 #define MAXSIZEREQUEST 1000000
 
-typedef struct s_ChildProcessInfo {
-	int	fd[2];
-	int	pid;
-	int	status;
-	int	exit_status;
-
-} ChildProcessData;
+class	Response
+{
+	public:
+		Response( void ) : contentLenght(0), BytesRead(0) {};
+	public:
+		std::vector<char>	content;
+		int					contentLenght;
+		int					BytesRead;
+};
 
 class	Server
 {
@@ -53,6 +55,8 @@ class	Server
 
 		std::string**	create_verbs( void );
 		void			initializeDefaultErrorPage( void );
+		// void			initializeResponses( void );
+
 
 		bool	create_server_configured( void );
 		bool	create_server( void );
@@ -76,10 +80,10 @@ class	Server
 
 		bool	handle_events( epoll_event& event );
 		bool	is_closed_or_error_event( epoll_event& event );
-		bool	handle_client_request( epoll_event& event );
+		bool	handleClientRequest( epoll_event& event );
 
 		bool	set_fdNotBlock( int& fd );
-		bool	read_request( std::string& buffer );
+		bool	readRequest( std::string& buffer );
 		bool	response_request( std::string& buffer );
 		bool	deleteParserRequest(bool status);
 
@@ -97,10 +101,11 @@ class	Server
 		bool	returnIndexLocation(t_location* _location );
 		bool	createRootLocation(std::string& dst, const t_location* location);
 
-		bool	handle_POST_requesition( void );
-		bool	checkClientMaxSize( int& contentLenght);
+		bool	handlePostRequest( void );
+		bool	validatePostRequest( void );
+		bool	handleBodyPost( void );
 		void	handleProcessPOST(ChildProcessData& auxProcess, std::vector<char>& content);
-		bool	redirectBodyCGI( int& contentLenght );
+		bool	redirectBodyCGI( void );
 
 
 		bool	handle_DELETE_requesition( void );
@@ -148,14 +153,14 @@ class	Server
 		int						_number_of_events;
 
 		bool					_write;
+		Response				**_response;
 
-
-		std::string				**_verbs;
+		std::string					**_verbs;
 		std::map<int, std::string>	_defaultErrorPage;
 };
 
-void	set_debug(bool	value);
-int		get_debug( void );
+void		set_debug(bool	value);
+int			get_debug( void );
 
 bool		getContentFile(auxReadFiles& dst);
 void		generateDynamicHeader(auxReadFiles& tmp, std::string status_code);

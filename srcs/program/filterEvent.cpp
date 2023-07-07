@@ -41,7 +41,7 @@ bool	Server::handle_events(epoll_event& event)
 	if (is_closed_or_error_event(event))
 		return (cleanupFd(event));
 	if (event.events & EPOLLIN)
-		return (handle_client_request(event));
+		return (handleClientRequest(event));
 	else if (event.events & EPOLLOUT)
 		return (cleanupFd(event));
 	return (true);
