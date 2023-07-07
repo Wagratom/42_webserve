@@ -39,6 +39,5 @@ bool	Server::readRequest(std::string& buffer)
 		indexArray++;
 	}
 	buffer = std::string(headerChar.begin(), headerChar.end());
-	write_debug(buffer);
 	return (true);
 }

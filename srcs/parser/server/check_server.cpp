@@ -21,7 +21,7 @@ bool	Parser_configuration::parserLineServer( std::string& line )
 		line.compare(0, 6, "server") != 0 ||
 		line.compare(pos, 1, "{") != 0 ||
 		line.find_first_not_of(" \t", pos + 1) != std::string::npos)
-		return (write_error("Error: Invalid line server"));
+		return (write_error("Invalid line server"));
 	_file.erase(_file.begin());
 	return (true);
 }

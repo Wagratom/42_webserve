@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/03 21:38:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:36:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ bool	removeIndentationAndComments(int indentation, std::string& line)
 {
 	if (line.empty() || !isspace(line[0]))
 		return (write_error("Error: saveLocationName: Invalid line location"));
+	erase_comments(line);
+	if (line.find_first_not_of(" \t") == std::string::npos)
+		return (true);
 	if (line[0] == ' ')
 		indentation *= 4;
-	erase_comments(line);
 	return (erase_isspaces(indentation, line));
 }
 

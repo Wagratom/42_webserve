@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 19:19:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:38:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ bool	Parser_configuration::controlParserConfiguration( void )
 	write_debug("\033[0;36m\tStarting parser\033[0;34m");
 	if (readConfigurationFile() == false)
 		return (false);
-	if (parserLineServer(_file[0]) == false)
-		return (false);
+	// if (parserLineServer(_file[0]) == false)
+	// 	return (false);
 	return (parserRestFile());
 }
 

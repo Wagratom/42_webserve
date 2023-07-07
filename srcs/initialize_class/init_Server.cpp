@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 11:45:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:25:26 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,9 @@ Server::~Server() {
 		delete _verbs[i];
 	}
 	delete [] _verbs;
-	delete [] _response;
+	for (int i = 0; i < 1024; i++)
+	{
+		if (_response[i] != NULL)
+			delete _response[i];
+	}
 };

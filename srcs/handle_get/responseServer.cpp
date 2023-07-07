@@ -35,7 +35,7 @@ bool	Server::responseServer(std::string status_code)
 	if (!getContentFile(tmp))
 		return (responseClientError(ERROR500, *(errorPages.find("500")->second)));
 	generateDynamicHeader(tmp, status_code);
-	tmp.response = tmp.header + tmp.content + "\r\n";
+	tmp.response = tmp.header + tmp.content;
 	if (sendResponseClient(tmp.response) == false)
 		return (responseClientError(ERROR500, *(errorPages.find("500")->second)));
 	return (true);

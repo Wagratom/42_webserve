@@ -28,6 +28,5 @@ bool	Server::handleClientRequest(epoll_event& event)
 		return (false);
 	if (responseRequest(buffer) == false)
 		return (false);
-	// cleanupFd(event);
 	return (true);
 }
