@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:41:44 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/24 19:52:43 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:05:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ std::string	Server::getErrorPageMapServer(std::string Error)
 {
 	std::map<std::string, std::string*>::iterator it;
 
-	it = server()->get_error_page().find(Error);
-	if (it == server()->get_error_page().end())
+	it = server()[_indexServer2]->get_error_page().find(Error);
+	if (it == server()[_indexServer2]->get_error_page().end())
 		return ("");
 	return (*(it->second));
 }

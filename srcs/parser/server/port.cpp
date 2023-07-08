@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 22:41:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:17:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,30 +63,32 @@ static bool	get_valid_port(std::string& listen, std::string& aux_port)
 	return (true);
 }
 
-static bool	save_port(aux_configuration* server, std::string& port)
-{
-	server_configuration* tmp;
+// static bool	wsave_port(aux_configuration* server, std::string& port)
+// {
+// 	server_configuration* tmp;
 
-	tmp = dynamic_cast<server_configuration*>(server);
-	if (tmp == NULL)
-		return (write_error("Error in cast configuration in get_port"));
-	tmp->set_port(std::strtol(port.c_str(), NULL, 10));
-	return (true);
-}
+// 	tmp = dynamic_cast<server_configuration*>(server);
+// 	if (tmp == NULL)
+// 		return (write_error("Error in cast configuration in get_port"));
+// 	tmp->set_port(std::strtol(port.c_str(), NULL, 10));
+// 	return (true);
+// }
 
 bool	Parser_configuration::get_port(std::string& listen)
 {
+	Server_configuration*	tmp = dynamic_cast<Server_configuration*>(_server_configurations[_indexServer]);
 	std::string	aux_port;
 
+	if (tmp == NULL)
+		return (write_error("get_port:: In cast configuration"));
 	if (has_semicolon_at_end(listen) == false)
-		return (write_error("Error: Invalid line listen, not ';'"));
+		return (write_error("getport:: Invalid line listen, not ';'"));
 	if (startsWithWord(listen, "listen") == false)
 		return (false);
 	if (get_valid_port(listen, aux_port) == false)
 		return (false);
 	if (convert_port(aux_port) == false)
 		return (false);
-	if (save_port(_server_configuration, aux_port) == false)
-		return (false);
+	tmp->set_port(std::strtol(aux_port.c_str(), NULL, 10));
 	return (true);
 }

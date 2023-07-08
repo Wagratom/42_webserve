@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 08:49:07 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 22:41:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:22:03 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static bool	valid_index(std::string& line)
 
 static bool	save_data(std::string& line, aux_configuration* dst)
 {
-	server_configuration* server = dynamic_cast<server_configuration*>(dst);
-	location_configuration* location = dynamic_cast<location_configuration*>(dst);
+	Location_configuration*	location = dynamic_cast<Location_configuration*>(dst);
+	Server_configuration*	server = dynamic_cast<Server_configuration*>(dst);
 
 	if (server != NULL)
 		server->set_index(line);

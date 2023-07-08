@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 14:34:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:11:53 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ bool	Server::createSockeConfigured( void )
 
 bool	Server::bind_socket( void )
 {
-	struct sockaddr_in server;
+	struct sockaddr_in port;
 
-	server.sin_family = AF_INET;
-	server.sin_addr.s_addr = INADDR_ANY;
-	server.sin_port = htons(_parserFile->get_server_configuration()->get_port());
+	port.sin_family = AF_INET;
+	port.sin_addr.s_addr = INADDR_ANY;
+	port.sin_port = htons(server()[_indexServer2]->get_port());
 
-	if (bind(_server_fd, (struct sockaddr *)&server, sizeof(server)) >= 0)
+	if (bind(_server_fd, (struct sockaddr *)&port, sizeof(port)) >= 0)
 		return (true);
 	return (write_error_prefix("Error: Bind_socket"));
 }

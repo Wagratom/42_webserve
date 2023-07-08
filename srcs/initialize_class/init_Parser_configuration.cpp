@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 17:54:00 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 11:17:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	Parser_configuration::initializeUniversalDictionary( void )
 Parser_configuration::Parser_configuration( void ) {}
 
 Parser_configuration::Parser_configuration(std::string filename)
- 	:  _server_configuration(new server_configuration)
-	, _filename(filename)
+	: _filename(filename)
+	, _indexServer(0)
 {
 	initializeUniversalDictionary();
 	initializeServerDictionary();
@@ -47,10 +47,12 @@ Parser_configuration::Parser_configuration(std::string filename)
 
 Parser_configuration::~Parser_configuration( void )
 {
-	delete _server_configuration;
+	for (std::vector<Server_configuration*>::iterator it = _server_configurations.begin(); it != _server_configurations.end(); it++)
+		delete *it;
 	for (std::map<std::string, t_location*>::iterator it = _locations.begin(); it != _locations.end(); it++)
 	{
 		delete it->second->configuration;
 		delete it->second;
+		it->second = NULL;
 	}
 }

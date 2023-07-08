@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 13:33:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:17:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@
 # include <vector>
 
 class	Parser_configuration;
-class	location_configuration;
+class	Location_configuration;
 class	aux_configuration;
-class	server_configuration;
+class	Server_configuration;
 class	Parser_request;
 
 /*############################################################################*/
@@ -44,7 +44,7 @@ class	Parser_request;
 typedef struct s_location
 {
 	std::string					endPoint; // key
-	location_configuration*		configuration;
+	Location_configuration*		configuration;
 	struct s_location*			next;
 
 } t_location;

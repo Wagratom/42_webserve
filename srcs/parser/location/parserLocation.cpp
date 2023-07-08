@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:31:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/22 15:14:27 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:19:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static bool	alloc_location(t_location **location)
 	if (*location == NULL)
 		return (write_error("Error: Memory allocation failed"));
 
-	(*location)->configuration = new location_configuration();
+	(*location)->configuration = new Location_configuration();
 	if ((*location)->configuration == NULL)
 		return (write_error("Error: Memory allocation failed"));
 

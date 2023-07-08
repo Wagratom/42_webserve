@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 13:21:44 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 14:03:32 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@
 class	Response
 {
 	public:
-		Response( void ) : contentLenght(0), BytesRead(0) {};
+		Response( void ) : contentLenght(0), totalBytesRead(0) {};
 	public:
 		std::vector<char>	content;
 		int					contentLenght;
-		int					BytesRead;
+		int					totalBytesRead;
 };
 
 class	Server
@@ -124,7 +124,7 @@ class	Server
 		bool	sendResponseClient( std::string response );
 
 		bool	responseRedirect(std::string endPoint);
-		bool	cleanupFd(epoll_event& event);
+		bool	cleanupFd(int fd);
 
 		std::string	getErrorPageMapServer(std::string Error);
 		std::string	getErrorPageMapLocation(t_location* _location, std::string Error);
@@ -133,7 +133,7 @@ class	Server
 			return (this->_parserFile->get_location_configuration());
 		}
 
-		server_configuration*	server( void ) {
+		std::vector<Server_configuration*>	server( void ) {
 			return (this->_parserFile->get_server_configuration());
 		}
 
@@ -141,19 +141,21 @@ class	Server
 			return (this->_parserFile);
 		}
 
+
 	private:
 		Parser_configuration*	_parserFile;
 		Parser_request*			_parserRequest;
 
+		size_t					_indexServer2;
+		bool					_write;
 		int						_server_fd;
 		int						_client_fd;
 		int						_epoll_fd;
 		int						_number_of_events;
 
-		bool					_write;
 		Response				**_response;
+		std::string				**_verbs;
 
-		std::string					**_verbs;
 		std::map<int, std::string>	_defaultErrorPage;
 };
 

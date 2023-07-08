@@ -6,22 +6,22 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 14:28:10 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 12:02:18 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-bool	Server::cleanupFd(epoll_event& event)
+bool	Server::cleanupFd(int fd)
 {
-	if ((int)event.data.fd == _server_fd)
+	if (fd == _server_fd)
 		return (true);
-	if (epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
+	if (epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, fd, NULL) == -1)
 		return (write_error_prefix("remove_fd_from_epoll"));
-	close(event.data.fd);
-	if (_response[event.data.fd] == NULL)
+	close(fd);
+	if (_response[fd] == NULL)
 		return (true);
-	delete _response[event.data.fd];
-	_response[event.data.fd] = NULL;
+	delete _response[fd];
+	_response[fd] = NULL;
 	return (true);
 }

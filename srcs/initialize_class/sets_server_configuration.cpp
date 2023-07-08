@@ -6,27 +6,27 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:40:49 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/01 13:21:46 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:20:48 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Parser_configuration.hpp>
 
-void	server_configuration::set_port( int port )
+void	Server_configuration::set_port( int port )
 {
 	if (this->_port != -1)
 		return ;
 	this->_port = port;
 }
 
-void	server_configuration::set_server_name( std::string server_name )
+void	Server_configuration::set_server_name( std::string server_name )
 {
 	if (this->_server_name != "")
 		return ;
 	this->_server_name = server_name;
 }
 
-void	server_configuration::set_root( std::string root )
+void	Server_configuration::set_root( std::string root )
 {
 	if (this->_root != "")
 		return ;
@@ -35,7 +35,7 @@ void	server_configuration::set_root( std::string root )
 	this->_root = root;
 }
 
-void	server_configuration::set_index( std::string index  )
+void	Server_configuration::set_index( std::string index  )
 {
 	if (this->_index != "")
 		return ;
@@ -43,26 +43,26 @@ void	server_configuration::set_index( std::string index  )
 }
 
 
-void	server_configuration::set_autoIndex( bool autoIndex )
+void	Server_configuration::set_autoIndex( bool autoIndex )
 {
 	this->_autoIndex = autoIndex;
 }
 
-void	server_configuration::set_error_page( std::string number, std::string error_page)
+void	Server_configuration::set_error_page( std::string number, std::string error_page)
 {
 	if (_error_page.find(number) != _error_page.end())
 		return ;
 	_error_page[number] = new std::string(error_page);
 }
 
-void	server_configuration::set_client_max_body_size( int maxSize )
+void	Server_configuration::set_client_max_body_size( int maxSize )
 {
 	if (this->_clientMaxBodySize != 0)
 		return ;
 	this->_clientMaxBodySize = maxSize;
 }
 
-void	server_configuration::set_return( std::string return_ )
+void	Server_configuration::set_return( std::string return_ )
 {
 	if (this->_return != "")
 		return ;

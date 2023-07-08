@@ -1,0 +1,132 @@
+	[0;31m	Debug mode is on[0;37m
+Valid arguments
+Argv[1]: confis/true10.conf
+[0;36m	Starting parser[0;34m
+_filename: confis/true10.conf
+Opening/Reading file of confinguration...
+[0;36m	Creating server configured[0;34m
+Creating server...
+Binding server...
+Listening server...
+Configuring server to read...
+	Data Server
+Port: 8080
+ServerName: serve.com
+[32mOk XD
+[0;37m
+[0;36m	Starting server[0;34m
+Waiting for events
+Number of captured events: 1
+Type of event: EPOLLIN | 
+New connection accepted
+
+
+Waiting for events
+Number of captured events: 2
+Type of event: EPOLLIN | 
+New connection accepted
+Type of event: EPOLLIN | 
+
+Client seed request
+REQUEST_METHODPOST
+REQUEST_URI/
+SERVER_PROTOCOLHTTP/1.1
+SERVER_PORT8080
+HTTP_HOSTlocalhost:8080
+CONTENT_LENGTH=459756
+CONTENT_TYPE=multipart/form-data; boundary=----WebKitFormBoundary6WAFd2DKnqDQFQMh
+HTTP_ACCEPT=text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+HTTP_ACCEPT_ENCODING=gzip, deflate, br
+HTTP_ACCEPT_LANGUAGE=pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+HTTP_CONNECTION=keep-alive
+HTTP_COOKIE=wp-settings-time-3=1680293779; wp-settings-time-1=1680607718
+HTTP_HOST=localhost:8080
+HTTP_USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.67
+SERVER_PORT=8080
+
+handlePostRequest
+validatePostRequest
+handleBodyPost
+
+
+Waiting for events
+Number of captured events: 2
+Type of event: EPOLLIN | 
+New connection accepted
+Type of event: EPOLLIN | 
+
+Client seed request
+
+handlePostRequest
+handleBodyPost
+
+
+Waiting for events
+Number of captured events: 1
+Type of event: EPOLLIN | 
+
+Client seed request
+
+handlePostRequest
+handleBodyPost
+redirectBodyCGI
+Content-type: text/html; charset=UTF-8
+
+Arquivo salvo com sucesso em /home/wallas/42_webserve//uploads/TP_AEDI_salao_de_festas_2023-1.pdfresponseServer
+path: /home/wallas/42_webserve/root/sever.html
+path: /home/wallas/42_webserve/root/index.php
+path: /home/wallas/42_webserve/root/index.html
+File opened
+getContentAllFile
+dst.path: /home/wallas/42_webserve/root/index.html
+sendResponseClient
+
+
+Waiting for events
+Number of captured events: 1
+Type of event: EPOLLIN | 
+
+Client seed request
+REQUEST_METHODPOST
+REQUEST_URI/
+SERVER_PROTOCOLHTTP/1.1
+SERVER_PORT8080
+HTTP_HOSTlocalhost:8080
+CONTENT_LENGTH=459756
+CONTENT_TYPE=multipart/form-data; boundary=----WebKitFormBoundaryu18GL7A8pAMbvAM1
+HTTP_ACCEPT=text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+HTTP_ACCEPT_ENCODING=gzip, deflate, br
+HTTP_ACCEPT_LANGUAGE=pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+HTTP_CONNECTION=keep-alive
+HTTP_COOKIE=wp-settings-time-3=1680293779; wp-settings-time-1=1680607718
+HTTP_HOST=localhost:8080
+HTTP_USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.67
+SERVER_PORT=8080
+
+handlePostRequest
+validatePostRequest
+handleBodyPost
+
+
+Waiting for events
+Number of captured events: 1
+Type of event: EPOLLIN | 
+
+Client seed request
+
+handlePostRequest
+handleBodyPost
+redirectBodyCGI
+responseServer
+Content-type: text/html; charset=UTF-8
+
+Arquivo salvo com sucesso em /home/wallas/42_webserve//uploads/TP_AEDI_salao_de_festas_2023-1.pdfpath: /home/wallas/42_webserve/root/sever.html
+path: /home/wallas/42_webserve/root/index.php
+path: /home/wallas/42_webserve/root/index.html
+File opened
+getContentAllFile
+dst.path: /home/wallas/42_webserve/root/index.html
+sendResponseClient
+
+
+Waiting for events

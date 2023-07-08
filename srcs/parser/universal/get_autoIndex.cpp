@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:19:36 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 18:06:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:21:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static bool	extractAutoIndex(std::string& autoIndexLine, bool& autoIndex)
 
 static bool	save_data(bool autoIndex, aux_configuration* dst)
 {
-	server_configuration* server = dynamic_cast<server_configuration*>(dst);
-	location_configuration* location = dynamic_cast<location_configuration*>(dst);
+	Location_configuration*	location = dynamic_cast<Location_configuration*>(dst);
+	Server_configuration*	server = dynamic_cast<Server_configuration*>(dst);
 
 	if (server != NULL)
 		server->set_autoIndex(autoIndex);

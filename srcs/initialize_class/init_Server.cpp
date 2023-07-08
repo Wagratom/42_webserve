@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 14:25:26 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:38:33 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,31 @@ void	Server::initializeDefaultErrorPage( void )
 Server::Server(std::string filename)
 			: _parserFile(new Parser_configuration(filename))
 			, _parserRequest(NULL)
+			, _indexServer2(0)
+			, _write(false)
 			, _server_fd(-1)
 			, _client_fd(-1)
 			, _epoll_fd(-1)
 			, _number_of_events(-1)
-			, _write(false)
-			, _response(new Response*[1024])
 			, _verbs(create_verbs())
 {
+	_response = new Response*[1024];
+	memset(_response, 0, sizeof(Response*) * 1024);
 	// initializeResponses();
 	initializeDefaultErrorPage();
 };
 
 Server::~Server() {
-	if (_parserRequest)
-		delete _parserRequest;
 	delete	_parserFile;
-	for (int i = 0; i < 10; i++) {
+	// if (_parserRequest)
+		// delete _parserRequest;
+	for (size_t i = 0; _verbs[i] != NULL; i++) {
 		delete _verbs[i];
 	}
 	delete [] _verbs;
-	for (int i = 0; i < 1024; i++)
-	{
-		if (_response[i] != NULL)
+	for (size_t i = 0; i < 1024; i++) {
+		if (_response[i])
 			delete _response[i];
 	}
+	delete [] _response;
 };

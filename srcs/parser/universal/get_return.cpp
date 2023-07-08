@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 13:35:59 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/27 14:23:52 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:21:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static bool	extractRedirect(std::string& LineReturn)
 
 static bool	save_data(std::string& line, aux_configuration* dst)
 {
-	server_configuration* server = dynamic_cast<server_configuration*>(dst);
-	location_configuration* location = dynamic_cast<location_configuration*>(dst);
+	Location_configuration*	location = dynamic_cast<Location_configuration*>(dst);
+	Server_configuration*	server = dynamic_cast<Server_configuration*>(dst);
 
 	if (server != NULL)
 		server->set_return(line);

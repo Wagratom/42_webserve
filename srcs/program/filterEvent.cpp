@@ -35,15 +35,14 @@ bool	Server::filterEvent(epoll_event* event)
 	return (true);
 }
 
-
 bool	Server::handle_events(epoll_event& event)
 {
 	if (is_closed_or_error_event(event))
-		return (cleanupFd(event));
+		return (cleanupFd(event.data.fd));
 	if (event.events & EPOLLIN)
 		return (handleClientRequest(event));
 	else if (event.events & EPOLLOUT)
-		return (cleanupFd(event));
+		return (cleanupFd(event.data.fd));
 	return (true);
 }
 

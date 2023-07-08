@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/21 21:56:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:46:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	Parser_configuration::readConfigurationFile( void )
 	std::ifstream	file(_filename.c_str());
 	std::string		line;
 
+	std::cout << "_filename: " << _filename.c_str() << std::endl;
 	write_debug("Opening/Reading file of confinguration...");
 	if (file.is_open() == false)
 		return (write_error("Error: File not found"));

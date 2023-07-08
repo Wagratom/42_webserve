@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/01 13:21:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:30:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ class	Parser_configuration
 
 		bool					controlParserConfiguration( void );
 		bool					readConfigurationFile( void );
+		bool					ParserConfigurationFile( void );
 		bool					parserLineServer( std::string& line );
-		bool					parserRestFile( void );
+		bool					parserConfigurationServer( void );
 
 		bool					handle_server( std::string& line );
 		bool					checkDirectiveServer(std::string& line);
@@ -60,17 +61,18 @@ class	Parser_configuration
 		bool					handleLineLocation(std::string& line, t_location& dst);
 		bool					saveLocationName(std::string& locationName);
 
-		server_configuration*				get_server_configuration( void );
+		std::vector<Server_configuration*>	get_server_configuration( void );
 		std::map<std::string, t_location*>	get_location_configuration( void );
 
 	private:
 		std::map<std::string, directiveNginxServer>				_dictionary_server;
 		std::map<std::string, directiveNginxUniversal>			_dictionary_universal;
 
-		server_configuration*				_server_configuration;
-		std::map<std::string, t_location*>	_locations;
-		std::vector<std::string>			_file;
-		std::string							_filename;
+		std::vector<Server_configuration*>						_server_configurations;
+		std::map<std::string, t_location*>						_locations;
+		std::vector<std::string>								_file;
+		std::string												_filename;
+		size_t													_indexServer;
 };
 
 /*############################################################################*/
@@ -84,10 +86,10 @@ class aux_configuration
 		virtual ~aux_configuration( void ){} ;
 };
 
-class server_configuration : public aux_configuration
+class Server_configuration : public aux_configuration
 {
 	public:
-		server_configuration( void )
+		Server_configuration( void )
 			: aux_configuration()
 			, _port(-1)
 			, _clientMaxBodySize(0)
@@ -95,7 +97,7 @@ class server_configuration : public aux_configuration
 			, _root("")
 			, _index("")
 		{};
-		~server_configuration( void ){
+		~Server_configuration( void ){
 			std::map<std::string, std::string*>::iterator it = _error_page.begin();
 			while (it != _error_page.end())
 			{
@@ -137,17 +139,17 @@ class server_configuration : public aux_configuration
 /*                         Location Configuration                             */
 /*############################################################################*/
 
-class location_configuration : public aux_configuration
+class Location_configuration : public aux_configuration
 {
 	public:
-		location_configuration( void )
+		Location_configuration( void )
 			:  aux_configuration()
 			, _root("")
 			, _index("")
 			, _clientMaxBodySize(0)
 			, _autoindex("")
 			{};
-		~location_configuration( void ){
+		~Location_configuration( void ){
 			std::map<std::string, std::string*>::iterator it = _error_page.begin();
 			while (it != _error_page.end())
 			{

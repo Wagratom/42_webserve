@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:19:25 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/23 19:32:00 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:21:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static bool	removeErrorPagePrefix(std::string& LineErrorPage)
 
 static bool	save_data(aux_configuration* dst, std::string number, std::string pathFileError)
 {
-	server_configuration*	server = dynamic_cast<server_configuration*>(dst);
-	location_configuration*	location = dynamic_cast<location_configuration*>(dst);
+	Location_configuration*	location = dynamic_cast<Location_configuration*>(dst);
+	Server_configuration*	server = dynamic_cast<Server_configuration*>(dst);
 
 	if (server != NULL)
 		server->set_error_page(number, pathFileError);

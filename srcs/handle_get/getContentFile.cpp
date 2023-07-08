@@ -24,7 +24,8 @@ bool	getContentAllFile(auxReadFiles& dst)
 	file.seekg(0, std::ios::beg);
 	dst.content.resize(dst.contentLength);
 	if (!file.read(&dst.content[0], dst.contentLength))
-		return (false);
+		return (file.close(), false);
+	file.close();
 	return (true);
 }
 

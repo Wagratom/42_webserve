@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/26 21:24:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:21:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ static bool	extractNumberConverted(std::string& size, size_t& unidate)
 
 static bool	save_data(int maxSize, aux_configuration* dst)
 {
-	server_configuration* server = dynamic_cast<server_configuration*>(dst);
-	location_configuration* location = dynamic_cast<location_configuration*>(dst);
+	Location_configuration*	location = dynamic_cast<Location_configuration*>(dst);
+	Server_configuration*	server = dynamic_cast<Server_configuration*>(dst);
 
 	if (server != NULL)
 		server->set_client_max_body_size(maxSize);
