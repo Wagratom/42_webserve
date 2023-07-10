@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/05/02 10:32:59 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 10:50:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,25 @@ bool	Server::create_epoll( void )
 	return (write_error_prefix("Create_epoll"));
 }
 
-bool	Server::add_mode_read()
+bool	Server::add_mode_read( int& serverFD )
 {
 	struct epoll_event event;
 
 	memset(&event, 0, sizeof(event));
-	event.data.fd = _server_fd;
+	event.data.fd = serverFD;
 	event.events = EPOLLIN;
 
-	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, _server_fd, &event) != -1)
+	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, serverFD, &event) != -1)
 		return (true);
 	return (write_error_prefix("Add_mod_read"));
 }
 
-bool	Server::conf_serve_to_read( void )
+bool	Server::conf_serve_to_read( int& serverFD )
 {
 	write_debug("Configuring server to read...");
 	if (!create_epoll())
 		return (false);
-	if (!add_mode_read())
+	if (!add_mode_read( serverFD ))
 		return (false);
 	return (true);
 }

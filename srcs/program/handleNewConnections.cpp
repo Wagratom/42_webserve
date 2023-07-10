@@ -28,19 +28,25 @@ mas ainda há dados para ler. Isso pode acontecer, por exemplo, quando a outra e
 mas ainda permitindo a leitura dos dados que já foram enviados.
 */
 
-bool	Server::is_newConnect(epoll_event& event)
-{
-	int	event_socket;
+// bool	Server::is_newConnect(epoll_event& event, int& server_fd)
+// {
+// 	int	event_socket;
 
-	event_socket = event.data.fd;
-	if (_server_fd == event_socket)
-		return (true);
-	return (false);
-}
+// 	event_socket = event.data.fd;
+// 	for (std::map<int, Server_configuration*>::iterator it = _servers_fd.begin(); it != _servers_fd.end(); it++)
+// 	{
+// 		if (it->first == event_socket)
+// 		{
+// 			server_fd = it->first;
+// 			return (true);
+// 		}
+// 	}
+// 	return (false);
+// }
 
-bool	Server::accept_status( int& new_client )
+bool	Server::accept_status( int& new_client, int& serverFD )
 {
-	new_client = accept(_server_fd, NULL, NULL);
+	new_client = accept(serverFD, NULL, NULL);
 	if (new_client == -1)
 		return (write_error_prefix("accept_status"));
 	return (true);
@@ -58,13 +64,13 @@ bool	Server::save_connection( int& new_client )
 	return (true);
 }
 
-bool	Server::handleNewConnections(epoll_event& event)
+bool	Server::handleNewConnections(int& serverFd)
 {
 	int	new_client;
 
-	if (!is_newConnect(event))
-		return (false);
-	if (!accept_status(new_client))
+	// if (!is_newConnect(event, serverFd))
+		// return (false);
+	if (!accept_status(new_client, serverFd))
 		return (false);
 	if (!save_connection(new_client))
 		return (false);

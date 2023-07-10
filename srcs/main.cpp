@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 10:47:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:17:09 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	Server::initializeServer( void )
 {
 	if (_parserFile->controlParserConfiguration() == false)
 		return (false);
-	if (create_server_configured() == false)
+	if (createServerConfigured() == false)
 		return (false);
 	if (startServer() == false)
 		return (false);
@@ -38,7 +38,6 @@ int main ( int argc, char *argv[] )
 	set_debug(true);
 	if (valid_arguments(argc, argv) == false)
 		return (false);
-	std::cout << "Argv[1]: " << argv[1] << std::endl;
 	Server	server(argv[1]);
 	if (server.initializeServer() == false)
 		return (-1);

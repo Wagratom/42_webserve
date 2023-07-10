@@ -12,17 +12,30 @@
 
 #include <web_server.hpp>
 
+bool	Server::checkEventInServer(epoll_event event, int& serverFd)
+{
+	for (std::map<int, Server_configuration*>::iterator it = _servers_fd.begin(); it != _servers_fd.end(); it++)
+	{
+		if (it->first == event.data.fd)
+			return (true);
+		serverFd = it->first;
+	}
+	return (false);
+}
+
 bool	Server::filterEvent(epoll_event* event)
 {
 	int	index;
+	int	serverFd;
 
 	index = 0;
+	serverFd = 0;
 	while (index < _number_of_events)
 	{
 		write_type_event_debug(event[index]);
-		if (event[index].data.fd == _server_fd)
+		if (checkEventInServer(event[index], serverFd))
 		{
-			if (!handleNewConnections(event[index]))
+			if (!handleNewConnections(serverFd))
 				return (false);
 		}
 		else

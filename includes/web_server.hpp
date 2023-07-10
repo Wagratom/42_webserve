@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 14:03:32 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:20:48 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,24 @@ class	Server
 
 
 		bool	initializeServer( void );
-		bool	create_server_configured( void );
-		bool	create_server( void );
-		bool	createSockeConfigured( void );
-		bool	bind_socket( void );
-		bool	listen_socket( void );
+		bool	createServerConfigured( void );
+		bool	create_server( int& serverFd, Server_configuration* server );
+		bool	createSockeConfigured( int& serverFd );
+		bool	bind_socket( int& serverFd, Server_configuration* server );
+		bool	listen_socket( int& serverFd );
 
-		bool	conf_serve_to_read( void );
 		bool	create_epoll( void );
-		bool	add_mode_read( void );
+		bool	conf_serve_to_read( int& serverFD );
+		bool	add_mode_read( int& serverFD );
 
 		int		startServer( void );
 		bool	captureNewEvents( epoll_event* event );
 		bool	filterEvent( epoll_event* event );
+		bool	checkEventInServer(epoll_event	event, int& serverFd);
 
-		bool	handleNewConnections( epoll_event& event );
-		bool	is_newConnect( epoll_event& event );
-		bool	accept_status( int& new_client );
+		bool	handleNewConnections( int& serverFd );
+		// bool	is_newConnect( epoll_event& event, int& serverFd);
+		bool	accept_status( int& new_client, int& serverFD );
 		bool	save_connection( int& new_client );
 
 		bool	handle_events( epoll_event& event );
@@ -148,7 +149,6 @@ class	Server
 
 		size_t					_indexServer2;
 		bool					_write;
-		int						_server_fd;
 		int						_client_fd;
 		int						_epoll_fd;
 		int						_number_of_events;
@@ -156,7 +156,8 @@ class	Server
 		Response				**_response;
 		std::string				**_verbs;
 
-		std::map<int, std::string>	_defaultErrorPage;
+		std::map<int, Server_configuration*>	_servers_fd;
+		std::map<int, std::string>				_defaultErrorPage;
 };
 
 void		set_debug(bool	value);
