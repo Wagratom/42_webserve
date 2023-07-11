@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 11:20:48 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 21:50:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ class	Server
 		bool	accept_status( int& new_client, int& serverFD );
 		bool	save_connection( int& new_client );
 
-		bool	handle_events( epoll_event& event );
+		bool	handleEvents( epoll_event& event );
 		bool	is_closed_or_error_event( epoll_event& event );
 		bool	handleClientRequest( epoll_event& event );
 
@@ -130,8 +130,8 @@ class	Server
 		std::string	getErrorPageMapServer(std::string Error);
 		std::string	getErrorPageMapLocation(t_location* _location, std::string Error);
 		//				GETTERS to tests
-		std::map<std::string, t_location*>	location( void ) {
-			return (this->_parserFile->get_location_configuration());
+		std::map<std::string, t_location*>	location( int port ) {
+			return (this->_serversConf[port]->get_locations());
 		}
 
 		std::vector<Server_configuration*>	server( void ) {
@@ -156,7 +156,8 @@ class	Server
 		Response				**_response;
 		std::string				**_verbs;
 
-		std::map<int, Server_configuration*>	_servers_fd;
+		int										_port;
+		std::map<int, Server_configuration*>	_serversConf;
 		std::map<int, std::string>				_defaultErrorPage;
 };
 
@@ -165,10 +166,10 @@ int			get_debug( void );
 
 bool		getContentFile(auxReadFiles& dst);
 void		generateDynamicHeader(auxReadFiles& tmp, std::string status_code);
-std::string	generateHeaderDynamicStatus(std::string status);
+std::string	generateHeaderDynamicStatus(auxReadFiles& tmp, std::string status);
 bool		executeFork( ChildProcessData& infos);
 // void		executeCGI(char** argv, char** envp);
-bool		getContentFile(auxReadFiles& dst);
+// bool		getContentFile(auxReadFiles& dst);
 void		appendBar(std::string& str);
 bool		getContentFilePHP(auxReadFiles& dst);
 bool		generateFilesList(std::string& listFiles, const char* pathDir);

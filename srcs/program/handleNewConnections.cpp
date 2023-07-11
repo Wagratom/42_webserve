@@ -48,7 +48,7 @@ bool	Server::accept_status( int& new_client, int& serverFD )
 {
 	new_client = accept(serverFD, NULL, NULL);
 	if (new_client == -1)
-		return (write_error_prefix("accept_status"));
+		return (write_error_prefix("Error: accept_status"));
 	return (true);
 }
 
@@ -68,6 +68,7 @@ bool	Server::handleNewConnections(int& serverFd)
 {
 	int	new_client;
 
+	write_debug("New connection");
 	// if (!is_newConnect(event, serverFd))
 		// return (false);
 	if (!accept_status(new_client, serverFd))

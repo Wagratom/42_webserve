@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:33:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 10:19:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 21:52:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ std::string Server_configuration::get_index( void )
 	return (this->_index);
 }
 
-std::map<std::string, std::string*>	Server_configuration::get_error_page( void )
-{
-	return (this->_error_page);
-}
-
 int	Server_configuration::get_clientMaxBodySize( void )
 {
 	return (this->_clientMaxBodySize);
@@ -50,4 +45,14 @@ std::string	Server_configuration::get_return( void )
 bool	Server_configuration::get_autoIndex( void )
 {
 	return (this->_autoIndex);
+}
+
+std::map<std::string, std::string*>	Server_configuration::get_error_page( void )
+{
+	return (this->_error_page);
+}
+
+std::map<std::string, t_location*>	Server_configuration::get_locations( void )
+{
+	return (this->_locations);
 }

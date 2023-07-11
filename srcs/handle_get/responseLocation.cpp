@@ -43,7 +43,7 @@ bool	Server::createRootLocation(std::string& dst, const t_location* location)
 
 bool	Server::responseLocation(std::string endPoint, std::string locationName)
 {
-	t_location*							_location = location().at(locationName);
+	t_location*							_location = location(_port).at(locationName);
 
 	std::cout << "responseLocation" << std::endl;
 	if (_location == NULL)

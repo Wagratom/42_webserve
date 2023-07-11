@@ -14,7 +14,13 @@
 
 bool	Server::handleClientRequest(epoll_event& event)
 {
-	std::string	buffer;
+	struct sockaddr_in	addr;
+	std::string			buffer;
+	socklen_t			addrlen = sizeof(addr);
+
+	getsockname(event.data.fd, (struct sockaddr*)&addr, &addrlen);
+	_port = ntohs(addr.sin_port);
+	std::cout << "Port: " << _port << "|" << std::endl;
 
 	write_debug("\nClient seed request");
 	// if (event.events & EPOLLOUT)

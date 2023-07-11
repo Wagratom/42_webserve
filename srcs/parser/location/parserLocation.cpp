@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:31:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 10:19:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 19:24:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ bool	Parser_configuration::parserLocation( void )
 		return (delete_location(location));
 	if (saveLocationInfos(*location) == false)
 		return (delete_location(location));
-	_locations[location->endPoint] = location;
+	_server_configurations[_indexServer]->set_locations(location->endPoint, location);
 	return (true);
 }

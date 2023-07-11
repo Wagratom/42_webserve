@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 11:17:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 19:07:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,4 @@ Parser_configuration::~Parser_configuration( void )
 {
 	for (std::vector<Server_configuration*>::iterator it = _server_configurations.begin(); it != _server_configurations.end(); it++)
 		delete *it;
-	for (std::map<std::string, t_location*>::iterator it = _locations.begin(); it != _locations.end(); it++)
-	{
-		delete it->second->configuration;
-		delete it->second;
-		it->second = NULL;
-	}
 }

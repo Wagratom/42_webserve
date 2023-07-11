@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 09:52:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 21:52:53 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,13 @@ class	Parser_configuration
 		bool					saveLocationName(std::string& locationName);
 
 		std::vector<Server_configuration*>	get_server_configuration( void );
-		std::map<std::string, t_location*>	get_location_configuration( void );
+		// std::map<std::string, t_location*>	get_location_configuration( void );
 
 	private:
 		std::map<std::string, directiveNginxServer>				_dictionary_server;
 		std::map<std::string, directiveNginxUniversal>			_dictionary_universal;
 
 		std::vector<Server_configuration*>						_server_configurations;
-		std::map<std::string, t_location*>						_locations;
 		std::vector<std::string>								_file;
 		std::string												_filename;
 		size_t													_indexServer;
@@ -86,25 +85,11 @@ class aux_configuration
 		virtual ~aux_configuration( void ){} ;
 };
 
-class Server_configuration : public aux_configuration
+class  Server_configuration : public aux_configuration
 {
 	public:
-		Server_configuration( void )
-			: aux_configuration()
-			, _port(-1)
-			, _clientMaxBodySize(0)
-			, _server_name("")
-			, _root("")
-			, _index("")
-		{};
-		~Server_configuration( void ){
-			std::map<std::string, std::string*>::iterator it = _error_page.begin();
-			while (it != _error_page.end())
-			{
-				delete it->second;
-				it++;
-			}
-		};
+		Server_configuration( void );
+		~Server_configuration( void );
 
 		int			get_port( void );
 		int			get_clientMaxBodySize( void );
@@ -113,16 +98,18 @@ class Server_configuration : public aux_configuration
 		std::string	get_root( void );
 		std::string	get_index( void );
 		std::string	get_return( void );
+		std::map<std::string, t_location*>	get_locations( void );
 		std::map<std::string, std::string*>	get_error_page( void );
 
 		void	set_port( int port );
 		void	set_server_name( std::string server_name );
 		void	set_root( std::string root );
 		void	set_index( std::string index );
-		void	set_error_page( std::string number, std::string error_page );
 		void	set_client_max_body_size( int size );
 		void	set_return( std::string return_ );
 		void	set_autoIndex( bool autoIndex );
+		void	set_error_page( std::string number, std::string error_page );
+		void	set_locations( std::string location_name, t_location* location );
 
 	private:
 		int									_port;
@@ -132,6 +119,7 @@ class Server_configuration : public aux_configuration
 		std::string							_root;
 		std::string							_index;
 		std::string							_return;
+		std::map<std::string, t_location*>	_locations;
 		std::map<std::string, std::string*>	_error_page;
 };
 
@@ -165,12 +153,12 @@ class Location_configuration : public aux_configuration
 		bool		get_autoIndex( void );
 		std::map<std::string, std::string*>	get_error_page( void );
 
-		void	set_root( std::string root );
-		void	set_index( std::string index );
-		void	set_return( std::string index );
-		void	set_error_page( std::string number, std::string error_page );
-		void	set_client_max_body_size( int maxSize );
-		void	set_autoIndex( bool autoIndex );
+		void		set_root( std::string root );
+		void		set_index( std::string index );
+		void		set_return( std::string index );
+		void		set_error_page( std::string number, std::string error_page );
+		void		set_client_max_body_size( int maxSize );
+		void		set_autoIndex( bool autoIndex );
 
 
 	private:

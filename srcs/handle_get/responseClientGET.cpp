@@ -37,7 +37,7 @@ bool	Server::responseClientGET( std::string& endPoint)
 		return (responseInputGET(endPoint));
 	if (endPoint == "/list/files/server")
 		return (responseClientListFiles("/home/wallas/42_webserve/uploads/", "./root/listFiles.php"));
-	if (findLocationVector(location(), LocationsNames))
+	if (findLocationVector(location(_port), LocationsNames))
 		return (responseLocation(endPoint, LocationsNames));
 	return (responseFileServer(endPoint));
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:08:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 13:36:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 13:42:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ static const std::string	getContentType(const std::string& path)
 
 void generateDynamicHeader(auxReadFiles& tmp, std::string status_code)
 {
-    std::ostringstream oss;
-    oss << tmp.content.length(); // Convertendo o valor numérico para uma string usando std::ostringstream
+	std::ostringstream oss;
+	oss << tmp.content.length(); // Convertendo o valor numérico para uma string usando std::ostringstream
 
-    tmp.header = "HTTP/1.1 " + status_code + " OK\r\n";
-    tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n";
-    tmp.header += "Content-Length: " + oss.str() + "\r\n\r\n";
+	tmp.header = "HTTP/1.1 " + status_code + " OK\r\n";
+	tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n";
+	tmp.header += "Content-Length: " + oss.str() + "\r\n\r\n";
 }
 
 
@@ -60,11 +60,15 @@ void generateDynamicHeader(auxReadFiles& tmp, std::string status_code)
 /*                           createStaticHeader                               */
 /*############################################################################*/
 
-std::string	generateHeaderDynamicStatus(std::string status)
+std::string	generateHeaderDynamicStatus(auxReadFiles& tmp, std::string status)
 {
+	std::ostringstream oss;
+	oss << tmp.content.length(); // Convertendo o valor numérico para uma string usando std::ostringstream
+
+
 	std::string	header = "HTTP/1.1 " + status + " \r\n";
 	header += "Content-Type: text/html\r\n";
-	header += "\r\n";
+	header += "Content-Length: " + oss.str() + "\r\n\r\n";
 	return (header);
 }
 

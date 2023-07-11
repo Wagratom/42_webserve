@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 14:23:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 12:41:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	Server::handleBodyPost( void )
 	write_debug("handleBodyPost");
 	bytesRead = read(_client_fd, initialPos, rest);
 	if (bytesRead == -1)
-		return (write_error(strerror(errno)));
+		return (write_error_prefix("handleBodyPost"));
 	response->totalBytesRead += bytesRead;
 	if (response->totalBytesRead < response->contentLenght)
 		return (true);
@@ -30,6 +30,6 @@ bool	Server::handleBodyPost( void )
 		return (false);
 	bool	status = responseServer("200");
 	response->content.clear();
-	cleanupFd(_client_fd);
+	// cleanupFd(_client_fd);
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:40:49 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 10:20:48 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/10 19:22:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,6 @@ void	Server_configuration::set_autoIndex( bool autoIndex )
 	this->_autoIndex = autoIndex;
 }
 
-void	Server_configuration::set_error_page( std::string number, std::string error_page)
-{
-	if (_error_page.find(number) != _error_page.end())
-		return ;
-	_error_page[number] = new std::string(error_page);
-}
-
 void	Server_configuration::set_client_max_body_size( int maxSize )
 {
 	if (this->_clientMaxBodySize != 0)
@@ -67,4 +60,16 @@ void	Server_configuration::set_return( std::string return_ )
 	if (this->_return != "")
 		return ;
 	this->_return = return_;
+}
+
+void	Server_configuration::set_error_page( std::string number, std::string error_page)
+{
+	if (_error_page.find(number) != _error_page.end())
+		return ;
+	_error_page[number] = new std::string(error_page);
+}
+
+void	Server_configuration::set_locations( std::string location_name, t_location* location )
+{
+	this->_locations[location_name] = location;
 }
