@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 21:50:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/11 10:26:36 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,6 @@ class	Server
 		Parser_configuration*	_parserFile;
 		Parser_request*			_parserRequest;
 
-		size_t					_indexServer2;
 		bool					_write;
 		int						_client_fd;
 		int						_epoll_fd;

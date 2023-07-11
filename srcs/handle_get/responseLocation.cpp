@@ -35,7 +35,7 @@ bool	Server::createRootLocation(std::string& dst, const t_location* location)
 {
 	dst = location->configuration->get_root();
 	if (dst.empty())
-		dst = server()[_indexServer2]->get_root();
+		dst = _serversConf[_port]->get_root();
 	if (dst.empty())
 		return (write_error("Error: root not found"));
 	return (true);

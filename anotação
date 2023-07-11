@@ -26,3 +26,5 @@ usar as paginas de error passas pelo usuario
 document root fazer
 
 dar um jeito de concatenar o responseInput com o responseClentListFiles
+
+deixa o pipe aberto e tentar manda de pouco em pouco

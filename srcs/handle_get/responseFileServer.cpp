@@ -18,9 +18,9 @@ bool Server::responseFileServer(std::string endPoint)
 
 	std::cout << "responseFileServer" << std::endl;
 	endPoint.erase(0, 1);
+	tmp.path = _serversConf[_port]->get_root() + endPoint;
 	if (endPoint.find(".") == std::string::npos)
 		return (responseClientError(ERROR404, getErrorPageMapServer("404")));
-	tmp.path = server()[_indexServer2]->get_root() + endPoint;
 	if (getContentFile(tmp) == false)
 		return (responseClientError(ERROR404, getErrorPageMapServer("404")));
 	generateDynamicHeader(tmp, "200");

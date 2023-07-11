@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:41:44 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 10:05:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/11 10:28:04 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 std::string	Server::getErrorPageMapLocation(t_location* _location, std::string Error)
 {
-	std::map<std::string, std::string*>::iterator it;
+	std::map<std::string, std::string*>::iterator	it;
+	std::map<std::string, std::string*>				ErrorPages	= _location->configuration->get_error_page();
 
-	it = _location->configuration->get_error_page().find(Error);
-	if (it == _location->configuration->get_error_page().end())
+	it = ErrorPages.find(Error);
+	if (it == ErrorPages.end())
 		return ("");
 	return (*(it->second));
 }
 
 std::string	Server::getErrorPageMapServer(std::string Error)
 {
-	std::map<std::string, std::string*>::iterator it;
+	std::map<std::string, std::string*>::iterator	it;
+	std::map<std::string, std::string*>				ErrorPages	= server()[_port]->get_error_page();
 
-	it = server()[_indexServer2]->get_error_page().find(Error);
-	if (it == server()[_indexServer2]->get_error_page().end())
+	it = ErrorPages.find(Error);
+	if (it == ErrorPages.end())
 		return ("");
 	return (*(it->second));
 }

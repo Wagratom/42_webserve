@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 22:05:08 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/11 10:49:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	Server::validatePostRequest( void )
 	response->contentLenght = std::strtol(contentLength.c_str(), NULL, 10);
 	if (_parserRequest->get_request()[0])
 		return (responseClientError(ERROR400, getErrorPageMapServer("400")));
-	if (server()[_indexServer2]->get_clientMaxBodySize() < response->contentLenght)
+	if (_serversConf[_port]->get_clientMaxBodySize() < response->contentLenght)
 	{
 		char	buffer[4096];
 		while (read(_client_fd, buffer, 4096) > 0);
