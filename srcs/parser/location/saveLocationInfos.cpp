@@ -6,16 +6,16 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:31:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/06/28 11:56:40 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/11 08:35:33 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Parser_configuration.hpp>
 
-static bool	isNotEmptyLine(std::string line)
-{
-	return (line.find_first_not_of(" \t") != std::string::npos);
-}
+// static bool	isNotEmptyLine(std::string line)
+// {
+// 	return (line.find_first_not_of(" \t") != std::string::npos);
+// }
 
 static bool	isEndServer(std::string& line)
 {
@@ -46,8 +46,8 @@ bool	Parser_configuration::saveLocationInfos(t_location& location)
 
 bool	Parser_configuration::handleLineLocation(std::string& line,  t_location& location)
 {
-	if (isNotEmptyLine(line) == false)
-		return (true);
+	// if (isNotEmptyLine(line) == false)
+		// return (true);
 	for (std::map<std::string, directiveNginxUniversal>::iterator it = _dictionary_universal.begin(); it != _dictionary_universal.end(); ++it )
 	{
 		if (line.compare(0, it->first.size(), it->first) == 0)

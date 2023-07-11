@@ -40,6 +40,7 @@ bool	Server::responseClientListFiles( std::string pathDir, std::string script)
 	ChildProcessData	auxProcess;
 	std::string			content;
 
+	std::cout << "pathDir: " << pathDir << std::endl;
 	std::cout << "responseClientListFiles" << std::endl;
 	setenvs(pathDir, script);
 	if (executeFork(auxProcess) == false)

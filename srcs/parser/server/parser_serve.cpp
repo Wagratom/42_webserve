@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 09:43:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/11 08:35:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@ bool	Parser_configuration::checkDirectiveUniversal(std::string& line)
 	return (false);
 }
 
-static bool	isNotEmptyLine(std::string line)
-{
-	return (line.find_first_not_of(" \t") != std::string::npos);
-}
+// static bool	isNotEmptyLine(std::string line)
+// {
+// 	return (line.find_first_not_of(" \t") != std::string::npos);
+// }
 
 bool	Parser_configuration::handle_server( std::string& line )
 {
 	if (removeIndentationAndComments(1, line) == false)
 		return (false);
-	if (isNotEmptyLine(line) == false)
-		return (true);
+	// if (isNotEmptyLine(line) == false)
+		// return (true);
 	if (checkDirectiveServer(line))
 		return (true);
 	return (checkDirectiveUniversal(line));

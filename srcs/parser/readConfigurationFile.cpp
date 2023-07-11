@@ -6,20 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 10:46:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/11 08:38:39 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Parser_configuration.hpp>
-
-static bool	isUsefuLine(std::string line)
-{
-	if (line.length() == 0)
-		return false;
-	if (line[0] == '#' || line[0] == '\n')
-		return false;
-	return true;
-}
 
 bool	Parser_configuration::readConfigurationFile( void )
 {
@@ -32,7 +23,7 @@ bool	Parser_configuration::readConfigurationFile( void )
 		return (write_error("Error: File not found"));
 	while (getline(file, line))
 	{
-		if (isUsefuLine(line))
+		if (isLineEmpty(line) == false)
 			_file.push_back(line);
 	}
 	file.close();

@@ -6,11 +6,23 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 14:36:02 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/11 08:38:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Parser_configuration.hpp>
+
+bool	Parser_configuration::isLineEmpty(std::string& line)
+{
+	if (line.empty())
+		return (true);
+	if (line[0] == '#' || line[0] == '\n')
+		return (true);
+	erase_comments(line);
+	if (line.find_first_not_of(" \t") == std::string::npos)
+		return (true);
+	return (false);
+}
 
 bool	write_error(std::string msg)
 {

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 21:52:53 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/11 08:38:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ class	Parser_configuration
 
 		bool					controlParserConfiguration( void );
 		bool					readConfigurationFile( void );
+		bool					isLineEmpty(std::string& line);
 		bool					ParserConfigurationFile( void );
 		bool					parserLineServer( std::string& line );
 		bool					parserConfigurationServer( void );

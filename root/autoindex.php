@@ -38,7 +38,7 @@
 	<ul>
 	<?php
 	// Obtém o valor da variável de ambiente "PATHDIR"
-	$pathDir = getenv('DOCUMENT_ROOT');
+	$pathDir = $_SERVER['PATHDIR'];
 
 	// Verifica se o diretório existe
 	if (!is_dir($pathDir)) {
@@ -67,3 +67,9 @@
 	</ul>
 </body>
 </html>
+
+<?php
+$output = ob_get_contents();
+$contentLength = strlen($output);
+header("Content-Length: $contentLength");
+?>
