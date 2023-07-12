@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 09:25:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 16:10:04 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ Server::Server(std::string filename)
 			, _client_fd(-1)
 			, _epoll_fd(-1)
 			, _number_of_events(-1)
-			, _verbs(create_verbs())
 			, _port(0)
+			, _verbs(create_verbs())
 {
 	_response = new Response*[1024];
 	memset(_response, 0, sizeof(Response*) * 1024);

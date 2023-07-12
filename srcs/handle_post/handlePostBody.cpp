@@ -6,13 +6,13 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 13:22:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 18:20:13 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-bool	Server::readAndSaveDatas(Response* response, std::vector<char>& buffer)
+bool	Server::readAndSaveDatas(Response*& response, std::vector<char>& buffer)
 {
 	response->bytesRead = read(_client_fd, buffer.data(), response->contentLenght);
 	if (response->bytesRead == -1)
@@ -23,7 +23,7 @@ bool	Server::readAndSaveDatas(Response* response, std::vector<char>& buffer)
 	return (true);
 }
 
-static bool	handleProcessResponse(Response* response, std::vector<char>& buffer)
+static void	handleProcessResponse(Response*& response, std::vector<char>& buffer)
 {
 	if (response->totalBytesRead == response->contentLenght)
 	{
@@ -31,10 +31,9 @@ static bool	handleProcessResponse(Response* response, std::vector<char>& buffer)
 		if (response->bytesRead != 0)
 			write(response->fd[1], buffer.data(), response->bytesRead);
 		close(response->fd[1]);
+		return ;
 	}
-	else
-		write(response->fd[1], buffer.data(), response->bytesRead);
-	return (true);
+	write(response->fd[1], buffer.data(), response->bytesRead);
 }
 
 bool	Server::handlePostBody( void )
@@ -48,8 +47,10 @@ bool	Server::handlePostBody( void )
 	if (response->hasProcess == false)
 		return createProcessResponse(response, buffer);
 	handleProcessResponse(response, buffer);
-	if (response->endProcess)
-		return (responseServer("200"));
 	buffer.clear();
-	return (true);
+	if (response->endProcess == false)
+		return (true);
+	if (responseServer("200") == false)
+		return (false);
+	return (handleKeepAlive());
 }

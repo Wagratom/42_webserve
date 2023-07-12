@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   closed_fd_epoll.cpp                                :+:      :+:    :+:   */
+/*   handleKeepAlive.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 10:03:19 by wwallas-         ###   ########.fr       */
+/*   Created: 2023/07/12 16:07:32 by wwallas-          #+#    #+#             */
+/*   Updated: 2023/07/12 16:07:52 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-bool	Server::closed_fd_epoll(epoll_event& event)
+bool	Server::handleKeepAlive( void )
 {
-	if ((int)event.data.fd == _server_fd)
-		return (true);
-	if (epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, event.data.fd, NULL) == -1)
-		return (writeStreerrorPrefix("remove_fd_from_epoll"));
-	close(event.data.fd);
+	std::string	typeConnection = getenv("HTTP_CONNECTION");
+	if (typeConnection != "keep-alive")
+		cleanupFd(_client_fd);
 	return (true);
 }

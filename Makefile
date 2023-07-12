@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/11 23:36:58 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/12 16:08:09 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				parser.cpp check_server.cpp index.cpp root.cpp parserLocation.cpp \
 				get_location.cpp gets_server_configuration.cpp init_parser_request.cpp \
 				createServerConfigured.cpp create_server.cpp configure_server.cpp \
-				startServer.cpp handleNewConnections.cpp filterEvent.cpp \
+				startServer.cpp handleNewConnections.cpp filterEvent.cpp handleKeepAlive.cpp \
 				set_fdNotBlock.cpp error.cpp captureNewEvents.cpp handlePostBody.cpp \
 				debug.cpp create_verbs.cpp handleClientRequest.cpp sendResponseClient.cpp \
 				set_envs_order_line.cpp gets_Parser_request.cpp set_envs_header.cpp\
@@ -33,7 +33,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				responseClientError.cpp responseLocation.cpp generateHeaders.cpp \
 				handlePostRequest.cpp responseServer.cpp generateResponseCGI.cpp\
 				responseFileServer.cpp responseLocationAux.cpp GetContentFilePhp.cpp \
-				getContentFile.cpp readOuputFormatedCGI.cpp handleProcessPOST.cpp\
+				getContentFile.cpp readOuputFormatedCGI.cpp createProcessResponse.cpp\
 				responseClientListFiles.cpp generateListFiles.cpp readConfigurationFile.cpp\
 				saveLocationInfos.cpp getErrosPage.cpp init_Server.cpp get_return.cpp \
 				responseRedirect.cpp get_autoIndex.cpp responseInputGET.cpp handleEvents.cpp \

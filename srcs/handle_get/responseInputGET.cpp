@@ -26,9 +26,9 @@ static void	callCGI(ChildProcessData& auxProcess)
 
 static void	setEnvs(std::string endPoint)
 {
-	size_t				questionMarkPos = endPoint.find("?");
-	std::string			scriptHandler	= "." + endPoint.substr(0, questionMarkPos);
-	std::string			query_string	= endPoint.substr(questionMarkPos + 1);
+	size_t			questionMarkPos = endPoint.find("?");
+	std::string		scriptHandler	= "." + endPoint.substr(0, questionMarkPos);
+	std::string		query_string	= endPoint.substr(questionMarkPos + 1);
 
 	setenv("QUERY_STRING", query_string.c_str(), 1);
 	setenv("SCRIPT_FILENAME", scriptHandler.c_str(), 1);

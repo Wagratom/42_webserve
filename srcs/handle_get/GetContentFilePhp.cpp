@@ -22,29 +22,29 @@ static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 	execlp(scrptName, scrptName, NULL);
 }
 
-static bool	contentFilePHP(auxReadFiles& dst, ChildProcessData& infos)
+static bool	contentFilePHP(auxReadFiles& dst, ChildProcessData& infosProcess)
 {
 	char	buffer[1024];
 	int		bytes_read;
 
-	close(infos.fd[1]);
-	waitpid(infos.pid, &infos.status, 0);
-	if (infos.status != 0)
-		return (write_error("Error: Server::handle_GET_requesition: php-cgi7.4"));
-	while ((bytes_read = read(infos.fd[0], buffer, 1024)) > 0)
+	close(infosProcess.fd[1]);
+	waitpid(infosProcess.pid, &infosProcess.status, 0);
+	if (infosProcess.status != 0)
+		return (write_error("contentFilePHP:: Error in callExecuteCgi"));
+	while ((bytes_read = read(infosProcess.fd[0], buffer, 1024)) > 0)
 		dst.content.append(buffer, bytes_read);
-	close(infos.fd[0]);
+	close(infosProcess.fd[0]);
 	return (true);
 }
 
 bool	getContentFilePHP(auxReadFiles& dst)
 {
-	ChildProcessData	infos;
+	ChildProcessData	infosProcess;
 
 	std::cout << "getContentFilePHP" << std::endl;
-	if (executeFork(infos) == false)
+	if (executeFork(infosProcess) == false)
 		return (false);
-	if (infos.pid == CHILD)
-		callExecuteCgi(dst, infos);
-	return contentFilePHP(dst, infos);
+	if (infosProcess.pid == CHILD)
+		callExecuteCgi(dst, infosProcess);
+	return contentFilePHP(dst, infosProcess);
 }

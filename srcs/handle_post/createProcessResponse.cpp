@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handleProcessPOST.cpp                              :+:      :+:    :+:   */
+/*   createProcessResponse.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 11:49:07 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 18:18:39 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void static setenvs( void )
 	setenv("DOCUMENT_ROOT", "/home/wallas/42_webserve/", 1);
 }
 
-static void	redirectCGI( Response* response )
+static void	redirectCGI( Response*& response )
 {
 	dup2(response->fd[0], STDIN_FILENO);
 	close(response->fd[0]);
@@ -30,7 +30,7 @@ static void	redirectCGI( Response* response )
 	exit(1);
 }
 
-void	Server::handleProcessPOST(Response* response, std::vector<char>& buffer)
+void	Server::handleProcessPOST(Response*& response, std::vector<char>& buffer)
 {
 	if (response->pid == CHILD_PROCESS)
 	{
@@ -41,21 +41,15 @@ void	Server::handleProcessPOST(Response* response, std::vector<char>& buffer)
 	close(response->fd[0]);
 }
 
-bool	Server::createProcessResponse(Response* response, std::vector<char>& buffer)
+bool	Server::createProcessResponse(Response*& response, std::vector<char>& buffer)
 {
 	setenvs();
 	std::cout << "createProcessResponse" << std::endl;
 	if (pipe(response->fd) == -1)
-	{
-		write_error("createProcessResponse: creating pipe");
-		return auxSendErrorPost(ERROR500, getErrorPageMapServer("500"));
-	}
+		return write_error("createProcessResponse: creating pipe");
 	response->pid = fork();
 	if (response->pid == -1)
-	{
-		write_error("createProcessResponse: executing fork");
-		return auxSendErrorPost(ERROR500, getErrorPageMapServer("500"));
-	}
+		return (write_error("createProcessResponse: executing fork"));
 	handleProcessPOST(response, buffer);
 	response->hasProcess = true;
 	return true;

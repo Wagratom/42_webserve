@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 11:00:37 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 18:30:59 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 bool	Server::createValidResponse( void )
 {
-	_response[_client_fd] = new Response;
-	Response* response = _response[_client_fd];
 	std::string	contentLength = getenv("CONTENT_LENGTH");
+	int			contentLengthInt;
 
 	write_debug("validatePostRequest");
-	response->contentLenght = std::strtol(contentLength.c_str(), NULL, 10);
-	if (_serversConf[_port]->get_clientMaxBodySize() < response->contentLenght)
-		return (false);
+	contentLengthInt = std::strtol(contentLength.c_str(), NULL, 10);
+	if (_serversConf[_port]->get_clientMaxBodySize() < contentLengthInt)
+		return (write_error("createValidResponse: contentLenght > clientMaxBodySize"));
+	_response[_client_fd] = new Response;
+	_response[_client_fd]->contentLenght = contentLengthInt;
 	return true;
 }
 
@@ -39,7 +40,10 @@ bool	Server::handlePostRequest()
 	if (_parserRequest->get_request()[0])
 		return (auxSendErrorPost(ERROR400, getErrorPageMapServer("400")));
 	if (createValidResponse() == false)
-		return (auxSendErrorPost(ERROR413, getErrorPageMapServer("413")));
+	{
+		auxSendErrorPost(ERROR413, getErrorPageMapServer("413"));
+		return (handleKeepAlive());
+	}
 	if (handlePostBody() == false)
 		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
 	return (true);

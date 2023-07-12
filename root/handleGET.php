@@ -11,6 +11,10 @@
 	foreach ($get as $key => $value) {
 		echo "<p><strong>Sua entrada:</strong> <strong>$key</strong><br><strong>Seu input:</strong> <strong>$value</strong></p>\n";
 	}
+	$output = ob_get_contents();
+	$contentLength = strlen($output);
+	header("Content-Length: $contentLength");
+	http_response_code(400);
 	?>
 	</body>
 </html>

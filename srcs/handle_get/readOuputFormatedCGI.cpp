@@ -19,24 +19,23 @@
 
 static bool readOutputCGI(ChildProcessData& auxProcess, std::ostringstream& oss)
 {
-	ssize_t				bytesRead;
-	char				buffer[4096];
+	ssize_t	bytesRead;
+	char	buffer[4096];
 
 	close(auxProcess.fd[1]);
 	while ((bytesRead = read(auxProcess.fd[0], buffer, sizeof(buffer))) > 0) {
 		oss.write(buffer, bytesRead);
 	}
 	close(auxProcess.fd[0]);
-	if (bytesRead == -1) {
-		return false;
-	}
+	if (bytesRead == -1)
+		return write_error("readOutputCGI: bytesRead == -1");
 	return true;
 }
 
 static bool	repairStatusCGI( std::string content, std::string& contentFormated )
 {
 	if (content.find("Status") != std::string::npos && content.find("Status: 200") == std::string::npos)
-		return (false);
+		return (write_error("Error: Script Output is not 200"));
 	if (content.find("Status: 200") != std::string::npos)
 	{
 		size_t pos = content.find("Status: 200");
@@ -53,8 +52,8 @@ bool	readOuputFormatedCGI(ChildProcessData& auxProcess, std::string& dst)
 	std::ostringstream	oss;
 
 	if (readOutputCGI(auxProcess, oss) == false)
-		return (write_error("Error: readOutputCGI"));
+		return (false);
 	if (repairStatusCGI(oss.str(), dst) == false)
-		return (write_error("Error: repairStatusCGI"));
+		return (false);
 	return (true);
 }

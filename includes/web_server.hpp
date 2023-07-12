@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 11:49:07 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 16:10:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,13 @@ class	Server
 		bool	createRootLocation(std::string& dst, const t_location* location);
 
 		bool	handlePostRequest( void );
-		bool	auxSendErrorPost( int status, std::string Error );
 		bool	createValidResponse( void );
+		bool	auxSendErrorPost( int status, std::string Error );
 		bool	handlePostBody( void );
-		bool	readAndSaveDatas(Response* response, std::vector<char>& buffer);
-		void	handleProcessPOST( Response* response, std::vector<char>& buffer );
-		bool	createProcessResponse( Response* response, std::vector<char>& buffer );
+		bool	readAndSaveDatas(Response*& response, std::vector<char>& buffer);
+		bool	createProcessResponse( Response*& response, std::vector<char>& buffer );
+		void	handleProcessPOST( Response*& response, std::vector<char>& buffer );
+
 
 
 		bool	handle_DELETE_requesition( void );
@@ -127,6 +128,7 @@ class	Server
 
 		bool	closed_fd_epoll(epoll_event& event);
 
+		bool	handleKeepAlive( void );
 
 		bool	sendResponseClient( std::string response );
 
@@ -157,11 +159,11 @@ class	Server
 		int						_client_fd;
 		int						_epoll_fd;
 		int						_number_of_events;
+		int						_port;
 
-		Response				**_response;
 		std::string				**_verbs;
+		Response				**_response;
 
-		int										_port;
 		std::map<int, Server_configuration*>	_serversConf;
 		std::map<int, std::string>				_defaultErrorPage;
 };
