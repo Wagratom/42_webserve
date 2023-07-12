@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 11:47:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 10:03:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	Server::add_mode_read( int& serverFD )
 
 	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, serverFD, &event) != -1)
 		return (true);
-	return (write_error_prefix("Add_mod_read"));
+	return (writeStreerrorPrefix("Add_mod_read"));
 }
 
 bool	Server::conf_serve_to_read( int& serverFD )

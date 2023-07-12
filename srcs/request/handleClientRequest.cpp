@@ -32,7 +32,7 @@ bool	Server::handleClientRequest(epoll_event& event)
 	_write = true;
 	_client_fd = event.data.fd;
 	if (_response[_client_fd] != NULL)
-		return handlePostRequest();
+		return handlePostBody();
 	if (set_fdNotBlock(_client_fd) == false)
 		return (false);
 	if (readRequest(buffer) == false)

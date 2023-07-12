@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 09:54:32 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 11:49:07 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,12 @@ class	Server
 		bool	createRootLocation(std::string& dst, const t_location* location);
 
 		bool	handlePostRequest( void );
-		bool	validatePostRequest( void );
+		bool	auxSendErrorPost( int status, std::string Error );
+		bool	createValidResponse( void );
 		bool	handlePostBody( void );
-		bool	readAndSaveBytes(Response* response, std::vector<char>& buffer);
+		bool	readAndSaveDatas(Response* response, std::vector<char>& buffer);
 		void	handleProcessPOST( Response* response, std::vector<char>& buffer );
-		bool	redirectBodyCGI( Response* response, std::vector<char>& buffer );
+		bool	createProcessResponse( Response* response, std::vector<char>& buffer );
 
 
 		bool	handle_DELETE_requesition( void );
@@ -126,7 +127,6 @@ class	Server
 
 		bool	closed_fd_epoll(epoll_event& event);
 
-		bool	write_error_prefix( std::string prefix );
 
 		bool	sendResponseClient( std::string response );
 
@@ -181,3 +181,4 @@ bool		generateFilesList(std::string& listFiles, const char* pathDir);
 bool		generateResponse(std::string& response);
 std::string	generateHeaderRedirect(std::string status, std::string endPoint);
 bool		readOuputFormatedCGI(ChildProcessData& auxProcess, std::string& oss);
+

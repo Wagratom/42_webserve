@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 10:17:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 10:05:04 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ typedef struct s_ChildProcessInfo {
 
 void	write_debug_number(std::string message, int number);
 void	write_debug_prefix(std::string prefix, std::string message);
+bool	writeStreerrorPrefix( std::string prefix );
 bool	write_debug(std::string message);
 void	write_type_event_debug(epoll_event& event);

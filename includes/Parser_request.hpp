@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/07 09:53:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 10:03:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Parser_request
 		bool	valid_verb( std::string** verbs );
 		bool	set_request_url( void );
 		bool	set_server_protocol( void );
-		bool	write_error_prefix( std::string prefix );
+		bool	writeStreerrorPrefix( std::string prefix );
 
 		bool	set_envs_header( void );
 		void	set_envs(std::map<std::string, std::string>& envs);

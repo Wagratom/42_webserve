@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/11 08:38:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 10:08:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@ bool	Parser_configuration::isLineEmpty(std::string& line)
 	erase_comments(line);
 	if (line.find_first_not_of(" \t") == std::string::npos)
 		return (true);
-	return (false);
-}
-
-bool	write_error(std::string msg)
-{
-	std::cerr << "\033[1;31mError: " << msg << std::endl;
-	std::cerr << "\033[1;37m" << std::endl;
 	return (false);
 }
 

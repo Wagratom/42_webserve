@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/11 23:22:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 11:49:07 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ static void	redirectCGI( Response* response )
 	dup2(response->fd[0], STDIN_FILENO);
 	close(response->fd[0]);
 	close(response->fd[1]);
-
 	execlp("./root/handlePOST.php", "./root/handlePOST.php", NULL);
-	write_error(strerror(errno));
+	writeStreerrorPrefix("Error: redirectCGI");
 	exit(1);
 }
 
@@ -38,21 +37,25 @@ void	Server::handleProcessPOST(Response* response, std::vector<char>& buffer)
 		close(_client_fd);
 		redirectCGI(response);
 	}
-	std::cout << "content lenght: " << getenv("CONTENT_LENGTH") << std::endl;
-	std::cout << "Content bytesRead" << response->bytesRead << std::endl;
 	write(response->fd[1], buffer.data(), response->bytesRead);
 	close(response->fd[0]);
 }
 
-bool	Server::redirectBodyCGI(Response* response, std::vector<char>& buffer)
+bool	Server::createProcessResponse(Response* response, std::vector<char>& buffer)
 {
 	setenvs();
-	std::cout << "redirectBodyCGI" << std::endl;
+	std::cout << "createProcessResponse" << std::endl;
 	if (pipe(response->fd) == -1)
-		return (write_error("redirectBodyCGI: creating pipe"));
+	{
+		write_error("createProcessResponse: creating pipe");
+		return auxSendErrorPost(ERROR500, getErrorPageMapServer("500"));
+	}
 	response->pid = fork();
 	if (response->pid == -1)
-		return (write_error("redirectBodyCGI: executing fork"));
+	{
+		write_error("createProcessResponse: executing fork");
+		return auxSendErrorPost(ERROR500, getErrorPageMapServer("500"));
+	}
 	handleProcessPOST(response, buffer);
 	response->hasProcess = true;
 	return true;

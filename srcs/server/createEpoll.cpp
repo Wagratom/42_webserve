@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 11:47:47 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 10:03:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	Server::create_epoll( void )
 {
 	_epoll_fd = epoll_create(5);
 	if (_epoll_fd == -1)
-		return (write_error_prefix("Create_epoll"));
+		return (writeStreerrorPrefix("Create_epoll"));
 	write_debug("Creating epoll...");
 	return (true);
 }

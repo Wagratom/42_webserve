@@ -48,7 +48,7 @@ bool	Server::accept_status( int& new_client, int& serverFD )
 {
 	new_client = accept(serverFD, NULL, NULL);
 	if (new_client == -1)
-		return (write_error_prefix("Error: accept_status"));
+		return (writeStreerrorPrefix("Error: accept_status"));
 	return (true);
 }
 
@@ -60,7 +60,7 @@ bool	Server::save_connection( int& new_client )
 	event.data.fd = new_client;
 	event.events = EPOLLIN | EPOLLHUP | EPOLLRDHUP | EPOLLERR;
 	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
-		return (write_error_prefix("save_connection"));
+		return (writeStreerrorPrefix("save_connection"));
 	return (true);
 }
 

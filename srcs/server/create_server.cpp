@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 11:21:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 10:03:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ bool	Server::createSockeConfigured( int& serverFd )
 
 	serverFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (serverFd == -1)
-		return (write_error_prefix("Error: Not create socket"));
+		return (writeStreerrorPrefix("Error: Not create socket"));
 	if (set_fdNotBlock(serverFd) == false)
-		return (write_error_prefix("Error: Not set socket non-blocking"));
+		return (writeStreerrorPrefix("Error: Not set socket non-blocking"));
 	if (setsockopt(serverFd, SOL_SOCKET, SO_REUSEADDR, (char *)&on, sizeof(on)) == -1)
-		return (write_error_prefix("Error: Not set socket option"));
+		return (writeStreerrorPrefix("Error: Not set socket option"));
 	return (true);
 }
 
@@ -48,14 +48,14 @@ bool	Server::bind_socket( int& serverFd, Server_configuration* server)
 
 	if (bind(serverFd, (struct sockaddr *)&port, sizeof(port)) >= 0)
 		return (true);
-	return (write_error_prefix("Error: Bind_socket"));
+	return (writeStreerrorPrefix("Error: Bind_socket"));
 }
 
 bool	Server::listen_socket( int& serverFd )
 {
 	if (listen(serverFd, MAX_CONNECTIONS) == 0)
 		return (true);
-	return (write_error_prefix("Error: Listen_socket"));
+	return (writeStreerrorPrefix("Error: Listen_socket"));
 }
 
 bool	Server::create_server( int& serverFd, Server_configuration* server)
