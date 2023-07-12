@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/11 10:26:36 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 09:54:32 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,22 @@
 
 # define PATH_CGI "/usr/bin/php-cgi"
 # define PATH_UPLOAD "/uploads/"
+# define AUTO_INDEX "./root/autoindex.php"
 
-#define MAXSIZEREQUEST 1000000
+#define MAX_SIZE_HEADER 1000000
 
 class	Response
 {
 	public:
-		Response( void ) : contentLenght(0), totalBytesRead(0) {};
+		Response( void ) : contentLenght(0), bytesRead(0), totalBytesRead(0), hasProcess(false), endProcess(false) {};
 	public:
-		std::vector<char>	content;
 		int					contentLenght;
+		int					bytesRead;
 		int					totalBytesRead;
+		int					fd[2];
+		pid_t				pid;
+		bool				hasProcess;
+		bool				endProcess;
 };
 
 class	Server
@@ -104,9 +109,10 @@ class	Server
 
 		bool	handlePostRequest( void );
 		bool	validatePostRequest( void );
-		bool	handleBodyPost( void );
-		void	handleProcessPOST(ChildProcessData& auxProcess, std::vector<char>& content);
-		bool	redirectBodyCGI( void );
+		bool	handlePostBody( void );
+		bool	readAndSaveBytes(Response* response, std::vector<char>& buffer);
+		void	handleProcessPOST( Response* response, std::vector<char>& buffer );
+		bool	redirectBodyCGI( Response* response, std::vector<char>& buffer );
 
 
 		bool	handle_DELETE_requesition( void );

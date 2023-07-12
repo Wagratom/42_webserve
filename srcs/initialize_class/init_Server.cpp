@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/11 10:28:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 09:25:25 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	Server::initializeDefaultErrorPage( void )
 {
-	_defaultErrorPage[ERROR404] = "./error_pages/404_lufy_pensativo.html";
 	_defaultErrorPage[ERROR400] = "./error_pages/400_bad_request.html";
-	_defaultErrorPage[ERROR415] = "./error_pages/415_unsupported_media.html";
-	_defaultErrorPage[ERROR500] = "./error_pages/500_internal_server.html";
+	_defaultErrorPage[ERROR404] = "./error_pages/404_lufyPensativo.html";
 	_defaultErrorPage[ERROR413] = "./error_pages/413_payload_too_large.html";
+	_defaultErrorPage[ERROR500] = "./error_pages/500_internal_server.html";
+	// _defaultErrorPage[ERROR415] = "./error_pages/415_unsupported_media.html";
 }
 
 // void	Server::initializeResponses( void )
@@ -39,6 +39,7 @@ Server::Server(std::string filename)
 			, _epoll_fd(-1)
 			, _number_of_events(-1)
 			, _verbs(create_verbs())
+			, _port(0)
 {
 	_response = new Response*[1024];
 	memset(_response, 0, sizeof(Response*) * 1024);

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:07:54 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 21:39:56 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 09:40:47 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,6 @@ void	write_debug_prefix(std::string prefix, std::string message)
 
 void	write_type_event_debug(epoll_event& event)
 {
-	struct sockaddr_in addr;
-	socklen_t addrlen = sizeof(addr);
-
-	getsockname(event.data.fd, (struct sockaddr*)&addr, &addrlen);
-	std::cout << "Port: " << ntohs(addr.sin_port) << "|" << std::endl;
-
 	// std::cout << "addr.sin_addr.s_addr: " << addr.sin_addr.s_addr << std::endl;
 	if (get_debug() == false)
 		return ;

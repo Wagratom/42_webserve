@@ -50,6 +50,7 @@ static bool getValidPath(std::string listNames, std::string root, std::string& p
 bool	Server::generetePathToResponse(std::string& dst, std::string root, std::string listNames)
 {
 	dst.clear();
+	write_debug("generetePathToResponse");
 	if (listNames.empty() || root.empty())
 		return (false);
 	if (getValidPath(listNames, root, dst) == false)

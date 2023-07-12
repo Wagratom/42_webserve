@@ -12,7 +12,7 @@
 
 #include <web_server.hpp>
 
-static bool findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint)
+static bool findLocationVector(const std::map<std::string, t_location*> locations, std::string& endPoint)
 {
 	size_t lastSlashPos;
 
@@ -37,7 +37,7 @@ bool	Server::responseClientGET( std::string& endPoint)
 		return (responseInputGET(endPoint));
 	if (endPoint == "/list/files/server")
 		return (responseClientListFiles("/home/wallas/42_webserve/uploads/", "./root/listFiles.php"));
-	if (findLocationVector(location(_port), LocationsNames))
+	if (findLocationVector(_serversConf[_port]->get_locations(), LocationsNames))
 		return (responseLocation(endPoint, LocationsNames));
 	return (responseFileServer(endPoint));
 }

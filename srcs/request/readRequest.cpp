@@ -21,7 +21,7 @@ static bool	isEndHeader(std::vector<char>& header, int index)
 
 bool	Server::readRequest(std::string& buffer)
 {
-	std::vector<char>	headerChar(MAXSIZEREQUEST);
+	std::vector<char>	headerChar(MAX_SIZE_HEADER);
 	char				tmp[1];
 	int					bytesRead = 0;
 	int					indexArray = 0;

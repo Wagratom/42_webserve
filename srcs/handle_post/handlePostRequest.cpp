@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/11 10:49:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/11 23:35:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ bool	Server::validatePostRequest( void )
 		while (read(_client_fd, buffer, 4096) > 0);
 		return (false);
 	}
-	response->content.resize(response->contentLenght);
 	return true;
 }
 
@@ -40,9 +39,10 @@ bool	Server::handlePostRequest()
 		if (validatePostRequest() == false)
 			return (responseClientError(ERROR413, getErrorPageMapServer("413")));
 	}
-	if (handleBodyPost() == true)
-		return true;
-	bool status = responseClientError(ERROR500, getErrorPageMapServer("500"));
-	// cleanupFd(_client_fd);
-	return (status);
+	if (handlePostBody() == false)
+		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
+	if (_response[_client_fd]->endProcess)
+		return (responseServer("200"));
+	return (true);
+
 }

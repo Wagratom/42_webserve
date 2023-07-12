@@ -12,17 +12,22 @@
 
 #include <web_server.hpp>
 
-bool	Server::handleClientRequest(epoll_event& event)
+static void	savaDataCleint(epoll_event& event, int& port)
 {
 	struct sockaddr_in	addr;
-	std::string			buffer;
 	socklen_t			addrlen = sizeof(addr);
 
 	getsockname(event.data.fd, (struct sockaddr*)&addr, &addrlen);
-	_port = ntohs(addr.sin_port);
-	std::cout << "Port: " << _port << "|" << std::endl;
+	std::cout << "Port: " << ntohs(addr.sin_port)<< std::endl;
+	std::cout << "Client: " << event.data.fd << std::endl;
+	port = ntohs(addr.sin_port);
+}
 
+bool	Server::handleClientRequest(epoll_event& event)
+{
+	std::string			buffer;
 	write_debug("\nClient seed request");
+	savaDataCleint(event, _port);
 	// if (event.events & EPOLLOUT)
 	_write = true;
 	_client_fd = event.data.fd;

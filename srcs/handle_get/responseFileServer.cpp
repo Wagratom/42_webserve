@@ -30,7 +30,7 @@ bool Server::responseFileServer(std::string endPoint)
 	return true;
 }
 
-bool Server::responseFileLocation(t_location* location, std::string endPoint)
+bool	Server::responseFileLocation(t_location* location, std::string endPoint)
 {
 	auxReadFiles	tmp;
 

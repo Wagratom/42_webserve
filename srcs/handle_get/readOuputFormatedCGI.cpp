@@ -35,7 +35,6 @@ static bool readOutputCGI(ChildProcessData& auxProcess, std::ostringstream& oss)
 
 static bool	repairStatusCGI( std::string content, std::string& contentFormated )
 {
-	std::cout << "content: " << content << std::endl;
 	if (content.find("Status") != std::string::npos && content.find("Status: 200") == std::string::npos)
 		return (false);
 	if (content.find("Status: 200") != std::string::npos)

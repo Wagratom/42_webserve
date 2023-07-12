@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 13:58:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/11 23:22:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,40 @@ void static setenvs( void )
 	setenv("DOCUMENT_ROOT", "/home/wallas/42_webserve/", 1);
 }
 
-static void	redirectCGI( ChildProcessData auxProcess )
+static void	redirectCGI( Response* response )
 {
-	dup2(auxProcess.fd[0], STDIN_FILENO);
-	close(auxProcess.fd[0]);
-	close(auxProcess.fd[1]);
+	dup2(response->fd[0], STDIN_FILENO);
+	close(response->fd[0]);
+	close(response->fd[1]);
 
 	execlp("./root/handlePOST.php", "./root/handlePOST.php", NULL);
 	write_error(strerror(errno));
 	exit(1);
 }
 
-void	Server::handleProcessPOST(ChildProcessData& auxProcess, std::vector<char>& content)
+void	Server::handleProcessPOST(Response* response, std::vector<char>& buffer)
 {
-	if (auxProcess.pid == CHILD_PROCESS)
+	if (response->pid == CHILD_PROCESS)
 	{
 		close(_client_fd);
-		redirectCGI(auxProcess);
+		redirectCGI(response);
 	}
-	write(auxProcess.fd[1], content.data(), content.size());
-	close(auxProcess.fd[0]);
-	close(auxProcess.fd[1]);
+	std::cout << "content lenght: " << getenv("CONTENT_LENGTH") << std::endl;
+	std::cout << "Content bytesRead" << response->bytesRead << std::endl;
+	write(response->fd[1], buffer.data(), response->bytesRead);
+	close(response->fd[0]);
 }
 
-bool	Server::redirectBodyCGI( void )
+bool	Server::redirectBodyCGI(Response* response, std::vector<char>& buffer)
 {
-	ChildProcessData	auxProcess;
-
 	setenvs();
 	std::cout << "redirectBodyCGI" << std::endl;
-	if (executeFork(auxProcess) == false)
+	if (pipe(response->fd) == -1)
+		return (write_error("redirectBodyCGI: creating pipe"));
+	response->pid = fork();
+	if (response->pid == -1)
 		return (write_error("redirectBodyCGI: executing fork"));
-	handleProcessPOST(auxProcess, _response[_client_fd]->content);
+	handleProcessPOST(response, buffer);
+	response->hasProcess = true;
 	return true;
 }

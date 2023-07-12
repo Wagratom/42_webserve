@@ -45,7 +45,7 @@ bool	Server::responseLocation(std::string endPoint, std::string locationName)
 {
 	t_location*							_location = location(_port).at(locationName);
 
-	std::cout << "responseLocation" << std::endl;
+	write_debug("responseLocation");
 	if (_location == NULL)
 		return (responseClientError(ERROR500, getErrorPageMapLocation(_location, "500")));
 	if (hasRedirection(_location))
@@ -62,7 +62,7 @@ bool	Server::returnIndexLocation(t_location* location)
 	auxReadFiles						tmp;
 	std::string							root;
 
-	std::cout << "returnIndexLocation" << std::endl;
+	write_debug("returnIndexLocation");
 	if (createRootLocation(root, location) == false)
 		return (responseClientError(ERROR500, getErrorPageMapLocation(location, "500")));
 	if (generetePathToResponse(tmp.path, root, location->configuration->get_index()) == false)
@@ -76,10 +76,10 @@ bool	Server::returnIndexLocation(t_location* location)
 
 bool	Server::responseAutoIndexOrErrorLocation( t_location* location )
 {
-	std::cout << "responseAutoIndexOrErrorLocation" << std::endl;
+	write_debug("responseAutoIndexOrErrorLocation");
 	if (location->configuration->get_autoIndex() == false)
 		return (responseClientError(ERROR500, *(location->configuration->get_error_page().find("404")->second)));
-	if (responseClientListFiles(location->configuration->get_root().c_str(), "./root/autoindex.php") == false)
+	if (responseClientListFiles(location->configuration->get_root().c_str(), AUTO_INDEX) == false)
 		return (responseClientError(ERROR500, *(location->configuration->get_error_page().find("404")->second)));
 	return (true);
 

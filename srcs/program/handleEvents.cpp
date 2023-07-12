@@ -17,9 +17,7 @@ bool	Server::is_closed_or_error_event(epoll_event& event)
 	if (event.events & EPOLLERR)
 		std::cout << "Error: error in connection" << std::endl;
 	else if (event.events & EPOLLRDHUP)
-		std::cout << "Error: abnormally closed connection" << std::endl;
-	else if (event.events & EPOLLRDHUP)
-		std::cout << "Client exit" << std::endl;
+		std::cout << "Client exit: " << event.data.fd << std::endl;
 	else
 		return (false);
 	return (true);
