@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 21:47:10 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:27:34 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define PORT 8080
 # define MAX_EVENTS 10
 # define MAX_CONNECTIONS 10
+# define MAX_CLIENTS 1024
 
 # define NOT_CONNECTION 0
 # define NEW_CONNECTION 1
@@ -79,6 +80,9 @@ class	Server
 		int		startServer( void );
 		bool	captureNewEvents( epoll_event* event, int& numberOfEvents );
 		bool	filterEvent( epoll_event* event, int numberOfEvents );
+		void	checkTimeout( int& numberOfEvents );
+
+
 		bool	checkEventInServer(epoll_event	event, int& serverFd);
 
 		bool	handleNewConnections( int& serverFd );
@@ -101,7 +105,6 @@ class	Server
 		bool	responseAutoIndexOrErrorServer( void );
 		bool	responseAutoIndexOrErrorLocation( t_location* location );
 		bool	responseInputGET(std::string endPoint);
-
 
 		bool	responseFileServer( std::string endPoint );
 		bool	responseFileLocation(t_location* location, std::string endPoint);
@@ -162,11 +165,13 @@ class	Server
 		int						_epoll_fd;
 		int						_port;
 
+		std::string				_pathIndexServer;
 		std::string				**_verbs;
 		Response				**_response;
 
 		std::map<int, Server_configuration*>	_serversConf;
 		std::map<int, std::string>				_defaultErrorPage;
+		std::vector<int>						_clientsFds;
 };
 
 void		set_debug(bool	value);

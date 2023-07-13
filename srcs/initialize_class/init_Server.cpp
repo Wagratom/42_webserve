@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 20:19:10 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:26:47 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ void	Server::initializeDefaultErrorPage( void )
 	_defaultErrorPage[ERROR413] = "./error_pages/413_payload_too_large.html";
 	_defaultErrorPage[ERROR500] = "./error_pages/500_internal_server.html";
 	// _defaultErrorPage[ERROR415] = "./error_pages/415_unsupported_media.html";
+}
+
+std::string**	Server::create_verbs( void )
+{
+	std::string** verbs = new std::string*[4];
+	verbs[0] = new std::string("GET");
+	verbs[1] = new std::string("POST");
+	verbs[2] = new std::string("DELETE");
+	verbs[3] = NULL;
+	return (verbs);
 }
 
 // void	Server::initializeResponses( void )
@@ -38,6 +48,7 @@ Server::Server(std::string filename)
 			, _client_fd(-1)
 			, _epoll_fd(-1)
 			, _port(0)
+			, _pathIndexServer("")
 			, _verbs(create_verbs())
 {
 	_response = new Response*[1024];

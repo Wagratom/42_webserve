@@ -18,10 +18,10 @@ static void	savaDataCleint(epoll_event& event, int& port, int& client, bool& wri
 	socklen_t			addrlen = sizeof(addr);
 
 	getsockname(event.data.fd, (struct sockaddr*)&addr, &addrlen);
-	std::cout << "Port: " << ntohs(addr.sin_port)<< std::endl;
-	std::cout << "Client: " << event.data.fd << std::endl;
 	port = ntohs(addr.sin_port);
 	client = event.data.fd;
+	write_debug_number("Port: ", port);
+	write_debug_number("Client: ", client);
 	if (event.events & EPOLLOUT)
 		write = true;
 }
@@ -29,6 +29,7 @@ static void	savaDataCleint(epoll_event& event, int& port, int& client, bool& wri
 bool	Server::handleClientRequest(epoll_event& event)
 {
 	std::string			buffer;
+
 	write_debug("\nClient seed request");
 	savaDataCleint(event, _port, _client_fd, _write);
 	if (_response[_client_fd] != NULL)

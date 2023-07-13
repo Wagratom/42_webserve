@@ -16,7 +16,7 @@ bool Server::responseFileServer(std::string endPoint)
 {
 	auxReadFiles	tmp;
 
-	std::cout << "responseFileServer" << std::endl;
+	write_debug("responseFileServer");
 	endPoint.erase(0, 1);
 	tmp.path = _serversConf[_port]->get_root() + endPoint;
 	if (endPoint.find(".") == std::string::npos)

@@ -15,8 +15,8 @@
 bool	Server::isClosedOrErrorEvent(epoll_event& event)
 {
 	if (event.events & EPOLLRDHUP)
-		write_error_prefixI("Client exit: ", event.data.fd);
-	if (event.events & EPOLLERR)
+		write_debug_number("Client exit: ", event.data.fd);
+	else if (event.events & EPOLLERR)
 		write_error_prefixI ("EPOLLERR fd: ", event.data.fd);
 	else
 		return (false);

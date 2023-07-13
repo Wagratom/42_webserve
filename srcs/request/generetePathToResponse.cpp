@@ -16,10 +16,11 @@ static bool	open_file_status( std::string path )
 {
 	std::ifstream	file(path.c_str());
 
-	std::cout << "path: " << path << std::endl;
+	write_debug("open_file_status");
+	write_debug_prefix("Path: ", path);
 	if (!file.is_open())
 		return (false);
-	std::cout << "File opened" << std::endl;
+	write_debug("File is open");
 	return (true);
 }
 
@@ -44,7 +45,7 @@ static bool getValidPath(std::string listNames, std::string root, std::string& p
 		listNames.erase(0, (endWorld + 1));
 	}
 	pathFile = root + listNames;
-	return (saveValidPathFile(pathFile, pathFile));
+	return saveValidPathFile(pathFile, pathFile);
 }
 
 bool	Server::generetePathToResponse(std::string& dst, std::string root, std::string listNames)
@@ -53,8 +54,14 @@ bool	Server::generetePathToResponse(std::string& dst, std::string root, std::str
 	write_debug("generetePathToResponse");
 	if (listNames.empty() || root.empty())
 		return (false);
-	if (getValidPath(listNames, root, dst) == false)
-		return (write_error("Error: path not found"));
+	if (_pathIndexServer.empty() == false)
+		dst = _pathIndexServer;
+	else
+	{
+		if (getValidPath(listNames, root, dst) == false)
+			return (write_error("Error: path not found"));
+		_pathIndexServer = dst;
+	}
 	return (true);
 }
 

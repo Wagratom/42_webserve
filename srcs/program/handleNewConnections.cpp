@@ -28,22 +28,6 @@ mas ainda há dados para ler. Isso pode acontecer, por exemplo, quando a outra e
 mas ainda permitindo a leitura dos dados que já foram enviados.
 */
 
-// bool	Server::is_newConnect(epoll_event& event, int& server_fd)
-// {
-// 	int	event_socket;
-
-// 	event_socket = event.data.fd;
-// 	for (std::map<int, Server_configuration*>::iterator it = _servers_fd.begin(); it != _servers_fd.end(); it++)
-// 	{
-// 		if (it->first == event_socket)
-// 		{
-// 			server_fd = it->first;
-// 			return (true);
-// 		}
-// 	}
-// 	return (false);
-// }
-
 bool	Server::accept_status( int& new_client, int& serverFD )
 {
 	new_client = accept(serverFD, NULL, NULL);
@@ -61,6 +45,7 @@ bool	Server::save_connection( int& new_client )
 	event.events = EPOLLIN | EPOLLHUP | EPOLLOUT | EPOLLRDHUP | EPOLLERR;
 	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
 		return (writeStreerrorPrefix("save_connection"));
+	_clientsFds.push_back(new_client);
 	return (true);
 }
 
@@ -69,8 +54,6 @@ bool	Server::handleNewConnections(int& serverFd)
 	int	new_client;
 
 	write_debug("New connection");
-	// if (!is_newConnect(event, serverFd))
-		// return (false);
 	if (!accept_status(new_client, serverFd))
 		return (false);
 	if (!save_connection(new_client))

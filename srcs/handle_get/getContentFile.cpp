@@ -16,10 +16,10 @@ bool	getContentAllFile(auxReadFiles& dst)
 {
 	std::ifstream	file(dst.path.c_str(), std::ios::ate);
 
-	std::cout << "getContentAllFile" << std::endl;
-	std::cout << "dst.path: " << dst.path << std::endl;
+	write_debug("getContentAllFile");
+	write_debug_prefix("File: ", dst.path);
 	if (!file.is_open())
-		return (perror("Error: getContentAllFile: file.is_open()"), false);
+		return writeStreerrorPrefix("Error: getContentAllFile: ");
 	dst.contentLength = file.tellg();
 	file.seekg(0, std::ios::beg);
 	dst.content.resize(dst.contentLength);

@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/12 20:13:50 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/13 09:39:24 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,14 @@ MAIN		=
 
 INCLUDE		=	-I./includes
 
-SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
+SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				clientMaxBodySize.cpp error_page.cpp init_Parser_configuration.cpp \
 				parser.cpp check_server.cpp index.cpp root.cpp parserLocation.cpp \
 				get_location.cpp gets_server_configuration.cpp init_parser_request.cpp \
 				createServerConfigured.cpp create_server.cpp configure_server.cpp \
 				startServer.cpp handleNewConnections.cpp filterEvent.cpp handleKeepAlive.cpp \
 				set_fdNotBlock.cpp error.cpp captureNewEvents.cpp handlePostBody.cpp \
-				debug.cpp create_verbs.cpp handleClientRequest.cpp sendResponseClient.cpp \
+				debug.cpp handleClientRequest.cpp sendResponseClient.cpp \
 				set_envs_order_line.cpp gets_Parser_request.cpp set_envs_header.cpp\
 				gets_location_configuration.cpp sets_location_configuration.cpp \
 				gets_Parser_configuration.cpp sets_server_configuration.cpp \
@@ -34,7 +34,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				handlePostRequest.cpp responseServer.cpp generateResponseCGI.cpp\
 				responseFileServer.cpp responseLocationAux.cpp GetContentFilePhp.cpp \
 				getContentFile.cpp readOuputFormatedCGI.cpp createProcessResponse.cpp\
-				responseClientListFiles.cpp generateListFiles.cpp readConfigurationFile.cpp\
+				responseClientListFiles.cpp readConfigurationFile.cpp\
 				saveLocationInfos.cpp getErrosPage.cpp init_Server.cpp get_return.cpp \
 				responseRedirect.cpp get_autoIndex.cpp responseInputGET.cpp handleEvents.cpp \
 				init_Server_configuration.cpp main.cpp

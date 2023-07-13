@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 09:29:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 10:13:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	Server::sendErrorToClient( std::string path, std::string error)
 	auxReadFiles	tmp;
 	std::string		header;
 
-	std::cout << "sendErrorToClient" << std::endl;
+	write_debug_prefix("sendError ", std::string(error + " To Client"));
 	tmp.path = path;
 	if (getContentFile(tmp) == false)
 		return (false);
@@ -28,7 +28,7 @@ bool	Server::sendErrorToClient( std::string path, std::string error)
 
 bool	Server::responseClientError( int status, std::string pathFileError )
 {
-	std::cout << "responseClientError: " << status << std::endl;
+	write_debug("responseClientError");
 	if (pathFileError.empty())
 		pathFileError = _defaultErrorPage[status];
 	if (status == ERROR404)

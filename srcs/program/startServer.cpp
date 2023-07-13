@@ -12,6 +12,14 @@
 
 #include <web_server.hpp>
 
+void	Server::checkTimeout( int& numberOfEvents )
+{
+	if (numberOfEvents > 0)
+		return ;
+	for (int i = 3; i < MAX_CLIENTS; i++)
+		cleanupFd(i);
+}
+
 int	Server::startServer( void )
 {
 	struct	epoll_event event[MAX_EVENTS];
@@ -22,6 +30,7 @@ int	Server::startServer( void )
 		int	numberOfEvents = 0;
 		if (!captureNewEvents(event, numberOfEvents))
 			return (-1);
+		checkTimeout(numberOfEvents);
 		if (!filterEvent(event, numberOfEvents))
 			return (-1);
 		write_debug("\n");

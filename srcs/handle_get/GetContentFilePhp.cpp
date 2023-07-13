@@ -41,7 +41,8 @@ bool	getContentFilePHP(auxReadFiles& dst)
 {
 	ChildProcessData	infosProcess;
 
-	std::cout << "getContentFilePHP" << std::endl;
+	write_debug("getContentFilePHP");
+	write_debug_prefix("File: ", dst.path);
 	if (executeFork(infosProcess) == false)
 		return (false);
 	if (infosProcess.pid == CHILD)

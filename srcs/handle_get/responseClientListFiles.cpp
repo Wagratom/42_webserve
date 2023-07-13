@@ -40,9 +40,7 @@ bool	Server::responseClientListFiles( std::string pathDir, std::string script)
 	ChildProcessData	auxProcess;
 	std::string			content;
 
-	std::cout << "responseClientListFiles" << std::endl;
-	std::cout << "pathDir: " << pathDir << std::endl;
-	std::cout << "script: " << script << std::endl;
+	write_debug("responseClientListFiles");
 	setenvs(pathDir, script);
 	if (executeFork(auxProcess) == false)
 		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
