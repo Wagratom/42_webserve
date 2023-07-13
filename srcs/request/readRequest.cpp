@@ -30,7 +30,7 @@ bool	Server::readRequest(std::string& buffer)
 	{
 		bytesRead = recv(_client_fd, tmp, 1, 0);
 		if (bytesRead == -1)
-			return (write_error("Error: readRequest"));
+			return (writeStreerrorPrefix("Error: readRequest: "));
 		if (bytesRead == 0)
 			break;
 		headerChar[indexArray] = tmp[0];
@@ -39,6 +39,7 @@ bool	Server::readRequest(std::string& buffer)
 		indexArray++;
 	}
 	buffer = std::string(headerChar.begin(), headerChar.end());
-	write_debug(buffer);
+	write_debug_prefix(CIANO, "\t Header received");
+	write_debug_prefix(AZUL, buffer);
 	return (true);
 }

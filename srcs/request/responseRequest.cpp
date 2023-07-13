@@ -23,10 +23,14 @@ bool	Server::responseRequest( std::string& buffer )
 {
 	_parserRequest = new Parser_request(buffer);
 
+	write_debug_prefix(CIANO, "\t ENV Pasing");
+	write_debug(AZUL);
 	if (_parserRequest->set_envs_order_line(_verbs) == false)
 		return (deleteParserRequest(false));
 	if (_parserRequest->set_envs_header() == false)
 		return (deleteParserRequest(false));
+	write_debug_prefix(CIANO, "\t Tratavive request");
+	write_debug(AZUL);
 	if (_parserRequest->get_metodo() == "GET")
 		return deleteParserRequest(handle_GET_requesition());
 	if (_parserRequest->get_metodo() == "POST")

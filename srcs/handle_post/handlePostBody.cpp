@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 21:48:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 14:37:59 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	handleProcessResponse(Response*& response, std::vector<char>& buffer
 
 bool	Server::handlePostBody( void )
 {
-	Response*			response = _response[_client_fd];
+	Response*			response = _responses.find(_client_fd)->second;
 	std::vector<char>	buffer(response->contentLenght);
 
 	write_debug("handlePostBody");

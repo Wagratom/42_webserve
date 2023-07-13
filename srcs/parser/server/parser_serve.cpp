@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/11 08:35:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:11:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	Parser_configuration::checkDirectiveUniversal(std::string& line)
 		if (line.compare(0, it->first.size(), it->first) == 0)
 			return (this->*(it->second))(line, _server_configurations[_indexServer]);
 	}
-	return (false);
+	return (write_error_prefixS("Error invalid Line: ", line));
 }
 
 // static bool	isNotEmptyLine(std::string line)
@@ -55,8 +55,6 @@ bool	Parser_configuration::handle_server( std::string& line )
 {
 	if (removeIndentationAndComments(1, line) == false)
 		return (false);
-	// if (isNotEmptyLine(line) == false)
-		// return (true);
 	if (checkDirectiveServer(line))
 		return (true);
 	return (checkDirectiveUniversal(line));

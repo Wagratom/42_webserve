@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 09:56:56 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 13:49:47 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ bool	Server::createValidResponse( void )
 	contentLengthInt = std::strtol(contentLength.c_str(), NULL, 10);
 	if (_serversConf[_port]->get_clientMaxBodySize() < contentLengthInt)
 		return (write_error("createValidResponse: contentLenght > clientMaxBodySize"));
-	_response[_client_fd] = new Response;
-	_response[_client_fd]->contentLenght = contentLengthInt;
-	_response[_client_fd]->write = _write;
+	_responses.find(_client_fd)->second = new Response;
+	_responses.find(_client_fd)->second->contentLenght = contentLengthInt;
+	_responses.find(_client_fd)->second->write = _write;
 	return true;
 }
 

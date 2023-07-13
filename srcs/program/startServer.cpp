@@ -30,7 +30,7 @@ int	Server::startServer( void )
 		int	numberOfEvents = 0;
 		if (!captureNewEvents(event, numberOfEvents))
 			return (-1);
-		checkTimeout(numberOfEvents);
+		// checkTimeout(numberOfEvents);
 		if (!filterEvent(event, numberOfEvents))
 			return (-1);
 		write_debug("\n");

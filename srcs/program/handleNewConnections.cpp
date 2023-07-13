@@ -33,6 +33,7 @@ bool	Server::accept_status( int& new_client, int& serverFD )
 	new_client = accept(serverFD, NULL, NULL);
 	if (new_client == -1)
 		return (writeStreerrorPrefix("Error: accept_status"));
+	write_debug_number("New connection accepted: ", new_client);
 	return (true);
 }
 
@@ -45,7 +46,7 @@ bool	Server::save_connection( int& new_client )
 	event.events = EPOLLIN | EPOLLHUP | EPOLLOUT | EPOLLRDHUP | EPOLLERR;
 	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
 		return (writeStreerrorPrefix("save_connection"));
-	_clientsFds.push_back(new_client);
+	// _clientsFds.push_back(new_client);
 	return (true);
 }
 
@@ -53,11 +54,9 @@ bool	Server::handleNewConnections(int& serverFd)
 {
 	int	new_client;
 
-	write_debug("New connection");
 	if (!accept_status(new_client, serverFd))
 		return (false);
 	if (!save_connection(new_client))
 		return (false);
-	write_debug("New connection accepted");
 	return (true);
 }

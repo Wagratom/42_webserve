@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 13:59:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 10:12:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 12:23:26 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	writeStreerrorPrefix(std::string prefix)
 
 bool	write_error(std::string msg)
 {
-	std::cerr << "\033[31mError: " << msg << std::endl;
+	std::cerr << "\033[31mError: " << msg;
 	std::cerr << "\033[1;37m" << std::endl;
 	return (false);
 }

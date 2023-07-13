@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 09:26:47 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:43:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,8 @@ Server::Server(std::string filename)
 			, _client_fd(-1)
 			, _epoll_fd(-1)
 			, _port(0)
-			, _pathIndexServer("")
 			, _verbs(create_verbs())
 {
-	_response = new Response*[1024];
-	memset(_response, 0, sizeof(Response*) * 1024);
 	// initializeResponses();
 	initializeDefaultErrorPage();
 };
@@ -65,9 +62,7 @@ Server::~Server() {
 		delete _verbs[i];
 	}
 	delete [] _verbs;
-	for (size_t i = 0; i < 1024; i++) {
-		if (_response[i])
-			delete _response[i];
+	for (std::map<int, Response*>::iterator it = _responses.begin(); it != _responses.end(); it++) {
+		delete it->second;
 	}
-	delete [] _response;
 };

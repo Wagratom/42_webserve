@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 16:49:15 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 10:14:34 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:36:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	Parser_request::set_method( void )
 	_metodo = _order_request.substr(0, (pos - 1));
 	_order_request.erase(0, pos);
 	setenv("REQUEST_METHOD", _metodo.c_str(), 1);
-	write_debug_prefix("REQUEST_METHOD", _metodo);
+	write_debug_prefix("REQUEST_METHOD: ", _metodo);
 	return (true);
 }
 
@@ -58,7 +58,7 @@ bool	Parser_request::set_request_url( void )
 	_endPoint = _order_request.substr(0, pos);
 	_order_request.erase(0, pos + 1);
 	setenv("REQUEST_URI", _endPoint.c_str(), 1);
-	write_debug_prefix("REQUEST_URI", _endPoint);
+	write_debug_prefix("REQUEST_URI: ", _endPoint);
 	return (true);
 }
 
@@ -69,7 +69,7 @@ bool	Parser_request::set_server_protocol( void )
 	if (_order_request != "HTTP/1.1\r")
 		return (write_error("set_server_protocol::Invalid  HTTP version: msg"));
 	setenv("SERVER_PROTOCOL", _order_request.c_str(), 1);
-	write_debug_prefix("SERVER_PROTOCOL", _order_request);
+	write_debug_prefix("SERVER_PROTOCOL: ", _order_request);
 	return (true);
 }
 

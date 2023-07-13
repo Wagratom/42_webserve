@@ -12,18 +12,23 @@
 
 #include <web_server.hpp>
 
-static void	savaDataCleint(epoll_event& event, int& port, int& client, bool& write)
+void	Server::savaDataCleint(epoll_event& event)
 {
 	struct sockaddr_in	addr;
 	socklen_t			addrlen = sizeof(addr);
 
 	getsockname(event.data.fd, (struct sockaddr*)&addr, &addrlen);
-	port = ntohs(addr.sin_port);
-	client = event.data.fd;
-	write_debug_number("Port: ", port);
-	write_debug_number("Client: ", client);
+	_port = ntohs(addr.sin_port);
+	_client_fd = event.data.fd;
+	write_debug_number("Port: ", _port);
+	write_debug_number("Cleint: ", _client_fd);
 	if (event.events & EPOLLOUT)
-		write = true;
+		_write = true;
+	if (_responses.find(_client_fd) == _responses.end())
+	{
+		write_debug("Add new client in Client list");
+		_responses.insert(std::pair<int, Response*>(_client_fd, NULL));
+	}
 }
 
 bool	Server::handleClientRequest(epoll_event& event)
@@ -31,12 +36,12 @@ bool	Server::handleClientRequest(epoll_event& event)
 	std::string			buffer;
 
 	write_debug("\nClient seed request");
-	savaDataCleint(event, _port, _client_fd, _write);
-	if (_response[_client_fd] != NULL)
+	savaDataCleint(event);
+	if (_responses.find(_client_fd)->second != NULL)
 		return handlePostBody();
 	if (set_fdNotBlock(_client_fd) == false)
 		return (false);
-	if (readRequest(buffer) == false)
+	if (readRequest(buffer) == false)  // Fui na venda <-----------------
 		return (false);
 	if (responseRequest(buffer) == false)
 		return (false);

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 21:01:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 19:45:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,9 @@ class  Server_configuration : public aux_configuration
 		int									_clientMaxBodySize;
 		bool								_autoIndex;
 		std::string							_server_name;
-		std::string							_root;
-		std::string							_index;
 		std::string							_return;
+		std::string							_index;
+		std::string							_root;
 		std::map<std::string, t_location*>	_locations;
 		std::map<std::string, std::string*>	_error_page;
 };
@@ -167,12 +167,14 @@ class Location_configuration : public aux_configuration
 
 
 	private:
-		std::string							_root;
-		std::string							_index;
-		int									_clientMaxBodySize;
-		bool								_autoIndex;
+		std::string							_limit_except;
 		std::string							_autoindex;
 		std::string							_return;
+		std::string							_index;
+		std::string							_root;
+
+		bool								_autoIndex;
+		int									_clientMaxBodySize;
 		std::map<std::string, std::string*>	_error_page;
 };
 

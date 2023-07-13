@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 09:27:34 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:41:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ class	Server
 		bool	isClosedOrErrorEvent( epoll_event& event );
 		bool	handleClientRequest( epoll_event& event );
 
+		void	savaDataCleint( epoll_event& event );
 		bool	set_fdNotBlock( int& fd );
 		bool	readRequest( std::string& buffer );
 		bool	responseRequest( std::string& buffer );
@@ -165,13 +166,12 @@ class	Server
 		int						_epoll_fd;
 		int						_port;
 
-		std::string				_pathIndexServer;
 		std::string				**_verbs;
-		Response				**_response;
+		// Response				**_response;
 
 		std::map<int, Server_configuration*>	_serversConf;
 		std::map<int, std::string>				_defaultErrorPage;
-		std::vector<int>						_clientsFds;
+		std::map<int, Response*>				_responses;
 };
 
 void		set_debug(bool	value);

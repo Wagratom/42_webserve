@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:07:54 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 09:40:47 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:29:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	write_type_event_debug(epoll_event& event)
 	// std::cout << "addr.sin_addr.s_addr: " << addr.sin_addr.s_addr << std::endl;
 	if (get_debug() == false)
 		return ;
+	std::cout << "Client: " << event.data.fd << " | ";
 	std::cout << "Type of event: ";
 	if (event.events & EPOLLERR)
 		std::cout << "EPOLLERR | ";
