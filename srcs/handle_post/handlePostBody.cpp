@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 18:20:13 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:48:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ bool	Server::handlePostBody( void )
 	if (response->hasProcess == false)
 		return createProcessResponse(response, buffer);
 	handleProcessResponse(response, buffer);
-	buffer.clear();
 	if (response->endProcess == false)
 		return (true);
+	_write = response->write;
 	if (responseServer("200") == false)
 		return (false);
 	return (handleKeepAlive());

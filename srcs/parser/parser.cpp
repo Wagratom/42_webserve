@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:45 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/11 08:33:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:07:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static bool	is_location(std::string line)
 
 bool	Parser_configuration::controlParserConfiguration( void )
 {
-	write_debug("\033[0;36m\tStarting parser\033[0;34m");
+	write_debug_prefix(CIANO, "\tStarting parser");
 	if (readConfigurationFile() == false)
 		return (false);
 	return (ParserConfigurationFile());
@@ -35,6 +35,7 @@ bool	Parser_configuration::controlParserConfiguration( void )
 
 bool	Parser_configuration::ParserConfigurationFile( void )
 {
+	write_debug("ParserConfigurationFile...");
 	while (_file.size() != 0)
 	{
 		// erase_comments(_file[0]);

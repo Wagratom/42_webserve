@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 07:52:52 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 21:35:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:13:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,14 @@ bool	Server::createServerConfigured( void )
 	for (std::vector<Server_configuration*>::iterator it = auxServer.begin(); it != auxServer.end(); it++)
 	{
 		int	serverFd;
-		write_debug("\033[0;34m");
-		if (create_server(serverFd, *it) == false)
+		if (createServer(serverFd, *it) == false)
 			return (false);
-		if (conf_serve_to_read(serverFd) == false)
+		if (confServeToRead(serverFd) == false)
 			return (false);
 		write_debug_number("Port: ", (*it)->get_port());
 		write_debug_prefix("ServerName: ", (*it)->get_server_name());
-		write_debug("\033[32mOk \n\n");
 		_serversConf[(*it)->get_port()] = *it;
 		_serversConf[serverFd] = *it;
 	}
-	write_debug("\033[0m");
 	return (true);
 }

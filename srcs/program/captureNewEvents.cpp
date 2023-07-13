@@ -12,12 +12,12 @@
 
 #include <web_server.hpp>
 
-bool	Server::captureNewEvents(epoll_event* event)
+bool	Server::captureNewEvents(epoll_event* event, int& numberOfEvents)
 {
 	write_debug("Waiting for events");
-	_number_of_events = epoll_wait(_epoll_fd, event, MAX_EVENTS, -1);
-	write_debug_number("Number of captured events: ", _number_of_events);
-	if (_number_of_events == -1)
+	numberOfEvents = epoll_wait(_epoll_fd, event, MAX_EVENTS, 10000);
+	write_debug_number("Number of captured events: ", numberOfEvents);
+	if (numberOfEvents == -1)
 		return (writeStreerrorPrefix("handleNewConnections"));
 	return (true);
 }

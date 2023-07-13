@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 18:18:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:00:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	Server::handleProcessPOST(Response*& response, std::vector<char>& buffer)
 bool	Server::createProcessResponse(Response*& response, std::vector<char>& buffer)
 {
 	setenvs();
-	std::cout << "createProcessResponse" << std::endl;
+	write_debug("createProcessResponse");
 	if (pipe(response->fd) == -1)
 		return write_error("createProcessResponse: creating pipe");
 	response->pid = fork();

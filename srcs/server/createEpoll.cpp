@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 10:03:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:06:51 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ Level-triggered mode (default) - sinaliza um evento enquanto o estado for verdad
 
 bool	Server::create_epoll( void )
 {
+	write_debug_prefix(AZUL, "Creating epoll...");
 	_epoll_fd = epoll_create(5);
 	if (_epoll_fd == -1)
 		return (writeStreerrorPrefix("Create_epoll"));
-	write_debug("Creating epoll...");
 	return (true);
 }

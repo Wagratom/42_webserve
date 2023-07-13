@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 20:46:34 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 11:48:53 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:19:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 bool	valid_arguments( int argc, char *argv[])
 {
-	if (argc != 2)
+	write_debug("Validating arguments");
+	if (argc > 3)
 		return (write_error("Error: Invalid number of arguments"));
 	if (argv == NULL || *argv == 0)
 		return (write_error("Error: Invalid arguments"));
-	std::cout << "Valid arguments" << std::endl;
+	if (argv[2] && std::string(argv[2]) == "DEBUG")
+		set_debug(true);
 	return (true);
 }
 
@@ -35,7 +37,7 @@ bool	Server::initializeServer( void )
 
 int main ( int argc, char *argv[] )
 {
-	set_debug(true);
+	// set_debug(true);
 	if (valid_arguments(argc, argv) == false)
 		return (false);
 	Server	server(argv[1]);

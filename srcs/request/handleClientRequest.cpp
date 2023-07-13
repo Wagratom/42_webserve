@@ -12,7 +12,7 @@
 
 #include <web_server.hpp>
 
-static void	savaDataCleint(epoll_event& event, int& port)
+static void	savaDataCleint(epoll_event& event, int& port, int& client, bool& write)
 {
 	struct sockaddr_in	addr;
 	socklen_t			addrlen = sizeof(addr);
@@ -21,16 +21,16 @@ static void	savaDataCleint(epoll_event& event, int& port)
 	std::cout << "Port: " << ntohs(addr.sin_port)<< std::endl;
 	std::cout << "Client: " << event.data.fd << std::endl;
 	port = ntohs(addr.sin_port);
+	client = event.data.fd;
+	if (event.events & EPOLLOUT)
+		write = true;
 }
 
 bool	Server::handleClientRequest(epoll_event& event)
 {
 	std::string			buffer;
 	write_debug("\nClient seed request");
-	savaDataCleint(event, _port);
-	// if (event.events & EPOLLOUT)
-	_write = true;
-	_client_fd = event.data.fd;
+	savaDataCleint(event, _port, _client_fd, _write);
 	if (_response[_client_fd] != NULL)
 		return handlePostBody();
 	if (set_fdNotBlock(_client_fd) == false)

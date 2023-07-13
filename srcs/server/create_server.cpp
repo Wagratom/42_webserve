@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_server.cpp                                  :+:      :+:    :+:   */
+/*   createServer.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -58,9 +58,9 @@ bool	Server::listen_socket( int& serverFd )
 	return (writeStreerrorPrefix("Error: Listen_socket"));
 }
 
-bool	Server::create_server( int& serverFd, Server_configuration* server)
+bool	Server::createServer( int& serverFd, Server_configuration* server)
 {
-	write_debug("Creating server...");
+	write_debug_prefix(AZUL, "\nCreating server...");
 	if (createSockeConfigured(serverFd) == false)
 		return (false);
 	write_debug("Binding server...");

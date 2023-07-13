@@ -12,12 +12,12 @@
 
 #include <web_server.hpp>
 
-bool	Server::is_closed_or_error_event(epoll_event& event)
+bool	Server::isClosedOrErrorEvent(epoll_event& event)
 {
+	if (event.events & EPOLLRDHUP)
+		write_error_prefixI("Client exit: ", event.data.fd);
 	if (event.events & EPOLLERR)
-		std::cout << "Error: error in connection" << std::endl;
-	else if (event.events & EPOLLRDHUP)
-		std::cout << "Client exit: " << event.data.fd << std::endl;
+		write_error_prefixI ("EPOLLERR fd: ", event.data.fd);
 	else
 		return (false);
 	return (true);
@@ -25,12 +25,13 @@ bool	Server::is_closed_or_error_event(epoll_event& event)
 
 bool	Server::handleEvents(epoll_event& event)
 {
-	if (is_closed_or_error_event(event))
-		return (cleanupFd(event.data.fd));
+	write_debug("Handling events");
+	if (isClosedOrErrorEvent(event))
+		return cleanupFd(event.data.fd);
 	if (event.events & EPOLLIN)
-		return (handleClientRequest(event));
-	else if (event.events & EPOLLOUT)
-		return (cleanupFd(event.data.fd));
+		return handleClientRequest(event);
+	else
+		return cleanupFd(event.data.fd);
 	return (true);
 }
 

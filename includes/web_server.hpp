@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 16:10:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:47:10 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 
 #define MAX_SIZE_HEADER 1000000
 
+
 class	Response
 {
 	public:
@@ -50,6 +51,7 @@ class	Response
 		pid_t				pid;
 		bool				hasProcess;
 		bool				endProcess;
+		bool				write;
 };
 
 class	Server
@@ -65,18 +67,18 @@ class	Server
 
 		bool	initializeServer( void );
 		bool	createServerConfigured( void );
-		bool	create_server( int& serverFd, Server_configuration* server );
+		bool	createServer( int& serverFd, Server_configuration* server );
 		bool	createSockeConfigured( int& serverFd );
 		bool	bind_socket( int& serverFd, Server_configuration* server );
 		bool	listen_socket( int& serverFd );
 
 		bool	create_epoll( void );
-		bool	conf_serve_to_read( int& serverFD );
+		bool	confServeToRead( int& serverFD );
 		bool	add_mode_read( int& serverFD );
 
 		int		startServer( void );
-		bool	captureNewEvents( epoll_event* event );
-		bool	filterEvent( epoll_event* event );
+		bool	captureNewEvents( epoll_event* event, int& numberOfEvents );
+		bool	filterEvent( epoll_event* event, int numberOfEvents );
 		bool	checkEventInServer(epoll_event	event, int& serverFd);
 
 		bool	handleNewConnections( int& serverFd );
@@ -85,7 +87,7 @@ class	Server
 		bool	save_connection( int& new_client );
 
 		bool	handleEvents( epoll_event& event );
-		bool	is_closed_or_error_event( epoll_event& event );
+		bool	isClosedOrErrorEvent( epoll_event& event );
 		bool	handleClientRequest( epoll_event& event );
 
 		bool	set_fdNotBlock( int& fd );
@@ -158,7 +160,6 @@ class	Server
 		bool					_write;
 		int						_client_fd;
 		int						_epoll_fd;
-		int						_number_of_events;
 		int						_port;
 
 		std::string				**_verbs;

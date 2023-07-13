@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 16:10:04 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 20:19:10 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ Server::Server(std::string filename)
 			, _write(false)
 			, _client_fd(-1)
 			, _epoll_fd(-1)
-			, _number_of_events(-1)
 			, _port(0)
 			, _verbs(create_verbs())
 {

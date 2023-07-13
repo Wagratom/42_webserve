@@ -19,9 +19,10 @@ int	Server::startServer( void )
 	write_debug("\033[0;36m\tStarting server\033[0;34m");
 	while (true)
 	{
-		if (!captureNewEvents(event))
+		int	numberOfEvents = 0;
+		if (!captureNewEvents(event, numberOfEvents))
 			return (-1);
-		if (!filterEvent(event))
+		if (!filterEvent(event, numberOfEvents))
 			return (-1);
 		write_debug("\n");
 	}

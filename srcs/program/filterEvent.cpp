@@ -24,12 +24,12 @@ bool	Server::checkEventInServer(epoll_event event, int& serverFd)
 	return (false);
 }
 
-bool	Server::filterEvent(epoll_event* event)
+bool	Server::filterEvent(epoll_event* event, int numberOfEvents)
 {
 	int	index;
 
 	index = 0;
-	while (index < _number_of_events)
+	while (index < numberOfEvents)
 	{
 		int serverFd = 0;
 		write_type_event_debug(event[index]);

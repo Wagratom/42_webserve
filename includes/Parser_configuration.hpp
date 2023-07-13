@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/11 08:38:14 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:01:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 #define MEGABYTES 'G'
 
 #define maximumSizeAllowed 2000000000
+
+# define ESMERALDA "\033[0;32m"
+# define CIANO "\033[0;36m"
+# define AZUL "\033[0;34m"
 
 /*############################################################################*/
 /*                           Parser_configuration                             */
@@ -177,6 +181,8 @@ class Location_configuration : public aux_configuration
 /*############################################################################*/
 
 bool	write_error(std::string msg);
+bool	write_error_prefixS(std::string prefix, std::string msg);
+bool	write_error_prefixI(std::string prefix, int number);
 bool	startsWithWord(std::string& listen, std::string word);
 bool	has_semicolon_at_end(std::string& line);
 bool	equal_or_err_i(int a, int b, int line);

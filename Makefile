@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/12 16:08:09 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/12 20:13:50 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp tester.cpp parser_serve.cpp \
 				responseClientListFiles.cpp generateListFiles.cpp readConfigurationFile.cpp\
 				saveLocationInfos.cpp getErrosPage.cpp init_Server.cpp get_return.cpp \
 				responseRedirect.cpp get_autoIndex.cpp responseInputGET.cpp handleEvents.cpp \
-				init_Server_configuration.cpp
+				init_Server_configuration.cpp main.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs
@@ -66,7 +66,7 @@ $(OBJECTS_DIR)/%.o:	%.cpp
 all:	$(NAME)
 
 $(NAME):	$(OBJECTS_DIR) $(OBJECTS)
-				$(CC) $(CFLAGS) ./srcs/main.cpp $(OBJECTS) -o $@ $(INCLUDE)
+				$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(INCLUDE)
 # main.cpp/main.cpp
 $(OBJECTS_DIR):
 				mkdir -p $@
@@ -74,61 +74,10 @@ $(OBJECTS_DIR):
 clean:
 				$(RM) $(OBJECTS_DIR)
 
-PDF:
-	pip install PyPDF2
-
 fclean:		clean
 				$(RM) $(NAME)
 norm:
 	@echo "\n			INCLUDES\n" && norminette include
 	@echo "\n			SOURCES\n" && norminette source
 
-
 re: fclean all
-
-################################################################################
-#									TEST
-################################################################################
-
-re_mandatory: clean $(OBJECTS_DIR) $(OBJECTS)
-
-TST_PATH		=	./test
-
-
-FILE_TST		=	$(TST_PATH)/$(t).cpp
-OJBS_TST		=	$(patsubst %.cpp, %.out, $(FILE_TST))
-
-FILE_TSTS		=	$(wildcard $(TST_PATH)/*.cpp);
-OJBS_TSTS		=	$(patsubst %.cpp, %.out, $(FILE_TSTS))
-
-%.out:	%.cpp
-		@$(CC) $(OBJECTS) $< -o teste $(INCLUDE)
-		@./teste
-		@$(RM) teste
-
-test: re_mandatory $(OJBS_TST)
-
-tests: re_mandatory $(OJBS_TSTS)
-
-################################################################################
-#									TESTVG
-################################################################################
-
-TST_PATH		=	./test
-
-VG_FILE_TST		=	$(TST_PATH)/$(t).cpp
-VG_OJBS_TST		=	$(patsubst %.cpp, %.vg.out, $(VG_FILE_TST))
-
-VG_FILE_TSTS	=	$(wildcard $(TST_PATH)/*.cpp)
-VG_OJBS_TSTS	=	$(patsubst %.cpp, %.vg.out, $(VG_FILE_TSTS))
-
-%.vg.out:	%.cpp
-		@$(CC) $(OBJECTS) $< $(LIB_FILO) -o vgteste $(INCLUDE)
-		@valgrind --leak-check=full ./vgteste
-		@$(RM) vgteste
-
-vgtest: re_mandatory $(VG_OJBS_TST)
-
-vgtests: re_mandatory $(VG_OJBS_TSTS)
-
-.PHONY: all clean fclean re

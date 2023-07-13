@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 10:03:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:09:16 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	Server::add_mode_read( int& serverFD )
 	return (writeStreerrorPrefix("Add_mod_read"));
 }
 
-bool	Server::conf_serve_to_read( int& serverFD )
+bool	Server::confServeToRead( int& serverFD )
 {
 	write_debug("Configuring server to read...");
 	if (!add_mode_read( serverFD ))
