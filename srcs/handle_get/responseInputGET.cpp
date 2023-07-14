@@ -48,8 +48,8 @@ bool	Server::responseInputGET(std::string endPoint)
 		callCGI(auxProcess);
 	waitpid(auxProcess.pid, &auxProcess.status, 0);
 	if (auxProcess.status != 0)
-		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
 	if (readOuputFormatedCGI(auxProcess, content) == false)
-		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
 	return (sendResponseClient(content));
 }

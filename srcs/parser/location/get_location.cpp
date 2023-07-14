@@ -67,6 +67,8 @@ static void	saveAndAppendSlash(std::string& dst, const std::string name)
 	dst = name;
 	if (dst[dst.length() - 1] != '/')
 		dst.append("/");
+	else if (dst[dst.length() - 1] == '/' && dst.size() == 1)
+		dst.append("/");
 }
 
 bool	Parser_configuration::saveLocationName(std::string& locationName)

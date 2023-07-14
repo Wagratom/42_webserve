@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 16:41:30 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 17:45:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ class	Server
 		bool	responseFileLocation(t_location* location, std::string endPoint);
 		bool	responseLocation( std::string endPoint, std::string locationName );
 		bool	returnIndexLocation(t_location* _location );
-		bool	createRootLocation(std::string& dst, const t_location* location);
+		bool	createRootLocation(const t_location* location);
 
 		bool	handlePostRequest( void );
 		bool	createValidResponse( void );
@@ -127,8 +127,9 @@ class	Server
 		bool	responseClientListFiles( std::string pathDir, std::string pathFile );
 		// bool	extractFileNameFromBody( aux_upload& data );
 
-		bool	generetePathToResponse( std::string& dst , std::string root, std::string listNames );
-		bool	responseClientError( int status, std::string pathFileError );
+		bool		generetePathToResponse( std::string& dst , std::string root, std::string listNames );
+		bool		responseClientError( int status, std::string root, std::string pathFileError );
+		std::string	generetePathErrorValid(int status, std::string root, std::string path);
 
 		bool	sendErrorToClient( std::string path, std::string header );
 

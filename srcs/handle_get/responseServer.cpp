@@ -14,30 +14,32 @@
 
 bool	Server::responseAutoIndexOrErrorServer( void )
 {
+	Server_configuration* server = _serversConf[_port];
+
 	write_debug("responseAutoIndexOrErrorServer");
-	if (_serversConf[_port]->get_autoIndex() == false)
-		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
-	if (responseClientListFiles(_serversConf[_port]->get_root().c_str(), "./root/autoindex.php") == false)
-		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
+	if (server->get_autoIndex() == false)
+		return (responseClientError(ERROR404, server->get_root(), getErrorPageMapServer("404")));
+	if (responseClientListFiles(server->get_root().c_str(), "./root/autoindex.php") == false)
+		return (responseClientError(ERROR500, server->get_root(), getErrorPageMapServer("500")));
 	return (true);
 
 }
 
 bool	Server::responseServer(std::string status_code)
 {
-	std::map<std::string, std::string*>	errorPages;
+	Server_configuration*				server = _serversConf[_port];
+	std::map<std::string, std::string*>	errorPages = server->get_error_page();
 	auxReadFiles						tmp;
 
 	write_debug("Response server");
-	errorPages = _serversConf[_port]->get_error_page();
-	if (!generetePathToResponse(tmp.path, _serversConf[_port]->get_root(), _serversConf[_port]->get_index()))
+	if (!generetePathToResponse(tmp.path, server->get_root(), server->get_index()))
 		return (responseAutoIndexOrErrorServer());
 	if (!getContentFile(tmp))
-		return (responseClientError(ERROR500, *(errorPages.find("500")->second)));
+		return (responseClientError(ERROR500, server->get_root(), *(errorPages.find("500")->second)));
 	generateDynamicHeader(tmp, status_code);
 	tmp.response = tmp.header + tmp.content;
 	if (sendResponseClient(tmp.response) == false)
-		return (responseClientError(ERROR500, *(errorPages.find("500")->second)));
+		return (responseClientError(ERROR500, server->get_root(), *(errorPages.find("500")->second)));
 	tmp.response.clear();
 	return (true);
 }

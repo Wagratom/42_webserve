@@ -55,7 +55,7 @@ bool	Server::generetePathToResponse(std::string& dst, std::string root, std::str
 	if (listNames.empty() || root.empty())
 		return (false);
 	if (getValidPath(listNames, root, dst) == false)
-		return (write_error("Error: path not found"));
+		return (write_error("path not found"));
 	return (true);
 }
 

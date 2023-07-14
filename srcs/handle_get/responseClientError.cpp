@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 10:13:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 17:35:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,24 @@ bool	Server::sendErrorToClient( std::string path, std::string error)
 	return sendResponseClient(header);
 }
 
-bool	Server::responseClientError( int status, std::string pathFileError )
+std::string	Server::generetePathErrorValid(int status, std::string root, std::string path)
+{
+	if (path.empty())
+		return (_defaultErrorPage.find(status)->second);
+	if (path[0] == '.')
+		return (path);
+	if (path[0] == '/')
+	{
+		path.erase(0, 1);
+		return (root + path);
+	}
+	return (root + path);
+}
+
+bool	Server::responseClientError( int status, std::string root, std::string pathFileError)
 {
 	write_debug("responseClientError");
-	if (pathFileError.empty())
-		pathFileError = _defaultErrorPage[status];
+	pathFileError = generetePathErrorValid(status, root, pathFileError);
 	if (status == ERROR404)
 		return sendErrorToClient(pathFileError, "404 Not Found");
 	else if (status == ERROR500)

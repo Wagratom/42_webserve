@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 13:49:47 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 17:57:12 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	Server::auxSendErrorPost( int status, std::string pathFileError )
 {
 	char	buffer[4096];
 	while (read(_client_fd, buffer, 4096) > 0);
-	responseClientError(status, pathFileError);
+	responseClientError(status, _serversConf[_port]->get_root() ,pathFileError);
 	return handleKeepAlive();
 }
 
@@ -44,7 +44,7 @@ bool	Server::handlePostRequest()
 	if (createValidResponse() == false)
 		return (auxSendErrorPost(ERROR413, getErrorPageMapServer("413")));
 	if (handlePostBody() == false)
-		return (responseClientError(ERROR500, getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
 	return (true);
 
 }

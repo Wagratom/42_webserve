@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 08:49:07 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/14 12:08:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 13:48:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	save_data(std::string& line, aux_configuration* dst)
 bool	Parser_configuration::get_index(std::string& line, aux_configuration *dst)
 {
 	if (has_semicolon_at_end(line) == false)
-		return (write_error("Error: Invalid line index, not ';'"));
+		return (write_error("Invalid line index, not ';'"));
 	if (startsWithWord(line, "index") == false)
 		return (false);
 	if (extractPrefixWord(line, 5) == false)
