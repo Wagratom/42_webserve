@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 18:11:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 12:14:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,6 @@ bool	Parser_configuration::checkDirectiveUniversal(std::string& line)
 	}
 	return (write_error_prefixS("Error invalid Line: ", line));
 }
-
-// static bool	isNotEmptyLine(std::string line)
-// {
-// 	return (line.find_first_not_of(" \t") != std::string::npos);
-// }
 
 bool	Parser_configuration::handle_server( std::string& line )
 {

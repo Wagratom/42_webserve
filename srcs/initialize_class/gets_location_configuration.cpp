@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:52:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 10:20:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 09:52:30 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,9 @@ int	Location_configuration::get_clientMaxBodySize( void )
 bool	Location_configuration::get_autoIndex( void )
 {
 	return (this->_autoIndex);
+}
+
+std::vector<std::string>	Location_configuration::get_limit_except( void )
+{
+	return (this->_limit_except);
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:06:08 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 19:07:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:09:24 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	Parser_configuration::initializeServerDictionary( void )
 {
 	_dictionary_server["listen"] = &Parser_configuration::get_port;
 	_dictionary_server["server_name"] = &Parser_configuration::get_server_name;
+	_dictionary_server["timeout"] = &Parser_configuration::get_timeout;
 }
 
 void	Parser_configuration::initializeUniversalDictionary( void )
@@ -30,6 +31,7 @@ void	Parser_configuration::initializeUniversalDictionary( void )
 	_dictionary_universal["error_page"] = &Parser_configuration::get_error_page;
 	_dictionary_universal["return"] = &Parser_configuration::get_return;
 	_dictionary_universal["autoindex"] = &Parser_configuration::get_autoIndex;
+	_dictionary_universal["limit_except"] = &Parser_configuration::get_limit_except;
 }
 
 /*############################################################################*/

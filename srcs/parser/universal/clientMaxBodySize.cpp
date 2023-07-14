@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:06:27 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 21:05:00 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 12:10:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,6 @@ static bool	get_ValidateUnitMeasure(std::string& size, size_t& unidate)
 	else if (unit == MEGABYTES)
 		unidate = 1000000000;
 	size.erase(end);
-	return (true);
-}
-
-static bool	removeClientMaxBodySizePrefix(std::string& aux)
-{
-	size_t	start;
-
-	start = aux.find_first_not_of(" \t", 20);
-	if (start == std::string::npos)
-		return (write_error("Invalid client_max_body_size: no value"));
-	aux.erase(0, start);
 	return (true);
 }
 
@@ -83,7 +72,7 @@ bool	Parser_configuration::get_clientMaxBodySize(std::string& line, aux_configur
 		return (write_error("Error: Invalid line clientMaxBodySize, not ';'"));
 	if (startsWithWord(line, "client_max_body_size") == false)
 		return (false);
-	if (removeClientMaxBodySizePrefix(line) == false)
+	if (extractPrefixWord(line, 20) == false)
 		return (false);
 	if (extractNumberConverted(line, maxSize) == false)
 		return (false);

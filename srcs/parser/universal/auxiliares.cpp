@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 12:43:22 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 10:08:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 12:01:59 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,16 @@ bool	startsWithWord(std::string& line, std::string word)
 		return (write_error("Invalid word: not " + word));
 	if (line[lenghtWord] != ' ' && line[lenghtWord] != '\t')
 		return (write_error("Invalid word: no space after " + word));
+	return (true);
+}
+
+bool	extractPrefixWord(std::string& line, size_t lenghtErase)
+{
+	size_t	pos = line.find_first_not_of(" \t", lenghtErase);
+
+	if (pos == std::string::npos)
+		return (write_error("Invalid line: no word"));
+	line = line.substr(pos);
 	return (true);
 }
 

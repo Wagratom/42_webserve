@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 19:12:17 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/10 21:09:34 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:41:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 Server_configuration::Server_configuration( void )
 	: aux_configuration()
-	, _port(-1)
-	, _clientMaxBodySize(0)
+	, _error_page()
+	, _locations()
 	, _server_name("")
-	, _root("")
+	, _return("")
 	, _index("")
+	, _root("")
+	, _clientMaxBodySize(0)
+	, _autoIndex(false)
+	, _timeout(-1)
+	, _port(-1)
 {};
 
 Server_configuration::~Server_configuration( void ) {

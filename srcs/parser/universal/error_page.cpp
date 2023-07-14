@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:19:25 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 10:21:38 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 12:09:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,6 @@ static bool	extractPathErrorPage(std::string& LineErrorPage)
 	return (true);
 }
 
-static bool	removeErrorPagePrefix(std::string& LineErrorPage)
-{
-	size_t	initInfos = LineErrorPage.find_first_not_of(" \t", 10);
-
-	if (initInfos == std::string::npos)
-		return (write_error("Invalid error_page: no error_page"));
-	LineErrorPage.erase(0, initInfos);
-	return (true);
-}
-
 static bool	save_data(aux_configuration* dst, std::string number, std::string pathFileError)
 {
 	Location_configuration*	location = dynamic_cast<Location_configuration*>(dst);
@@ -73,7 +63,7 @@ bool	Parser_configuration::get_error_page(std::string& LineErrorPage, aux_config
 		return (write_error("Error: Invalid LineErrorPage error_page, not ';'"));
 	if (startsWithWord(LineErrorPage, "error_page") == false)
 		return (false);
-	if (removeErrorPagePrefix(LineErrorPage) == false)
+	if (extractPrefixWord(LineErrorPage, 10) == false)
 		return (false);
 	if (extractErrorNumber(LineErrorPage, number) == false)
 		return (false);

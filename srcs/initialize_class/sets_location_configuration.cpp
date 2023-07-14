@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:52:42 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/08 10:20:25 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 09:52:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,12 @@ void	Location_configuration::set_autoIndex( bool autoIndex )
 {
 	this->_autoIndex = autoIndex;
 }
+
+void	Location_configuration::set_limit_except( std::vector<std::string> method )
+{
+	if (this->_limit_except.size() != 0)
+		return ;
+	this->_limit_except = method;
+}
+
 

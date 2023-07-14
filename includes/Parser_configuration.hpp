@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 19:45:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/14 12:06:18 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ class	Parser_configuration
 		bool					get_error_page( std::string& LineErrorPage, aux_configuration* dst );
 		bool					get_return( std::string& LineErrorPage, aux_configuration* dst );
 		bool					get_autoIndex( std::string& LineErrorPage, aux_configuration* dst );
+		bool					get_limit_except(std::string& line, aux_configuration* dst);
+		bool					get_timeout( std::string& line );
 
 		bool					parserLocation( void );
 		bool					saveLocationInfos(t_location& location);
@@ -70,9 +72,8 @@ class	Parser_configuration
 		// std::map<std::string, t_location*>	get_location_configuration( void );
 
 	private:
-		std::map<std::string, directiveNginxServer>				_dictionary_server;
 		std::map<std::string, directiveNginxUniversal>			_dictionary_universal;
-
+		std::map<std::string, directiveNginxServer>				_dictionary_server;
 		std::vector<Server_configuration*>						_server_configurations;
 		std::vector<std::string>								_file;
 		std::string												_filename;
@@ -96,15 +97,15 @@ class  Server_configuration : public aux_configuration
 		Server_configuration( void );
 		~Server_configuration( void );
 
-		int			get_port( void );
-		int			get_clientMaxBodySize( void );
-		bool		get_autoIndex( void );
-		std::string	get_server_name( void );
-		std::string	get_root( void );
-		std::string	get_index( void );
-		std::string	get_return( void );
-		std::map<std::string, t_location*>	get_locations( void );
 		std::map<std::string, std::string*>	get_error_page( void );
+		std::map<std::string, t_location*>	get_locations( void );
+		std::string							get_server_name( void );
+		std::string							get_root( void );
+		std::string							get_index( void );
+		std::string							get_return( void );
+		bool								get_autoIndex( void );
+		int									get_port( void );
+		int									get_clientMaxBodySize( void );
 
 		void	set_port( int port );
 		void	set_server_name( std::string server_name );
@@ -117,15 +118,16 @@ class  Server_configuration : public aux_configuration
 		void	set_locations( std::string location_name, t_location* location );
 
 	private:
-		int									_port;
-		int									_clientMaxBodySize;
-		bool								_autoIndex;
+		std::map<std::string, std::string*>	_error_page;
+		std::map<std::string, t_location*>	_locations;
 		std::string							_server_name;
 		std::string							_return;
 		std::string							_index;
 		std::string							_root;
-		std::map<std::string, t_location*>	_locations;
-		std::map<std::string, std::string*>	_error_page;
+		int									_clientMaxBodySize;
+		bool								_autoIndex;
+		int									_timeout;
+		int									_port;
 };
 
 /*############################################################################*/
@@ -137,10 +139,13 @@ class Location_configuration : public aux_configuration
 	public:
 		Location_configuration( void )
 			:  aux_configuration()
-			, _root("")
+			, _error_page()
+			, _limit_except()
+			, _return("")
 			, _index("")
+			, _root("")
+			, _autoIndex(false)
 			, _clientMaxBodySize(0)
-			, _autoindex("")
 			{};
 		~Location_configuration( void ){
 			std::map<std::string, std::string*>::iterator it = _error_page.begin();
@@ -151,31 +156,32 @@ class Location_configuration : public aux_configuration
 			}
 		};
 
-		std::string	get_root( void );
-		std::string	get_index( void );
-		std::string	get_return( void );
-		int			get_clientMaxBodySize( void );
-		bool		get_autoIndex( void );
 		std::map<std::string, std::string*>	get_error_page( void );
+		std::vector<std::string>			get_limit_except( void );
+		std::string							get_root( void );
+		std::string							get_index( void );
+		std::string							get_return( void );
+		bool								get_autoIndex( void );
+		int									get_clientMaxBodySize( void );
 
-		void		set_root( std::string root );
-		void		set_index( std::string index );
-		void		set_return( std::string index );
-		void		set_error_page( std::string number, std::string error_page );
-		void		set_client_max_body_size( int maxSize );
-		void		set_autoIndex( bool autoIndex );
+
+		void	set_root( std::string root );
+		void	set_index( std::string index );
+		void	set_return( std::string index );
+		void	set_error_page( std::string number, std::string error_page );
+		void	set_client_max_body_size( int maxSize );
+		void	set_autoIndex( bool autoIndex );
+		void	set_limit_except( std::vector<std::string> method );
 
 
 	private:
-		std::string							_limit_except;
-		std::string							_autoindex;
+		std::map<std::string, std::string*>	_error_page;
+		std::vector<std::string>			_limit_except;
 		std::string							_return;
 		std::string							_index;
 		std::string							_root;
-
 		bool								_autoIndex;
 		int									_clientMaxBodySize;
-		std::map<std::string, std::string*>	_error_page;
 };
 
 /*############################################################################*/
@@ -187,13 +193,15 @@ bool	write_error_prefixS(std::string prefix, std::string msg);
 bool	write_error_prefixI(std::string prefix, int number);
 bool	startsWithWord(std::string& listen, std::string word);
 bool	has_semicolon_at_end(std::string& line);
-bool	equal_or_err_i(int a, int b, int line);
+bool	extractPrefixWord(std::string& line, size_t lenghtErase);
+
 void	erase_comments(std::string& line);
 bool	erase_isspaces(size_t indentation, std::string& line);
 bool	removeIndentationAndComments(int indentation, std::string& line);
 
-bool	different_or_err_i(int a, int b, int line);
-bool	equal_or_err_s(std::string a, std::string b, int line);
-bool	different_or_err_s(std::string a, std::string b, int line);
-bool	equal_or_err_b(bool a, bool b, int line);
-bool	different_or_err_b(bool a, bool b, int line);
+// bool	equal_or_err_i(int a, int b, int line);
+// bool	different_or_err_i(int a, int b, int line);
+// bool	equal_or_err_s(std::string a, std::string b, int line);
+// bool	different_or_err_s(std::string a, std::string b, int line);
+// bool	equal_or_err_b(bool a, bool b, int line);
+// bool	different_or_err_b(bool a, bool b, int line);
