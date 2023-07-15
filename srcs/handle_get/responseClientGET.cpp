@@ -32,7 +32,7 @@ bool	Server::responseClientGET( std::string& endPoint)
 	std::string	LocationsNames = endPoint + "/";
 
 	if (endPoint == "/")
-		return (responseServer("200"));
+		return (responseServer());
 	if (endPoint.find("?") != std::string::npos)
 		return (responseInputGET(endPoint));
 	if (endPoint == "/list/files/server")

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/14 17:35:41 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/15 10:12:44 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ bool	Server::sendErrorToClient( std::string path, std::string error)
 	tmp.path = path;
 	if (getContentFile(tmp) == false)
 		return (false);
-	header = generateHeaderDynamicStatus(tmp, error);
-	header += tmp.content + "\r\n";
-	return sendResponseClient(header);
+	return sendResponseClient(tmp.content);
 }
 
 std::string	Server::generetePathErrorValid(int status, std::string root, std::string path)

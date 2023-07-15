@@ -25,6 +25,8 @@ bool	getContentAllFile(auxReadFiles& dst)
 	dst.content.resize(dst.contentLength);
 	if (!file.read(&dst.content[0], dst.contentLength))
 		return (file.close(), false);
+	generateDynamicHeader(dst, "200");
+	dst.content = dst.header + dst.content;
 	file.close();
 	return (true);
 }

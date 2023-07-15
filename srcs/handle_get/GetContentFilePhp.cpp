@@ -16,36 +16,45 @@ static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 {
 	char*	scrptName = (char *)dst.path.c_str();
 
+	setenv("REDIRECT_STATUS", "200", 1);
+	setenv("REQUEST_METHOD", "GET", 1);
+	setenv("SCRIPT_FILENAME", scrptName, 1);
+	setenv("SCRIPT_NAME", scrptName, 1);
 	dup2(infos.fd[1], STDOUT_FILENO);
 	close(infos.fd[0]);
 	close(infos.fd[1]);
 	execlp(scrptName, scrptName, NULL);
+	writeStreerrorPrefix("Error: callExecuteCgi: ");
+	exit(1);
 }
 
-static bool	contentFilePHP(auxReadFiles& dst, ChildProcessData& infosProcess)
-{
-	char	buffer[1024];
-	int		bytes_read;
+// static bool	CheckAndSaveContentScript(auxReadFiles& dst, ChildProcessData& infosProcess)
+// {
+// 	char	buffer[1024];
+// 	int		bytes_read;
 
-	close(infosProcess.fd[1]);
-	waitpid(infosProcess.pid, &infosProcess.status, 0);
-	if (infosProcess.status != 0)
-		return (write_error("contentFilePHP:: Error in callExecuteCgi"));
-	while ((bytes_read = read(infosProcess.fd[0], buffer, 1024)) > 0)
-		dst.content.append(buffer, bytes_read);
-	close(infosProcess.fd[0]);
-	return (true);
-}
+// 	close(infosProcess.fd[1]);
+// 	waitpid(infosProcess.pid, &infosProcess.status, 0);
+// 	if (infosProcess.status != 0)
+// 		return (write_error("contentFilePHP:: Error in callExecuteCgi"));
+// 	while ((bytes_read = read(infosProcess.fd[0], buffer, 1024)) > 0)
+// 		dst.content.append(buffer, bytes_read);
+// 	close(infosProcess.fd[0]);
+// 	return (true);
+// }
 
 bool	getContentFilePHP(auxReadFiles& dst)
 {
-	ChildProcessData	infosProcess;
+	ChildProcessData	auxProcess;
 
 	write_debug("getContentFilePHP");
 	write_debug_prefix("File: ", dst.path);
-	if (executeFork(infosProcess) == false)
+	bzero(&auxProcess, sizeof(ChildProcessData));
+	if (executeFork(auxProcess) == false)
 		return (false);
-	if (infosProcess.pid == CHILD)
-		callExecuteCgi(dst, infosProcess);
-	return contentFilePHP(dst, infosProcess);
+	if (auxProcess.pid == CHILD)
+		callExecuteCgi(dst, auxProcess);
+	if (readOuputFormatedCGI(auxProcess, dst.content) == false)
+		return (false);
+	return (true);
 }

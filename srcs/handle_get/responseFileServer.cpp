@@ -23,9 +23,7 @@ bool Server::responseFileServer(std::string endPoint)
 		return (responseClientError(ERROR404, _serversConf[_port]->get_root(), getErrorPageMapServer("404")));
 	if (getContentFile(tmp) == false)
 		return (responseClientError(ERROR404, _serversConf[_port]->get_root(), getErrorPageMapServer("404")));
-	generateDynamicHeader(tmp, "200");
-	tmp.response = tmp.header + tmp.content;
-	if (sendResponseClient(tmp.response) == false)
+	if (sendResponseClient(tmp.content) == false)
 		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
 	return true;
 }
@@ -34,13 +32,12 @@ bool	Server::responseFileLocation(t_location* location, std::string endPoint)
 {
 	auxReadFiles	tmp;
 
+	write_debug("responseFileLocation");
 	endPoint.erase(0, location->endPoint.length());
 	tmp.path = location->configuration->get_root() + endPoint;
 	if (getContentFile(tmp) == false)
 		return (responseClientError(ERROR404, _serversConf[_port]->get_root(), getErrorPageMapLocation(location, "404")));
-	generateDynamicHeader(tmp, "200");
-	tmp.response = tmp.header + tmp.content;
-	if (sendResponseClient(tmp.response) == false)
+	if (sendResponseClient(tmp.content) == false)
 		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapLocation(location, "500")));
 	return true;
 }

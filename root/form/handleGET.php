@@ -14,7 +14,6 @@
 	$output = ob_get_contents();
 	$contentLength = strlen($output);
 	header("Content-Length: $contentLength");
-	http_response_code(400);
 	?>
 	</body>
 </html>

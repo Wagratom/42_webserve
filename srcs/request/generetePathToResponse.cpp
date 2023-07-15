@@ -16,11 +16,10 @@ static bool	open_file_status( std::string path )
 {
 	std::ifstream	file(path.c_str());
 
-	write_debug("open_file_status");
 	write_debug_prefix("Path: ", path);
 	if (!file.is_open())
 		return (false);
-	write_debug("File is open");
+	write_debug("Path existing");
 	return (true);
 }
 

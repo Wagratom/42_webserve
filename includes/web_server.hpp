@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/14 17:45:46 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/15 10:05:09 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 # define PATH_CGI "/usr/bin/php-cgi"
 # define PATH_UPLOAD "/uploads/"
-# define AUTO_INDEX "./root/autoindex.php"
+# define AUTO_INDEX "./autoindex.php"
 
 #define MAX_SIZE_HEADER 1000000
 
@@ -102,7 +102,7 @@ class	Server
 
 		bool	handle_GET_requesition( void );
 		bool	responseClientGET( std::string& endPoint );
-		bool	responseServer( std::string status_code );
+		bool	responseServer( void );
 		bool	responseAutoIndexOrErrorServer( void );
 		bool	responseAutoIndexOrErrorLocation( t_location* location );
 		bool	responseInputGET(std::string endPoint);

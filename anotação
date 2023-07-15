@@ -28,3 +28,17 @@ document root fazer
 dar um jeito de concatenar o responseInput com o responseClentListFiles
 
 deixa o pipe aberto e tentar manda de pouco em pouco
+
+quando o location ou arquivo começa apenas com '/' ele usa o root como referencia.
+Exemplo:
+root ./tomzim
+location /wagratom
+final: ./tomzim/wagratom
+
+com .
+
+location ./wagratom
+final: ./wagratom
+
+quando o root começa com / ele procura na raiz do computador e quando começa com .
+ele procura na raiz do server.

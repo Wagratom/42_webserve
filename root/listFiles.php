@@ -1,14 +1,5 @@
 #!/usr/bin/php-cgi
 
-<?php
-	$pathDir = getenv('PATHDIR');
-
-	if (!is_dir($pathDir)) {
-		http_response_code(500);
-		exit();
-	}
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,22 +44,16 @@
 		</tr>
 		<?php
 		// Obtém a lista de arquivos no caminho especificado
-		$files = scandir($pathDir);
-		// http_response_code(200);
-		// http_response_code(300);
-		// header("HTTP/1.1 300 OK");
-		// header("wagratom 200 OK");
-
-
+		$files = scandir("../uploads");
 		// Exibe a lista de arquivos com botões de delete
 		foreach ($files as $file) {
 			if ($file === "." || $file === "..") {
-			continue;
-		}
-		echo "<tr>";
-		echo "<td class=\"filename\">$file</td>";
-		echo "<td class=\"button\"><button onclick=\"deleteFile('$file')\">Delete</button></td>";
-		echo "</tr>";
+				continue;
+			}
+			echo "<tr>";
+			echo "<td class=\"filename\">$file</td>";
+			echo "<td class=\"button\"><button onclick=\"deleteFile('$file')\">Delete</button></td>";
+			echo "</tr>";
 		}
 		?>
 
@@ -90,3 +75,10 @@
 	</script>
 </body>
 </html>
+
+<?php
+$output = ob_get_contents();
+$contentLength = strlen($output);
+header("Content-Length: $contentLength");
+?>
+
