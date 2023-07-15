@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/15 10:12:44 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:39:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	Server::sendErrorToClient( std::string path, std::string error)
 
 	write_debug_prefix("sendError ", std::string(error + " To Client"));
 	tmp.path = path;
-	if (getContentFile(tmp) == false)
+	if (getContentFile(tmp, _serversConf[_port]->get_cgi()) == false)
 		return (false);
 	return sendResponseClient(tmp.content);
 }

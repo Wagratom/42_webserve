@@ -14,17 +14,18 @@
 
 bool Server::responseFileServer(std::string endPoint)
 {
-	auxReadFiles	tmp;
+	Server_configuration*	server = _serversConf[_port];
+	auxReadFiles			tmp;
 
 	write_debug("responseFileServer");
 	endPoint.erase(0, 1);
-	tmp.path = _serversConf[_port]->get_root() + endPoint;
+	tmp.path = server->get_root() + endPoint;
 	if (endPoint.find(".") == std::string::npos)
-		return (responseClientError(ERROR404, _serversConf[_port]->get_root(), getErrorPageMapServer("404")));
-	if (getContentFile(tmp) == false)
-		return (responseClientError(ERROR404, _serversConf[_port]->get_root(), getErrorPageMapServer("404")));
+		return (responseClientError(ERROR404, server->get_root(), getErrorPageMapServer("404")));
+	if (getContentFile(tmp, server->get_cgi()) == false)
+		return (responseClientError(ERROR404, server->get_root(), getErrorPageMapServer("404")));
 	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, server->get_root(), getErrorPageMapServer("500")));
 	return true;
 }
 
@@ -35,9 +36,9 @@ bool	Server::responseFileLocation(t_location* location, std::string endPoint)
 	write_debug("responseFileLocation");
 	endPoint.erase(0, location->endPoint.length());
 	tmp.path = location->configuration->get_root() + endPoint;
-	if (getContentFile(tmp) == false)
-		return (responseClientError(ERROR404, _serversConf[_port]->get_root(), getErrorPageMapLocation(location, "404")));
+	if (getContentFile(tmp, location->configuration->get_cgi()) == false)
+		return (responseClientError(ERROR404, location->configuration->get_root(), getErrorPageMapLocation(location, "404")));
 	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapLocation(location, "500")));
+		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
 	return true;
 }

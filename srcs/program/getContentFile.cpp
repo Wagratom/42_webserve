@@ -31,9 +31,11 @@ bool	getContentAllFile(auxReadFiles& dst)
 	return (true);
 }
 
-bool	getContentFile(auxReadFiles& dst)
+bool	getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi)
 {
-	if (dst.path.find(".php") != std::string::npos)
+	std::string	extension = dst.path.substr(dst.path.find_last_of("."));
+
+	if (cgi.find(extension) != cgi.end())
 		return (getContentFilePHP(dst));
 	if (dst.path.find(".") != std::string::npos)
 		return (getContentAllFile(dst));

@@ -34,7 +34,7 @@ bool	Server::responseServer( void )
 	write_debug("Response server");
 	if (!generetePathToResponse(tmp.path, server->get_root(), server->get_index()))
 		return (responseAutoIndexOrErrorServer());
-	if (!getContentFile(tmp))
+	if (!getContentFile(tmp, server->get_cgi()))
 		return (responseClientError(ERROR500, server->get_root(), *(errorPages.find("500")->second)));
 	if (sendResponseClient(tmp.content) == false)
 		return (responseClientError(ERROR500, server->get_root(), *(errorPages.find("500")->second)));

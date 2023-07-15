@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/15 10:05:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:39:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ class	Server
 void		set_debug(bool	value);
 int			get_debug( void );
 
-bool		getContentFile(auxReadFiles& dst);
+bool		getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi);
 void		generateDynamicHeader(auxReadFiles& tmp, std::string status_code);
 std::string	generateHeaderDynamicStatus(auxReadFiles& tmp, std::string status);
 bool		executeFork( ChildProcessData& infos);

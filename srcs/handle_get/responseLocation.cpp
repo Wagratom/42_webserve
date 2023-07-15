@@ -60,14 +60,14 @@ bool	Server::responseLocation(std::string endPoint, std::string locationName)
 
 bool	Server::returnIndexLocation(t_location* location)
 {
-	auxReadFiles						tmp;
+	auxReadFiles	tmp;
 
 	write_debug("returnIndexLocation");
 	if (createRootLocation(location) == false)
 		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
 	if (generetePathToResponse(tmp.path, location->configuration->get_root(), location->configuration->get_index()) == false)
 		return (responseAutoIndexOrErrorLocation(location));
-	if (getContentFile(tmp) == false)
+	if (getContentFile(tmp, location->configuration->get_cgi()) == false)
 		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
 	// generateDynamicHeader(tmp, "200");
 	// tmp.response = tmp.header + tmp.content;
@@ -94,7 +94,7 @@ bool	Server::responseAutoIndexOrErrorLocation( t_location* location )
 		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "404")));
 	tmp.path = AUTO_INDEX;
 	set_PathAutoindex(location);
-	if (getContentFile(tmp) == false)
+	if (getContentFile(tmp, location->configuration->get_cgi()) == false)
 		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
 	return (sendResponseClient(tmp.content));
 }
