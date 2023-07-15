@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:33:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 09:45:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:05:03 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,9 @@ std::map<std::string, std::string*>	Server_configuration::get_error_page( void )
 std::map<std::string, t_location*>	Server_configuration::get_locations( void )
 {
 	return (this->_locations);
+}
+
+std::map<std::string, std::string>	Server_configuration::get_cgi( void )
+{
+	return (this->_cgi);
 }

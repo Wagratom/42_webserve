@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:52:42 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/14 09:52:00 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:14:24 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	Location_configuration::set_error_page( std::string number, std::string err
 {
 	if (_error_page.find(number) != _error_page.end())
 		return ;
-	_error_page[number] = new std::string(error_page);
+	this->_error_page.insert(std::pair<std::string, std::string*>(number, new std::string(error_page)));
 }
 
 void	Location_configuration::set_client_max_body_size( int maxSize )
@@ -61,4 +61,9 @@ void	Location_configuration::set_limit_except( std::vector<std::string> method )
 	this->_limit_except = method;
 }
 
-
+void	Location_configuration::set_cgi( std::string extension, std::string path )
+{
+	if (_cgi.find(extension) != _cgi.end())
+		return ;
+	this->_cgi.insert(std::pair<std::string, std::string>(extension, path));
+}

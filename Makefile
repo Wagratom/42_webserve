@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/14 12:04:37 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/15 11:31:06 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,11 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				handlePostRequest.cpp responseServer.cpp generateResponseCGI.cpp\
 				responseFileServer.cpp responseLocationAux.cpp GetContentFilePhp.cpp \
 				getContentFile.cpp readOuputFormatedCGI.cpp createProcessResponse.cpp\
-				responseClientListFiles.cpp readConfigurationFile.cpp\
+				responseClientListFiles.cpp readConfigurationFile.cpp cgi.cpp\
 				saveLocationInfos.cpp getErrosPage.cpp init_Server.cpp return.cpp \
 				responseRedirect.cpp autoIndex.cpp responseInputGET.cpp handleEvents.cpp \
-				init_Server_configuration.cpp main.cpp limit_except.cpp get_timeout.cpp
+				init_Server_configuration.cpp main.cpp limit_except.cpp get_timeout.cpp \
+				init_Location_configuration.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs

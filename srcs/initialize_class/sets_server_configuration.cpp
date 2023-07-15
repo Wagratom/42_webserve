@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:40:49 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 20:55:03 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:13:09 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,19 @@ void	Server_configuration::set_error_page( std::string number, std::string error
 {
 	if (_error_page.find(number) != _error_page.end())
 		return ;
-	_error_page[number] = new std::string(error_page);
+	this->_error_page.insert(std::pair<std::string, std::string*>(number, new std::string(error_page)));
 }
 
 void	Server_configuration::set_locations( std::string location_name, t_location* location )
 {
-	this->_locations[location_name] = location;
+	if (this->_locations.find(location_name) != this->_locations.end())
+		return ;
+	this->_locations.insert(std::pair<std::string, t_location*>(location_name, location));
+}
+
+void	Server_configuration::set_cgi( std::string extension, std::string path )
+{
+	if (this->_cgi.find(extension) != this->_cgi.end())
+		return ;
+	this->_cgi.insert(std::pair<std::string, std::string>(extension, path));
 }

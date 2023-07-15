@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/14 12:06:18 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:30:39 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ class	Parser_configuration
 		bool					get_return( std::string& LineErrorPage, aux_configuration* dst );
 		bool					get_autoIndex( std::string& LineErrorPage, aux_configuration* dst );
 		bool					get_limit_except(std::string& line, aux_configuration* dst);
+		bool					get_cgi(std::string& line, aux_configuration* dst);
 		bool					get_timeout( std::string& line );
 
 		bool					parserLocation( void );
@@ -99,6 +100,7 @@ class  Server_configuration : public aux_configuration
 
 		std::map<std::string, std::string*>	get_error_page( void );
 		std::map<std::string, t_location*>	get_locations( void );
+		std::map<std::string, std::string>	get_cgi( void );
 		std::string							get_server_name( void );
 		std::string							get_root( void );
 		std::string							get_index( void );
@@ -107,19 +109,21 @@ class  Server_configuration : public aux_configuration
 		int									get_port( void );
 		int									get_clientMaxBodySize( void );
 
-		void	set_port( int port );
+		void	set_locations( std::string location_name, t_location* location );
+		void	set_error_page( std::string number, std::string error_page );
+		void	set_cgi( std::string extension, std::string path );
 		void	set_server_name( std::string server_name );
-		void	set_root( std::string root );
-		void	set_index( std::string index );
 		void	set_client_max_body_size( int size );
 		void	set_return( std::string return_ );
 		void	set_autoIndex( bool autoIndex );
-		void	set_error_page( std::string number, std::string error_page );
-		void	set_locations( std::string location_name, t_location* location );
+		void	set_index( std::string index );
+		void	set_root( std::string root );
+		void	set_port( int port );
 
 	private:
 		std::map<std::string, std::string*>	_error_page;
 		std::map<std::string, t_location*>	_locations;
+		std::map<std::string, std::string>	_cgi;
 		std::string							_server_name;
 		std::string							_return;
 		std::string							_index;
@@ -137,26 +141,11 @@ class  Server_configuration : public aux_configuration
 class Location_configuration : public aux_configuration
 {
 	public:
-		Location_configuration( void )
-			:  aux_configuration()
-			, _error_page()
-			, _limit_except()
-			, _return("")
-			, _index("")
-			, _root("")
-			, _autoIndex(false)
-			, _clientMaxBodySize(0)
-			{};
-		~Location_configuration( void ){
-			std::map<std::string, std::string*>::iterator it = _error_page.begin();
-			while (it != _error_page.end())
-			{
-				delete it->second;
-				it++;
-			}
-		};
+		Location_configuration( void );
+		~Location_configuration( void );
 
 		std::map<std::string, std::string*>	get_error_page( void );
+		std::map<std::string, std::string>	get_cgi( void );
 		std::vector<std::string>			get_limit_except( void );
 		std::string							get_root( void );
 		std::string							get_index( void );
@@ -165,17 +154,19 @@ class Location_configuration : public aux_configuration
 		int									get_clientMaxBodySize( void );
 
 
-		void	set_root( std::string root );
-		void	set_index( std::string index );
-		void	set_return( std::string index );
 		void	set_error_page( std::string number, std::string error_page );
+		void	set_limit_except( std::vector<std::string> method );
+		void	set_cgi( std::string extension, std::string path );
 		void	set_client_max_body_size( int maxSize );
 		void	set_autoIndex( bool autoIndex );
-		void	set_limit_except( std::vector<std::string> method );
+		void	set_return( std::string index );
+		void	set_root( std::string root );
+		void	set_index( std::string index );
 
 
 	private:
 		std::map<std::string, std::string*>	_error_page;
+		std::map<std::string, std::string>	_cgi;
 		std::vector<std::string>			_limit_except;
 		std::string							_return;
 		std::string							_index;
