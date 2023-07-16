@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/14 17:57:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/16 17:17:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ bool	Server::auxSendErrorPost( int status, std::string pathFileError )
 
 bool	Server::handlePostRequest()
 {
-
+	std::string	script = _parserRequest->get_endPoint().erase(0, 1);
 	write_debug("handlePostRequest");
+
+	setenv("SCRIPT_FILENAME", std::string(_serversConf[_port]->get_root() + script).c_str(), 1);
 	if (_parserRequest->get_request()[0])
 		return (auxSendErrorPost(ERROR400, getErrorPageMapServer("400")));
 	if (createValidResponse() == false)

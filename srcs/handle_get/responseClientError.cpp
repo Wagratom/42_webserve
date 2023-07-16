@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/15 11:39:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/16 17:39:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,22 @@ bool	Server::sendErrorToClient( std::string path, std::string error)
 	return sendResponseClient(tmp.content);
 }
 
-std::string	Server::generetePathErrorValid(int status, std::string root, std::string path)
+std::string	Server::generetePathErrorValid(int& status, std::string root, std::string path)
 {
-	if (path.empty())
-		return (_defaultErrorPage.find(status)->second);
-	if (path[0] == '.')
+	write_debug("generetePathErrorValid");
+	try {
+		if (path.empty())
+			path = _defaultErrorPage.at(status);
+		else if (path[0] == '/')
+		{
+			path.erase(0, 1);
+			path = root + path;
+		}
 		return (path);
-	if (path[0] == '/')
-	{
-		path.erase(0, 1);
-		return (root + path);
+	} catch (const std::exception& e) {
+		status = ERROR500;
+		return (_defaultErrorPage.find(ERROR500)->second);
 	}
-	return (root + path);
 }
 
 bool	Server::responseClientError( int status, std::string root, std::string pathFileError)

@@ -42,3 +42,8 @@ final: ./wagratom
 
 quando o root começa com / ele procura na raiz do computador e quando começa com .
 ele procura na raiz do server.
+
+
+
+
+readOuputFormatedCGI remover de todos os lugares

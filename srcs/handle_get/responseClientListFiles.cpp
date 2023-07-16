@@ -49,6 +49,7 @@ bool	Server::responseClientListFiles( std::string pathDir, std::string script)
 	waitpid(auxProcess.pid, &auxProcess.status, 0);
 	if (auxProcess.status != 0)
 		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
+	close(auxProcess.fd[1]);
 	if (readOuputFormatedCGI(auxProcess, content) == false)
 		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
 	return (sendResponseClient(content));

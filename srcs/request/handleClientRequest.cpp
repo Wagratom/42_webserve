@@ -20,8 +20,6 @@ void	Server::savaDataCleint(epoll_event& event)
 	getsockname(event.data.fd, (struct sockaddr*)&addr, &addrlen);
 	_port = ntohs(addr.sin_port);
 	_client_fd = event.data.fd;
-	write_debug_number("Port: ", _port);
-	write_debug_number("Cleint: ", _client_fd);
 	if (event.events & EPOLLOUT)
 		_write = true;
 	if (_responses.find(_client_fd) == _responses.end())

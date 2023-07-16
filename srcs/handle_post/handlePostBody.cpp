@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/15 10:09:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/16 17:33:49 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,37 @@ bool	Server::readAndSaveDatas(Response*& response, std::vector<char>& buffer)
 	if (response->bytesRead == -1)
 		return (writeStreerrorPrefix("Error: readAndSaveDatas"));
 	response->totalBytesRead += response->bytesRead;
-	if (response->totalBytesRead >= response->contentLenght)
-		response->endProcess = true;
 	return (true);
 }
 
-static void	handleProcessResponse(Response*& response, std::vector<char>& buffer)
+int	Server::checkStatusCGI(Response*& response)
 {
+	int	status;
+
+	waitpid(response->process.pid, &status, 0);
+	close(response->process.fd[1]);
+	if (status == 0)
+		return 0;
+	write_error("handleProcessResponse: CGI error");
+	return (WEXITSTATUS(status));
+}
+
+bool	Server::handleProcessResponse(Response*& response, std::vector<char>& buffer)
+{
+	write_debug("handleProcessResponse");
+	write(response->process.fd[1], buffer.data(), response->bytesRead);
 	if (response->totalBytesRead == response->contentLenght)
 	{
-		response->endProcess = true;
-		if (response->bytesRead != 0)
-			write(response->fd[1], buffer.data(), response->bytesRead);
-		close(response->fd[1]);
-		return ;
+		std::string	content;
+
+		write_debug("Is end of body");
+		int	wexitstatus = checkStatusCGI(response);
+		if (wexitstatus != 0)
+			return responseClientError(wexitstatus, _serversConf[_port]->get_root(), getErrorPageMapServer(get_stringError(wexitstatus)));
+		responseServer();
+		return (handleKeepAlive());
 	}
-	write(response->fd[1], buffer.data(), response->bytesRead);
+	return (true);
 }
 
 bool	Server::handlePostBody( void )
@@ -45,12 +60,6 @@ bool	Server::handlePostBody( void )
 	if (readAndSaveDatas(response, buffer) == false)
 		return (false);
 	if (response->hasProcess == false)
-		return createProcessResponse(response, buffer);
-	handleProcessResponse(response, buffer);
-	if (response->endProcess == false)
-		return (true);
-	_write = response->write;
-	if (responseServer() == false)
-		return (false);
-	return (handleKeepAlive());
+		createProcessResponse(response);
+	return (handleProcessResponse(response, buffer));
 }

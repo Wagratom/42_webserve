@@ -54,6 +54,7 @@ bool	getContentFilePHP(auxReadFiles& dst)
 		return (false);
 	if (auxProcess.pid == CHILD)
 		callExecuteCgi(dst, auxProcess);
+	close(auxProcess.fd[1]);
 	if (readOuputFormatedCGI(auxProcess, dst.content) == false)
 		return (false);
 	return (true);

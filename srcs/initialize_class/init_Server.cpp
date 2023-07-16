@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 16:43:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/16 16:43:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	Server::initializeDefaultErrorPage( void )
 {
 	_defaultErrorPage[ERROR400] = "./error_pages/400_bad_request.html";
 	_defaultErrorPage[ERROR404] = "./error_pages/404_lufyPensativo.html";
+	_defaultErrorPage[ERROR403] = "./error_pages/403_forbidden.html";
+	_defaultErrorPage[ERROR405] = "./error_pages/405_method_not_allowed.html";
 	_defaultErrorPage[ERROR413] = "./error_pages/413_payload_too_large.html";
 	_defaultErrorPage[ERROR500] = "./error_pages/500_internal_server.html";
 	// _defaultErrorPage[ERROR415] = "./error_pages/415_unsupported_media.html";
@@ -56,12 +58,13 @@ Server::Server(std::string filename)
 
 Server::~Server() {
 	delete	_parserFile;
-	// if (_parserRequest)
-		// delete _parserRequest;
 	for (size_t i = 0; _verbs[i] != NULL; i++) {
 		delete _verbs[i];
 	}
 	delete [] _verbs;
+	// for (std::map<int, Response*>::iterator it = _responses.begin(); it != _responses.end(); it++) {
+		// delete it->second;
+	// }
 	for (std::map<int, Response*>::iterator it = _responses.begin(); it != _responses.end(); it++) {
 		delete it->second;
 	}

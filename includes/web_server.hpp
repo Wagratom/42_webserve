@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/15 11:39:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/16 17:26:44 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@
 # define CHILD 0
 
 # define ERROR400 100
+# define ERROR403 103
 # define ERROR404 104
+# define ERROR405 105
 # define ERROR413 113
 # define ERROR415 115
 # define ERROR500 200
@@ -43,15 +45,13 @@
 class	Response
 {
 	public:
-		Response( void ) : contentLenght(0), bytesRead(0), totalBytesRead(0), hasProcess(false), endProcess(false) {};
+		Response( void ) : contentLenght(0), bytesRead(0), totalBytesRead(0), hasProcess(false) {};
 	public:
 		int					contentLenght;
 		int					bytesRead;
 		int					totalBytesRead;
-		int					fd[2];
-		pid_t				pid;
+		ChildProcessData	process;
 		bool				hasProcess;
-		bool				endProcess;
 		bool				write;
 };
 
@@ -118,8 +118,11 @@ class	Server
 		bool	auxSendErrorPost( int status, std::string Error );
 		bool	handlePostBody( void );
 		bool	readAndSaveDatas(Response*& response, std::vector<char>& buffer);
-		bool	createProcessResponse( Response*& response, std::vector<char>& buffer );
-		void	handleProcessPOST( Response*& response, std::vector<char>& buffer );
+		bool	createProcessResponse( Response*& response );
+		void	handleProcessPOST( Response*& response );
+		bool	handleProcessResponse(Response*& response, std::vector<char>& buffer);
+		int		checkStatusCGI(Response*& response);
+
 
 
 
@@ -129,7 +132,7 @@ class	Server
 
 		bool		generetePathToResponse( std::string& dst , std::string root, std::string listNames );
 		bool		responseClientError( int status, std::string root, std::string pathFileError );
-		std::string	generetePathErrorValid(int status, std::string root, std::string path);
+		std::string	generetePathErrorValid( int& status, std::string root, std::string path );
 
 		bool	sendErrorToClient( std::string path, std::string header );
 
@@ -153,9 +156,9 @@ class	Server
 			return (this->_parserFile->get_server_configuration());
 		}
 
-		Parser_configuration*	get_parser( void ) {
-			return (this->_parserFile);
-		}
+		// Parser_configuration*	get_parser( void ) {
+		// 	return (this->_parserFile);
+		// }
 
 
 	private:
@@ -186,8 +189,9 @@ bool		executeFork( ChildProcessData& infos);
 // bool		getContentFile(auxReadFiles& dst);
 void		appendBar(std::string& str);
 bool		getContentFilePHP(auxReadFiles& dst);
-bool		generateFilesList(std::string& listFiles, const char* pathDir);
-bool		generateResponse(std::string& response);
+// bool		generateFilesList(std::string& listFiles, const char* pathDir);
+// bool		generateResponse(std::string& response);
 std::string	generateHeaderRedirect(std::string status, std::string endPoint);
 bool		readOuputFormatedCGI(ChildProcessData& auxProcess, std::string& oss);
 
+std::string	get_stringError(int error);

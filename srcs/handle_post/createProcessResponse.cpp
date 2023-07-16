@@ -6,51 +6,50 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 19:00:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/16 17:40:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
 
-void static setenvs( void )
-{
-	setenv("REDIRECT_STATUS", "200", 1);
-	setenv("SCRIPT_FILENAME", "./root/handlePOST.php", 1);
-	setenv("PATH_DIR", PATH_UPLOAD, 1);
-	setenv("DOCUMENT_ROOT", "/home/wallas/42_webserve/", 1);
-}
-
 static void	redirectCGI( Response*& response )
 {
-	dup2(response->fd[0], STDIN_FILENO);
-	close(response->fd[0]);
-	close(response->fd[1]);
-	execlp("./root/handlePOST.php", "./root/handlePOST.php", NULL);
+	char*	script = getenv("SCRIPT_FILENAME");
+
+	setenv("REDIRECT_STATUS", "200", 1);
+	dup2(response->process.fd[0], STDIN_FILENO);
+	close(response->process.fd[0]);
+	close(response->process.fd[1]);
+	execlp(script, script, NULL);
 	writeStreerrorPrefix("Error: redirectCGI");
+	sleep(2);
+	if (errno == ENOENT)
+		exit(ERROR404);
+	if (errno == EACCES)
+		exit(ERROR403);
+	if (errno == EISDIR)
+		exit(ERROR403);
+	if (errno == ENOTDIR)
+		exit(ERROR404);
 	exit(1);
 }
 
-void	Server::handleProcessPOST(Response*& response, std::vector<char>& buffer)
+void	Server::handleProcessPOST(Response*& response)
 {
-	if (response->pid == CHILD_PROCESS)
+	if (response->process.pid == CHILD_PROCESS)
 	{
 		close(_client_fd);
 		redirectCGI(response);
 	}
-	write(response->fd[1], buffer.data(), response->bytesRead);
-	close(response->fd[0]);
+	close(response->process.fd[0]);
 }
 
-bool	Server::createProcessResponse(Response*& response, std::vector<char>& buffer)
+bool	Server::createProcessResponse(Response*& response)
 {
-	setenvs();
 	write_debug("createProcessResponse");
-	if (pipe(response->fd) == -1)
-		return write_error("createProcessResponse: creating pipe");
-	response->pid = fork();
-	if (response->pid == -1)
-		return (write_error("createProcessResponse: executing fork"));
-	handleProcessPOST(response, buffer);
+	if (executeFork(response->process) == false)
+		return false;
+	handleProcessPOST(response);
 	response->hasProcess = true;
 	return true;
 }

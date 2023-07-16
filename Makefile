@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/15 11:31:06 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/16 13:52:02 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				createServerConfigured.cpp create_server.cpp configure_server.cpp \
 				startServer.cpp handleNewConnections.cpp filterEvent.cpp handleKeepAlive.cpp \
 				set_fdNotBlock.cpp error.cpp captureNewEvents.cpp handlePostBody.cpp \
-				debug.cpp handleClientRequest.cpp sendResponseClient.cpp \
+				debug.cpp handleClientRequest.cpp sendResponseClient.cpp get_stringError.cpp \
 				set_envs_order_line.cpp gets_Parser_request.cpp set_envs_header.cpp\
 				gets_location_configuration.cpp sets_location_configuration.cpp \
 				gets_Parser_configuration.cpp sets_server_configuration.cpp \

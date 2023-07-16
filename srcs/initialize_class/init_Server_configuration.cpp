@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 19:12:17 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/15 11:27:59 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/16 16:45:27 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,5 @@ Server_configuration::~Server_configuration( void ) {
 		delete it->second->configuration;
 		delete it->second;
 		it->second = NULL;
-	}
-	for (std::map<std::string, std::string>::iterator it = _cgi.begin(); it != _cgi.end(); it++)
-	{
-		it->second.clear();
 	}
 };
