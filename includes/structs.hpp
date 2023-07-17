@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/16 12:57:17 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/17 10:04:56 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_aux_read_file
 	std::string			content;
 	std::string			path;
 	int					contentLength;
+	bool				notPermmision;
 } auxReadFiles;
 
 typedef struct s_ChildProcessInfo {

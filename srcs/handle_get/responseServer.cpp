@@ -32,11 +32,15 @@ bool	Server::responseServer( void )
 	auxReadFiles						tmp;
 
 	write_debug("Response server");
-	if (!generetePathToResponse(tmp.path, server->get_root(), server->get_index()))
+	if (generetePathToResponse(tmp.path, server->get_root(), server->get_index()) == false)
 		return (responseAutoIndexOrErrorServer());
-	if (!getContentFile(tmp, server->get_cgi()))
-		return (responseClientError(ERROR500, server->get_root(), *(errorPages.find("500")->second)));
+	if (getContentFile(tmp, server->get_cgi()) == false)
+	{
+		if (tmp.notPermmision == true)
+			return (responseClientError(ERROR403, server->get_root(), getErrorPageMapServer("403")));
+		return (responseClientError(ERROR500, server->get_root(), getErrorPageMapServer("500")));
+	}
 	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, server->get_root(), *(errorPages.find("500")->second)));
+		return (responseClientError(ERROR500, server->get_root(), getErrorPageMapServer("500")));
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:41:44 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/16 14:43:30 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/17 09:51:22 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 std::string	Server::getErrorPageMapLocation(t_location* _location, std::string Error)
 {
-	std::map<std::string, std::string*>::iterator	it;
-	std::map<std::string, std::string*>				ErrorPages	= _location->configuration->get_error_page();
-
-	it = ErrorPages.find(Error);
-	if (it == ErrorPages.end())
+	if (Error.empty())
 		return ("");
-	return (*(it->second));
+	try {
+		std::map<std::string, std::string*>	errorPages	= _location->configuration->get_error_page();
+		std::string							pathError = *errorPages.at(Error);
+
+		return (pathError);
+	} catch (const std::out_of_range& e) {
+		return ("");
+	}
 }
 
 std::string	Server::getErrorPageMapServer(std::string Error)
@@ -28,14 +31,11 @@ std::string	Server::getErrorPageMapServer(std::string Error)
 	if (Error.empty())
 		return ("");
 	try {
-		Server_configuration*							server	= _serversConf.find(_port)->second;
-		std::map<std::string, std::string*>				ErrorPages	= server->get_error_page();
-		std::map<std::string, std::string*>::iterator	it = ErrorPages.find(Error);
+		std::map<std::string, std::string*>	errorPages	= _serversConf.at(_port)->get_error_page();
+		std::string							pathError = *errorPages.at(Error);
 
-		if (it == ErrorPages.end())
-			return ("");
-		return (*(it->second));
-	} catch (const std::exception& e) {
+		return (pathError);
+	} catch (const std::out_of_range& e) {
 		return ("");
 	}
 }

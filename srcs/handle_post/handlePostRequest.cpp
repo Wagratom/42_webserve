@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/16 17:17:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/17 09:35:13 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ bool	Server::handlePostRequest()
 	write_debug("handlePostRequest");
 
 	setenv("SCRIPT_FILENAME", std::string(_serversConf[_port]->get_root() + script).c_str(), 1);
+	if (script.find(".") == std::string::npos)
+		return (auxSendErrorPost(ERROR404, getErrorPageMapServer("404")));
+	if (access(script.c_str(), F_OK) == -1)
+		return (auxSendErrorPost(ERROR404, getErrorPageMapServer("404")));
+	if (access(script.c_str(), X_OK) == -1)
+		return (auxSendErrorPost(ERROR403, getErrorPageMapServer("403")));
 	if (_parserRequest->get_request()[0])
 		return (auxSendErrorPost(ERROR400, getErrorPageMapServer("400")));
 	if (createValidResponse() == false)

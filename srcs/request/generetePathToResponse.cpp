@@ -16,8 +16,7 @@ static bool	open_file_status( std::string path )
 {
 	std::ifstream	file(path.c_str());
 
-	write_debug_prefix("Path: ", path);
-	if (!file.is_open())
+	if (access(path.c_str(), F_OK) == -1)
 		return (false);
 	write_debug("Path existing");
 	return (true);

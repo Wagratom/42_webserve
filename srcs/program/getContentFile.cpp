@@ -12,23 +12,40 @@
 
 #include <web_server.hpp>
 
+static bool	checkAcess(std::string path, bool& status)
+{
+	if (access(path.c_str(), R_OK) == 0)
+		return (true);
+	status = true;
+	return (writeStreerrorPrefix("Error: getContentFilePHP: "));
+}
+
 bool	getContentAllFile(auxReadFiles& dst)
 {
-	std::ifstream	file(dst.path.c_str(), std::ios::ate);
-
 	write_debug("getContentAllFile");
 	write_debug_prefix("File: ", dst.path);
-	if (!file.is_open())
-		return writeStreerrorPrefix("Error: getContentAllFile: ");
-	dst.contentLength = file.tellg();
-	file.seekg(0, std::ios::beg);
-	dst.content.resize(dst.contentLength);
-	if (!file.read(&dst.content[0], dst.contentLength))
-		return (file.close(), false);
-	generateDynamicHeader(dst, "200");
-	dst.content = dst.header + dst.content;
-	file.close();
-	return (true);
+	if (checkAcess(dst.path, dst.notPermmision) == false)
+		return (false);
+	try {
+		std::ifstream	file(dst.path.c_str(), std::ios::ate);
+
+		if (!file.is_open())
+			return writeStreerrorPrefix("Error: getContentAllFile: ");
+		dst.contentLength = file.tellg();
+		file.seekg(0, std::ios::beg);
+		dst.content.resize(dst.contentLength);
+		if (!file.read(&dst.content[0], dst.contentLength))
+			return (file.close(), false);
+		generateDynamicHeader(dst, "200");
+		dst.content = dst.header + dst.content;
+		file.close();
+		return (true);
+	}
+	catch (std::exception& e) {
+		write_debug("getContentAllFile: catch");
+		write_debug_prefix("Error: ", e.what());
+		return (false);
+	}
 }
 
 bool	getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi)
@@ -37,7 +54,8 @@ bool	getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi)
 
 	if (cgi.find(extension) != cgi.end())
 		return (getContentFilePHP(dst));
-	if (dst.path.find(".") != std::string::npos)
+	size_t hasExtension = dst.path.find_last_of(".");
+	if (hasExtension != std::string::npos && hasExtension != 0)
 		return (getContentAllFile(dst));
 	return (false);
 }

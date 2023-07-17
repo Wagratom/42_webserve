@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/16 17:39:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/17 10:25:13 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ bool	Server::sendErrorToClient( std::string path, std::string error)
 
 std::string	Server::generetePathErrorValid(int& status, std::string root, std::string path)
 {
-	write_debug("generetePathErrorValid");
 	try {
 		if (path.empty())
 			path = _defaultErrorPage.at(status);
@@ -35,6 +34,7 @@ std::string	Server::generetePathErrorValid(int& status, std::string root, std::s
 			path.erase(0, 1);
 			path = root + path;
 		}
+		write_debug_prefix("generetePathErrorValid: path: ", path);
 		return (path);
 	} catch (const std::exception& e) {
 		status = ERROR500;
@@ -57,5 +57,7 @@ bool	Server::responseClientError( int status, std::string root, std::string path
 		return (false);
 	else if (status == ERROR413)
 		return sendErrorToClient(pathFileError, "413 Payload Too Large");
+	else if (status == ERROR403)
+		return (sendErrorToClient(pathFileError, "403 Forbidden"));
 	return (true);
 }

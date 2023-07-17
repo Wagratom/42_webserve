@@ -17,9 +17,7 @@ static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 	char*	scrptName = (char *)dst.path.c_str();
 
 	setenv("REDIRECT_STATUS", "200", 1);
-	setenv("REQUEST_METHOD", "GET", 1);
 	setenv("SCRIPT_FILENAME", scrptName, 1);
-	setenv("SCRIPT_NAME", scrptName, 1);
 	dup2(infos.fd[1], STDOUT_FILENO);
 	close(infos.fd[0]);
 	close(infos.fd[1]);
@@ -43,19 +41,38 @@ static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 // 	return (true);
 // }
 
+static bool	checkAcess(std::string path, bool& status)
+{
+	if (access(path.c_str(), R_OK) == 0)
+		return (true);
+	status = true;
+	return (writeStreerrorPrefix("Error: getContentFilePHP: "));
+}
+
 bool	getContentFilePHP(auxReadFiles& dst)
 {
-	ChildProcessData	auxProcess;
 
 	write_debug("getContentFilePHP");
 	write_debug_prefix("File: ", dst.path);
-	bzero(&auxProcess, sizeof(ChildProcessData));
-	if (executeFork(auxProcess) == false)
+	if (checkAcess(dst.path, dst.notPermmision) == false)
 		return (false);
-	if (auxProcess.pid == CHILD)
-		callExecuteCgi(dst, auxProcess);
-	close(auxProcess.fd[1]);
-	if (readOuputFormatedCGI(auxProcess, dst.content) == false)
+	try {
+		ChildProcessData	auxProcess;
+
+		bzero(&auxProcess, sizeof(ChildProcessData));
+		if (executeFork(auxProcess) == false)
+			return (false);
+		if (auxProcess.pid == CHILD)
+			callExecuteCgi(dst, auxProcess);
+		close(auxProcess.fd[1]);
+		if (readOuputFormatedCGI(auxProcess, dst.content) == false)
+			return (false);
+		return (true);
+	}
+	catch (std::exception& e) {
+		write_debug("getContentFilePHP: catch");
+		write_debug_prefix("Error: ", e.what());
 		return (false);
+	}
 	return (true);
 }
