@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/17 12:10:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:31:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,18 @@ bool	Server::createValidResponse( void )
 	contentLengthInt = std::strtol(contentLength.c_str(), NULL, 10);
 	if (_serversConf[_port]->get_clientMaxBodySize() < contentLengthInt)
 		return (write_error("createValidResponse: contentLenght > clientMaxBodySize"));
-	_responses.find(_client_fd)->second = new Response;
-	_responses.find(_client_fd)->second->contentLenght = contentLengthInt;
-	_responses.find(_client_fd)->second->write = _write;
-	return true;
+	if (_responses.find(_client_fd) != _responses.end())
+		return true;
+	try {
+		_responses.insert(std::pair<int, Response*>(_client_fd, new Response));
+		_responses.at(_client_fd)->contentLenght = contentLengthInt;
+		_responses.at(_client_fd)->write = _write;
+		return true;
+	}
+	catch (std::exception& e) {
+		write_error("createValidResponse: " + std::string(e.what()));
+		return false;
+	}
 }
 
 bool	Server::auxSendErrorPost( int status, std::string pathFileError )

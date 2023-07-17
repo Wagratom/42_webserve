@@ -66,35 +66,10 @@ bool	Server::returnIndexLocation(t_location* location)
 	if (createRootLocation(location) == false)
 		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
 	if (generetePathToResponse(tmp.path, location->configuration->get_root(), location->configuration->get_index()) == false)
-		return (responseAutoIndexOrErrorLocation(location));
+		return (get_autoindex(location->configuration->get_autoIndex(), location->configuration->get_root()));
 	if (getContentFile(tmp, location->configuration->get_cgi(), "200 OK") == false)
 		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
 	// generateDynamicHeader(tmp, "200");
 	// tmp.response = tmp.header + tmp.content;
-	return (sendResponseClient(tmp.content));
-}
-
-static void	set_PathAutoindex( t_location* location)
-{
-	// std::string endPoint = location->endPoint;
-
-	// if (endPoint[0] == '/')
-		// endPoint.erase(0, 1);
-	// std::string path = location->configuration->get_root() + endPoint;
-	// write_debug_prefix("setPathAutoindex: ", path);
-	setenv("PATHDIR", location->configuration->get_root().c_str(), 1);
-}
-
-bool	Server::responseAutoIndexOrErrorLocation( t_location* location )
-{
-	auxReadFiles	tmp;
-
-	write_debug("responseAutoIndexOrErrorLocation");
-	if (location->configuration->get_autoIndex() == false)
-		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "404")));
-	tmp.path = AUTO_INDEX;
-	set_PathAutoindex(location);
-	if (getContentFile(tmp, location->configuration->get_cgi(), "200 OK") == false)
-		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
 	return (sendResponseClient(tmp.content));
 }

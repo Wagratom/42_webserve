@@ -12,19 +12,6 @@
 
 #include <web_server.hpp>
 
-bool	Server::responseAutoIndexOrErrorServer( void )
-{
-	Server_configuration* server = _serversConf[_port];
-
-	write_debug("responseAutoIndexOrErrorServer");
-	if (server->get_autoIndex() == false)
-		return (responseClientError(ERROR404, server->get_root(), getErrorPageMapServer("404")));
-	if (responseClientListFiles(server->get_root().c_str(), AUTO_INDEX) == false)
-		return (responseClientError(ERROR500, server->get_root(), getErrorPageMapServer("500")));
-	return (true);
-
-}
-
 bool	Server::responseServer( void )
 {
 	Server_configuration*				server = _serversConf[_port];
@@ -33,7 +20,7 @@ bool	Server::responseServer( void )
 
 	write_debug("Response server");
 	if (generetePathToResponse(tmp.path, server->get_root(), server->get_index()) == false)
-		return (responseAutoIndexOrErrorServer());
+		return (get_autoindex(server->get_autoIndex(), server->get_root()));
 	if (getContentFile(tmp, server->get_cgi(), "200 OK") == false)
 	{
 		if (tmp.notPermmision == true)

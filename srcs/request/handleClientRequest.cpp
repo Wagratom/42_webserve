@@ -22,11 +22,6 @@ void	Server::savaDataCleint(epoll_event& event)
 	_client_fd = event.data.fd;
 	if (event.events & EPOLLOUT)
 		_write = true;
-	if (_responses.find(_client_fd) == _responses.end())
-	{
-		write_debug("Add new client in Client list");
-		_responses.insert(std::pair<int, Response*>(_client_fd, NULL));
-	}
 }
 
 bool	Server::handleClientRequest(epoll_event& event)
@@ -35,7 +30,7 @@ bool	Server::handleClientRequest(epoll_event& event)
 
 	write_debug("\nClient seed request");
 	savaDataCleint(event);
-	if (_responses.find(_client_fd)->second != NULL)
+	if (_responses.find(_client_fd) != _responses.end())
 		return handlePostBody();
 	if (set_fdNotBlock(_client_fd) == false)
 		return (false);

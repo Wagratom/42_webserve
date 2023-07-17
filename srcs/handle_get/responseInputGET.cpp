@@ -42,6 +42,10 @@ bool	Server::responseInputGET(std::string endPoint)
 	std::string			content;
 
 	setEnvs(endPoint);
+	if (access(getenv("SCRIPT_FILENAME"), F_OK) == -1)
+		return (responseClientError(ERROR404, _serversConf[_port]->get_root(), getErrorPageMapServer("404")));
+	if (access(getenv("SCRIPT_FILENAME"), X_OK) == -1)
+		return (responseClientError(ERROR403, _serversConf[_port]->get_root(), getErrorPageMapServer("403")));
 	if (executeFork(auxProcess) == false)
 		return (write_error("Error: Server::responseInputGET: executeFork"));
 	if (auxProcess.pid == CHILD_PROCESS)

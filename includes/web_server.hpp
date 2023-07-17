@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/17 11:49:40 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:57:27 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,7 @@ class	Server
 		bool	handle_GET_requesition( void );
 		bool	responseClientGET( std::string& endPoint );
 		bool	responseServer( void );
-		bool	responseAutoIndexOrErrorServer( void );
-		bool	responseAutoIndexOrErrorLocation( t_location* location );
+		bool	get_autoindex( const bool& autoindex, const std::string& root);
 		bool	responseInputGET(std::string endPoint);
 
 		bool	responseFileServer( std::string endPoint );
@@ -128,7 +127,7 @@ class	Server
 
 
 		bool	handle_DELETE_requesition( void );
-		bool	responseClientListFiles( std::string pathDir, std::string pathFile );
+		// bool	responseClientListFiles( std::string pathDir, std::string pathFile );
 		// bool	extractFileNameFromBody( aux_upload& data );
 
 		bool		generetePathToResponse( std::string& dst , std::string root, std::string listNames );
