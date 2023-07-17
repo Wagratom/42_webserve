@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/16 17:26:44 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:49:40 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 
 # define CHILD 0
 
-# define ERROR400 100
-# define ERROR403 103
-# define ERROR404 104
-# define ERROR405 105
-# define ERROR413 113
-# define ERROR415 115
-# define ERROR500 200
+# define ERROR400 100 // Bad Request
+# define ERROR403 103 // Forbidden
+# define ERROR404 104 // Not Found
+# define ERROR405 105 // Method Not Allowed
+# define ERROR413 113 // Payload Too Large
+# define ERROR415 115 // Unsupported Media Type
+# define ERROR500 200 // Internal Server Error
 
 # define CHILD_PROCESS 0
 
@@ -114,6 +114,7 @@ class	Server
 		bool	createRootLocation(const t_location* location);
 
 		bool	handlePostRequest( void );
+		bool	checkPermitionFile(std::string path);
 		bool	createValidResponse( void );
 		bool	auxSendErrorPost( int status, std::string Error );
 		bool	handlePostBody( void );
@@ -181,9 +182,9 @@ class	Server
 void		set_debug(bool	value);
 int			get_debug( void );
 
-bool		getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi);
-void		generateDynamicHeader(auxReadFiles& tmp, std::string status_code);
-std::string	generateHeaderDynamicStatus(auxReadFiles& tmp, std::string status);
+bool		getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi, std::string statusHeader);
+// void		generateDynamicHeader(auxReadFiles& tmp, std::string status_code);
+void		generateHeaderDynamicStatus(auxReadFiles& tmp, std::string status);
 bool		executeFork( ChildProcessData& infos);
 // void		executeCGI(char** argv, char** envp);
 // bool		getContentFile(auxReadFiles& dst);

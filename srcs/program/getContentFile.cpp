@@ -20,7 +20,7 @@ static bool	checkAcess(std::string path, bool& status)
 	return (writeStreerrorPrefix("Error: getContentFilePHP: "));
 }
 
-bool	getContentAllFile(auxReadFiles& dst)
+static bool	getContentAllFile(auxReadFiles& dst, std::string statusHeader)
 {
 	write_debug("getContentAllFile");
 	write_debug_prefix("File: ", dst.path);
@@ -36,7 +36,7 @@ bool	getContentAllFile(auxReadFiles& dst)
 		dst.content.resize(dst.contentLength);
 		if (!file.read(&dst.content[0], dst.contentLength))
 			return (file.close(), false);
-		generateDynamicHeader(dst, "200");
+		generateHeaderDynamicStatus(dst, statusHeader);
 		dst.content = dst.header + dst.content;
 		file.close();
 		return (true);
@@ -48,7 +48,7 @@ bool	getContentAllFile(auxReadFiles& dst)
 	}
 }
 
-bool	getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi)
+bool	getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi, std::string statusHeader)
 {
 	std::string	extension = dst.path.substr(dst.path.find_last_of("."));
 
@@ -56,6 +56,6 @@ bool	getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi)
 		return (getContentFilePHP(dst));
 	size_t hasExtension = dst.path.find_last_of(".");
 	if (hasExtension != std::string::npos && hasExtension != 0)
-		return (getContentAllFile(dst));
+		return (getContentAllFile(dst, statusHeader));
 	return (false);
 }

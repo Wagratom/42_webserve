@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/17 09:35:13 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/17 12:10:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,26 @@ bool	Server::auxSendErrorPost( int status, std::string pathFileError )
 	return handleKeepAlive();
 }
 
+bool	Server::checkPermitionFile(std::string path)
+{
+	write_debug("checkPermitionFile");
+	if (access(path.c_str(), F_OK) == -1)
+		auxSendErrorPost(ERROR404, getErrorPageMapServer("404"));
+	else if (access(path.c_str(), W_OK) == -1)
+		auxSendErrorPost(ERROR403, getErrorPageMapServer("403"));
+	else
+		return (true);
+	return write_error("handlePostRequest: Not Access path: " + path);
+}
+
 bool	Server::handlePostRequest()
 {
 	std::string	script = _parserRequest->get_endPoint().erase(0, 1);
 	write_debug("handlePostRequest");
 
 	setenv("SCRIPT_FILENAME", std::string(_serversConf[_port]->get_root() + script).c_str(), 1);
-	if (script.find(".") == std::string::npos)
-		return (auxSendErrorPost(ERROR404, getErrorPageMapServer("404")));
-	if (access(script.c_str(), F_OK) == -1)
-		return (auxSendErrorPost(ERROR404, getErrorPageMapServer("404")));
-	if (access(script.c_str(), X_OK) == -1)
-		return (auxSendErrorPost(ERROR403, getErrorPageMapServer("403")));
+	if (checkPermitionFile(getenv("SCRIPT_FILENAME")) == false)
+		return (true);
 	if (_parserRequest->get_request()[0])
 		return (auxSendErrorPost(ERROR400, getErrorPageMapServer("400")));
 	if (createValidResponse() == false)

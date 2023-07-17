@@ -34,7 +34,7 @@ bool	Server::responseServer( void )
 	write_debug("Response server");
 	if (generetePathToResponse(tmp.path, server->get_root(), server->get_index()) == false)
 		return (responseAutoIndexOrErrorServer());
-	if (getContentFile(tmp, server->get_cgi()) == false)
+	if (getContentFile(tmp, server->get_cgi(), "200 OK") == false)
 	{
 		if (tmp.notPermmision == true)
 			return (responseClientError(ERROR403, server->get_root(), getErrorPageMapServer("403")));
