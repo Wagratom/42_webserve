@@ -30,7 +30,7 @@ static bool	saveValidPathFile(std::string& pathFile, std::string currentPath)
 	return (true);
 }
 
-static bool getValidPath(std::string listNames, std::string root, std::string& pathFile)
+static bool getValidPath(std::string listNames, const std::string& root, std::string& pathFile)
 {
 	std::string	currentPath;
 	size_t		endWorld;
@@ -46,7 +46,7 @@ static bool getValidPath(std::string listNames, std::string root, std::string& p
 	return saveValidPathFile(pathFile, pathFile);
 }
 
-bool	Server::generetePathToResponse(std::string& dst, std::string root, std::string listNames)
+bool	Server::generetePathToResponse(std::string& dst, const std::string& root, std::string listNames)
 {
 	dst.clear();
 	write_debug("generetePathToResponse");

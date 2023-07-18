@@ -12,7 +12,7 @@
 
 #include <web_server.hpp>
 
-static bool findLocationVector(const std::map<std::string, t_location*> locations, std::string& endPoint)
+static bool findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint)
 {
 	size_t lastSlashPos;
 

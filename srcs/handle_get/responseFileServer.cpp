@@ -12,25 +12,36 @@
 
 #include <web_server.hpp>
 
-
-bool Server::responseFileServer(std::string endPoint)
+bool	Server::preparingToReadFile(auxReadFiles& tmp, std::string& endPoint)
 {
-	auxReadFiles	tmp;
 	size_t			checkExtensionFile = endPoint.find_last_of('.');
 
-	write_debug("responseFileServer");
 	if (checkExtensionFile == std::string::npos || checkExtensionFile == 0)
-		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMapServer("404")));
+		return write_error("preparingToReadFile: not found extension file");
 	endPoint.erase(0, 1);
 	tmp.path = _serverUsing->get_root() + endPoint;
+	return true;
+}
+
+bool Server::responseFileServer(std::string& endPoint)
+{
+	auxReadFiles	tmp;
+
+	write_debug("responseFileServer");
+	if (preparingToReadFile(tmp, endPoint) == false)
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
 	if (getContentFile(tmp, _serverUsing->get_cgi(), "200 OK") == false)
-		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMapServer("404")));
+	{
+		if (tmp.notPermmision == true)
+			return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMapServer("403")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+	}
 	if (sendResponseClient(tmp.content) == false)
 		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
 	return true;
 }
 
-bool	Server::responseFileLocation(t_location* location, std::string endPoint)
+bool	Server::responseFileLocation(const t_location*& location, std::string& endPoint)
 {
 	auxReadFiles	tmp;
 

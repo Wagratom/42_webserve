@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/17 21:20:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/18 10:47:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ class	Server
 		bool	isClosedOrErrorEvent( epoll_event& event );
 		bool	handleClientRequest( epoll_event& event );
 
-		void	savaDataCleint( epoll_event& event );
+		bool	savaDataCleint( epoll_event& event );
 		bool	set_fdNotBlock( int& fd );
 		bool	readRequest( std::string& buffer );
 		bool	responseRequest( std::string& buffer );
@@ -102,17 +102,19 @@ class	Server
 
 		bool	handle_GET_requesition( void );
 		bool	responseClientGET( std::string& endPoint );
+		void	handleQuerystring(std::string& endPoint);
 		bool	responseServer( void );
 		bool	get_autoindex( const bool& autoindex, const std::string& root);
 		// bool	responseInputGET(std::string endPoint);
 
-		bool	responseFileServer( std::string endPoint );
-		void	handleQuerystring(std::string& endPoint);
+		bool	responseFileServer( std::string& endPoint );
+		bool	preparingToReadFile(auxReadFiles& tmp, std::string& endPoint);
 
-		bool	responseFileLocation(t_location* location, std::string endPoint);
-		bool	responseLocation( std::string endPoint, std::string locationName );
-		bool	returnIndexLocation(t_location* _location );
-		bool	createRootLocation(const t_location* location);
+
+		bool	responseFileLocation(const t_location*& location, std::string& endPoint);
+		bool	responseLocation( std::string& endPoint, std::string& locationName );
+		bool	returnIndexLocation(const t_location*& _location );
+		bool	createRootLocation(const t_location*& location);
 
 		bool	handlePostRequest( void );
 		bool	checkPermitionFile(std::string path);
@@ -132,23 +134,21 @@ class	Server
 		// bool	responseClientListFiles( std::string pathDir, std::string pathFile );
 		// bool	extractFileNameFromBody( aux_upload& data );
 
-		bool		generetePathToResponse( std::string& dst , std::string root, std::string listNames );
-		bool		responseClientError( int status, std::string root, std::string pathFileError );
-		std::string	generetePathErrorValid( int& status, std::string root, std::string path );
+		bool		generetePathToResponse( std::string& dst , const std::string& root, std::string listNames );
+		bool		responseClientError( int status, const std::string& root, std::string pathFileError );
+		std::string	generetePathErrorValid( int& status, const std::string& root, std::string path );
 
 		bool	sendErrorToClient( std::string path, std::string header );
 
-		bool	closed_fd_epoll(epoll_event& event);
-
 		bool	handleKeepAlive( void );
-
+		bool	checkMethodSupported(std::vector<std::string> methods);
 		bool	sendResponseClient( std::string response );
 
 		bool	responseRedirect(std::string endPoint);
 		bool	cleanupFd(int fd);
 
 		std::string	getErrorPageMapServer(std::string Error);
-		std::string	getErrorPageMapLocation(t_location* _location, std::string Error);
+		std::string	getErrorPageMapLocation(const t_location*& _location, std::string Error);
 		//				GETTERS to tests
 		std::map<std::string, t_location*>	location( int port ) {
 			return (this->_serversConf[port]->get_locations());
@@ -184,7 +184,7 @@ class	Server
 void		set_debug(bool	value);
 int			get_debug( void );
 
-bool		getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi, std::string statusHeader);
+bool		getContentFile(auxReadFiles& dst,  const std::map<std::string, std::string>& cgi, std::string statusHeader);
 // void		generateDynamicHeader(auxReadFiles& tmp, std::string status_code);
 void		generateHeaderDynamicStatus(auxReadFiles& tmp, std::string status);
 bool		executeFork( ChildProcessData& infos);

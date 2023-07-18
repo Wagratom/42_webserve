@@ -6,13 +6,13 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:41:44 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/17 09:51:22 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/18 09:36:05 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <web_server.hpp>
 
-std::string	Server::getErrorPageMapLocation(t_location* _location, std::string Error)
+std::string	Server::getErrorPageMapLocation(const t_location*& _location, std::string Error)
 {
 	if (Error.empty())
 		return ("");

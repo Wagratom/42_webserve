@@ -41,11 +41,11 @@ static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 // 	return (true);
 // }
 
-static bool	checkAcess(std::string path, bool& status)
+static bool	checkAcess(std::string path, auxReadFiles& dst)
 {
 	if (access(path.c_str(), R_OK) == 0)
 		return (true);
-	status = true;
+	dst.notPermmision = true;
 	return (writeStreerrorPrefix("Error: getContentFilePHP: "));
 }
 
@@ -53,7 +53,7 @@ bool	getContentFilePHP(auxReadFiles& dst)
 {
 	write_debug("getContentFilePHP");
 	write_debug_prefix("File: ", dst.path);
-	if (checkAcess(dst.path, dst.notPermmision) == false)
+	if (checkAcess(dst.path, dst) == false)
 		throw std::exception();
 	ChildProcessData	auxProcess;
 	bzero(&auxProcess, sizeof(ChildProcessData));

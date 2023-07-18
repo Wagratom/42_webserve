@@ -12,17 +12,17 @@
 
 #include <web_server.hpp>
 
-static bool	hasRedirection(const t_location* location)
+static bool	hasRedirection(const t_location*& location)
 {
 	return (location->configuration->get_return().empty() == false);
 }
 
-static bool	isRequerimentFile(std::string& endPoint)
+static bool	isRequerimentFile(const std::string& endPoint)
 {
 	return (endPoint.find(".") != std::string::npos);
 }
 
-static bool	isEndPoint(std::string endPoint, std::string& locationName)
+static bool	isEndPoint(std::string& endPoint, std::string& locationName)
 {
 	if (endPoint[endPoint.length() - 1] != '/')
 		endPoint += "/";
@@ -31,7 +31,7 @@ static bool	isEndPoint(std::string endPoint, std::string& locationName)
 	return (false);
 }
 
-bool	Server::createRootLocation(const t_location* location)
+bool	Server::createRootLocation(const t_location*& location)
 {
 	if (location->configuration->get_root().empty() == false)
 		return (true);
@@ -42,13 +42,15 @@ bool	Server::createRootLocation(const t_location* location)
 	return (true);
 }
 
-bool	Server::responseLocation(std::string endPoint, std::string locationName)
+bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 {
-	t_location*							_location = location(_port).at(locationName);
+	const t_location*&	_location = (const t_location*&)location(_port).at(locationName);
 
 	write_debug("responseLocation");
 	if (_location == NULL)
 		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapLocation(_location, "500")));
+	if (checkMethodSupported(_location->configuration->get_limit_except()) == false)
+		return (responseClientError(ERROR405, _serversConf[_port]->get_root(), getErrorPageMapLocation(_location, "405")));
 	if (hasRedirection(_location))
 		return (responseRedirect(_location->configuration->get_return()));
 	if (isRequerimentFile(endPoint))
@@ -58,9 +60,10 @@ bool	Server::responseLocation(std::string endPoint, std::string locationName)
 	return (responseClientError(ERROR404, _serversConf[_port]->get_root(), getErrorPageMapLocation(_location, "404")));
 }
 
-bool	Server::returnIndexLocation(t_location* location)
+bool	Server::returnIndexLocation(const t_location*& location)
 {
 	auxReadFiles	tmp;
+	// Location_configuration* locationConf = location->configuration;
 
 	write_debug("returnIndexLocation");
 	if (createRootLocation(location) == false)

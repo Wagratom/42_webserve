@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/17 11:05:53 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/18 09:41:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	Server::sendErrorToClient( std::string path, std::string statusHeader)
 	}
 }
 
-std::string	Server::generetePathErrorValid(int& status, std::string root, std::string path)
+std::string	Server::generetePathErrorValid(int& status, const std::string& root, std::string path)
 {
 	try {
 		if (path.empty())
@@ -47,7 +47,7 @@ std::string	Server::generetePathErrorValid(int& status, std::string root, std::s
 	}
 }
 
-bool	Server::responseClientError( int status, std::string root, std::string pathFileError)
+bool	Server::responseClientError( int status, const std::string& root, std::string pathFileError)
 {
 	write_debug("responseClientError");
 	pathFileError = generetePathErrorValid(status, root, pathFileError);

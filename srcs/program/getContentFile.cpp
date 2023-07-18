@@ -12,11 +12,11 @@
 
 #include <web_server.hpp>
 
-static bool	checkAcess(std::string path, bool& status)
+static bool	checkAcess(std::string path, auxReadFiles& dst)
 {
 	if (access(path.c_str(), R_OK) == 0)
 		return (true);
-	status = true;
+	dst.notPermmision = true;
 	return (writeStreerrorPrefix("Error: getContentFilePHP: "));
 }
 
@@ -24,7 +24,7 @@ static bool	getContentAllFile(auxReadFiles& dst, std::string statusHeader)
 {
 	write_debug("getContentAllFile");
 	write_debug_prefix("File: ", dst.path);
-	if (checkAcess(dst.path, dst.notPermmision) == false)
+	if (checkAcess(dst.path, dst) == false)
 		return (false);
 	try {
 		std::ifstream	file(dst.path.c_str(), std::ios::ate);
@@ -48,7 +48,7 @@ static bool	getContentAllFile(auxReadFiles& dst, std::string statusHeader)
 	}
 }
 
-bool	getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi, std::string statusHeader)
+bool	getContentFile(auxReadFiles& dst, const std::map<std::string, std::string>& cgi, std::string statusHeader)
 {
 	try {
 		std::string	extension = dst.path.substr(dst.path.find_last_of("."));
