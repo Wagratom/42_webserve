@@ -29,7 +29,7 @@ bool Server::responseFileServer(std::string& endPoint)
 
 	write_debug("responseFileServer");
 	if (preparingToReadFile(tmp, endPoint) == false)
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMapServer("404")));
 	if (getContentFile(tmp, _serverUsing->get_cgi(), "200 OK") == false)
 	{
 		if (tmp.notPermmision == true)

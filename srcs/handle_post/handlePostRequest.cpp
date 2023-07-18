@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 10:42:24 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/18 13:07:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,17 @@ bool	Server::auxSendErrorPost( int status, std::string pathFileError )
 {
 	char	buffer[4096];
 	while (read(_client_fd, buffer, 4096) > 0);
-	try {
-		responseClientError(status, _serversConf.at(_port)->get_root() ,pathFileError);
-		cleanupFd(_client_fd);
-	} catch (std::exception& e) {
-		write_error("auxSendErrorPost: " + std::string(e.what()));
-		write_error("Error brusco servidor sem root");
-		cleanupFd(_client_fd);
-	}
+	responseClientError(status, _serverUsing->get_root() ,pathFileError);
 	return handleKeepAlive();
 }
 
 bool	Server::checkPermitionFile(std::string path)
 {
+	size_t	extension = path.find_last_of(".");
+
 	write_debug("checkPermitionFile");
+	if (extension == std::string::npos || extension == 0)
+		auxSendErrorPost(ERROR404, getErrorPageMapServer("404"));
 	if (access(path.c_str(), F_OK) == -1)
 		auxSendErrorPost(ERROR404, getErrorPageMapServer("404"));
 	else if (access(path.c_str(), W_OK) == -1)
@@ -64,9 +61,20 @@ bool	Server::checkPermitionFile(std::string path)
 
 bool	Server::handlePostRequest()
 {
-	std::string	script = _parserRequest->get_endPoint().erase(0, 1);
-	write_debug("handlePostRequest");
+	std::string	endPoint = _parserRequest->get_endPoint();
+	std::string	LocationsNames = _parserRequest->get_endPoint();
 
+	write_debug("handlePostRequest");
+	if (findLocationVector(_serverUsing->get_locations(), LocationsNames))
+		return (responseLocation(endPoint, LocationsNames));
+	return handleScriptPOST(endPoint);
+}
+
+bool	Server::handleScriptPOST(std::string& endpoint)
+{
+	std::string	script = endpoint.erase(0, 1);
+
+	write_debug("handleScriptPOST");
 	setenv("SCRIPT_FILENAME", std::string(_serversConf[_port]->get_root() + script).c_str(), 1);
 	if (checkPermitionFile(getenv("SCRIPT_FILENAME")) == false)
 		return (true);

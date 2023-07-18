@@ -12,21 +12,6 @@
 
 #include <web_server.hpp>
 
-static bool findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint)
-{
-	size_t lastSlashPos;
-
-	while (true)
-	{
-		if (locations.find(endPoint) != locations.end())
-			return true;
-		lastSlashPos = endPoint.find_last_of('/', endPoint.length() - 2);
-		if (lastSlashPos == std::string::npos || lastSlashPos == 0)
-			return false;
-		endPoint.erase((lastSlashPos + 1));
-	}
-}
-
 void	Server::handleQuerystring(std::string& endPoint)
 {
 	size_t	questionMarkPos = endPoint.find("?");
@@ -39,13 +24,13 @@ void	Server::handleQuerystring(std::string& endPoint)
 
 bool	Server::responseClientGET( std::string& endPoint)
 {
-	std::string	LocationsNames = endPoint + "/";
+	std::string	LocationsNames = endPoint;
 
 	if (endPoint == "/")
 		return (responseServer());
 	if (endPoint.find("?") != std::string::npos)
 		handleQuerystring(endPoint);
-	if (findLocationVector(_serversConf[_port]->get_locations(), LocationsNames))
+	if (findLocationVector(_serverUsing->get_locations(), LocationsNames))
 		return (responseLocation(endPoint, LocationsNames));
 	return (responseFileServer(endPoint));
 }

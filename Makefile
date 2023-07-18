@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/17 21:45:31 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/18 10:55:26 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				gets_location_configuration.cpp sets_location_configuration.cpp \
 				gets_Parser_configuration.cpp sets_server_configuration.cpp \
 				readRequest.cpp responseRequest.cpp responseClientGET.cpp \
-				handle_GET_requesition.cpp handle_DELETE_requesition.cpp\
+				handle_GET_requesition.cpp handle_DELETE_requesition.cpp \
 				generetePathToResponse.cpp cleanupFd.cpp auxProcess.cpp createEpoll.cpp \
 				responseClientError.cpp responseLocation.cpp generateHeaders.cpp \
 				handlePostRequest.cpp responseServer.cpp generateResponseCGI.cpp\
@@ -38,7 +38,8 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				saveLocationInfos.cpp getErrosPage.cpp init_Server.cpp return.cpp \
 				responseRedirect.cpp autoIndex.cpp responseInputGET.cpp handleEvents.cpp \
 				init_Server_configuration.cpp main.cpp limit_except.cpp get_timeout.cpp \
-				init_Location_configuration.cpp get_autoindex.cpp checkMethodSupported.cpp
+				init_Location_configuration.cpp get_autoindex.cpp checkMethodSupported.cpp \
+				findLocationVector.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 10:47:05 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/18 13:06:48 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ class	Server
 		bool	createRootLocation(const t_location*& location);
 
 		bool	handlePostRequest( void );
+		bool	handleScriptPOST( std::string& endPoint );
 		bool	checkPermitionFile(std::string path);
 		bool	createValidResponse( void );
 		bool	auxSendErrorPost( int status, std::string Error );
@@ -134,9 +135,11 @@ class	Server
 		// bool	responseClientListFiles( std::string pathDir, std::string pathFile );
 		// bool	extractFileNameFromBody( aux_upload& data );
 
+		std::string	generetePathErrorValid( int& status, const std::string& root, std::string path );
 		bool		generetePathToResponse( std::string& dst , const std::string& root, std::string listNames );
 		bool		responseClientError( int status, const std::string& root, std::string pathFileError );
-		std::string	generetePathErrorValid( int& status, const std::string& root, std::string path );
+		bool		findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint);
+
 
 		bool	sendErrorToClient( std::string path, std::string header );
 
@@ -151,7 +154,7 @@ class	Server
 		std::string	getErrorPageMapLocation(const t_location*& _location, std::string Error);
 		//				GETTERS to tests
 		std::map<std::string, t_location*>	location( int port ) {
-			return (this->_serversConf[port]->get_locations());
+			return (this->_serversConf.at(port)->get_locations());
 		}
 
 		std::vector<Server_configuration*>	server( void ) {

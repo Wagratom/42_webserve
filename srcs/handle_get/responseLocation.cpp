@@ -22,6 +22,14 @@ static bool	isRequerimentFile(const std::string& endPoint)
 	return (endPoint.find(".") != std::string::npos);
 }
 
+static bool	isPostMethod(const std::string& root, const std::string& endPoint, std::string& dst)
+{
+	if (std::string(getenv("REQUEST_METHOD")) != "POST")
+		return (false);
+	dst = root + endPoint;
+	return (true);
+}
+
 static bool	isEndPoint(std::string& endPoint, std::string& locationName)
 {
 	if (endPoint[endPoint.length() - 1] != '/')
@@ -44,20 +52,28 @@ bool	Server::createRootLocation(const t_location*& location)
 
 bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 {
-	const t_location*&	_location = (const t_location*&)location(_port).at(locationName);
+	try {
+		const t_location*	location = _serverUsing->get_locations().at(locationName);
+		std::string			script_name;
 
-	write_debug("responseLocation");
-	if (_location == NULL)
-		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapLocation(_location, "500")));
-	if (checkMethodSupported(_location->configuration->get_limit_except()) == false)
-		return (responseClientError(ERROR405, _serversConf[_port]->get_root(), getErrorPageMapLocation(_location, "405")));
-	if (hasRedirection(_location))
-		return (responseRedirect(_location->configuration->get_return()));
-	if (isRequerimentFile(endPoint))
-		return (responseFileLocation(_location, endPoint));
-	if (isEndPoint(endPoint, locationName))
-		return (returnIndexLocation(_location));
-	return (responseClientError(ERROR404, _serversConf[_port]->get_root(), getErrorPageMapLocation(_location, "404")));
+		write_debug_prefix("responseLocation: ", locationName);
+		if (location == NULL)
+			return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
+		if (checkMethodSupported(location->configuration->get_limit_except()) == false)
+			return (responseClientError(ERROR405, location->configuration->get_root(), getErrorPageMapLocation(location, "405")));
+		if (hasRedirection(location))
+			return (responseRedirect(location->configuration->get_return()));
+		if (isPostMethod(location->configuration->get_root(), endPoint, script_name) == false)
+			return (handleScriptPOST(script_name));
+		if (isRequerimentFile(endPoint))
+			return (responseFileLocation(location, endPoint));
+		if (isEndPoint(endPoint, locationName))
+			return (returnIndexLocation(location));
+		return (responseClientError(ERROR404, location->configuration->get_root(), getErrorPageMapLocation(location, "404")));
+	} catch (std::exception& e) {
+		write_error("responseLocation: " + std::string(e.what()));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+	}
 }
 
 bool	Server::returnIndexLocation(const t_location*& location)
