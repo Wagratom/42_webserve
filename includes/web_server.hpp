@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/17 19:57:27 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:20:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,11 @@ class	Server
 		bool	responseClientGET( std::string& endPoint );
 		bool	responseServer( void );
 		bool	get_autoindex( const bool& autoindex, const std::string& root);
-		bool	responseInputGET(std::string endPoint);
+		// bool	responseInputGET(std::string endPoint);
 
 		bool	responseFileServer( std::string endPoint );
+		void	handleQuerystring(std::string& endPoint);
+
 		bool	responseFileLocation(t_location* location, std::string endPoint);
 		bool	responseLocation( std::string endPoint, std::string locationName );
 		bool	returnIndexLocation(t_location* _location );
@@ -176,6 +178,7 @@ class	Server
 		std::map<int, Server_configuration*>	_serversConf;
 		std::map<int, std::string>				_defaultErrorPage;
 		std::map<int, Response*>				_responses;
+		Server_configuration*					_serverUsing;
 };
 
 void		set_debug(bool	value);

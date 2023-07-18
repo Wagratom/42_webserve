@@ -12,49 +12,45 @@
 
 #include <web_server.hpp>
 
-static void	callCGI(ChildProcessData& auxProcess)
-{
-	char*		script = getenv("SCRIPT_FILENAME");
+// static void	callCGI(ChildProcessData& auxProcess)
+// {
+// 	char*		script = getenv("SCRIPT_FILENAME");
 
-	dup2(auxProcess.fd[1], STDOUT_FILENO);
-	close(auxProcess.fd[0]);
-	close(auxProcess.fd[1]);
-	execlp(script, script, NULL);
-	std::cerr << strerror(errno) << std::endl;
-	exit(ERROR500);
-}
+// 	dup2(auxProcess.fd[1], STDOUT_FILENO);
+// 	close(auxProcess.fd[0]);
+// 	close(auxProcess.fd[1]);
+// 	execlp(script, script, NULL);
+// 	std::cerr << strerror(errno) << std::endl;
+// 	exit(ERROR500);
+// }
 
-static void	setEnvs(std::string endPoint)
-{
-	size_t			questionMarkPos = endPoint.find("?");
-	std::string		scriptHandler	= "." + endPoint.substr(0, questionMarkPos);
-	std::string		query_string	= endPoint.substr(questionMarkPos + 1);
+// static void	setEnvs(std::string endPoint)
+// {
+// 	size_t			questionMarkPos = endPoint.find("?");
+// 	std::string		scriptHandler	= "." + endPoint.substr(0, questionMarkPos);
+// 	std::string		query_string	= endPoint.substr(questionMarkPos + 1);
 
-	setenv("QUERY_STRING", query_string.c_str(), 1);
-	setenv("SCRIPT_FILENAME", scriptHandler.c_str(), 1);
-	setenv("SCRIPT_NAME", PATH_CGI, 1);
-	setenv("REDIRECT_STATUS", "200", 1);
-}
+// 	setenv("QUERY_STRING", query_string.c_str(), 1);
+// 	setenv("SCRIPT_FILENAME", scriptHandler.c_str(), 1);
+// 	setenv("SCRIPT_NAME", PATH_CGI, 1);
+// 	setenv("REDIRECT_STATUS", "200", 1);
+// }
 
-bool	Server::responseInputGET(std::string endPoint)
-{
-	ChildProcessData	auxProcess;
-	std::string			content;
+// bool	Server::responseInputGET(std::string endPoint)
+// {
+// 	ChildProcessData	auxProcess;
+// 	std::string			content;
 
-	setEnvs(endPoint);
-	if (access(getenv("SCRIPT_FILENAME"), F_OK) == -1)
-		return (responseClientError(ERROR404, _serversConf[_port]->get_root(), getErrorPageMapServer("404")));
-	if (access(getenv("SCRIPT_FILENAME"), X_OK) == -1)
-		return (responseClientError(ERROR403, _serversConf[_port]->get_root(), getErrorPageMapServer("403")));
-	if (executeFork(auxProcess) == false)
-		return (write_error("Error: Server::responseInputGET: executeFork"));
-	if (auxProcess.pid == CHILD_PROCESS)
-		callCGI(auxProcess);
-	waitpid(auxProcess.pid, &auxProcess.status, 0);
-	if (auxProcess.status != 0)
-		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
-	close(auxProcess.fd[1]);
-	if (readOuputFormatedCGI(auxProcess, content) == false)
-		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
-	return (sendResponseClient(content));
-}
+// 	setEnvs(endPoint);
+// 	if (executeFork(auxProcess) == false)
+// 		return (write_error("Error: Server::responseInputGET: executeFork"));
+// 	if (auxProcess.pid == CHILD_PROCESS)
+// 		callCGI(auxProcess);
+// 	waitpid(auxProcess.pid, &auxProcess.status, 0);
+// 	if (auxProcess.status != 0)
+// 		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
+// 	close(auxProcess.fd[1]);
+// 	if (readOuputFormatedCGI(auxProcess, content) == false)
+// 		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
+// 	return (sendResponseClient(content));
+// }

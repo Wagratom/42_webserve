@@ -12,20 +12,21 @@
 
 #include <web_server.hpp>
 
+
 bool Server::responseFileServer(std::string endPoint)
 {
-	Server_configuration*	server = _serversConf[_port];
-	auxReadFiles			tmp;
+	auxReadFiles	tmp;
+	size_t			checkExtensionFile = endPoint.find_last_of('.');
 
 	write_debug("responseFileServer");
+	if (checkExtensionFile == std::string::npos || checkExtensionFile == 0)
+		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMapServer("404")));
 	endPoint.erase(0, 1);
-	tmp.path = server->get_root() + endPoint;
-	if (endPoint.find(".") == std::string::npos)
-		return (responseClientError(ERROR404, server->get_root(), getErrorPageMapServer("404")));
-	if (getContentFile(tmp, server->get_cgi(), "200 OK") == false)
-		return (responseClientError(ERROR404, server->get_root(), getErrorPageMapServer("404")));
+	tmp.path = _serverUsing->get_root() + endPoint;
+	if (getContentFile(tmp, _serverUsing->get_cgi(), "200 OK") == false)
+		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMapServer("404")));
 	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, server->get_root(), getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
 	return true;
 }
 

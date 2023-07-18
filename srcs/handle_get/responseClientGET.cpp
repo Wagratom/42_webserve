@@ -27,6 +27,16 @@ static bool findLocationVector(const std::map<std::string, t_location*> location
 	}
 }
 
+void	Server::handleQuerystring(std::string& endPoint)
+{
+	size_t	questionMarkPos = endPoint.find("?");
+
+	if (questionMarkPos == std::string::npos)
+		return ;
+	setenv("QUERY_STRING", endPoint.substr(questionMarkPos + 1).c_str(), 1);
+	endPoint.erase(questionMarkPos);
+}
+
 bool	Server::responseClientGET( std::string& endPoint)
 {
 	std::string	LocationsNames = endPoint + "/";
@@ -34,7 +44,7 @@ bool	Server::responseClientGET( std::string& endPoint)
 	if (endPoint == "/")
 		return (responseServer());
 	if (endPoint.find("?") != std::string::npos)
-		return (responseInputGET(endPoint));
+		handleQuerystring(endPoint);
 	if (findLocationVector(_serversConf[_port]->get_locations(), LocationsNames))
 		return (responseLocation(endPoint, LocationsNames));
 	return (responseFileServer(endPoint));

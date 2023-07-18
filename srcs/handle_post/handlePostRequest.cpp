@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/17 13:31:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/17 20:17:12 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,14 @@ bool	Server::auxSendErrorPost( int status, std::string pathFileError )
 {
 	char	buffer[4096];
 	while (read(_client_fd, buffer, 4096) > 0);
-	responseClientError(status, _serversConf[_port]->get_root() ,pathFileError);
+	try {
+		responseClientError(status, _serversConf.at(_port)->get_root() ,pathFileError);
+		cleanupFd(_client_fd);
+	} catch (std::exception& e) {
+		write_error("auxSendErrorPost: " + std::string(e.what()));
+		write_error("Error brusco servidor sem root");
+		cleanupFd(_client_fd);
+	}
 	return handleKeepAlive();
 }
 

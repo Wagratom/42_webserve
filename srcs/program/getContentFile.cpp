@@ -50,12 +50,13 @@ static bool	getContentAllFile(auxReadFiles& dst, std::string statusHeader)
 
 bool	getContentFile(auxReadFiles& dst, std::map<std::string, std::string> cgi, std::string statusHeader)
 {
-	std::string	extension = dst.path.substr(dst.path.find_last_of("."));
-
-	if (cgi.find(extension) != cgi.end())
-		return (getContentFilePHP(dst));
-	size_t hasExtension = dst.path.find_last_of(".");
-	if (hasExtension != std::string::npos && hasExtension != 0)
+	try {
+		std::string	extension = dst.path.substr(dst.path.find_last_of("."));
+		if (cgi.find(extension) != cgi.end())
+			return (getContentFilePHP(dst));
 		return (getContentAllFile(dst, statusHeader));
-	return (false);
+	}
+	catch (std::exception& e) {
+		return write_error_prefixS("getContentFilePHP: catch", e.what());
+	}
 }

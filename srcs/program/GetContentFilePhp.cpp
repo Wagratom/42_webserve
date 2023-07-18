@@ -51,28 +51,19 @@ static bool	checkAcess(std::string path, bool& status)
 
 bool	getContentFilePHP(auxReadFiles& dst)
 {
-
 	write_debug("getContentFilePHP");
 	write_debug_prefix("File: ", dst.path);
 	if (checkAcess(dst.path, dst.notPermmision) == false)
-		return (false);
-	try {
-		ChildProcessData	auxProcess;
-
-		bzero(&auxProcess, sizeof(ChildProcessData));
-		if (executeFork(auxProcess) == false)
-			return (false);
-		if (auxProcess.pid == CHILD)
-			callExecuteCgi(dst, auxProcess);
-		close(auxProcess.fd[1]);
-		if (readOuputFormatedCGI(auxProcess, dst.content) == false)
-			return (false);
-		return (true);
-	}
-	catch (std::exception& e) {
-		write_debug("getContentFilePHP: catch");
-		write_debug_prefix("Error: ", e.what());
-		return (false);
-	}
+		throw std::exception();
+	ChildProcessData	auxProcess;
+	bzero(&auxProcess, sizeof(ChildProcessData));
+	if (executeFork(auxProcess) == false)
+		throw std::exception();
+	if (auxProcess.pid == CHILD)
+		callExecuteCgi(dst, auxProcess);
+	close(auxProcess.fd[1]);
+	if (readOuputFormatedCGI(auxProcess, dst.content) == false)
+		throw std::exception();
 	return (true);
+
 }
