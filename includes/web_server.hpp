@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 13:06:48 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:54:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,15 @@ class	Server
 		bool	preparingToReadFile(auxReadFiles& tmp, std::string& endPoint);
 
 
-		bool	responseFileLocation(const t_location*& location, std::string& endPoint);
 		bool	responseLocation( std::string& endPoint, std::string& locationName );
+		bool	responseLocationPost(const t_location*& location);
+		bool	responseFileLocation(const t_location*& location, std::string& endPoint);
 		bool	returnIndexLocation(const t_location*& _location );
+
 		bool	createRootLocation(const t_location*& location);
 
 		bool	handlePostRequest( void );
-		bool	handleScriptPOST( std::string& endPoint );
+		bool	handleScriptPOST( void );
 		bool	checkPermitionFile(std::string path);
 		bool	createValidResponse( void );
 		bool	auxSendErrorPost( int status, std::string Error );

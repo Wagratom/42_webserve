@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 13:07:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:54:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	Server::checkPermitionFile(std::string path)
 {
 	size_t	extension = path.find_last_of(".");
 
-	write_debug("checkPermitionFile");
+	write_debug_prefix("checkPermitionFile: ", path);
 	if (extension == std::string::npos || extension == 0)
 		auxSendErrorPost(ERROR404, getErrorPageMapServer("404"));
 	if (access(path.c_str(), F_OK) == -1)
@@ -66,16 +66,15 @@ bool	Server::handlePostRequest()
 
 	write_debug("handlePostRequest");
 	if (findLocationVector(_serverUsing->get_locations(), LocationsNames))
-		return (responseLocation(endPoint, LocationsNames));
-	return handleScriptPOST(endPoint);
+		return responseLocation(endPoint, LocationsNames);
+	std::string	script = endPoint.erase(0, 1);
+	setenv("SCRIPT_FILENAME", std::string(_serverUsing->get_root() + script).c_str(), 1);
+	return handleScriptPOST();
 }
 
-bool	Server::handleScriptPOST(std::string& endpoint)
+bool	Server::handleScriptPOST( void )
 {
-	std::string	script = endpoint.erase(0, 1);
-
 	write_debug("handleScriptPOST");
-	setenv("SCRIPT_FILENAME", std::string(_serversConf[_port]->get_root() + script).c_str(), 1);
 	if (checkPermitionFile(getenv("SCRIPT_FILENAME")) == false)
 		return (true);
 	if (_parserRequest->get_request()[0])
@@ -83,7 +82,7 @@ bool	Server::handleScriptPOST(std::string& endpoint)
 	if (createValidResponse() == false)
 		return (auxSendErrorPost(ERROR413, getErrorPageMapServer("413")));
 	if (handlePostBody() == false)
-		return (responseClientError(ERROR500, _serversConf[_port]->get_root(), getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
 	return (true);
 
 }

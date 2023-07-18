@@ -22,12 +22,11 @@ static bool	isRequerimentFile(const std::string& endPoint)
 	return (endPoint.find(".") != std::string::npos);
 }
 
-static bool	isPostMethod(const std::string& root, const std::string& endPoint, std::string& dst)
+static bool	isPostMethod( void )
 {
-	if (std::string(getenv("REQUEST_METHOD")) != "POST")
-		return (false);
-	dst = root + endPoint;
-	return (true);
+	if (std::string(getenv("REQUEST_METHOD")) == "POST")
+		return (true);
+	return (false);
 }
 
 static bool	isEndPoint(std::string& endPoint, std::string& locationName)
@@ -54,17 +53,14 @@ bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 {
 	try {
 		const t_location*	location = _serverUsing->get_locations().at(locationName);
-		std::string			script_name;
 
 		write_debug_prefix("responseLocation: ", locationName);
-		if (location == NULL)
-			return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
 		if (checkMethodSupported(location->configuration->get_limit_except()) == false)
 			return (responseClientError(ERROR405, location->configuration->get_root(), getErrorPageMapLocation(location, "405")));
 		if (hasRedirection(location))
 			return (responseRedirect(location->configuration->get_return()));
-		if (isPostMethod(location->configuration->get_root(), endPoint, script_name) == false)
-			return (handleScriptPOST(script_name));
+		if (isPostMethod())
+			return (responseLocationPost(location));
 		if (isRequerimentFile(endPoint))
 			return (responseFileLocation(location, endPoint));
 		if (isEndPoint(endPoint, locationName))
@@ -74,6 +70,17 @@ bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 		write_error("responseLocation: " + std::string(e.what()));
 		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
 	}
+}
+
+bool	Server::responseLocationPost(const t_location*& location)
+{
+	std::string path;
+
+	write_debug("responseLocationPost");
+	if (generetePathToResponse(path, location->configuration->get_root(), location->configuration->get_index()) == false)
+		return (get_autoindex(location->configuration->get_autoIndex(), location->configuration->get_root()));
+	setenv("SCRIPT_FILENAME", path.c_str(), 1);
+	return handleScriptPOST();
 }
 
 bool	Server::returnIndexLocation(const t_location*& location)
