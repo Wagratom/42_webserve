@@ -42,7 +42,7 @@ bool	Server::createRootLocation(const t_location*& location)
 {
 	if (location->configuration->get_root().empty() == false)
 		return (true);
-	std::string	rootServer = _serversConf[_port]->get_root();
+	std::string	rootServer = _serverUsing->get_root();
 	if (rootServer.empty())
 		write_error("Error: root not found");
 	location->configuration->set_root(rootServer);
@@ -75,26 +75,32 @@ bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 bool	Server::responseLocationPost(const t_location*& location)
 {
 	std::string path;
+	Location_configuration*	locationConf = location->configuration;
 
 	write_debug("responseLocationPost");
-	if (generetePathToResponse(path, location->configuration->get_root(), location->configuration->get_index()) == false)
-		return (get_autoindex(location->configuration->get_autoIndex(), location->configuration->get_root()));
+	if (generetePathToResponse(path, locationConf->get_root(), locationConf->get_index()) == false)
+	{
+		get_autoindex(locationConf->get_autoIndex(), locationConf->get_root());
+		cleanupFd(_client_fd);
+		return true;
+	}
 	setenv("SCRIPT_FILENAME", path.c_str(), 1);
 	return handleScriptPOST();
 }
 
 bool	Server::returnIndexLocation(const t_location*& location)
 {
-	auxReadFiles	tmp;
-	// Location_configuration* locationConf = location->configuration;
+	Location_configuration*	locationConf = location->configuration;
+	auxReadFiles			tmp;
 
+	locationConf->get_root();
 	write_debug("returnIndexLocation");
 	if (createRootLocation(location) == false)
-		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
-	if (generetePathToResponse(tmp.path, location->configuration->get_root(), location->configuration->get_index()) == false)
-		return (get_autoindex(location->configuration->get_autoIndex(), location->configuration->get_root()));
-	if (getContentFile(tmp, location->configuration->get_cgi(), "200 OK") == false)
-		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
+		return (responseClientError(ERROR500, locationConf->get_root(), getErrorPageMapLocation(location, "500")));
+	if (generetePathToResponse(tmp.path, locationConf->get_root(), locationConf->get_index()) == false)
+		return (get_autoindex(locationConf->get_autoIndex(), locationConf->get_root()));
+	if (getContentFile(tmp, locationConf->get_cgi(), "200 OK") == false)
+		return (responseClientError(ERROR500, locationConf->get_root(), getErrorPageMapLocation(location, "500")));
 	// generateDynamicHeader(tmp, "200");
 	// tmp.response = tmp.header + tmp.content;
 	return (sendResponseClient(tmp.content));

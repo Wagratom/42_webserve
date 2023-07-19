@@ -12,7 +12,7 @@
 
 #include <web_server.hpp>
 
-static bool	open_file_status( std::string path )
+static bool	open_file_status( const std::string& path )
 {
 	std::ifstream	file(path.c_str());
 
@@ -22,7 +22,7 @@ static bool	open_file_status( std::string path )
 	return (true);
 }
 
-static bool	saveValidPathFile(std::string& pathFile, std::string currentPath)
+static bool	saveValidPathFile(std::string& pathFile, std::string& currentPath)
 {
 	if (!open_file_status(currentPath))
 		return (false);
@@ -30,7 +30,7 @@ static bool	saveValidPathFile(std::string& pathFile, std::string currentPath)
 	return (true);
 }
 
-static bool getValidPath(std::string listNames, const std::string& root, std::string& pathFile)
+static bool getValidPath(std::string& pathFile, const std::string& root, std::string listNames)
 {
 	std::string	currentPath;
 	size_t		endWorld;
@@ -46,13 +46,13 @@ static bool getValidPath(std::string listNames, const std::string& root, std::st
 	return saveValidPathFile(pathFile, pathFile);
 }
 
-bool	Server::generetePathToResponse(std::string& dst, const std::string& root, std::string listNames)
+bool	Server::generetePathToResponse(std::string& dst, const std::string& root, const std::string& listNames)
 {
 	dst.clear();
 	write_debug("generetePathToResponse");
 	if (listNames.empty() || root.empty())
 		return (false);
-	if (getValidPath(listNames, root, dst) == false)
+	if (getValidPath(dst, root, listNames) == false)
 		return (write_error("path not found"));
 	return (true);
 }

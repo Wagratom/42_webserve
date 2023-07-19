@@ -16,6 +16,8 @@ static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 {
 	char*	scrptName = (char *)dst.path.c_str();
 
+	if (dst.path == AUTO_INDEX)
+		setenv("CONTENT_LENGTH", "0", 1);
 	setenv("REDIRECT_STATUS", "200", 1);
 	setenv("SCRIPT_FILENAME", scrptName, 1);
 	dup2(infos.fd[1], STDOUT_FILENO);
@@ -25,21 +27,6 @@ static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 	writeStreerrorPrefix("Error: callExecuteCgi: ");
 	exit(1);
 }
-
-// static bool	CheckAndSaveContentScript(auxReadFiles& dst, ChildProcessData& infosProcess)
-// {
-// 	char	buffer[1024];
-// 	int		bytes_read;
-
-// 	close(infosProcess.fd[1]);
-// 	waitpid(infosProcess.pid, &infosProcess.status, 0);
-// 	if (infosProcess.status != 0)
-// 		return (write_error("contentFilePHP:: Error in callExecuteCgi"));
-// 	while ((bytes_read = read(infosProcess.fd[0], buffer, 1024)) > 0)
-// 		dst.content.append(buffer, bytes_read);
-// 	close(infosProcess.fd[0]);
-// 	return (true);
-// }
 
 static bool	checkAcess(std::string path, auxReadFiles& dst)
 {
@@ -52,7 +39,6 @@ static bool	checkAcess(std::string path, auxReadFiles& dst)
 bool	getContentFilePHP(auxReadFiles& dst)
 {
 	write_debug("getContentFilePHP");
-	write_debug_prefix("File: ", dst.path);
 	if (checkAcess(dst.path, dst) == false)
 		throw std::exception();
 	ChildProcessData	auxProcess;

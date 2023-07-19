@@ -34,9 +34,9 @@ static bool readOutputCGI(ChildProcessData& auxProcess, std::ostringstream& oss)
 static bool	repairStatusCGI( std::string content, std::string& contentFormated )
 {
 	if (content.empty())
-		return (write_error("Error: Script Output is empty"));
+		return (write_error("Script Output is empty"));
 	if (content.find("Status") != std::string::npos && content.find("Status: 200") == std::string::npos)
-		return (write_error("Error: Script Output is not 200"));
+		return (write_error("Script Output is not 200"));
 	if (content.find("Status: 200") != std::string::npos)
 	{
 		size_t pos = content.find("Status: 200");

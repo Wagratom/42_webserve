@@ -1,35 +1,22 @@
+handlePostRequest
+responseLocation: /uploads/
+responseLocationPost
+generetePathToResponse
+Error: path not found
+get_autoindex
+getContentFilePHP
+PAsseianan
 
-	ChildProcessData aux;
+SCRIPT_FILENAME: ./autoindex.php
+PATHDIR: ./root/scripts/
 
-	if (executeFork(aux) == false)
-		return false;
-	if (aux.pid == CHILD_PROCESS)
-	{
-		setenv("REDIRECT_STATUS", "200", 1);
-		setenv("AUTY_TYPE", "NULL", 1);
-		setenv("SCRIPT_FILENAME", "./root/handlePOST.php", 1);
-		setenv("HTTP_ACCEPT_ENCODING", "gzip,", 1);
-		setenv("HTTP_ACCEPT_LANGUAGE", "pt-BR,pt;q0.8,en-US;q0.5,en;q0.3", 1);
-		setenv("HTTP_HOST", "localhost:8080", 1);
-		setenv("SERVER_NAME", "localhost", 1);
-		setenv("SERVER_PORT", "8080", 1);
-		setenv("HTTP_USER_AGENT", "Mozilla/5.0", 1);
-		setenv("PATH_INFO", "/handlePOST.php", 1);
-		setenv("QUERY_STRING", "", 1);
-		setenv("REQUEST_URI", "handlePOST.php", 1);
-		setenv("REMOTE_HOST", "http://localhost:8080", 1);
-		setenv("SERVER_PROTOCOL", "HTTP/1.1", 1);
-		setenv("SCRIPT_NAME", "/usr/bin/php-cgi7.4", 1);
-		setenv("GATEWAY_INTERFACE","CGI/7.4",1);
-		setenv("SERVER_SOFTWARE", "TDD/4.0", 1);
-		setenv
 
-		// setenv("DOCUMENT_ROOT", "/home/wallas/42_webserve", 1);
-		write(aux.fd[1], requestChar.data(), requestChar.size());
-		dup2(aux.fd[0], STDIN_FILENO);
-		close(aux.fd[0]);
-		close(aux.fd[1]);
-		execlp("./root/handlePOST.php", "./root/handlePOST.php", NULL);
-		exit(0);
-	}
-	waitpid(aux.pid, NULL, 0);
+
+generetePathToResponse
+Error: path not found
+get_autoindex
+getContentFilePHP
+PAsseianan
+
+SCRIPT_FILENAME: ./autoindex.php
+PATHDIR: ./root/scripts/

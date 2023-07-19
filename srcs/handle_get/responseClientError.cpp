@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 09:41:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:39:39 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 bool	Server::sendErrorToClient( std::string path, std::string statusHeader)
 {
 	auxReadFiles	tmp;
-	std::string		header;
 
-	write_debug_prefix("sendErrorToClient ", std::string(statusHeader + " To Client"));
 	tmp.path = path;
+	write_debug_prefix("sendErrorToClient ", std::string(statusHeader + " To Client"));
 	try {
 		if (getContentFile(tmp, _serversConf.at(_port)->get_cgi(), statusHeader) == false)
 			return (false);
-		return sendResponseClient(tmp.content);
+		bool status = sendResponseClient(tmp.content);
+		cleanupFd(_client_fd);
+		return status;
 	}
 	catch (const std::exception& e) {
 		return (false);
