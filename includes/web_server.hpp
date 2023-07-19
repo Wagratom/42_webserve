@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 11:54:10 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 12:25:47 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ class	Server
 		bool	handleClientResponse(epoll_event& event);
 
 		bool	handle_DELETE_requesition( void );
+
 		// bool	responseClientListFiles( std::string pathDir, std::string pathFile );
 		// bool	extractFileNameFromBody( aux_upload& data );
 
@@ -160,6 +161,7 @@ class	Server
 		void	timeoutHandler( void );
 		bool	responseRedirect(std::string endPoint);
 		bool	cleanupFd(int fd);
+		void	cleanupResponse( int& fd );
 
 		std::string	getErrorPageMapServer(std::string Error);
 		std::string	getErrorPageMapLocation(const t_location*& _location, std::string Error);

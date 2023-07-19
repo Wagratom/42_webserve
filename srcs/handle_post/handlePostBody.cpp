@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 11:55:22 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 13:19:41 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ bool	Server::handleProcessResponse(Response*& response, std::vector<char>& buffe
 	write(response->process.fd[1], buffer.data(), response->bytesRead);
 	if (response->totalBytesRead == response->contentLenght)
 	{
-		std::string	content;
-
 		write_debug("Is end of body");
 		close(response->process.fd[1]);
 		if (waitpid(response->process.pid, &status, WNOHANG) == 0)
@@ -47,6 +45,7 @@ bool	Server::handleProcessResponse(Response*& response, std::vector<char>& buffe
 		if (wexitstatus != 0)
 			return responseClientError(wexitstatus, _serversConf[_port]->get_root(), getErrorPageMapServer(get_stringError(wexitstatus)));
 		responseServer();
+		cleanupResponse(_client_fd);
 		return (handleKeepAlive());
 	}
 	return (true);

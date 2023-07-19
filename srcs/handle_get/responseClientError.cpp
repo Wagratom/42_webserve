@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 12:01:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 12:37:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ bool	Server::sendErrorToClient( std::string path, std::string statusHeader)
 	try {
 		if (getContentFile(tmp, _serversConf.at(_port)->get_cgi(), statusHeader) == false)
 			return (false);
-		bool status = sendResponseClient(tmp.content);
-		cleanupFd(_client_fd);
-		return status;
+		return sendResponseClient(tmp.content);
 	}
 	catch (const std::exception& e) {
 		return (false);
