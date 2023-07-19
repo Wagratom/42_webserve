@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/12 10:03:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 10:59:58 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include <structs.hpp>
 
-class Parser_request
+class	Parser_request
 {
 	public:
 		Parser_request( std::string& request_client );

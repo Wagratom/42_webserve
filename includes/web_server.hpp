@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 09:06:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 11:54:10 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <Parser_request.hpp>
 #include <Parser_configuration.hpp>
+#include <ctime>
 
 # define PORT 8080
 # define MAX_EVENTS 10
@@ -32,6 +33,7 @@
 # define ERROR413 113 // Payload Too Large
 # define ERROR415 115 // Unsupported Media Type
 # define ERROR500 200 // Internal Server Error
+# define ERROR504 204 // Gateway Timeout
 
 # define CHILD_PROCESS 0
 
@@ -45,7 +47,14 @@
 class	Response
 {
 	public:
-		Response( void ) : contentLenght(0), bytesRead(0), totalBytesRead(0), hasProcess(false) {};
+		Response( void )
+		: contentLenght(0)
+		, bytesRead(0)
+		, totalBytesRead(0)
+		, hasProcess(false)
+		, write(false)
+		, creationTime(std::time(NULL)) {};
+
 	public:
 		int					contentLenght;
 		int					bytesRead;
@@ -53,6 +62,7 @@ class	Response
 		ChildProcessData	process;
 		bool				hasProcess;
 		bool				write;
+		std::time_t			creationTime;
 };
 
 class	Server
@@ -91,31 +101,29 @@ class	Server
 		bool	save_connection( int& new_client );
 
 		bool	handleEvents( epoll_event& event );
-		bool	isClosedOrErrorEvent( epoll_event& event );
-		bool	handleClientRequest( epoll_event& event );
 
+		bool	isClosedOrErrorEvent( epoll_event& event );
+
+		//		handleClientRequest
+		bool	handleClientRequest( epoll_event& event );
 		bool	savaDataCleint( epoll_event& event );
 		bool	set_fdNotBlock( int& fd );
 		bool	readRequest( std::string& buffer );
 		bool	responseRequest( std::string& buffer );
-		bool	deleteParserRequest(bool status);
 
 		bool	handle_GET_requesition( void );
 		bool	responseClientGET( std::string& endPoint );
 		void	handleQuerystring(std::string& endPoint);
 		bool	responseServer( void );
 		bool	get_autoindex( const bool& autoindex, const std::string& root);
-		// bool	responseInputGET(std::string endPoint);
 
 		bool	responseFileServer( std::string& endPoint );
 		bool	preparingToReadFile(auxReadFiles& tmp, std::string& endPoint);
-
 
 		bool	responseLocation( std::string& endPoint, std::string& locationName );
 		bool	responseLocationPost(const t_location*& location);
 		bool	responseFileLocation(const t_location*& location, std::string& endPoint);
 		bool	returnIndexLocation(const t_location*& _location );
-
 		bool	createRootLocation(const t_location*& location);
 
 		bool	handlePostRequest( void );
@@ -128,24 +136,28 @@ class	Server
 		bool	createProcessResponse( Response*& response );
 		void	handleProcessPOST( Response*& response );
 		bool	handleProcessResponse(Response*& response, std::vector<char>& buffer);
-		int		checkStatusCGI(Response*& response);
+
+		//		handleClientResponse
+		bool	handleClientResponse(epoll_event& event);
 
 		bool	handle_DELETE_requesition( void );
 		// bool	responseClientListFiles( std::string pathDir, std::string pathFile );
 		// bool	extractFileNameFromBody( aux_upload& data );
+
+
+
 
 		std::string	generetePathErrorValid( int& status, const std::string& root, std::string path );
 		bool		generetePathToResponse( std::string& dst , const std::string& root, const std::string& listNames );
 		bool		responseClientError( int status, const std::string& root, std::string pathFileError );
 		bool		findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint);
 
-
 		bool	sendErrorToClient( std::string path, std::string header );
 
 		bool	handleKeepAlive( void );
 		bool	checkMethodSupported(std::vector<std::string> methods);
 		bool	sendResponseClient( std::string response );
-
+		void	timeoutHandler( void );
 		bool	responseRedirect(std::string endPoint);
 		bool	cleanupFd(int fd);
 
@@ -159,11 +171,6 @@ class	Server
 		std::vector<Server_configuration*>	server( void ) {
 			return (this->_parserFile->get_server_configuration());
 		}
-
-		// Parser_configuration*	get_parser( void ) {
-		// 	return (this->_parserFile);
-		// }
-
 
 	private:
 		Parser_configuration*	_parserFile;
@@ -179,8 +186,9 @@ class	Server
 
 		std::map<int, Server_configuration*>	_serversConf;
 		std::map<int, std::string>				_defaultErrorPage;
-		static std::map<int, Response*>				_responses;
+		std::map<int, Response*>				_responses;
 		Server_configuration*					_serverUsing;
+		std::time_t								_lastVerifyTimeout;
 };
 
 void		set_debug(bool	value);

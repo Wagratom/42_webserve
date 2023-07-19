@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 19:22:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 09:17:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	Server::auxSendErrorPost( int status, std::string pathFileError )
 {
-	char	buffer[4096];
-	while (read(_client_fd, buffer, 4096) > 0);
+	// char	buffer[4096];
+	// while (read(_client_fd, buffer, 4096) > 0);
 	responseClientError(status, _serverUsing->get_root() ,pathFileError);
 	return handleKeepAlive();
 }

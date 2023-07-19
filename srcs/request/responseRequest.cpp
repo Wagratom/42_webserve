@@ -12,10 +12,10 @@
 
 #include <web_server.hpp>
 
-bool	Server::deleteParserRequest(bool status)
+bool	deleteParserRequest(Parser_request*& parserRequest, bool status)
 {
-	delete _parserRequest;
-	_parserRequest = NULL;
+	delete parserRequest;
+	parserRequest = NULL;
 	return (status);
 }
 
@@ -26,16 +26,16 @@ bool	Server::responseRequest( std::string& buffer )
 	write_debug_prefix(CIANO, "\t ENV Pasing");
 	write_debug(AZUL);
 	if (_parserRequest->set_envs_order_line(_verbs) == false)
-		return (deleteParserRequest(false));
+		return (deleteParserRequest(_parserRequest, false));
 	if (_parserRequest->set_envs_header() == false)
-		return (deleteParserRequest(false));
+		return (deleteParserRequest(_parserRequest, false));
 	write_debug_prefix(CIANO, "\t Tratavive request");
 	write_debug(AZUL);
 	if (_parserRequest->get_metodo() == "GET")
-		return deleteParserRequest(handle_GET_requesition());
+		return deleteParserRequest(_parserRequest, handle_GET_requesition());
 	if (_parserRequest->get_metodo() == "POST")
-		return deleteParserRequest(handlePostRequest());
+		return deleteParserRequest(_parserRequest, handlePostRequest());
 	if (_parserRequest->get_metodo() == "DELETE")
-		return deleteParserRequest(handle_DELETE_requesition());
-	return (deleteParserRequest(false));
+		return deleteParserRequest(_parserRequest, handle_DELETE_requesition());
+	return (deleteParserRequest(_parserRequest, false));
 }

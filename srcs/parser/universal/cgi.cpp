@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:26:29 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/15 11:32:44 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 10:45:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,5 @@ bool	Parser_configuration::get_cgi(std::string& line, aux_configuration* dst)
 		return (false);
 	if (save_data(extension, path, dst) == false)
 		return (false);
-	std::cout << "extension: " << extension << std::endl;
-	std::cout << "path: " << path << std::endl;
 	return (true);
 }

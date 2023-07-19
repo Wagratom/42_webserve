@@ -23,6 +23,15 @@ bool	Server::isClosedOrErrorEvent(epoll_event& event)
 	return (true);
 }
 
+bool	Server::handleClientResponse(epoll_event& event)
+{
+	int	clientFd = event.data.fd;
+
+	if (_responses.find(clientFd) == _responses.end())
+		cleanupFd(clientFd);
+	return (true);
+}
+
 bool	Server::handleEvents(epoll_event& event)
 {
 	write_debug("Handling events");
@@ -30,8 +39,8 @@ bool	Server::handleEvents(epoll_event& event)
 		return cleanupFd(event.data.fd);
 	if (event.events & EPOLLIN)
 		return handleClientRequest(event);
-	else
-		return cleanupFd(event.data.fd);
+	else if (event.events & EPOLLOUT)
+		return handleClientResponse(event);
 	return (true);
 }
 

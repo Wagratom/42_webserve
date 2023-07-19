@@ -12,12 +12,25 @@
 
 #include <web_server.hpp>
 
-void	Server::checkTimeout( int& numberOfEvents )
+void	Server::timeoutHandler( void )
 {
-	if (numberOfEvents > 0)
+	write_debug_number("Number of open clients process: ", _responses.size());
+	if ((std::time(NULL) -_lastVerifyTimeout) < 3)
 		return ;
-	for (int i = 3; i < MAX_CLIENTS; i++)
-		cleanupFd(i);
+	write_debug_prefix(CIANO, "checking Timeout ");
+	write_debug(AZUL);
+	for (std::map<int, Response*>::iterator it = _responses.begin(); it != _responses.end(); it++)
+	{
+		if ((std::time(NULL) -it->second->creationTime) > 3)
+		{
+			write_debug_number("Timeout in client process: ", it->first);
+			_client_fd = it->first;
+			responseClientError(ERROR504, _serverUsing->get_root(), getErrorPageMapServer("504"));
+			kill(it->second->process.pid, SIGKILL);
+			cleanupFd(_client_fd);
+		}
+	}
+	_lastVerifyTimeout = std::time(NULL);
 }
 
 int	Server::startServer( void )
@@ -25,12 +38,13 @@ int	Server::startServer( void )
 	struct	epoll_event event[MAX_EVENTS];
 
 	write_debug("\033[0;36m\tStarting server\033[0;34m");
+	_lastVerifyTimeout = std::time(NULL);
 	while (true)
 	{
 		int	numberOfEvents = 0;
 		if (!captureNewEvents(event, numberOfEvents))
 			return (-1);
-		// checkTimeout(numberOfEvents);
+		timeoutHandler();
 		if (!filterEvent(event, numberOfEvents))
 			return (-1);
 		write_debug("\n");

@@ -6,13 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 09:08:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 11:55:12 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
-
-std::map<int, Response*> Server::_responses;
 
 void	Server::initializeDefaultErrorPage( void )
 {
@@ -22,7 +20,7 @@ void	Server::initializeDefaultErrorPage( void )
 	_defaultErrorPage[ERROR405] = "./error_pages/405_method_not_allowed.html";
 	_defaultErrorPage[ERROR413] = "./error_pages/413_payload_too_large.html";
 	_defaultErrorPage[ERROR500] = "./error_pages/500_internal_server.html";
-	// _defaultErrorPage[ERROR415] = "./error_pages/415_unsupported_media.html";
+	_defaultErrorPage[ERROR504] = "./error_pages/504_gateway_timeout.html";
 }
 
 std::string**	Server::create_verbs( void )
