@@ -6,11 +6,13 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 10:21:16 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 09:08:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
+
+std::map<int, Response*> Server::_responses;
 
 void	Server::initializeDefaultErrorPage( void )
 {

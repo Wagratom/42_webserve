@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 19:12:01 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 09:06:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,6 @@ class	Server
 		bool	handleProcessResponse(Response*& response, std::vector<char>& buffer);
 		int		checkStatusCGI(Response*& response);
 
-
-
-
 		bool	handle_DELETE_requesition( void );
 		// bool	responseClientListFiles( std::string pathDir, std::string pathFile );
 		// bool	extractFileNameFromBody( aux_upload& data );
@@ -182,7 +179,7 @@ class	Server
 
 		std::map<int, Server_configuration*>	_serversConf;
 		std::map<int, std::string>				_defaultErrorPage;
-		std::map<int, Response*>				_responses;
+		static std::map<int, Response*>				_responses;
 		Server_configuration*					_serverUsing;
 };
 
