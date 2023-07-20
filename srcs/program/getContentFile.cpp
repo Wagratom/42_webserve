@@ -48,7 +48,7 @@ static bool	getContentAllFile(auxReadFiles& dst, std::string statusHeader)
 	}
 }
 
-bool	getContentFile(auxReadFiles& dst, const std::map<std::string, std::string>& cgi, std::string statusHeader)
+bool	Server::getContentFile(auxReadFiles& dst, const std::map<std::string, std::string>& cgi, std::string statusHeader)
 {
 	try {
 		std::string	extension = dst.path.substr(dst.path.find_last_of("."));

@@ -14,20 +14,20 @@
 
 bool	Server::responseServer( void )
 {
-	Server_configuration*				server = _serversConf[_port];
-	std::map<std::string, std::string*>	errorPages = server->get_error_page();
+	std::map<std::string, std::string*>	errorPages = _serverUsing->get_error_page();
 	auxReadFiles						tmp;
 
+	bzero(&tmp, sizeof(tmp));
 	write_debug("Response server");
-	if (generetePathToResponse(tmp.path, server->get_root(), server->get_index()) == false)
-		return (get_autoindex(server->get_autoIndex(), server->get_root()));
-	if (getContentFile(tmp, server->get_cgi(), "200 OK") == false)
+	if (generetePathToResponse(tmp.path, _serverUsing->get_root(), _serverUsing->get_index()) == false)
+		return (get_autoindex(_serverUsing->get_autoIndex(), _serverUsing->get_root()));
+	if (getContentFile(tmp, _serverUsing->get_cgi(), "200 OK") == false)
 	{
 		if (tmp.notPermmision == true)
-			return (responseClientError(ERROR403, server->get_root(), getErrorPageMapServer("403")));
-		return (responseClientError(ERROR500, server->get_root(), getErrorPageMapServer("500")));
+			return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMapServer("403")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
 	}
 	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, server->get_root(), getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
 	return (true);
 }

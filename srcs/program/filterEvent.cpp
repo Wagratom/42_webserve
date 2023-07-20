@@ -34,15 +34,9 @@ bool	Server::filterEvent(epoll_event* event, int numberOfEvents)
 		int serverFd = 0;
 		// write_type_event_debug(event[index]);
 		if (checkEventInServer(event[index], serverFd))
-		{
-			if (!handleNewConnections(serverFd))
-				return (false);
-		}
+			handleNewConnections(serverFd);
 		else
-		{
-			if (!handleEvents(event[index]))
-				return (false);
-		}
+			handleEvents(event[index]);
 		index++;
 	}
 	return (true);

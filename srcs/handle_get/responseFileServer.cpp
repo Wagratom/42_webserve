@@ -27,6 +27,7 @@ bool Server::responseFileServer(std::string& endPoint)
 {
 	auxReadFiles	tmp;
 
+	bzero(&tmp, sizeof(tmp));
 	write_debug("responseFileServer");
 	if (preparingToReadFile(tmp, endPoint) == false)
 		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMapServer("404")));
@@ -45,11 +46,16 @@ bool	Server::responseFileLocation(const t_location*& location, std::string& endP
 {
 	auxReadFiles	tmp;
 
+	bzero(&tmp, sizeof(tmp));
 	write_debug("responseFileLocation");
 	endPoint.erase(0, location->endPoint.length());
 	tmp.path = location->configuration->get_root() + endPoint;
 	if (getContentFile(tmp, location->configuration->get_cgi(), "200 OK") == false)
+	{
+		if (tmp.notPermmision == true)
+			return (responseClientError(ERROR403, location->configuration->get_root(), getErrorPageMapLocation(location, "403")));
 		return (responseClientError(ERROR404, location->configuration->get_root(), getErrorPageMapLocation(location, "404")));
+	}
 	if (sendResponseClient(tmp.content) == false)
 		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
 	return true;

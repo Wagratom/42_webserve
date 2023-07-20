@@ -23,29 +23,37 @@ bool	Server::isClosedOrErrorEvent(epoll_event& event)
 	return (true);
 }
 
-bool	Server::handleClientResponse(epoll_event& event)
+bool	Server::handleClientResponse( void )
 {
-	int	clientFd = event.data.fd;
-
-	if (_responses.find(clientFd) == _responses.end())
-		return cleanupFd(clientFd);
-	if (waitpid(_responses.at(clientFd)->process.pid, NULL, WNOHANG) == 0)
+	if (_responses.find(_client_fd) == _responses.end())
+		return cleanupFd(_client_fd);
+	if (waitpid(_responses.at(_client_fd)->process.pid, NULL, WNOHANG) == 0)
 		return (true);
-	responseServer();
-	cleanupFd(clientFd);
-	cleanupResponse(clientFd);
+	if (_responses.at(_client_fd)->method == "GET")
+	{
+		std::string	content;
+
+		if (readOuputFormatedCGI(content, _responses.at(_client_fd)->process) == false)
+			responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500"));
+		sendResponseClient(content);
+	}
+	else
+		responseServer();
+	cleanupFd(_client_fd);
+	cleanupResponse(_client_fd);
 	return (true);
 }
 
 bool	Server::handleEvents(epoll_event& event)
 {
-	// write_debug("Handling events");
 	if (isClosedOrErrorEvent(event))
 		return cleanupFd(event.data.fd);
+	if (savaDataCleint(event) == false)
+		cleanupFd(_client_fd);
 	if (event.events & EPOLLIN)
-		return handleClientRequest(event);
+		return handleClientRequest();
 	else if (event.events & EPOLLOUT)
-		return handleClientResponse(event);
+		return handleClientResponse();
 	return (true);
 }
 

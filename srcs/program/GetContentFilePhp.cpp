@@ -16,8 +16,6 @@ static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 {
 	char*	scrptName = (char *)dst.path.c_str();
 
-	if (dst.path == AUTO_INDEX)
-		setenv("CONTENT_LENGTH", "0", 1);
 	setenv("REDIRECT_STATUS", "200", 1);
 	setenv("SCRIPT_FILENAME", scrptName, 1);
 	dup2(infos.fd[1], STDOUT_FILENO);
@@ -36,20 +34,26 @@ static bool	checkAcess(std::string path, auxReadFiles& dst)
 	return (writeStreerrorPrefix("Error: getContentFilePHP: "));
 }
 
-bool	getContentFilePHP(auxReadFiles& dst)
+bool	Server::getContentFilePHP(auxReadFiles& dst)
 {
 	write_debug("getContentFilePHP");
 	if (checkAcess(dst.path, dst) == false)
 		throw std::exception();
-	ChildProcessData	auxProcess;
-	bzero(&auxProcess, sizeof(ChildProcessData));
+	if (createNewResponses(0) == false)
+		return (false);
+	dst.hasProcess = true;
+	ChildProcessData& auxProcess = _responses.at(_client_fd)->process;
 	if (executeFork(auxProcess) == false)
 		throw std::exception();
 	if (auxProcess.pid == CHILD)
 		callExecuteCgi(dst, auxProcess);
 	close(auxProcess.fd[1]);
-	if (readOuputFormatedCGI(auxProcess, dst.content) == false)
+	if (waitpid(auxProcess.pid, &auxProcess.status, WNOHANG) == 0)
+		return true;
+	dst.hasProcess = false;
+	if (readOuputFormatedCGI(dst.content, auxProcess) == false)
 		throw std::exception();
+	cleanupResponse(_client_fd);
 	return (true);
 
 }

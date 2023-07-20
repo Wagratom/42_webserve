@@ -12,10 +12,12 @@
 
 #include <web_server.hpp>
 
-void	Server::timeoutHandler( void )
+bool	Server::timeoutHandler( void )
 {
-	if ((std::time(NULL) -_lastVerifyTimeout) < 11)
-		return ;
+	bool	status = false;
+
+	if ((std::time(NULL) -_lastVerifyTimeout) < 5)
+		return status;
 	write_debug_prefix(CIANO, "checking Timeout ");
 	write_debug_number("Number of open clients process: ", _responses.size());
 	write_debug(AZUL);
@@ -26,16 +28,20 @@ void	Server::timeoutHandler( void )
 		{
 			write_debug_number("Timeout in client process: ", it->first);
 			_client_fd = it->first;
+			_serverUsing = _serversConf.at(it->second->port);
 			responseClientError(ERROR504, _serverUsing->get_root(), getErrorPageMapServer("504"));
 			if (waitpid(it->second->process.pid, NULL, WNOHANG) == 0)
 				kill(it->second->process.pid, SIGKILL);
 			it++;
 			cleanupFd(_client_fd);
 			cleanupResponse(_client_fd);
+			status = true;
 		}
 		else
 			it++;
 	}
+	_lastVerifyTimeout = std::time(NULL);
+	return status;
 }
 
 int	Server::startServer( void )
@@ -47,10 +53,9 @@ int	Server::startServer( void )
 	while (true)
 	{
 		int	numberOfEvents = 0;
-		if (!captureNewEvents(event, numberOfEvents))
-			return (-1);
-		timeoutHandler();
-		if (!filterEvent(event, numberOfEvents))
-			return (-1);
+		captureNewEvents(event, numberOfEvents);
+		if (timeoutHandler())
+			continue ;
+		filterEvent(event, numberOfEvents);
 	}
 }

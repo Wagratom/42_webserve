@@ -48,7 +48,6 @@ static bool getValidPath(std::string& pathFile, const std::string& root, std::st
 
 bool	Server::generetePathToResponse(std::string& dst, const std::string& root, const std::string& listNames)
 {
-	dst.clear();
 	write_debug("generetePathToResponse");
 	if (listNames.empty() || root.empty())
 		return (false);

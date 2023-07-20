@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 21:54:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/20 09:58:03 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,19 @@
 
 bool	Server::auxSendErrorPost( int status, std::string pathFileError )
 {
-	char	buffer[4096];
-	while (read(_client_fd, buffer, 4096) > 0);
+	// char	buffer[4096];
+	// while (read(_client_fd, buffer, 4096) > 0);
 	responseClientError(status, _serverUsing->get_root() ,pathFileError);
 	return (true);
 }
 
-bool	Server::createValidResponse( void )
+bool	Server::createValidResponse( int& contentLength )
 {
-	std::string	contentLength = getenv("CONTENT_LENGTH");
-	int			contentLengthInt;
-
 	write_debug("validatePostRequest");
-	contentLengthInt = std::strtol(contentLength.c_str(), NULL, 10);
-	if (_serversConf[_port]->get_clientMaxBodySize() < contentLengthInt)
+	contentLength = std::strtol(getenv("CONTENT_LENGTH"), NULL, 10);
+	if (_serverUsing->get_clientMaxBodySize() < contentLength)
 		return (write_error("createValidResponse: contentLenght > clientMaxBodySize"));
-	if (_responses.find(_client_fd) != _responses.end())
-		return true;
-	try {
-		_responses.insert(std::pair<int, Response*>(_client_fd, new Response));
-		_responses.at(_client_fd)->contentLenght = contentLengthInt;
-		_responses.at(_client_fd)->write = _write;
-		return true;
-	}
-	catch (std::exception& e) {
-		write_error("createValidResponse: " + std::string(e.what()));
-		return false;
-	}
+	return true;
 }
 
 bool	Server::checkPermitionFile(std::string path)
@@ -61,13 +47,17 @@ bool	Server::checkPermitionFile(std::string path)
 
 bool	Server::handleScriptPOST( void )
 {
+	int	contentLenght;
+
 	write_debug("handleScriptPOST");
 	if (checkPermitionFile(getenv("SCRIPT_FILENAME")) == false)
 		return (true);
 	if (_parserRequest->get_request()[0])
 		return (auxSendErrorPost(ERROR400, getErrorPageMapServer("400")));
-	if (createValidResponse() == false)
+	if (createValidResponse(contentLenght) == false)
 		return (auxSendErrorPost(ERROR413, getErrorPageMapServer("413")));
+	if (createNewResponses(contentLenght) == false)
+		return (auxSendErrorPost(ERROR500, getErrorPageMapServer("500")));
 	if (handlePostBody() == false)
 		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
 	return (true);

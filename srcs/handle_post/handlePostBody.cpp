@@ -6,11 +6,19 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 22:34:40 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/20 09:57:28 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <web_server.hpp>
+
+int	checkStatusCGI(int& status)
+{
+	if (status == 0)
+		return 0;
+	write_error("handleProcessResponse: CGI error");
+	return (WEXITSTATUS(status));
+}
 
 bool	Server::readAndSaveDatas(Response*& response, std::vector<char>& buffer)
 {
@@ -19,14 +27,6 @@ bool	Server::readAndSaveDatas(Response*& response, std::vector<char>& buffer)
 		return (writeStreerrorPrefix("Error: readAndSaveDatas"));
 	response->totalBytesRead += response->bytesRead;
 	return (true);
-}
-
-int	checkStatusCGI(int& status)
-{
-	if (status == 0)
-		return 0;
-	write_error("handleProcessResponse: CGI error");
-	return (WEXITSTATUS(status));
 }
 
 bool	Server::handleProcessResponse(Response*& response, std::vector<char>& buffer)
@@ -43,7 +43,7 @@ bool	Server::handleProcessResponse(Response*& response, std::vector<char>& buffe
 			return true;
 		int	wexitstatus = checkStatusCGI(status);
 		if (wexitstatus != 0)
-			return responseClientError(wexitstatus, _serversConf[_port]->get_root(), getErrorPageMapServer(get_stringError(wexitstatus)));
+			return responseClientError(wexitstatus, _serverUsing->get_root(), getErrorPageMapServer(get_stringError(wexitstatus)));
 		responseServer();
 		cleanupResponse(_client_fd);
 		return (handleKeepAlive());

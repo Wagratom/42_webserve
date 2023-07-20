@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 19:49:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 21:33:14 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/20 11:10:18 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ bool	Server::get_autoindex( const bool& autoindex, const std::string& root)
 	try {
 		auxReadFiles	tmp;
 
+		bzero(&tmp, sizeof(tmp));
 		tmp.path = AUTO_INDEX;
+		setenv("CONTENT_LENGTH", "0", 1);
 		setenv("PATHDIR", root.c_str(), 1);
 		if (getContentFilePHP(tmp) == false)
 		{

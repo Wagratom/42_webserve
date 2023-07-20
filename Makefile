@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/18 19:23:37 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/20 09:04:57 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				responseRedirect.cpp autoIndex.cpp responseInputGET.cpp handleEvents.cpp \
 				init_Server_configuration.cpp main.cpp limit_except.cpp get_timeout.cpp \
 				init_Location_configuration.cpp get_autoindex.cpp checkMethodSupported.cpp \
-				findLocationVector.cpp handleScriptPOST.cpp
+				findLocationVector.cpp handleScriptPOST.cpp createNewResponses.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))
 OBJECTS_DIR	=	objs

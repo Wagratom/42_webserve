@@ -48,7 +48,7 @@ static bool	repairStatusCGI( std::string content, std::string& contentFormated )
 	return (true);
 }
 
-bool	readOuputFormatedCGI(ChildProcessData& auxProcess, std::string& dst)
+bool	readOuputFormatedCGI(std::string& dst, ChildProcessData& auxProcess)
 {
 	std::ostringstream	oss;
 

@@ -30,13 +30,11 @@ bool	Server::savaDataCleint(epoll_event& event)
 	}
 }
 
-bool	Server::handleClientRequest(epoll_event& event)
+bool	Server::handleClientRequest( void )
 {
 	std::string			buffer;
 
-	write_debug_number("Handling client request: ", event.data.fd);
-	if (savaDataCleint(event) == false)
-		cleanupFd(_client_fd);
+	write_debug_prefix(CIANO, "handleClientRequest");
 	if (_responses.find(_client_fd) != _responses.end())
 		return handlePostBody();
 	if (set_fdNotBlock(_client_fd) == false)

@@ -49,6 +49,8 @@ bool	Server::createRootLocation(const t_location*& location)
 	return (true);
 }
 
+/*								init										  */
+/* ************************************************************************** */
 bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 {
 	try {
@@ -57,6 +59,8 @@ bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 		write_debug_prefix("responseLocation: ", locationName);
 		if (checkMethodSupported(location->configuration->get_limit_except()) == false)
 			return (responseClientError(ERROR405, location->configuration->get_root(), getErrorPageMapLocation(location, "405")));
+		if (createRootLocation(location) == false)
+			return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
 		if (hasRedirection(location))
 			return (responseRedirect(location->configuration->get_return()));
 		if (isPostMethod())
@@ -93,15 +97,17 @@ bool	Server::returnIndexLocation(const t_location*& location)
 	Location_configuration*	locationConf = location->configuration;
 	auxReadFiles			tmp;
 
-	locationConf->get_root();
+	bzero(&tmp, sizeof(tmp));
 	write_debug("returnIndexLocation");
-	if (createRootLocation(location) == false)
-		return (responseClientError(ERROR500, locationConf->get_root(), getErrorPageMapLocation(location, "500")));
 	if (generetePathToResponse(tmp.path, locationConf->get_root(), locationConf->get_index()) == false)
 		return (get_autoindex(locationConf->get_autoIndex(), locationConf->get_root()));
 	if (getContentFile(tmp, locationConf->get_cgi(), "200 OK") == false)
+	{
+		if (tmp.notPermmision == true)
+			return (responseClientError(ERROR403, locationConf->get_root(), getErrorPageMapLocation(location, "403")));
 		return (responseClientError(ERROR500, locationConf->get_root(), getErrorPageMapLocation(location, "500")));
-	// generateDynamicHeader(tmp, "200");
-	// tmp.response = tmp.header + tmp.content;
+	}
+	if (tmp.hasProcess == true)
+		return (true);
 	return (sendResponseClient(tmp.content));
 }
