@@ -3,7 +3,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-while (1);
 // Verifica se há um arquivo enviado no POST
 if (isset($_FILES['fileUpload'])) {
 	$uploadDirectory = '../../uploads/';					// Diretório de upload

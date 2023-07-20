@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 12:25:47 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 21:37:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ class	Server
 
 		bool	initializeServer( void );
 		bool	createServerConfigured( void );
+		bool	create_server_aux( Server_configuration* server );
 		bool	createServer( int& serverFd, Server_configuration* server );
 		bool	createSockeConfigured( int& serverFd );
 		bool	bind_socket( int& serverFd, Server_configuration* server );

@@ -34,7 +34,7 @@ bool	Server::handleClientRequest(epoll_event& event)
 {
 	std::string			buffer;
 
-	write_debug("\nClient seed request");
+	write_debug_number("Handling client request: ", event.data.fd);
 	if (savaDataCleint(event) == false)
 		cleanupFd(_client_fd);
 	if (_responses.find(_client_fd) != _responses.end())

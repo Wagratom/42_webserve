@@ -34,7 +34,7 @@ bool	Server::handleClientResponse(epoll_event& event)
 
 bool	Server::handleEvents(epoll_event& event)
 {
-	write_debug("Handling events");
+	// write_debug("Handling events");
 	if (isClosedOrErrorEvent(event))
 		return cleanupFd(event.data.fd);
 	if (event.events & EPOLLIN)

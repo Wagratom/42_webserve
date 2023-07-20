@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 10:44:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 21:53:22 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,5 @@ bool	Server::handle_GET_requesition( void )
 
 	write_debug("handle_GET_requesition");
 	responseClientGET(endPoint);
-	return (handleKeepAlive());
+	return (true);
 }

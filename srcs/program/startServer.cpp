@@ -14,24 +14,28 @@
 
 void	Server::timeoutHandler( void )
 {
-	if ((std::time(NULL) -_lastVerifyTimeout) < 3)
+	if ((std::time(NULL) -_lastVerifyTimeout) < 11)
 		return ;
 	write_debug_prefix(CIANO, "checking Timeout ");
 	write_debug_number("Number of open clients process: ", _responses.size());
 	write_debug(AZUL);
-	for (std::map<int, Response*>::iterator it = _responses.begin(); it != _responses.end(); it++)
+	std::map<int, Response*>::iterator it = _responses.begin();
+	while (it != _responses.end())
 	{
-		if ((std::time(NULL) -it->second->creationTime) > 3)
+		if ((std::time(NULL) -it->second->creationTime) > 10)
 		{
-			std::map<int, Response*>::iterator& it2 = (it);
-			write_debug_number("Timeout in client process: ", it2->first);
-			_client_fd = it2->first;
+			write_debug_number("Timeout in client process: ", it->first);
+			_client_fd = it->first;
 			responseClientError(ERROR504, _serverUsing->get_root(), getErrorPageMapServer("504"));
-			kill(it2->second->process.pid, SIGKILL);
-			cleanupFd(it2->first);
+			if (waitpid(it->second->process.pid, NULL, WNOHANG) == 0)
+				kill(it->second->process.pid, SIGKILL);
+			it++;
+			cleanupFd(_client_fd);
+			cleanupResponse(_client_fd);
 		}
+		else
+			it++;
 	}
-	_lastVerifyTimeout = std::time(NULL);
 }
 
 int	Server::startServer( void )
@@ -48,6 +52,5 @@ int	Server::startServer( void )
 		timeoutHandler();
 		if (!filterEvent(event, numberOfEvents))
 			return (-1);
-		write_debug("\n");
 	}
 }

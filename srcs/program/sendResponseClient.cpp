@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:56:26 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/17 11:36:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/19 21:53:55 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ bool	Server::sendResponseClient(std::string response)
 		return (true);
 	if ((send(_client_fd, response.c_str(), response.size(), 0) < 0))
 		return (write_error("Server::sendResponseClient: send"));
-	return (true);
+	return (handleKeepAlive());
 }

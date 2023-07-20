@@ -65,7 +65,7 @@ bool	Server::createServer( int& serverFd, Server_configuration* server)
 		return (false);
 	write_debug("Binding server...");
 	if (bind_socket(serverFd, server) == false)
-		return (false);
+		return (write_error_prefixI("Port: ", server->get_port()));
 	write_debug("Listening server...");
 	if (listen_socket(serverFd) == false)
 		return (false);
