@@ -28,7 +28,12 @@ bool	Server::handleClientResponse(epoll_event& event)
 	int	clientFd = event.data.fd;
 
 	if (_responses.find(clientFd) == _responses.end())
-		cleanupFd(clientFd);
+		return cleanupFd(clientFd);
+	if (waitpid(_responses.at(clientFd)->process.pid, NULL, WNOHANG) == 0)
+		return (true);
+	responseServer();
+	cleanupFd(clientFd);
+	cleanupResponse(clientFd);
 	return (true);
 }
 
