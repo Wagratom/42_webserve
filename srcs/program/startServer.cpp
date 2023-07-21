@@ -18,15 +18,13 @@ bool	Server::timeoutHandler( void )
 
 	if ((std::time(NULL) -_lastVerifyTimeout) < 5)
 		return status;
-	write_debug_prefix(CIANO, "checking Timeout ");
-	write_debug_number("Number of open clients process: ", _responses.size());
-	write_debug(AZUL);
+	write_debug_number("checking Timeout process: ", _responses.size());
 	std::map<int, Response*>::iterator it = _responses.begin();
 	while (it != _responses.end())
 	{
 		if ((std::time(NULL) -it->second->creationTime) > 10)
 		{
-			write_debug_number("Timeout in client process: ", it->first);
+			write_debug_number("Timeout process: ", it->first);
 			_client_fd = it->first;
 			_serverUsing = _serversConf.at(it->second->port);
 			responseClientError(ERROR504, _serverUsing->get_root(), getErrorPageMapServer("504"));

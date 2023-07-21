@@ -45,7 +45,7 @@ bool	Server::getContentFilePHP(auxReadFiles& dst)
 	ChildProcessData& auxProcess = _responses.at(_client_fd)->process;
 	if (executeFork(auxProcess) == false)
 		throw std::exception();
-	if (auxProcess.pid == CHILD)
+	if (auxProcess.pid == CHILD_PROCESS)
 		callExecuteCgi(dst, auxProcess);
 	close(auxProcess.fd[1]);
 	if (waitpid(auxProcess.pid, &auxProcess.status, WNOHANG) == 0)

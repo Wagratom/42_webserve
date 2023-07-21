@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/20 11:01:13 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/21 09:25:29 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@
 # define MAX_EVENTS 10
 # define MAX_CONNECTIONS 10
 # define MAX_CLIENTS 1024
-
-# define NOT_CONNECTION 0
-# define NEW_CONNECTION 1
-
-# define CHILD 0
 
 # define ERROR400 100 // Bad Request
 # define ERROR403 103 // Forbidden
@@ -43,18 +38,10 @@
 
 #define MAX_SIZE_HEADER 1000000
 
-
 class	Response
 {
 	public:
-		Response( void )
-		: method("")
-		, contentLenght(0)
-		, bytesRead(0)
-		, totalBytesRead(0)
-		, hasProcess(false)
-		, write(false)
-		, creationTime(std::time(NULL)) {};
+		Response( void );
 
 	public:
 		std::string				method;
@@ -76,8 +63,6 @@ class	Server
 
 		std::string**	create_verbs( void );
 		void			initializeDefaultErrorPage( void );
-		// void			initializeResponses( void );
-
 
 		bool	initializeServer( void );
 		bool	createServerConfigured( void );

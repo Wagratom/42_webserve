@@ -34,11 +34,9 @@ bool	Server::handleClientRequest( void )
 {
 	std::string			buffer;
 
-	write_debug_prefix(CIANO, "handleClientRequest");
+	write_debug_number("handleClientRequest: ", _client_fd);
 	if (_responses.find(_client_fd) != _responses.end())
 		return handlePostBody();
-	if (set_fdNotBlock(_client_fd) == false)
-		return (false);
 	if (readRequest(buffer) == false)  // Fui na venda <-----------------
 		return (false);
 	if (responseRequest(buffer) == false)

@@ -18,7 +18,6 @@ static bool	open_file_status( const std::string& path )
 
 	if (access(path.c_str(), F_OK) == -1)
 		return (false);
-	write_debug("Path existing");
 	return (true);
 }
 

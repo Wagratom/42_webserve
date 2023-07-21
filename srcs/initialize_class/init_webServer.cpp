@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_Server.cpp                                    :+:      :+:    :+:   */
+/*   init_webServer.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 11:55:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/21 09:25:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	Server::initializeDefaultErrorPage( void )
 	_defaultErrorPage[ERROR413] = "./error_pages/413_payload_too_large.html";
 	_defaultErrorPage[ERROR500] = "./error_pages/500_internal_server.html";
 	_defaultErrorPage[ERROR504] = "./error_pages/504_gateway_timeout.html";
+	
 }
 
 std::string**	Server::create_verbs( void )
@@ -68,4 +69,20 @@ Server::~Server() {
 	for (std::map<int, Response*>::iterator it = _responses.begin(); it != _responses.end(); it++) {
 		delete it->second;
 	}
+};
+
+
+
+/*								RESPONSE									  */
+
+Response::Response( void )
+	: method("")
+	, contentLenght(0)
+	, bytesRead(0)
+	, totalBytesRead(0)
+	, hasProcess(false)
+	, write(false)
+	, creationTime(std::time(NULL))
+	, port(0) {
+	bzero(&process, sizeof(ChildProcessData));
 };

@@ -22,8 +22,7 @@ static bool	checkAcess(std::string path, auxReadFiles& dst)
 
 static bool	getContentAllFile(auxReadFiles& dst, std::string statusHeader)
 {
-	write_debug("getContentAllFile");
-	write_debug_prefix("File: ", dst.path);
+	write_debug_prefix("getContentAllFile: ", dst.path);
 	if (checkAcess(dst.path, dst) == false)
 		return (false);
 	try {

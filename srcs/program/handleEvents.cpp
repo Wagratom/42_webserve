@@ -25,6 +25,7 @@ bool	Server::isClosedOrErrorEvent(epoll_event& event)
 
 bool	Server::handleClientResponse( void )
 {
+	write_debug_number("handleClientResponse: ", _client_fd);
 	if (_responses.find(_client_fd) == _responses.end())
 		return cleanupFd(_client_fd);
 	if (waitpid(_responses.at(_client_fd)->process.pid, NULL, WNOHANG) == 0)

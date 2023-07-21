@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/20 09:04:57 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/21 09:19:53 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				responseFileServer.cpp responseLocationAux.cpp GetContentFilePhp.cpp \
 				getContentFile.cpp readOuputFormatedCGI.cpp createProcessResponse.cpp\
 				responseClientListFiles.cpp readConfigurationFile.cpp cgi.cpp\
-				saveLocationInfos.cpp getErrosPage.cpp init_Server.cpp return.cpp \
+				saveLocationInfos.cpp getErrosPage.cpp init_webServer.cpp return.cpp \
 				responseRedirect.cpp autoIndex.cpp responseInputGET.cpp handleEvents.cpp \
 				init_Server_configuration.cpp main.cpp limit_except.cpp get_timeout.cpp \
 				init_Location_configuration.cpp get_autoindex.cpp checkMethodSupported.cpp \

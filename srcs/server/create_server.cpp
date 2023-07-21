@@ -31,7 +31,7 @@ bool	Server::createSockeConfigured( int& serverFd )
 	serverFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (serverFd == -1)
 		return (writeStreerrorPrefix("Error: Not create socket"));
-	if (set_fdNotBlock(serverFd) == false)
+	if (fcntl(serverFd, F_SETFD, O_NONBLOCK) == -1)
 		return (writeStreerrorPrefix("Error: Not set socket non-blocking"));
 	if (setsockopt(serverFd, SOL_SOCKET, SO_REUSEADDR, (char *)&on, sizeof(on)) == -1)
 		return (writeStreerrorPrefix("Error: Not set socket option"));
@@ -60,13 +60,11 @@ bool	Server::listen_socket( int& serverFd )
 
 bool	Server::createServer( int& serverFd, Server_configuration* server)
 {
-	write_debug_prefix(AZUL, "\nCreating server...");
+	write_debug("\nCreating server...");
 	if (createSockeConfigured(serverFd) == false)
 		return (false);
-	write_debug("Binding server...");
 	if (bind_socket(serverFd, server) == false)
 		return (write_error_prefixI("Port: ", server->get_port()));
-	write_debug("Listening server...");
 	if (listen_socket(serverFd) == false)
 		return (false);
 	return (true);

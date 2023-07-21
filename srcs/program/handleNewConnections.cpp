@@ -46,6 +46,8 @@ bool	Server::save_connection( int& new_client )
 	event.events = EPOLLIN | EPOLLHUP | EPOLLOUT | EPOLLRDHUP | EPOLLERR;
 	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, new_client, &event) == -1)
 		return (writeStreerrorPrefix("save_connection"));
+	if (fcntl(new_client, F_SETFL, O_NONBLOCK) == -1)
+		return (writeStreerrorPrefix("Error: save_connection: "));
 	return (true);
 }
 
