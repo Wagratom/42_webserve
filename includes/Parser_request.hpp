@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 10:59:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/21 10:02:33 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class	Parser_request
 
 		bool	save_requesition_line( void );
 		bool	set_method( void );
-		bool	valid_verb( std::string** verbs );
+		bool	valid_requestion_line( std::string** verbs );
 		bool	set_request_url( void );
 		bool	set_server_protocol( void );
 		bool	writeStreerrorPrefix( std::string prefix );
@@ -44,7 +44,8 @@ class	Parser_request
 	private:
 		std::string		_request;
 		std::string		_order_request;
-		std::string		_metodo;
+		std::string		_method;
 		std::string		_endPoint;
+		std::string		_versionHTTP;
 		bool			need_cgi;
 };

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handleClientRequest.cpp                          :+:      :+:    :+:   */
+/*   handleRequestClient.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -30,11 +30,11 @@ bool	Server::savaDataCleint(epoll_event& event)
 	}
 }
 
-bool	Server::handleClientRequest( void )
+bool	Server::handleRequestClient( void )
 {
 	std::string			buffer;
 
-	write_debug_number("handleClientRequest: ", _client_fd);
+	write_debug_number("handleRequestClient: ", _client_fd);
 	if (_responses.find(_client_fd) != _responses.end())
 		return handlePostBody();
 	if (readRequest(buffer) == false)  // Fui na venda <-----------------

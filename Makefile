@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/21 09:19:53 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/21 10:43:25 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,14 +22,14 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				get_location.cpp gets_server_configuration.cpp init_parser_request.cpp \
 				createServerConfigured.cpp create_server.cpp configure_server.cpp \
 				startServer.cpp handleNewConnections.cpp filterEvent.cpp handleKeepAlive.cpp \
-				set_fdNotBlock.cpp error.cpp captureNewEvents.cpp handlePostBody.cpp \
-				debug.cpp handleClientRequest.cpp sendResponseClient.cpp get_stringError.cpp \
+				set_fdNotBlock.cpp error.cpp handlePostBody.cpp \
+				debug.cpp handleRequestClient.cpp sendResponseClient.cpp get_stringError.cpp \
 				set_envs_order_line.cpp gets_Parser_request.cpp set_envs_header.cpp\
 				gets_location_configuration.cpp sets_location_configuration.cpp \
 				gets_Parser_configuration.cpp sets_server_configuration.cpp \
 				readRequest.cpp responseRequest.cpp responseClientGET.cpp \
 				handle_GET_requesition.cpp handle_DELETE_requesition.cpp \
-				generetePathToResponse.cpp cleanupFd.cpp auxProcess.cpp createEpoll.cpp \
+				generetePathToResponse.cpp cleanups.cpp auxProcess.cpp createEpoll.cpp \
 				responseClientError.cpp responseLocation.cpp generateHeaders.cpp \
 				handlePostRequest.cpp responseServer.cpp generateResponseCGI.cpp\
 				responseFileServer.cpp responseLocationAux.cpp GetContentFilePhp.cpp \
@@ -38,7 +38,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				saveLocationInfos.cpp getErrosPage.cpp init_webServer.cpp return.cpp \
 				responseRedirect.cpp autoIndex.cpp responseInputGET.cpp handleEvents.cpp \
 				init_Server_configuration.cpp main.cpp limit_except.cpp get_timeout.cpp \
-				init_Location_configuration.cpp get_autoindex.cpp checkMethodSupported.cpp \
+				init_Location_configuration.cpp get_autoindex.cpp \
 				findLocationVector.cpp handleScriptPOST.cpp createNewResponses.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))

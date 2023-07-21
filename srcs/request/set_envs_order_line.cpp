@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 16:49:15 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 16:36:51 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/21 10:03:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,66 +24,33 @@ bool	Parser_request::save_requesition_line( void )
 	return (true);
 }
 
-bool	Parser_request::set_method( void )
+bool	Parser_request::valid_requestion_line( std::string** verbs )
 {
-	size_t	pos;
-
-	pos = _order_request.find("/");
-	if (pos == std::string::npos)
-		return (write_error("set_method::Invalid orde request: not method"));
-	_metodo = _order_request.substr(0, (pos - 1));
-	_order_request.erase(0, pos);
-	setenv("REQUEST_METHOD", _metodo.c_str(), 1);
-	write_debug_prefix("REQUEST_METHOD: ", _metodo);
-	return (true);
-}
-
-bool	Parser_request::valid_verb( std::string** verbs )
-{
+	if (_versionHTTP.compare("HTTP/1.1") != 0)
+		return (write_error("set_server_protocol::Invalid  HTTP version: msg"));
 	for (int i = 0; verbs[i]; i++)
 	{
-		if (_metodo == *verbs[i])
+		if (_method == *verbs[i])
 			return (true);
 	}
-	return (write_error("valid_verb::Invalid orde request invalid method"));
-}
-
-bool	Parser_request::set_request_url( void )
-{
-	size_t		pos;
-
-	pos = _order_request.find(" ");
-	if (pos == std::string::npos)
-		return (write_error("set_request_url::Invalid orde request not resource")); // Defidir se falta de recurso é erro ou não
-	_endPoint = _order_request.substr(0, pos);
-	_order_request.erase(0, pos + 1);
-	setenv("REQUEST_URI", _endPoint.c_str(), 1);
-	write_debug_prefix("REQUEST_URI: ", _endPoint);
-	return (true);
-}
-
-bool	Parser_request::set_server_protocol( void )
-{
-	if (_order_request.size() != 9)
-		return (write_error("set_server_protocol::Invalid HTTP version: size"));
-	if (_order_request != "HTTP/1.1\r")
-		return (write_error("set_server_protocol::Invalid  HTTP version: msg"));
-	setenv("SERVER_PROTOCOL", _order_request.c_str(), 1);
-	write_debug_prefix("SERVER_PROTOCOL: ", _order_request);
-	return (true);
+	return (write_error("valid_requestion_line::Invalid orde request invalid method"));
 }
 
 bool	Parser_request::set_envs_order_line( std::string** verbs )
 {
 	if (!save_requesition_line())
 		return (false);
-	if (!set_method())
+	std::istringstream iss(_order_request);
+	iss >> _method >> _endPoint >> _versionHTTP;
+	if (!valid_requestion_line(verbs))
 		return (false);
-	if (!valid_verb(verbs))
-		return (false);
-	if (!set_request_url())
-		return (false);
-	if (!set_server_protocol())
-		return (false);
+	setenv("SERVER_PROTOCOL", _versionHTTP.c_str(), 1);
+	setenv("REQUEST_METHOD", _method.c_str(), 1);
+	setenv("REQUEST_URI", _endPoint.c_str(), 1);
+	write_debug_prefix("REQUEST_METHOD: ", _method);
+	write_debug_prefix("REQUEST_URI: ", _endPoint);
+	write_debug_prefix("SERVER_PROTOCOL: ", _versionHTTP);
+
+
 	return (true);
 }

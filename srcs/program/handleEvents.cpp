@@ -52,7 +52,7 @@ bool	Server::handleEvents(epoll_event& event)
 	if (savaDataCleint(event) == false)
 		cleanupFd(_client_fd);
 	if (event.events & EPOLLIN)
-		return handleClientRequest();
+		return handleRequestClient();
 	else if (event.events & EPOLLOUT)
 		return handleClientResponse();
 	return (true);

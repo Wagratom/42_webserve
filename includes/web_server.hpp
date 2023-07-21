@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/21 09:25:29 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/21 10:42:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,13 @@ class	Server
 
 		bool	isClosedOrErrorEvent( epoll_event& event );
 
-		//		handleClientRequest
-		bool	handleClientRequest( void );
+		//		handleRequestClient
+		bool	handleRequestClient( void );
 		bool	savaDataCleint( epoll_event& event );
-		bool	set_fdNotBlock( int& fd );
 		bool	readRequest( std::string& buffer );
 		bool	responseRequest( std::string& buffer );
 
 		bool	handle_GET_requesition( void );
-		bool	responseClientGET( std::string& endPoint );
 		void	handleQuerystring(std::string& endPoint);
 		bool	responseServer( void );
 		bool	get_autoindex( const bool& autoindex, const std::string& root);
@@ -133,8 +131,6 @@ class	Server
 
 		// bool	responseClientListFiles( std::string pathDir, std::string pathFile );
 		// bool	extractFileNameFromBody( aux_upload& data );
-
-
 
 
 		std::string	generetePathErrorValid( int& status, const std::string& root, std::string path );

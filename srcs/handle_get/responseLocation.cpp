@@ -49,6 +49,22 @@ bool	Server::createRootLocation(const t_location*& location)
 	return (true);
 }
 
+bool	Server::checkMethodSupported(std::vector<std::string> methods)
+{
+	std::string	method = getenv("REQUEST_METHOD");
+
+	if (methods.empty())
+		return (true);
+	for (size_t i = 0; i < methods.size(); i++)
+	{
+		if (methods[i] == method)
+			return (true);
+	}
+	write_error("Error: method not supported");
+	return (false);
+}
+
+
 /*								init										  */
 /* ************************************************************************** */
 bool	Server::responseLocation(std::string& endPoint, std::string& locationName)

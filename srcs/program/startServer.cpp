@@ -42,6 +42,16 @@ bool	Server::timeoutHandler( void )
 	return status;
 }
 
+bool	Server::captureNewEvents(epoll_event* event, int& numberOfEvents)
+{
+	// write_debug("Waiting for events");
+	numberOfEvents = epoll_wait(_epoll_fd, event, MAX_EVENTS, 3000);
+	// write_debug_number("Number of captured events: ", numberOfEvents);
+	if (numberOfEvents == -1)
+		return (writeStreerrorPrefix("handleNewConnections"));
+	return (true);
+}
+
 int	Server::startServer( void )
 {
 	struct	epoll_event event[MAX_EVENTS];

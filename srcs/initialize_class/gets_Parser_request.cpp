@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 17:48:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/03 11:49:21 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/21 09:56:18 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ std::string	Parser_request::get_order_request( void )
 
 std::string	Parser_request::get_metodo( void )
 {
-	return ( this->_metodo );
+	return ( this->_method );
 }
 
 std::string	Parser_request::get_endPoint( void )

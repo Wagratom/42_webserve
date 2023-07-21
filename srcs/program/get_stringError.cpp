@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:50:59 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/16 14:52:43 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/21 10:43:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,5 @@ std::string	get_stringError(int error)
 		return ("413");
 	if (error == ERROR500) // Internal Server Error
 		return ("500");
-	// if (error == ERROR501) // Not Implemented
-		// return ("501")
-	// if (error == ERROR505) // HTTP Version Not Supported
-		// return ("505")
 	return ("");
 }

@@ -29,8 +29,6 @@ bool	Server::responseRequest( std::string& buffer )
 		return (deleteParserRequest(_parserRequest, false));
 	if (_parserRequest->set_envs_header() == false)
 		return (deleteParserRequest(_parserRequest, false));
-	write_debug_prefix(CIANO, "\t Tratavive request");
-	write_debug(AZUL);
 	if (_parserRequest->get_metodo() == "GET")
 		return deleteParserRequest(_parserRequest, handle_GET_requesition());
 	if (_parserRequest->get_metodo() == "POST")
