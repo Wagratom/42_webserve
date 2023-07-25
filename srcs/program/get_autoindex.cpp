@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 19:49:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/20 11:10:18 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/24 09:22:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	Server::get_autoindex( const bool& autoindex, const std::string& root)
 
 	write_debug("get_autoindex");
 	if (autoindex == false)
-		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMapServer("404")));
+		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "404")));
 	try {
 		auxReadFiles	tmp;
 
@@ -28,15 +28,15 @@ bool	Server::get_autoindex( const bool& autoindex, const std::string& root)
 		if (getContentFilePHP(tmp) == false)
 		{
 			if (tmp.notPermmision == true)
-				return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMapServer("403")));
-			return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+				return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "403")));
+			return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 		}
 		if (sendResponseClient(tmp.content) == false)
-			return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+			return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 		return (true);
 	} catch (std::exception& e) {
 		write_error("get_autoindex: " + std::string(e.what()));
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 	}
 }
 

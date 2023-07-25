@@ -29,16 +29,17 @@ bool Server::responseFileServer(std::string& endPoint)
 
 	bzero(&tmp, sizeof(tmp));
 	write_debug("responseFileServer");
+	_errorMapUsing = _serverUsing->get_error_page();
 	if (preparingToReadFile(tmp, endPoint) == false)
-		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMapServer("404")));
+		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "404")));
 	if (getContentFile(tmp, _serverUsing->get_cgi(), "200 OK") == false)
 	{
 		if (tmp.notPermmision == true)
-			return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMapServer("403")));
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+			return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "403")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 	}
 	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 	return true;
 }
 
@@ -53,10 +54,10 @@ bool	Server::responseFileLocation(const t_location*& location, std::string& endP
 	if (getContentFile(tmp, location->configuration->get_cgi(), "200 OK") == false)
 	{
 		if (tmp.notPermmision == true)
-			return (responseClientError(ERROR403, location->configuration->get_root(), getErrorPageMapLocation(location, "403")));
-		return (responseClientError(ERROR404, location->configuration->get_root(), getErrorPageMapLocation(location, "404")));
+			return (responseClientError(ERROR403, location->configuration->get_root(), getErrorPageMap(_errorMapUsing, "403")));
+		return (responseClientError(ERROR404, location->configuration->get_root(), getErrorPageMap(_errorMapUsing, "404")));
 	}
 	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMapLocation(location, "500")));
+		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 	return true;
 }

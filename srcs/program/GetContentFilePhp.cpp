@@ -39,7 +39,7 @@ bool	Server::getContentFilePHP(auxReadFiles& dst)
 	write_debug("getContentFilePHP");
 	if (checkAcess(dst.path, dst) == false)
 		throw std::exception();
-	if (createNewResponses(0) == false)
+	if (createNewResponses(0, _errorMapUsing) == false)
 		return (false);
 	dst.hasProcess = true;
 	ChildProcessData& auxProcess = _responses.at(_client_fd)->process;

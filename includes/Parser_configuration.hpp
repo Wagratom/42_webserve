@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/18 10:09:16 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/22 20:34:16 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,16 @@ class  Server_configuration : public aux_configuration
 		Server_configuration( void );
 		~Server_configuration( void );
 
-		std::map<std::string, std::string*>	get_error_page( void );
-		std::map<std::string, t_location*>	get_locations( void );
-		std::map<std::string, std::string>	get_cgi( void );
-		std::string							get_server_name( void );
-		std::string							get_root( void );
-		std::string							get_index( void );
-		std::string							get_return( void );
-		bool								get_autoIndex( void );
-		int									get_port( void );
-		int									get_clientMaxBodySize( void );
+		const std::map<std::string, std::string*>&	get_error_page( void ) const;
+		const std::map<std::string, t_location*>&	get_locations( void ) const;
+		const std::map<std::string, std::string>&	get_cgi( void ) const;
+		const std::string&							get_server_name( void ) const;
+		const std::string&							get_root( void ) const;
+		const std::string&							get_index( void ) const;
+		const std::string&							get_return( void ) const;
+		const bool&								get_autoIndex( void ) const;
+		const int&									get_port( void ) const;
+		const int&									get_clientMaxBodySize( void ) const;
 
 		void	set_locations( std::string location_name, t_location* location );
 		void	set_error_page( std::string number, std::string error_page );
@@ -144,14 +144,14 @@ class Location_configuration : public aux_configuration
 		Location_configuration( void );
 		~Location_configuration( void );
 
-		std::map<std::string, std::string*>	get_error_page( void );
-		std::map<std::string, std::string>	get_cgi( void );
-		std::vector<std::string>			get_limit_except( void );
-		std::string							get_root( void );
-		std::string							get_index( void );
-		std::string							get_return( void );
-		bool								get_autoIndex( void );
-		int									get_clientMaxBodySize( void );
+		const std::map<std::string, std::string*>&	get_error_page( void ) const;
+		const std::map<std::string, std::string>&	get_cgi( void ) const;
+		const std::vector<std::string>&				get_limit_except( void ) const;
+		const std::string&							get_root( void ) const;
+		const std::string&							get_index( void ) const;
+		const std::string&							get_return( void ) const;
+		const bool&									get_autoIndex( void ) const;
+		const int&									get_clientMaxBodySize( void ) const;
 
 
 		void	set_error_page( std::string number, std::string error_page );

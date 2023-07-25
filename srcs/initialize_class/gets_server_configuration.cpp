@@ -6,58 +6,58 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:33:39 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/15 11:05:03 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/22 20:32:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Parser_configuration.hpp>
 
-int	Server_configuration::get_port( void )
+const int&	Server_configuration::get_port( void ) const
 {
 	return (this->_port);
 }
 
-std::string Server_configuration::get_server_name( void )
+const std::string&	Server_configuration::get_server_name( void ) const
 {
 	return (this->_server_name);
 }
 
-std::string Server_configuration::get_root( void )
+const std::string&	Server_configuration::get_root( void ) const
 {
 	return (this->_root);
 }
 
-std::string Server_configuration::get_index( void )
+const std::string&	Server_configuration::get_index( void ) const
 {
 	return (this->_index);
 }
 
-int	Server_configuration::get_clientMaxBodySize( void )
+const int&	Server_configuration::get_clientMaxBodySize( void ) const
 {
 	return (this->_clientMaxBodySize);
 }
 
-std::string	Server_configuration::get_return( void )
+const std::string&	Server_configuration::get_return( void ) const
 {
 	return (this->_return);
 }
 
-bool	Server_configuration::get_autoIndex( void )
+const bool&	Server_configuration::get_autoIndex( void ) const
 {
 	return (this->_autoIndex);
 }
 
-std::map<std::string, std::string*>	Server_configuration::get_error_page( void )
+const std::map<std::string, std::string*>&	Server_configuration::get_error_page( void ) const
 {
 	return (this->_error_page);
 }
 
-std::map<std::string, t_location*>	Server_configuration::get_locations( void )
+const std::map<std::string, t_location*>&	Server_configuration::get_locations( void ) const
 {
 	return (this->_locations);
 }
 
-std::map<std::string, std::string>	Server_configuration::get_cgi( void )
+const std::map<std::string, std::string>&	Server_configuration::get_cgi( void ) const
 {
 	return (this->_cgi);
 }

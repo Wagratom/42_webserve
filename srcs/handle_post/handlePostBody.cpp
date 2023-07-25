@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/20 09:57:28 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/24 09:16:56 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	Server::handleProcessResponse(Response*& response, std::vector<char>& buffe
 			return true;
 		int	wexitstatus = checkStatusCGI(status);
 		if (wexitstatus != 0)
-			return responseClientError(wexitstatus, _serverUsing->get_root(), getErrorPageMapServer(get_stringError(wexitstatus)));
+			return responseClientError(wexitstatus, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, get_stringError(wexitstatus)));
 		responseServer();
 		cleanupResponse(_client_fd);
 		return (handleKeepAlive());

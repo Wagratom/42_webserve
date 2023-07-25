@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/20 09:58:03 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/24 09:24:20 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ bool	Server::checkPermitionFile(std::string path)
 
 	write_debug_prefix("checkPermitionFile: ", path);
 	if (extension == std::string::npos || extension == 0)
-		auxSendErrorPost(ERROR404, getErrorPageMapServer("404"));
+		auxSendErrorPost(ERROR404, getErrorPageMap(_errorMapUsing, "404"));
 	if (access(path.c_str(), F_OK) == -1)
-		auxSendErrorPost(ERROR404, getErrorPageMapServer("404"));
+		auxSendErrorPost(ERROR404, getErrorPageMap(_errorMapUsing, "404"));
 	else if (access(path.c_str(), W_OK) == -1)
-		auxSendErrorPost(ERROR403, getErrorPageMapServer("403"));
+		auxSendErrorPost(ERROR403, getErrorPageMap(_errorMapUsing, "403"));
 	else
 		return (true);
 	return write_error("handlePostRequest: Not Access path: " + path);
@@ -53,13 +53,13 @@ bool	Server::handleScriptPOST( void )
 	if (checkPermitionFile(getenv("SCRIPT_FILENAME")) == false)
 		return (true);
 	if (_parserRequest->get_request()[0])
-		return (auxSendErrorPost(ERROR400, getErrorPageMapServer("400")));
+		return (auxSendErrorPost(ERROR400, getErrorPageMap(_errorMapUsing, "400")));
 	if (createValidResponse(contentLenght) == false)
-		return (auxSendErrorPost(ERROR413, getErrorPageMapServer("413")));
-	if (createNewResponses(contentLenght) == false)
-		return (auxSendErrorPost(ERROR500, getErrorPageMapServer("500")));
+		return (auxSendErrorPost(ERROR413, getErrorPageMap(_errorMapUsing, "413")));
+	if (createNewResponses(contentLenght, _errorMapUsing) == false)
+		return (auxSendErrorPost(ERROR500, getErrorPageMap(_errorMapUsing, "500")));
 	if (handlePostBody() == false)
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 	return (true);
 
 }

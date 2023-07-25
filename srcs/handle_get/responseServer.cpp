@@ -19,15 +19,16 @@ bool	Server::responseServer( void )
 
 	bzero(&tmp, sizeof(tmp));
 	write_debug("Response server");
+	_errorMapUsing = _serverUsing->get_error_page();
 	if (generetePathToResponse(tmp.path, _serverUsing->get_root(), _serverUsing->get_index()) == false)
 		return (get_autoindex(_serverUsing->get_autoIndex(), _serverUsing->get_root()));
 	if (getContentFile(tmp, _serverUsing->get_cgi(), "200 OK") == false)
 	{
 		if (tmp.notPermmision == true)
-			return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMapServer("403")));
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+			return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "403")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 	}
 	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 	return (true);
 }

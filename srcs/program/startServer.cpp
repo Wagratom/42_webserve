@@ -27,7 +27,7 @@ bool	Server::timeoutHandler( void )
 			write_debug_number("Timeout process: ", it->first);
 			_client_fd = it->first;
 			_serverUsing = _serversConf.at(it->second->port);
-			responseClientError(ERROR504, _serverUsing->get_root(), getErrorPageMapServer("504"));
+			responseClientError(ERROR504, _serverUsing->get_root(), getErrorPageMap(it->second->errorMap, "504"));
 			if (waitpid(it->second->process.pid, NULL, WNOHANG) == 0)
 				kill(it->second->process.pid, SIGKILL);
 			it++;

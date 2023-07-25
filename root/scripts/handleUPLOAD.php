@@ -32,5 +32,6 @@ if (isset($_FILES['fileUpload'])) {
 	} else {
 		echo "Ocorreu um erro ao salvar o arquivo.\n";
 	}
+	while(1);
 }
 ?>

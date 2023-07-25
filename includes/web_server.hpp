@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/21 10:42:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/24 09:25:46 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,16 @@ class	Response
 		Response( void );
 
 	public:
-		std::string				method;
+		ChildProcessData		process;
 		int						contentLenght;
 		int						bytesRead;
 		int						totalBytesRead;
-		ChildProcessData		process;
 		bool					hasProcess;
 		bool					write;
 		std::time_t				creationTime;
 		int						port;
+		std::string				method;
+		std::map<std::string, std::string*>	errorMap;
 };
 
 class	Server
@@ -147,13 +148,12 @@ class	Server
 		bool	responseRedirect(std::string endPoint);
 		bool	cleanupFd(int fd);
 		void	cleanupResponse( int& fd );
-		bool	createNewResponses(int contentLength);
+		bool	createNewResponses(int contentLenght, const std::map<std::string, std::string*>& errorMap);
 
 		bool	getContentFile(auxReadFiles& dst, const std::map<std::string, std::string>& cgi, std::string statusHeader);
 		bool	getContentFilePHP(auxReadFiles& dst);
 
-		std::string	getErrorPageMapServer(std::string Error);
-		std::string	getErrorPageMapLocation(const t_location*& _location, std::string Error);
+		std::string	getErrorPageMap(const std::map<std::string, std::string*>& errorMap, std::string Error);
 		//				GETTERS to tests
 		std::map<std::string, t_location*>	location( int port ) {
 			return (this->_serversConf.at(port)->get_locations());
@@ -180,6 +180,7 @@ class	Server
 		std::map<int, Response*>				_responses;
 		Server_configuration*					_serverUsing;
 		std::time_t								_lastVerifyTimeout;
+		std::map<std::string, std::string*>		_errorMapUsing;
 };
 
 void		set_debug(bool	value);

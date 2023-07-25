@@ -35,7 +35,7 @@ bool	Server::handleClientResponse( void )
 		std::string	content;
 
 		if (readOuputFormatedCGI(content, _responses.at(_client_fd)->process) == false)
-			responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMapServer("500"));
+			responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_responses.at(_client_fd)->errorMap, "500"));
 		sendResponseClient(content);
 	}
 	else
