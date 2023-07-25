@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/23 16:28:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 10:58:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,12 @@ bool	Server::sendErrorToClient( std::string path, std::string statusHeader)
 {
 	auxReadFiles	tmp;
 
+	write_debug_prefix("sendErrorToClient ", std::string(statusHeader + " To Client"));
 	bzero(&tmp, sizeof(tmp));
 	tmp.path = path;
-	write_debug_prefix("sendErrorToClient ", std::string(statusHeader + " To Client"));
-	try {
-		if (getContentFile(tmp, _serverUsing->get_cgi(), statusHeader) == false)
-			return (false);
-		return sendResponseClient(tmp.content);
-	}
-	catch (const std::exception& e) {
+	if (getContentFile(tmp, _serverUsing->get_cgi(), statusHeader) == false)
 		return (false);
-	}
+	return sendResponseClient(tmp.content);
 }
 
 std::string	Server::generetePathErrorValid(int& status, const std::string& root, std::string path)

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/23 16:38:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 11:51:35 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ Response::Response( void )
 	, write(false)
 	, creationTime(std::time(NULL))
 	, port(0)
-	, method("") {
+	, method("")
+	, _isProcessAutoindex(false) {
  	bzero(&process, sizeof(ChildProcessData));
 };

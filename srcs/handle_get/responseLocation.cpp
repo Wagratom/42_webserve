@@ -64,7 +64,6 @@ bool	Server::checkMethodSupported(std::vector<std::string> methods)
 	return (false);
 }
 
-
 /*								init										  */
 /* ************************************************************************** */
 bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
@@ -101,8 +100,7 @@ bool	Server::responseLocationPost(const t_location*& location)
 	write_debug("responseLocationPost");
 	if (generetePathToResponse(path, locationConf->get_root(), locationConf->get_index()) == false)
 	{
-		get_autoindex(locationConf->get_autoIndex(), locationConf->get_root());
-		cleanupFd(_client_fd);
+		sendAutoindex(locationConf->get_autoIndex(), locationConf->get_root());
 		return true;
 	}
 	setenv("SCRIPT_FILENAME", path.c_str(), 1);
@@ -117,7 +115,7 @@ bool	Server::returnIndexLocation(const t_location*& location)
 	bzero(&tmp, sizeof(tmp));
 	write_debug("returnIndexLocation");
 	if (generetePathToResponse(tmp.path, locationConf->get_root(), locationConf->get_index()) == false)
-		return (get_autoindex(locationConf->get_autoIndex(), locationConf->get_root()));
+		return (sendAutoindex(locationConf->get_autoIndex(), locationConf->get_root()));
 	if (getContentFile(tmp, locationConf->get_cgi(), "200 OK") == false)
 	{
 		if (tmp.notPermmision == true)

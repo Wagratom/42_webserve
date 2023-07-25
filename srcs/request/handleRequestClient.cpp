@@ -35,6 +35,8 @@ bool	Server::handleRequestClient( void )
 	std::string			buffer;
 
 	write_debug_number("handleRequestClient: ", _client_fd);
+	if (_responses.find(_client_fd) != _responses.end() && _responses.at(_client_fd)->_isProcessAutoindex == true)
+		return (handleClientResponse());
 	if (_responses.find(_client_fd) != _responses.end())
 		return handlePostBody();
 	if (readRequest(buffer) == false)  // Fui na venda <-----------------

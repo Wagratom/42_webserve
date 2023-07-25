@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:03:12 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/24 09:24:55 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 12:08:07 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 bool	Server::createNewResponses(int contentLenght, const std::map<std::string, std::string*>& errorMap)
 {
+	write_debug("createNewResponses");
 	if (_responses.find(_client_fd) != _responses.end())
 		return true;
 	try {
@@ -23,10 +24,12 @@ bool	Server::createNewResponses(int contentLenght, const std::map<std::string, s
 		_responses.at(_client_fd)->method = getenv("REQUEST_METHOD");
 		_responses.at(_client_fd)->port = _port;
 		_responses.at(_client_fd)->errorMap = errorMap;
+		if (getenv("GET") && getenv("GET")[0] != '\0')
+			_responses.at(_client_fd)->_isProcessAutoindex = true;
 		return true;
 	}
 	catch (std::exception& e) {
-		write_error("createValidResponse: " + std::string(e.what()));
+		write_error("Error: createValidResponse: " + std::string(e.what()));
 		return false;
 	}
 

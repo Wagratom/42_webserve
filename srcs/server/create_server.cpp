@@ -58,6 +58,19 @@ bool	Server::listen_socket( int& serverFd )
 	return (writeStreerrorPrefix("Error: Listen_socket"));
 }
 
+bool	Server::add_mode_read( int& serverFD )
+{
+	struct epoll_event event;
+
+	memset(&event, 0, sizeof(event));
+	event.data.fd = serverFD;
+	event.events = EPOLLIN;
+
+	if (epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, serverFD, &event) != -1)
+		return (true);
+	return (writeStreerrorPrefix("Add_mod_read"));
+}
+
 bool	Server::createServer( int& serverFd, Server_configuration* server)
 {
 	write_debug("\nCreating server...");
@@ -66,6 +79,8 @@ bool	Server::createServer( int& serverFd, Server_configuration* server)
 	if (bind_socket(serverFd, server) == false)
 		return (write_error_prefixI("Port: ", server->get_port()));
 	if (listen_socket(serverFd) == false)
+		return (false);
+	if (add_mode_read(serverFd) == false)
 		return (false);
 	return (true);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanupFd.cpp                                      :+:      :+:    :+:   */
+/*   cleanups.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 22:08:37 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 10:53:26 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	Server::cleanupResponse( int& fd )
 {
+	write_debug_number("cleanupResponse: ", fd);
+
 	std::map<int, Response*>::iterator it = _responses.find(fd);
 	if (it != _responses.end() && it->second != NULL)
 	{

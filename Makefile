@@ -6,7 +6,7 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/21 10:43:25 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/07/25 11:36:04 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				clientMaxBodySize.cpp error_page.cpp init_Parser_configuration.cpp \
 				parser.cpp check_server.cpp index.cpp root.cpp parserLocation.cpp \
 				get_location.cpp gets_server_configuration.cpp init_parser_request.cpp \
-				createServerConfigured.cpp create_server.cpp configure_server.cpp \
+				createServerConfigured.cpp create_server.cpp \
 				startServer.cpp handleNewConnections.cpp filterEvent.cpp handleKeepAlive.cpp \
 				set_fdNotBlock.cpp error.cpp handlePostBody.cpp \
 				debug.cpp handleRequestClient.cpp sendResponseClient.cpp get_stringError.cpp \
@@ -34,11 +34,11 @@ SOURCE		=	auxiliares.cpp port.cpp server_name.cpp parser_serve.cpp \
 				handlePostRequest.cpp responseServer.cpp generateResponseCGI.cpp\
 				responseFileServer.cpp responseLocationAux.cpp GetContentFilePhp.cpp \
 				getContentFile.cpp readOuputFormatedCGI.cpp createProcessResponse.cpp\
-				responseClientListFiles.cpp readConfigurationFile.cpp cgi.cpp\
+				readConfigurationFile.cpp cgi.cpp handleClientResponse.cpp\
 				saveLocationInfos.cpp getErrosPage.cpp init_webServer.cpp return.cpp \
 				responseRedirect.cpp autoIndex.cpp responseInputGET.cpp handleEvents.cpp \
 				init_Server_configuration.cpp main.cpp limit_except.cpp get_timeout.cpp \
-				init_Location_configuration.cpp get_autoindex.cpp \
+				init_Location_configuration.cpp sendAutoindex.cpp \
 				findLocationVector.cpp handleScriptPOST.cpp createNewResponses.cpp
 
 OBJECTS		=	$(patsubst %.cpp, $(OBJECTS_DIR)/%.o, $(SOURCE))

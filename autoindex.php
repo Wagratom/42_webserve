@@ -49,6 +49,7 @@ ini_set('display_errors', 1);
 	// Verifica se o diretório existe
 	if (!is_dir($pathDir)) {
 		echo "Diretório inválido";
+		http_response_code(404);
 		exit;
 	}
 

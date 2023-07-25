@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/24 09:24:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 12:02:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	Server::auxSendErrorPost( int status, std::string pathFileError )
 
 bool	Server::createValidResponse( int& contentLength )
 {
-	write_debug("validatePostRequest");
+	write_debug("createValidResponse");
 	contentLength = std::strtol(getenv("CONTENT_LENGTH"), NULL, 10);
 	if (_serverUsing->get_clientMaxBodySize() < contentLength)
 		return (write_error("createValidResponse: contentLenght > clientMaxBodySize"));

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/24 09:25:46 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 11:58:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ class	Response
 		std::time_t				creationTime;
 		int						port;
 		std::string				method;
+		bool					_isProcessAutoindex;
 		std::map<std::string, std::string*>	errorMap;
 };
 
@@ -74,7 +75,7 @@ class	Server
 		bool	listen_socket( int& serverFd );
 
 		bool	create_epoll( void );
-		bool	confServeToRead( int& serverFD );
+		// bool	confServeToRead( int& serverFD );
 		bool	add_mode_read( int& serverFD );
 
 		int		startServer( void );
@@ -103,7 +104,7 @@ class	Server
 		bool	handle_GET_requesition( void );
 		void	handleQuerystring(std::string& endPoint);
 		bool	responseServer( void );
-		bool	get_autoindex( const bool& autoindex, const std::string& root);
+		bool	sendAutoindex( const bool& autoindex, const std::string& root);
 
 		bool	responseFileServer( std::string& endPoint );
 		bool	preparingToReadFile(auxReadFiles& tmp, std::string& endPoint);
@@ -127,6 +128,8 @@ class	Server
 
 		//		handleClientResponse
 		bool	handleClientResponse( void );
+		bool	handleProcessClient(const Response* response);
+
 
 		bool	handle_DELETE_requesition( void );
 
@@ -196,6 +199,6 @@ void		appendBar(std::string& str);
 // bool		generateFilesList(std::string& listFiles, const char* pathDir);
 // bool		generateResponse(std::string& response);
 std::string	generateHeaderRedirect(std::string status, std::string endPoint);
-bool		readOuputFormatedCGI(std::string& dst, ChildProcessData& auxProcess);
+bool		readOuputFormatedCGI(std::string& dst, const ChildProcessData& auxProcess);
 
 std::string	get_stringError(int error);

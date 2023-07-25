@@ -38,6 +38,8 @@ bool Server::responseFileServer(std::string& endPoint)
 			return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "403")));
 		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 	}
+	if (tmp.hasProcess == true)
+		return (true);
 	if (sendResponseClient(tmp.content) == false)
 		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 	return true;
@@ -57,6 +59,8 @@ bool	Server::responseFileLocation(const t_location*& location, std::string& endP
 			return (responseClientError(ERROR403, location->configuration->get_root(), getErrorPageMap(_errorMapUsing, "403")));
 		return (responseClientError(ERROR404, location->configuration->get_root(), getErrorPageMap(_errorMapUsing, "404")));
 	}
+	if (tmp.hasProcess == true)
+		return (true);
 	if (sendResponseClient(tmp.content) == false)
 		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMap(_errorMapUsing, "500")));
 	return true;

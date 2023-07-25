@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 07:52:52 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/21 09:32:33 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 09:41:56 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ bool	Server::create_server_aux(Server_configuration* server)
 {
 	int	serverFd;
 	if (createServer(serverFd, server) == false)
-		return (false);
-	if (confServeToRead(serverFd) == false)
 		return (false);
 	write_debug_number("Port: ", (server)->get_port());
 	write_debug_prefix("ServerName: ", (server)->get_server_name());

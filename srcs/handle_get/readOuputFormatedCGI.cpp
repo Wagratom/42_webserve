@@ -17,7 +17,7 @@
 #include <fstream>
 #include <sstream>
 
-static bool readOutputCGI(ChildProcessData& auxProcess, std::ostringstream& oss)
+static bool readOutputCGI(const ChildProcessData& auxProcess, std::ostringstream& oss)
 {
 	ssize_t	bytesRead;
 	char	buffer[4096];
@@ -48,7 +48,7 @@ static bool	repairStatusCGI( std::string content, std::string& contentFormated )
 	return (true);
 }
 
-bool	readOuputFormatedCGI(std::string& dst, ChildProcessData& auxProcess)
+bool	readOuputFormatedCGI(std::string& dst, const ChildProcessData& auxProcess)
 {
 	std::ostringstream	oss;
 
