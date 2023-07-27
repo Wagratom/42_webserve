@@ -1,9 +1,3 @@
-se procurar um /wagratom e nao tiver ele ira atras do /wagratom/blabla
-Você não precisa usar poll() (ou equivalente) antes de ler seu arquivo de configuração.
-response_server universal
-colocar a função para lista diretorios como universal
-execute_cgi universal
-send error_404 universal
 mudar os send para response_client. universal
 
 
@@ -42,7 +36,5 @@ final: ./wagratom
 
 quando o root começa com / ele procura na raiz do computador e quando começa com .
 ele procura na raiz do server.
-
-readOuputFormatedCGI remover de todos os lugares
 
 depois ver se realmente precisa do auxsenderror se não juntar a função de verificar acesso.

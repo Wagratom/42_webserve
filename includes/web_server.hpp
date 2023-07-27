@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/25 11:58:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:11:32 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ void		generateHeaderDynamicStatus(auxReadFiles& tmp, std::string status);
 bool		executeFork( ChildProcessData& infos);
 // void		executeCGI(char** argv, char** envp);
 // bool		getContentFile(auxReadFiles& dst);
-void		appendBar(std::string& str);
+// void		appendBar(std::string& str);
 // bool		generateFilesList(std::string& listFiles, const char* pathDir);
 // bool		generateResponse(std::string& response);
 std::string	generateHeaderRedirect(std::string status, std::string endPoint);

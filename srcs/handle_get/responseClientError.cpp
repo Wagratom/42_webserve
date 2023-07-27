@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/25 10:58:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:06:31 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,5 @@ bool	Server::responseClientError( int status, const std::string& root, std::stri
 		return sendErrorToClient(pathFileError, "500 Internal Server Error");
 	else if (status == ERROR504)
 		return sendErrorToClient(pathFileError, "504 Gateway Timeout");
-	// else if (status == ERROR415)
-		// return (false);
 	return (true);
 }

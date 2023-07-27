@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:08:38 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/17 11:07:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:07:43 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,6 @@ static const std::string	getContentType(const std::string& path)
 		return (dictionary_types[extension]);
 	return ("text/plain");
 }
-
-// #include <sstream>
-
-// void generateDynamicHeader(auxReadFiles& tmp, std::string status_code)
-// {
-// 	std::ostringstream oss;
-// 	oss << tmp.content.length(); // Convertendo o valor numérico para uma string usando std::ostringstream
-
-// 	tmp.header = "HTTP/1.1 " + status_code + " OK\r\n";
-// 	tmp.header += "Content-Type: " + getContentType(tmp.path) + "\r\n";
-// 	tmp.header += "Content-Length: " + oss.str() + "\r\n\r\n";
-// }
-
 
 /*############################################################################*/
 /*                           createStaticHeader                               */

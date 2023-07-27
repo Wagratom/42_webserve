@@ -6,25 +6,11 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 09:31:53 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/14 12:14:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:07:18 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Parser_configuration.hpp>
-
-// static bool	is_end_server(std::string& line)
-// {
-// 	static bool end = false;
-
-// 	erase_comments(line);
-// 	if (end == true)
-// 		return (false);
-// 	if (line[0] != '}' ||
-// 		line.find_first_not_of(" \t", 1) != std::string::npos)
-// 		return (write_error("Server: Incorrect closing brace '}'"));
-// 	end = true;
-// 	return (true);
-// }
 
 bool	Parser_configuration::checkDirectiveServer(std::string& line)
 {
