@@ -35,7 +35,10 @@ bool	Server::filterEvent(epoll_event* event, int numberOfEvents)
 		if (checkEventInServer(event[index], serverFd))
 			handleNewConnections(serverFd);
 		else
-			handleEvents(event[index]);
+		{
+			if (handleEvents(event[index]) == false)
+				cleanupClient(_client_fd);
+		}
 		index++;
 	}
 	return (true);

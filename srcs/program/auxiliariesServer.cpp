@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:41:44 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/25 13:23:06 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/28 12:00:21 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,36 @@ std::string	get_stringError(int error)
 	return ("");
 }
 
-bool	Server::createNewResponses(int contentLenght, const std::map<std::string, std::string*>& errorMap)
+bool	Server::configureEnvsServer(epoll_event& event)
 {
-	write_debug("createNewResponses");
-	if (_responses.find(_client_fd) != _responses.end())
-		return true;
-	try {
-		_responses.insert(std::pair<int, Response*>(_client_fd, new Response));
-		_responses.at(_client_fd)->contentLenght = contentLenght;
-		_responses.at(_client_fd)->write = _write;
-		_responses.at(_client_fd)->method = getenv("REQUEST_METHOD");
-		_responses.at(_client_fd)->port = _port;
-		_responses.at(_client_fd)->errorMap = errorMap;
-		if (getenv("GET") && getenv("GET")[0] != '\0')
-			_responses.at(_client_fd)->_isProcessAutoindex = true;
-		return true;
-	}
-	catch (std::exception& e) {
-		write_error("Error: createValidResponse: " + std::string(e.what()));
-		return false;
-	}
+	struct sockaddr_in	addr;
+	socklen_t			addrlen = sizeof(addr);
+
+	if (getsockname(event.data.fd, (struct sockaddr*)&addr, &addrlen) < 0)
+		return writeStreerrorPrefix("Server::configureEnvsServer: getsockname: ");
+	_port = ntohs(addr.sin_port);
+	_client_fd = event.data.fd;
+	if (event.events & EPOLLOUT)
+		_write = true;
+	_serverUsing = _serversConf.at(_port);
+	return true;
 }
+
+bool	Server::createNewResponses()
+{
+	if (_responses.find(_client_fd) != _responses.end())
+	{
+		_response = _responses.at(_client_fd);
+		return true;
+	}
+	write_debug("createNewResponses");
+	_responses.insert(std::pair<int, Response*>(_client_fd, new Response));
+	_responses.at(_client_fd)->write = _write;
+	_responses.at(_client_fd)->port = _port;
+	_response = _responses.at(_client_fd);
+	return true;
+}
+
 
 bool	Server::findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint)
 {
@@ -95,6 +104,7 @@ bool	Server::handleKeepAlive( void )
 bool	Server::sendResponseClient(std::string response)
 {
 	write_debug("sendResponseClient");
+	cleanupResponse(_client_fd);
 	if (_write != true)
 		return (true);
 	if ((send(_client_fd, response.c_str(), response.size(), 0) < 0))

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/21 10:32:22 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/28 10:39:59 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ bool	Server::handle_GET_requesition( void )
 	write_debug_prefix(CIANO, "\t Tratavive request");
 	write_debug(AZUL);
 	write_debug("handle_GET_requesition");
+	_response->method = "GET";
 	if (endPoint == "/")
 		return (responseServer());
 	if (endPoint.find("?") != std::string::npos)

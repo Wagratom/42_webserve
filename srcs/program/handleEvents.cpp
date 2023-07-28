@@ -28,7 +28,7 @@ bool	Server::handleEvents(epoll_event& event)
 	if (isClosedOrErrorEvent(event))
 		return cleanupFd(event.data.fd);
 	if (savaDataCleint(event) == false)
-		cleanupFd(_client_fd);
+		return cleanupFd(_client_fd);
 	if (event.events & EPOLLIN)
 		return handleRequestClient();
 	else if (event.events & EPOLLOUT)

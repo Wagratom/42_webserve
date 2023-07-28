@@ -19,9 +19,9 @@ bool	deleteParserRequest(Parser_request*& parserRequest, bool status)
 	return (status);
 }
 
-bool	Server::responseRequest( std::string& buffer )
+bool	Server::responseRequest( void )
 {
-	_parserRequest = new Parser_request(buffer);
+	_parserRequest = new Parser_request(_response->buffer);
 
 	write_debug_prefix(CIANO, "\t ENV Pasing");
 	write_debug(AZUL);

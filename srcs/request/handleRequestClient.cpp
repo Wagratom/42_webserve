@@ -14,16 +14,9 @@
 
 bool	Server::savaDataCleint(epoll_event& event)
 {
-	struct sockaddr_in	addr;
-	socklen_t			addrlen = sizeof(addr);
-
 	try {
-		getsockname(event.data.fd, (struct sockaddr*)&addr, &addrlen);
-		_port = ntohs(addr.sin_port);
-		_client_fd = event.data.fd;
-		if (event.events & EPOLLOUT)
-			_write = true;
-		_serverUsing = _serversConf.at(_port);
+		configureEnvsServer(event);
+		createNewResponses();
 		return (true);
 	} catch (std::exception& e) {
 		return  write_error("handle_GET_requesition: " + std::string(e.what()));
@@ -32,16 +25,16 @@ bool	Server::savaDataCleint(epoll_event& event)
 
 bool	Server::handleRequestClient( void )
 {
-	std::string			buffer;
-
-	write_debug_number("handleRequestClient: ", _client_fd);
-	if (_responses.find(_client_fd) != _responses.end() && _responses.at(_client_fd)->_isProcessAutoindex == true)
+	// write_debug_number("handleRequestClient: ", _client_fd);
+	if (_response->endHeader == false)
+	{
+		if (readHeaderRequest() == false)
+			return (false);
+		if (_response->endHeader == false)
+			return (true);
+		return (responseRequest());
+	}
+	if (_response->isProcessAutoindex == true)
 		return (handleClientResponse());
-	if (_responses.find(_client_fd) != _responses.end())
-		return handlePostBody();
-	if (readRequest(buffer) == false)  // Fui na venda <-----------------
-		return (false);
-	if (responseRequest(buffer) == false)
-		return (false);
-	return (true);
+	return handlePostBody();
 }

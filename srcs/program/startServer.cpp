@@ -27,12 +27,12 @@ bool	Server::timeoutHandler( void )
 			write_debug_number("Timeout process: ", it->first);
 			_client_fd = it->first;
 			_serverUsing = _serversConf.at(it->second->port);
-			responseClientError(ERROR504, _serverUsing->get_root(), getErrorPageMap(it->second->errorMap, "504"));
+			if (responseClientError(ERROR504, _serverUsing->get_root(), getErrorPageMap(it->second->errorMap, "504")) == false)
+				responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(it->second->errorMap, "500"));
 			if (waitpid(it->second->process.pid, NULL, WNOHANG) == 0)
 				kill(it->second->process.pid, SIGKILL);
 			it++;
 			cleanupFd(_client_fd);
-			cleanupResponse(_client_fd);
 			status = true;
 		}
 		else

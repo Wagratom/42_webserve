@@ -36,24 +36,20 @@ static bool	checkAcess(std::string path, auxReadFiles& dst)
 
 bool	Server::getContentFilePHP(auxReadFiles& dst)
 {
-	write_debug("getContentFilePHP");
 	if (checkAcess(dst.path, dst) == false)
 		throw std::exception();
-	if (createNewResponses(0, _errorMapUsing) == false)
-		return (false);
-	dst.hasProcess = true;
-	ChildProcessData& auxProcess = _responses.at(_client_fd)->process;
+	write_debug("getContentFilePHP");
+	ChildProcessData& auxProcess = _response->process;
 	if (executeFork(auxProcess) == false)
 		throw std::exception();
 	if (auxProcess.pid == CHILD_PROCESS)
 		callExecuteCgi(dst, auxProcess);
 	close(auxProcess.fd[1]);
 	if (waitpid(auxProcess.pid, &auxProcess.status, WNOHANG) == 0)
-		return true;
-	dst.hasProcess = false;
+		return (_response->hasProcess = true, true);
+	_response->hasProcess = false;
 	if (readOuputFormatedCGI(dst.content, auxProcess) == false)
 		throw std::exception();
-	cleanupResponse(_client_fd);
 	return (true);
 
 }

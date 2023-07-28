@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/25 12:02:38 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/28 13:03:03 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ bool	Server::auxSendErrorPost( int status, std::string pathFileError )
 	return (true);
 }
 
-bool	Server::createValidResponse( int& contentLength )
+bool	Server::checkClientMaxSize( void )
 {
-	write_debug("createValidResponse");
-	contentLength = std::strtol(getenv("CONTENT_LENGTH"), NULL, 10);
-	if (_serverUsing->get_clientMaxBodySize() < contentLength)
+	write_debug("checkClientMaxBodySize");
+	_response->contentLenght = std::strtol(getenv("CONTENT_LENGTH"), NULL, 10);
+	if (_serverUsing->get_clientMaxBodySize() < _response->contentLenght)
 		return (write_error("createValidResponse: contentLenght > clientMaxBodySize"));
 	return true;
 }
@@ -35,11 +35,11 @@ bool	Server::checkPermitionFile(std::string path)
 
 	write_debug_prefix("checkPermitionFile: ", path);
 	if (extension == std::string::npos || extension == 0)
-		auxSendErrorPost(ERROR404, getErrorPageMap(_errorMapUsing, "404"));
+		auxSendErrorPost(ERROR404, getErrorPageMap(_response->errorMap, "404"));
 	if (access(path.c_str(), F_OK) == -1)
-		auxSendErrorPost(ERROR404, getErrorPageMap(_errorMapUsing, "404"));
+		auxSendErrorPost(ERROR404, getErrorPageMap(_response->errorMap, "404"));
 	else if (access(path.c_str(), W_OK) == -1)
-		auxSendErrorPost(ERROR403, getErrorPageMap(_errorMapUsing, "403"));
+		auxSendErrorPost(ERROR403, getErrorPageMap(_response->errorMap, "403"));
 	else
 		return (true);
 	return write_error("handlePostRequest: Not Access path: " + path);
@@ -47,19 +47,15 @@ bool	Server::checkPermitionFile(std::string path)
 
 bool	Server::handleScriptPOST( void )
 {
-	int	contentLenght;
-
 	write_debug("handleScriptPOST");
 	if (checkPermitionFile(getenv("SCRIPT_FILENAME")) == false)
 		return (true);
-	if (_parserRequest->get_request()[0])
-		return (auxSendErrorPost(ERROR400, getErrorPageMap(_errorMapUsing, "400")));
-	if (createValidResponse(contentLenght) == false)
-		return (auxSendErrorPost(ERROR413, getErrorPageMap(_errorMapUsing, "413")));
-	if (createNewResponses(contentLenght, _errorMapUsing) == false)
-		return (auxSendErrorPost(ERROR500, getErrorPageMap(_errorMapUsing, "500")));
+	if (checkClientMaxSize() == false)
+		return (auxSendErrorPost(ERROR413, getErrorPageMap(_response->errorMap, "413")));
+	_response->sizeContent = _response->buffer.size();
+	_response->bytesRead = _response->sizeContent;
 	if (handlePostBody() == false)
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
 	return (true);
 
 }

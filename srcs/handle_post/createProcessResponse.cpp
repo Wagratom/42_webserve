@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/19 23:09:34 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/28 13:37:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	redirectCGI( Response*& response )
 
 	setenv("REDIRECT_STATUS", "200", 1);
 	dup2(response->process.fd[0], STDIN_FILENO);
+	dup2(response->process.fd[1], STDOUT_FILENO);
 	close(response->process.fd[0]);
 	close(response->process.fd[1]);
 	execlp(script, script, NULL);
@@ -34,22 +35,22 @@ static void	redirectCGI( Response*& response )
 	exit(1);
 }
 
-void	Server::handleProcessPOST(Response*& response)
+void	Server::handleProcessPOST( void )
 {
-	if (response->process.pid == CHILD_PROCESS)
+	if (_response->process.pid == CHILD_PROCESS)
 	{
 		close(_client_fd);
-		redirectCGI(response);
+		redirectCGI(_response);
 	}
-	close(response->process.fd[0]);
+	// close(_response->process.fd[0]);
 }
 
-bool	Server::createProcessResponse(Response*& response)
+bool	Server::createProcessResponse( void )
 {
 	write_debug("createProcessResponse");
-	if (executeFork(response->process) == false)
+	if (executeFork(_response->process) == false)
 		return false;
-	handleProcessPOST(response);
-	response->hasProcess = true;
+	handleProcessPOST();
+	_response->hasProcess = true;
 	return true;
 }

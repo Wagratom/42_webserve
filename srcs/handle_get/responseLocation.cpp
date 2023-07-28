@@ -72,11 +72,11 @@ bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 		const t_location*	location = _serverUsing->get_locations().at(locationName);
 
 		write_debug_prefix("responseLocation: ", locationName);
-		_errorMapUsing = location->configuration->get_error_page();
+		_response->errorMap = location->configuration->get_error_page();
 		if (checkMethodSupported(location->configuration->get_limit_except()) == false)
-			return (responseClientError(ERROR405, location->configuration->get_root(), getErrorPageMap(_errorMapUsing, "405")));
+			return (responseClientError(ERROR405, location->configuration->get_root(), getErrorPageMap(_response->errorMap, "405")));
 		if (createRootLocation(location) == false)
-			return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMap(_errorMapUsing, "500")));
+			return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMap(_response->errorMap, "500")));
 		if (hasRedirection(location))
 			return (responseRedirect(location->configuration->get_return()));
 		if (isPostMethod())
@@ -85,10 +85,10 @@ bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 			return (responseFileLocation(location, endPoint));
 		if (isEndPoint(endPoint, locationName))
 			return (returnIndexLocation(location));
-		return (responseClientError(ERROR404, location->configuration->get_root(), getErrorPageMap(_errorMapUsing, "404")));
+		return (responseClientError(ERROR404, location->configuration->get_root(), getErrorPageMap(_response->errorMap, "404")));
 	} catch (std::exception& e) {
 		write_error("responseLocation: " + std::string(e.what()));
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_errorMapUsing, "500")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
 	}
 }
 
@@ -99,10 +99,7 @@ bool	Server::responseLocationPost(const t_location*& location)
 
 	write_debug("responseLocationPost");
 	if (generetePathToResponse(path, locationConf->get_root(), locationConf->get_index()) == false)
-	{
-		sendAutoindex(locationConf->get_autoIndex(), locationConf->get_root());
-		return true;
-	}
+		return sendAutoindex(locationConf->get_autoIndex(), locationConf->get_root());
 	setenv("SCRIPT_FILENAME", path.c_str(), 1);
 	return handleScriptPOST();
 }
@@ -119,10 +116,10 @@ bool	Server::returnIndexLocation(const t_location*& location)
 	if (getContentFile(tmp, locationConf->get_cgi(), "200 OK") == false)
 	{
 		if (tmp.notPermmision == true)
-			return (responseClientError(ERROR403, locationConf->get_root(), getErrorPageMap(_errorMapUsing, "403")));
-		return (responseClientError(ERROR500, locationConf->get_root(), getErrorPageMap(_errorMapUsing, "500")));
+			return (responseClientError(ERROR403, locationConf->get_root(), getErrorPageMap(_response->errorMap, "403")));
+		return (responseClientError(ERROR500, locationConf->get_root(), getErrorPageMap(_response->errorMap, "500")));
 	}
-	if (tmp.hasProcess == true)
+	if (_response->hasProcess == true)
 		return (true);
 	return (sendResponseClient(tmp.content));
 }

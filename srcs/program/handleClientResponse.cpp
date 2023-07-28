@@ -12,33 +12,25 @@
 
 #include <web_server.hpp>
 
-bool	Server::handleProcessClient(const Response* response)
+bool	Server::handleProcessClient( void )
 {
-	if (response->method == "GET")
-	{
-		std::string	content;
+	write_debug("Generete response to client process");
+	_response->hasProcess = false;
+	std::string	content;
 
-		_serverUsing = _serversConf.at(response->port);
-		if (readOuputFormatedCGI(content, response->process) == false)
-			responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(response->errorMap, "500"));
-		sendResponseClient(content);
-	}
-	else
-		responseServer();
-	cleanupFd(_client_fd);
-	cleanupResponse(_client_fd);
+	_serverUsing = _serversConf.at(_response->port);
+	if (readOuputFormatedCGI(content, _response->process) == false)
+		responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500"));
+	sendResponseClient(content);
+	// cleanupFd(_client_fd);
 	return (true);
 }
 
 bool	Server::handleClientResponse( void )
 {
-	std::map<int, Response*>::iterator itClient = _responses.find(_client_fd);
-
-	write_debug_number("handleClientResponse: ", _client_fd);
-	if (itClient == _responses.end())
-		return cleanupFd(_client_fd);
-	if (waitpid(itClient->second->process.pid, NULL, WNOHANG) == 0)
+	if (_response->hasProcess == false)
+		return cleanupClient(_client_fd);
+	if (waitpid(_response->process.pid, NULL, WNOHANG) == 0)
 		return (true);
-	_client_fd = itClient->first;
-	return (handleProcessClient(itClient->second));
+	return (handleProcessClient());
 }

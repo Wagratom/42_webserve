@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 07:51:02 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/25 10:53:26 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/28 09:37:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,12 @@ bool	Server::cleanupFd(int fd)
 	if (epoll_ctl(_epoll_fd, EPOLL_CTL_DEL, fd, NULL) == -1)
 		return (writeStreerrorPrefix("remove_fd_from_epoll"));
 	close(fd);
+	return (true);
+}
+
+bool	Server::cleanupClient(int& fd)
+{
+	cleanupFd(fd);
+	cleanupResponse(fd);
 	return (true);
 }

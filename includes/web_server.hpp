@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/25 13:11:32 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/28 13:29:11 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ class	Response
 		ChildProcessData		process;
 		int						contentLenght;
 		int						bytesRead;
-		int						totalBytesRead;
+		int						sizeContent;
+		int						port;
 		bool					hasProcess;
 		bool					write;
+		bool					isProcessAutoindex;
+		bool					endHeader;
 		std::time_t				creationTime;
-		int						port;
+		std::string				buffer;
 		std::string				method;
-		bool					_isProcessAutoindex;
 		std::map<std::string, std::string*>	errorMap;
 };
 
@@ -97,9 +99,13 @@ class	Server
 
 		//		handleRequestClient
 		bool	handleRequestClient( void );
+
 		bool	savaDataCleint( epoll_event& event );
-		bool	readRequest( std::string& buffer );
-		bool	responseRequest( std::string& buffer );
+		bool	createNewResponses( void );
+		bool	configureEnvsServer(epoll_event& event);
+
+		bool	readHeaderRequest( void );
+		bool	responseRequest( void );
 
 		bool	handle_GET_requesition( void );
 		void	handleQuerystring(std::string& endPoint);
@@ -118,17 +124,17 @@ class	Server
 		bool	handlePostRequest( void );
 		bool	handleScriptPOST( void );
 		bool	checkPermitionFile(std::string path);
-		bool	createValidResponse( int& contentLength );
+		bool	checkClientMaxSize( void );
 		bool	auxSendErrorPost( int status, std::string Error );
 		bool	handlePostBody( void );
-		bool	readAndSaveDatas(Response*& response, std::vector<char>& buffer);
-		bool	createProcessResponse( Response*& response );
-		void	handleProcessPOST( Response*& response );
-		bool	handleProcessResponse(Response*& response, std::vector<char>& buffer);
+		bool	readAndSaveDatas( void );
+		bool	createProcessResponse( void );
+		void	handleProcessPOST( void );
+		bool	handleProcessResponse( void );
 
 		//		handleClientResponse
 		bool	handleClientResponse( void );
-		bool	handleProcessClient(const Response* response);
+		bool	handleProcessClient( void );
 
 
 		bool	handle_DELETE_requesition( void );
@@ -150,8 +156,8 @@ class	Server
 		bool	timeoutHandler( void );
 		bool	responseRedirect(std::string endPoint);
 		bool	cleanupFd(int fd);
+		bool	cleanupClient(int& fd);
 		void	cleanupResponse( int& fd );
-		bool	createNewResponses(int contentLenght, const std::map<std::string, std::string*>& errorMap);
 
 		bool	getContentFile(auxReadFiles& dst, const std::map<std::string, std::string>& cgi, std::string statusHeader);
 		bool	getContentFilePHP(auxReadFiles& dst);
@@ -183,7 +189,7 @@ class	Server
 		std::map<int, Response*>				_responses;
 		Server_configuration*					_serverUsing;
 		std::time_t								_lastVerifyTimeout;
-		std::map<std::string, std::string*>		_errorMapUsing;
+		Response*								_response;
 };
 
 void		set_debug(bool	value);

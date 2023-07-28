@@ -12,34 +12,27 @@
 
 #include <web_server.hpp>
 
-static bool	isEndHeader(std::vector<char>& header, int index)
+bool static	Read_AppendBuffer(int& FD, std::string& buffer)
 {
-	if (header[index] == '\n' && header[index - 1] == '\r' && header[index - 2] == '\n' && header[index - 3] == '\r')
-		return (true);
-	return (false);
+	char	tmp[10];
+	int		bytesRead = 0;
+
+	bytesRead = recv(FD, tmp, 10, 0);
+	if (bytesRead == -1)
+		return (writeStreerrorPrefix("Error: readRequest: "));
+	tmp[bytesRead] = '\0';
+	buffer.append(tmp, bytesRead);
+	return true;
 }
 
-bool	Server::readRequest(std::string& buffer)
+bool	Server::readHeaderRequest()
 {
-	std::vector<char>	headerChar(MAX_SIZE_HEADER);
-	char				tmp[1];
-	int					bytesRead = 0;
-	int					indexArray = 0;
-
-	while (true)
-	{
-		bytesRead = recv(_client_fd, tmp, 1, 0);
-		if (bytesRead == -1)
-			return (writeStreerrorPrefix("Error: readRequest: "));
-		if (bytesRead == 0)
-			break;
-		headerChar[indexArray] = tmp[0];
-		if (isEndHeader(headerChar, indexArray))
-			break;
-		indexArray++;
-	}
-	buffer = std::string(headerChar.begin(), headerChar.end());
-	write_debug_prefix(CIANO, "\t Header received");
-	write_debug_prefix(AZUL, buffer);
+	if (Read_AppendBuffer(_client_fd, _response->buffer) == false)
+		return (false);
+	if (_response->buffer.find("\r\n\r\n") == std::string::npos)
+		return (true);
+	_response->endHeader = true;
+	write_debug_prefix(CIANO, "\n\t Header received");
+	write_debug_prefix(AZUL, _response->buffer);
 	return (true);
 }
