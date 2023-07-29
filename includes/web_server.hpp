@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/28 13:29:11 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/29 11:18:27 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ class	Response
 		Response( void );
 
 	public:
-		ChildProcessData		process;
 		int						contentLenght;
 		int						bytesRead;
 		int						sizeContent;
@@ -56,6 +55,7 @@ class	Response
 		std::time_t				creationTime;
 		std::string				buffer;
 		std::string				method;
+		ChildProcessData		process;
 		std::map<std::string, std::string*>	errorMap;
 };
 
@@ -69,79 +69,62 @@ class	Server
 		void			initializeDefaultErrorPage( void );
 
 		bool	initializeServer( void );
+
 		bool	createServerConfigured( void );
-		bool	create_server_aux( Server_configuration* server );
+		bool	create_epoll( void );
 		bool	createServer( int& serverFd, Server_configuration* server );
 		bool	createSockeConfigured( int& serverFd );
 		bool	bind_socket( int& serverFd, Server_configuration* server );
 		bool	listen_socket( int& serverFd );
-
-		bool	create_epoll( void );
-		// bool	confServeToRead( int& serverFD );
 		bool	add_mode_read( int& serverFD );
 
 		int		startServer( void );
 		bool	captureNewEvents( epoll_event* event, int& numberOfEvents );
 		bool	filterEvent( epoll_event* event, int numberOfEvents );
-		void	checkTimeout( int& numberOfEvents );
 
-
-		bool	checkEventInServer(epoll_event	event, int& serverFd);
-
-		bool	handleNewConnections( int& serverFd );
-		// bool	is_newConnect( epoll_event& event, int& serverFd);
+		bool	handleNewConnections( int serverFd ); // if
 		bool	accept_status( int& new_client, int& serverFD );
 		bool	save_connection( int& new_client );
 
-		bool	handleEvents( epoll_event& event );
-
+		bool	handleEvents( epoll_event& event ); // else
 		bool	isClosedOrErrorEvent( epoll_event& event );
-
-		//		handleRequestClient
-		bool	handleRequestClient( void );
-
 		bool	savaDataCleint( epoll_event& event );
-		bool	createNewResponses( void );
 		bool	configureEnvsServer(epoll_event& event);
+		bool	createNewResponses( void );
 
+		bool	handleRequestClient( void ); // leitura
 		bool	readHeaderRequest( void );
 		bool	responseRequest( void );
 
-		bool	handle_GET_requesition( void );
+		bool	handle_GET_requesition( void ); // GET
 		void	handleQuerystring(std::string& endPoint);
 		bool	responseServer( void );
-		bool	sendAutoindex( const bool& autoindex, const std::string& root);
-
 		bool	responseFileServer( std::string& endPoint );
-		bool	preparingToReadFile(auxReadFiles& tmp, std::string& endPoint);
-
 		bool	responseLocation( std::string& endPoint, std::string& locationName );
-		bool	responseLocationPost(const t_location*& location);
-		bool	responseFileLocation(const t_location*& location, std::string& endPoint);
 		bool	returnIndexLocation(const t_location*& _location );
-		bool	createRootLocation(const t_location*& location);
+		bool	responseFileLocation(const t_location*& location, std::string& endPoint);
 
-		bool	handlePostRequest( void );
+		bool	handlePostRequest( void ); // POST
+		bool	responseLocationPost(const t_location*& location);
 		bool	handleScriptPOST( void );
 		bool	checkPermitionFile(std::string path);
 		bool	checkClientMaxSize( void );
-		bool	auxSendErrorPost( int status, std::string Error );
 		bool	handlePostBody( void );
 		bool	readAndSaveDatas( void );
 		bool	createProcessResponse( void );
 		void	handleProcessPOST( void );
 		bool	handleProcessResponse( void );
 
+		bool	handle_DELETE_requesition( void ); // DELETE
+
 		//		handleClientResponse
-		bool	handleClientResponse( void );
+		bool	handleClientResponse( void ); // escrita
 		bool	handleProcessClient( void );
 
-
-		bool	handle_DELETE_requesition( void );
-
-		// bool	responseClientListFiles( std::string pathDir, std::string pathFile );
-		// bool	extractFileNameFromBody( aux_upload& data );
-
+		bool	auxSendErrorPost( int status, std::string Error );
+		bool	preparingToReadFile(auxReadFiles& tmp, std::string& endPoint);
+		bool	createRootLocation(const t_location*& location);
+		bool	sendAutoindex( const bool& autoindex, const std::string& root);
 
 		std::string	generetePathErrorValid( int& status, const std::string& root, std::string path );
 		bool		generetePathToResponse( std::string& dst , const std::string& root, const std::string& listNames );

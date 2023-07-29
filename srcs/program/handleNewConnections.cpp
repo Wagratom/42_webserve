@@ -51,7 +51,7 @@ bool	Server::save_connection( int& new_client )
 	return (true);
 }
 
-bool	Server::handleNewConnections(int& serverFd)
+bool	Server::handleNewConnections(int serverFd)
 {
 	int	new_client;
 

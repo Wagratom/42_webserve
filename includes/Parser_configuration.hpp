@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/22 20:34:16 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/29 10:16:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,40 +37,39 @@ class	Parser_configuration
 		Parser_configuration( std::string filename );
 		virtual ~Parser_configuration( void );
 
-		void					initializeServerDictionary( void );
-		void					initializeUniversalDictionary ( void );
+		void	initializeServerDictionary( void );
+		void	initializeUniversalDictionary ( void );
 
-		bool					controlParserConfiguration( void );
-		bool					readConfigurationFile( void );
-		bool					isLineEmpty(std::string& line);
-		bool					ParserConfigurationFile( void );
-		bool					parserLineServer( std::string& line );
-		bool					parserConfigurationServer( void );
+		bool	controlParserConfiguration( void );
+		bool	readConfigurationFile( void );
+		bool	isLineEmpty(std::string& line);
+		bool	ParserConfigurationFile( void );
+		bool	parserLineServer( std::string& line );
+		bool	parserConfigurationServer( void );
 
-		bool					handle_server( std::string& line );
-		bool					checkDirectiveServer(std::string& line);
-		bool					checkDirectiveUniversal(std::string& line);
+		bool	handle_server( std::string& line );
+		bool	checkDirectiveServer(std::string& line);
+		bool	checkDirectiveUniversal(std::string& line);
 
-		bool					get_port( std::string& line );
-		bool					get_server_name( std::string& line );
+		bool	get_port( std::string& line );
+		bool	get_server_name( std::string& line );
 
-		bool					get_root(std::string& line, aux_configuration* dst);
-		bool					get_index(std::string& line , aux_configuration* dst);
-		bool					get_clientMaxBodySize( std::string& line, aux_configuration* dst );
-		bool					get_error_page( std::string& LineErrorPage, aux_configuration* dst );
-		bool					get_return( std::string& LineErrorPage, aux_configuration* dst );
-		bool					get_autoIndex( std::string& LineErrorPage, aux_configuration* dst );
-		bool					get_limit_except(std::string& line, aux_configuration* dst);
-		bool					get_cgi(std::string& line, aux_configuration* dst);
-		bool					get_timeout( std::string& line );
+		bool	get_root(std::string& line, aux_configuration* dst);
+		bool	get_index(std::string& line , aux_configuration* dst);
+		bool	get_clientMaxBodySize( std::string& line, aux_configuration* dst );
+		bool	get_error_page( std::string& LineErrorPage, aux_configuration* dst );
+		bool	get_return( std::string& LineErrorPage, aux_configuration* dst );
+		bool	get_autoIndex( std::string& LineErrorPage, aux_configuration* dst );
+		bool	get_limit_except(std::string& line, aux_configuration* dst);
+		bool	get_cgi(std::string& line, aux_configuration* dst);
+		bool	get_timeout( std::string& line );
 
-		bool					parserLocation( void );
-		bool					saveLocationInfos(t_location& location);
-		bool					handleLineLocation(std::string& line, t_location& dst);
-		bool					saveLocationName(std::string& locationName);
+		bool	parserLocation( void );
+		bool	saveLocationInfos(t_location& location);
+		bool	handleLineLocation(std::string& line, t_location& dst);
+		bool	saveLocationName(std::string& locationName);
 
 		std::vector<Server_configuration*>	get_server_configuration( void );
-		// std::map<std::string, t_location*>	get_location_configuration( void );
 
 	private:
 		std::map<std::string, directiveNginxUniversal>			_dictionary_universal;
@@ -189,10 +188,3 @@ bool	extractPrefixWord(std::string& line, size_t lenghtErase);
 void	erase_comments(std::string& line);
 bool	erase_isspaces(size_t indentation, std::string& line);
 bool	removeIndentationAndComments(int indentation, std::string& line);
-
-// bool	equal_or_err_i(int a, int b, int line);
-// bool	different_or_err_i(int a, int b, int line);
-// bool	equal_or_err_s(std::string a, std::string b, int line);
-// bool	different_or_err_s(std::string a, std::string b, int line);
-// bool	equal_or_err_b(bool a, bool b, int line);
-// bool	different_or_err_b(bool a, bool b, int line);

@@ -25,7 +25,6 @@ bool	Server::savaDataCleint(epoll_event& event)
 
 bool	Server::handleRequestClient( void )
 {
-	// write_debug_number("handleRequestClient: ", _client_fd);
 	if (_response->endHeader == false)
 	{
 		if (readHeaderRequest() == false)

@@ -190,7 +190,7 @@
 				<a class="nav-item nav-link" href="#sec-about" style="color: #fff;">Project</a>
 				<a class="nav-item nav-link" href="#sec-portfolio" style="color: #fff;">Apresentação</a>
 			</div>
-			<form method="post" enctype="multipart/form-data" class="send_file ms-auto" style="margin: 10px;" action="/uploads/">
+			<form method="post" enctype="multipart/form-data" class="send_file ms-auto" style="margin: 10px;" action="/uploads/handleUPLOAD.php">
 				<input type="file" name="fileUpload">
 				<input type="submit" value="Enviar" id="enviarBtn">
 				<button type="button" id="botao-excluir">Excluir</button>
@@ -227,20 +227,11 @@
 		</section>
 	</div>
 </body>
-<!-- <script>
-	// Selecione o botão "Enviar" pelo ID
-	var enviarBtn = document.getElementById("enviarBtn");
-	enviarBtn.addEventListener("click", function() {
-	  // Exiba a notificação de envio
-	  alert("O arquivo foi enviado com sucesso!");
-	});
-</script> -->
 <script>
 	var excluirBtn = document.getElementById("botao-excluir");
 	excluirBtn.addEventListener("click", function() {
 	  // Redirect to "/list/files/server"
 	  window.location.href = "/list/files/server";
 	});
-  </script>
+</script>
 
-<!-- action="/upload"

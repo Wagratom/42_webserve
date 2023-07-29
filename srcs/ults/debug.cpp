@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:07:54 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/13 16:29:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/29 10:20:45 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,4 @@ void	write_debug_prefix(std::string prefix, std::string message)
 	if (!get_debug())
 		return ;
 	std::cout << prefix << message << std::endl;
-}
-
-#include <arpa/inet.h>
-
-void	write_type_event_debug(epoll_event& event)
-{
-	// std::cout << "addr.sin_addr.s_addr: " << addr.sin_addr.s_addr << std::endl;
-	if (get_debug() == false)
-		return ;
-	std::cout << "Client: " << event.data.fd << " | ";
-	std::cout << "Type of event: ";
-	if (event.events & EPOLLERR)
-		std::cout << "EPOLLERR | ";
-	if (event.events & EPOLLRDHUP)
-		std::cout << "EPOLLRDHUP | ";
-	if (event.events & EPOLLRDHUP)
-		std::cout << "EPOLLRDHUP | ";
-	if (event.events & EPOLLIN)
-		std::cout << "EPOLLIN | ";
-	if (event.events & EPOLLOUT)
-		std::cout << "EPOLLOUT | ";
-	if (event.events & EPOLLHUP)
-		std::cout << "EPOLLHUP | ";
-	if (event.events & EPOLLPRI)
-		std::cout << "EPOLLPRI ";
-	std::cout << std::endl;
 }

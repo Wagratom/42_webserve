@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:47:48 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/28 13:06:47 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/29 10:20:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ class	Parser_request;
 
 typedef struct s_location
 {
-	std::string					endPoint; // key
+	std::string					endPoint;
 	Location_configuration*		configuration;
 	struct s_location*			next;
 
@@ -62,19 +62,10 @@ typedef struct s_ChildProcessInfo {
 	int		fd[2];
 	pid_t	pid;
 	int		status;
-	// int	exit_status;
 
 } ChildProcessData;
-
-// struct aux_upload{
-// 	std::string	filename;
-// 	int			fd;
-// 	int			contentLength;
-// 	std::string			resquestString;
-// };
 
 void	write_debug_number(std::string message, int number);
 void	write_debug_prefix(std::string prefix, std::string message);
 bool	writeStreerrorPrefix( std::string prefix );
 bool	write_debug(std::string message);
-void	write_type_event_debug(epoll_event& event);

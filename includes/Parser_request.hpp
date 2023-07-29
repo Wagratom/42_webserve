@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/28 12:52:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/29 10:17:15 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ class	Parser_request
 		std::string	get_order_request( void );
 		std::string	get_metodo( void );
 		std::string	get_endPoint( void );
-		// char**		get_envs( void );
 		int			get_index_envs( void );
-		// std::string get_envsMap(std::string key);
-
 
 	private:
 		std::string&	_request;
