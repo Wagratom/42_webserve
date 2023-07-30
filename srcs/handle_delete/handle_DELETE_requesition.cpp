@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/28 10:40:37 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/30 14:17:02 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	Server::handle_DELETE_requesition( void )
 	write_debug_prefix(CIANO, "\t Tratavive request");
 	write_debug(AZUL);
 	write_debug("handle_DELETE_requesition");
-	_response->method = "DELETE";
-	std::remove(pathFile.c_str());
-	return (handleKeepAlive());
+	if (std::string(getenv("CONTENT_LENGTH")) == "null")
+		return (handle_GET_requesition());
+	return (handlePostRequest());
 }

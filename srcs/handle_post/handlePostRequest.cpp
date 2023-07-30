@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/28 13:04:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/30 14:15:59 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ bool	Server::handlePostRequest()
 	std::string	endPoint = _parserRequest->get_endPoint();
 	std::string	LocationsNames = _parserRequest->get_endPoint();
 
-	write_debug_prefix(CIANO, "\t Tratavive request");
-	write_debug(AZUL);
 	write_debug("handlePostRequest");
 	_response->method = "POST";
 	if (findLocationVector(_serverUsing->get_locations(), LocationsNames))

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/29 17:45:00 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/30 10:48:57 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ class	Server
 		bool	responseFileLocation(const t_location*& location, std::string& endPoint);
 
 		bool	handlePostRequest( void ); // POST
-		bool	responseLocationPost(const t_location*& location);
 		bool	handleScriptPOST( void );
 		bool	checkPermitionFile(std::string path);
 		bool	checkClientMaxSize( void );

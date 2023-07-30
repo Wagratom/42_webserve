@@ -42,8 +42,7 @@ static bool	getContentAllFile(auxReadFiles& dst, std::string statusHeader)
 	}
 	catch (std::exception& e) {
 		write_debug("getContentAllFile: catch");
-		write_debug_prefix("Error: ", e.what());
-		return (false);
+		return (write_error_prefixS("Error: ", e.what()));
 	}
 }
 
@@ -56,13 +55,13 @@ bool	Server::getContentFile(auxReadFiles& dst, const std::map<std::string, std::
 		return (getContentAllFile(dst, statusHeader));
 	}
 	catch (std::exception& e) {
-		return write_error_prefixS("getContentFilePHP: catch", e.what());
+		return write_error_prefixS("getContentFile: catch", e.what());
 	}
 }
 
 bool	Server::responseClient(auxReadFiles& tmp, const std::map<std::string, std::string>& cgi, std::string statusHeader)
 {
-	write_debug("responseClient");
+	write_debug_prefix("responseClient: file: ", tmp.path);
 	if (getContentFile(tmp, cgi, statusHeader) == false)
 	{
 		if (tmp.notPermmision == true)

@@ -90,18 +90,6 @@ bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 	}
 }
 
-bool	Server::responseLocationPost(const t_location*& location)
-{
-	std::string path;
-	Location_configuration*	locationConf = location->configuration;
-
-	write_debug("responseLocationPost");
-	if (generetePathToResponse(path, locationConf->get_root(), locationConf->get_index()) == false)
-		return sendAutoindex(locationConf->get_autoIndex(), locationConf->get_root());
-	setenv("SCRIPT_FILENAME", path.c_str(), 1);
-	return handleScriptPOST();
-}
-
 bool	Server::returnIndexLocation(const t_location*& location)
 {
 	Location_configuration*	locationConf = location->configuration;

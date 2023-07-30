@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/28 13:03:03 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/30 14:14:01 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,23 @@ bool	Server::checkClientMaxSize( void )
 
 bool	Server::checkPermitionFile(std::string path)
 {
-	size_t	extension = path.find_last_of(".");
+	try {
+		size_t	extension = path.find_last_of(".");
+		write_debug_prefix("checkPermitionFile: ", path);
+		if (extension == std::string::npos || extension == 0)
+			auxSendErrorPost(ERROR404, getErrorPageMap(_response->errorMap, "404"));
+		if (access(path.c_str(), F_OK) == -1)
+			auxSendErrorPost(ERROR404, getErrorPageMap(_response->errorMap, "404"));
+		else if (access(path.c_str(), W_OK) == -1)
+			auxSendErrorPost(ERROR403, getErrorPageMap(_response->errorMap, "403"));
+		else
+			return (true);
+		return write_error("handlePostRequest: Not Access path: " + path);
+	}
+	catch (const std::exception& e) {
+		return (write_error("checkPermitionFile: " + std::string(e.what())));
+	}
 
-	write_debug_prefix("checkPermitionFile: ", path);
-	if (extension == std::string::npos || extension == 0)
-		auxSendErrorPost(ERROR404, getErrorPageMap(_response->errorMap, "404"));
-	if (access(path.c_str(), F_OK) == -1)
-		auxSendErrorPost(ERROR404, getErrorPageMap(_response->errorMap, "404"));
-	else if (access(path.c_str(), W_OK) == -1)
-		auxSendErrorPost(ERROR403, getErrorPageMap(_response->errorMap, "403"));
-	else
-		return (true);
-	return write_error("handlePostRequest: Not Access path: " + path);
 }
 
 bool	Server::handleScriptPOST( void )
