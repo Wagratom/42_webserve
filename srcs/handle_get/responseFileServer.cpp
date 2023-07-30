@@ -12,6 +12,13 @@
 
 #include <web_server.hpp>
 
+static bool	isPostMethod( void )
+{
+	if (std::string(getenv("REQUEST_METHOD")) == "POST")
+		return (true);
+	return (false);
+}
+
 bool	Server::preparingToReadFile(auxReadFiles& tmp, std::string& endPoint)
 {
 	size_t			checkExtensionFile = endPoint.find_last_of('.');
@@ -32,17 +39,7 @@ bool Server::responseFileServer(std::string& endPoint)
 	_response->errorMap = _serverUsing->get_error_page();
 	if (preparingToReadFile(tmp, endPoint) == false)
 		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "404")));
-	if (getContentFile(tmp, _serverUsing->get_cgi(), "200 OK") == false)
-	{
-		if (tmp.notPermmision == true)
-			return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "403")));
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
-	}
-	if (_response->hasProcess == true)
-		return (true);
-	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
-	return true;
+	return responseClient(tmp, _serverUsing->get_cgi(), "200 OK");
 }
 
 bool	Server::responseFileLocation(const t_location*& location, std::string& endPoint)
@@ -53,15 +50,10 @@ bool	Server::responseFileLocation(const t_location*& location, std::string& endP
 	write_debug("responseFileLocation");
 	endPoint.erase(0, location->endPoint.length());
 	tmp.path = location->configuration->get_root() + endPoint;
-	if (getContentFile(tmp, location->configuration->get_cgi(), "200 OK") == false)
+	if (isPostMethod())
 	{
-		if (tmp.notPermmision == true)
-			return (responseClientError(ERROR403, location->configuration->get_root(), getErrorPageMap(_response->errorMap, "403")));
-		return (responseClientError(ERROR404, location->configuration->get_root(), getErrorPageMap(_response->errorMap, "404")));
+		setenv("SCRIPT_FILENAME", tmp.path.c_str(), 1);
+		return handleScriptPOST();
 	}
-	if (_response->hasProcess == true)
-		return (true);
-	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMap(_response->errorMap, "500")));
-	return true;
+	return responseClient(tmp, location->configuration->get_cgi(), "200 OK");
 }

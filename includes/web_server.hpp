@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/29 11:18:27 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/07/29 17:45:00 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ class	Server
 		void	cleanupResponse( int& fd );
 
 		bool	getContentFile(auxReadFiles& dst, const std::map<std::string, std::string>& cgi, std::string statusHeader);
+		bool	responseClient(auxReadFiles& dst, const std::map<std::string, std::string>& cgi, std::string statusHeader);
 		bool	getContentFilePHP(auxReadFiles& dst);
 
 		std::string	getErrorPageMap(const std::map<std::string, std::string*>& errorMap, std::string Error);

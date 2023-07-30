@@ -79,8 +79,6 @@ bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 			return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMap(_response->errorMap, "500")));
 		if (hasRedirection(location))
 			return (responseRedirect(location->configuration->get_return()));
-		if (isPostMethod())
-			return (responseLocationPost(location));
 		if (isRequerimentFile(endPoint))
 			return (responseFileLocation(location, endPoint));
 		if (isEndPoint(endPoint, locationName))
@@ -113,13 +111,7 @@ bool	Server::returnIndexLocation(const t_location*& location)
 	write_debug("returnIndexLocation");
 	if (generetePathToResponse(tmp.path, locationConf->get_root(), locationConf->get_index()) == false)
 		return (sendAutoindex(locationConf->get_autoIndex(), locationConf->get_root()));
-	if (getContentFile(tmp, locationConf->get_cgi(), "200 OK") == false)
-	{
-		if (tmp.notPermmision == true)
-			return (responseClientError(ERROR403, locationConf->get_root(), getErrorPageMap(_response->errorMap, "403")));
-		return (responseClientError(ERROR500, locationConf->get_root(), getErrorPageMap(_response->errorMap, "500")));
-	}
-	if (_response->hasProcess == true)
-		return (true);
-	return (sendResponseClient(tmp.content));
+	if (isPostMethod())
+		return (handleScriptPOST());
+	return (responseClient(tmp, locationConf->get_cgi(), "200 OK"));
 }

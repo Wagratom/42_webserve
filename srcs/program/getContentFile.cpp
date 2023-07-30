@@ -59,3 +59,19 @@ bool	Server::getContentFile(auxReadFiles& dst, const std::map<std::string, std::
 		return write_error_prefixS("getContentFilePHP: catch", e.what());
 	}
 }
+
+bool	Server::responseClient(auxReadFiles& tmp, const std::map<std::string, std::string>& cgi, std::string statusHeader)
+{
+	write_debug("responseClient");
+	if (getContentFile(tmp, cgi, statusHeader) == false)
+	{
+		if (tmp.notPermmision == true)
+			return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "403")));
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
+	}
+	if (_response->hasProcess == true)
+		return (true);
+	if (sendResponseClient(tmp.content) == false)
+		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
+	return true;
+}

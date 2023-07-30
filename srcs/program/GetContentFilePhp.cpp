@@ -28,7 +28,7 @@ static void	callExecuteCgi(auxReadFiles& dst, ChildProcessData& infos)
 
 static bool	checkAcess(std::string path, auxReadFiles& dst)
 {
-	if (access(path.c_str(), R_OK) == 0)
+	if (access(path.c_str(), X_OK) == 0)
 		return (true);
 	dst.notPermmision = true;
 	return (writeStreerrorPrefix("Error: getContentFilePHP: "));

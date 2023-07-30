@@ -38,3 +38,7 @@ quando o root começa com / ele procura na raiz do computador e quando começa c
 ele procura na raiz do server.
 
 depois ver se realmente precisa do auxsenderror se não juntar a função de verificar acesso.
+
+
+
+verificar os as permissoes de escrita.
