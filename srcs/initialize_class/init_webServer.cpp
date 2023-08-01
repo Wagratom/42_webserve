@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/28 12:02:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 20:15:19 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	Server::initializeDefaultErrorPage( void )
 {
-	_defaultErrorPage[ERROR400] = "./error_pages/400_bad_request.html";
-	_defaultErrorPage[ERROR404] = "./error_pages/404_lufyPensativo.html";
-	_defaultErrorPage[ERROR403] = "./error_pages/403_forbidden.html";
-	_defaultErrorPage[ERROR405] = "./error_pages/405_method_not_allowed.html";
-	_defaultErrorPage[ERROR413] = "./error_pages/413_payload_too_large.html";
-	_defaultErrorPage[ERROR500] = "./error_pages/500_internal_server.html";
-	_defaultErrorPage[ERROR504] = "./error_pages/504_gateway_timeout.html";
+	_defaultErrorPage[ERROR400] = "./root/error_pages/400_bad_request.html";
+	_defaultErrorPage[ERROR404] = "./root/error_pages/404_lufyPensativo.html";
+	_defaultErrorPage[ERROR403] = "./root/error_pages/403_forbidden.html";
+	_defaultErrorPage[ERROR405] = "./root/error_pages/405_method_not_allowed.html";
+	_defaultErrorPage[ERROR413] = "./root/error_pages/413_payload_too_large.html";
+	_defaultErrorPage[ERROR500] = "./root/error_pages/500_internal_server.html";
+	_defaultErrorPage[ERROR504] = "./root/error_pages/504_gateway_timeout.html";
 
 }
 

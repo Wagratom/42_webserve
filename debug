@@ -1,0 +1,74 @@
+	[0;31m	Debug mode is on[0;37m
+[0;36m	Starting parser
+[0;34mOpening/Reading file of confinguration...
+File name: confis/ProjWJP.conf
+ParserConfigurationFile...
+[0;36m	Creating server configured
+[0;34mCreating epoll...
+
+Creating server...
+
+Creating server...
+[0;36m	Starting server[0;34m
+New connection accepted: 6
+createNewResponses
+[0;36m
+	 Header received
+[0;34mGET /uploads/ HTTP/1.1
+Host: localhost:8080
+Connection: keep-alive
+sec-ch-ua: "Not/A)Brand";v="99", "Microsoft Edge";v="115", "Chromium";v="115"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.188
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Accept-Language: pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+
+
+[0;36m	 ENV Pasing
+[0;34m
+REQUEST_METHOD: GET
+REQUEST_URI: /uploads/
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_PORT8080
+HTTP_HOSTlocalhost:8080
+CONTENT_LENGTH=null
+CONTENT_TYPE=null
+HTTP_ACCEPT=text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+HTTP_ACCEPT_ENCODING=gzip, deflate, br
+HTTP_ACCEPT_LANGUAGE=pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+HTTP_CONNECTION=keep-alive
+HTTP_COOKIE=null
+HTTP_HOST=localhost:8080
+HTTP_USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.188
+SERVER_PORT=8080
+[0;36m	 Tratavive request
+[0;34m
+handle_GET_requesition
+responseFileServer
+responseClientError
+generetePathErrorValid: path: ./error_pages/404_lufy_chorando.html
+sendErrorToClient 404 Not Found To Client
+getContentAllFile: ./error_pages/404_lufy_chorando.html
+sendResponseClient
+cleanupResponse: 6
+Keep-Alive
+
+createNewResponses
+cleanupFd: 6
+cleanupResponse: 6
+New connection accepted: 6
+createNewResponses
+cleanupFd: 6
+cleanupResponse: 6
+New connection accepted: 6
+createNewResponses
+cleanupFd: 6
+cleanupResponse: 6
+checking Timeout process: 0

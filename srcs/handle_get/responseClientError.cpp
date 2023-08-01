@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/25 13:06:31 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 20:17:29 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,16 @@ bool	Server::sendErrorToClient( std::string path, std::string statusHeader)
 	return sendResponseClient(tmp.content);
 }
 
-std::string	Server::generetePathErrorValid(int& status, const std::string& root, std::string path)
-{
-	try {
-		if (path.empty())
-			path = _defaultErrorPage.at(status);
-		else if (path[0] == '/')
-		{
-			path.erase(0, 1);
-			path = root + path;
-		}
-		write_debug_prefix("generetePathErrorValid: path: ", path);
-		return (path);
-	} catch (const std::exception& e) {
-		status = ERROR500;
-		return (_defaultErrorPage.find(ERROR500)->second);
-	}
-}
 
 bool	Server::responseClientError( int status, const std::string& root, std::string pathFileError)
 {
 	write_debug("responseClientError");
-	pathFileError = generetePathErrorValid(status, root, pathFileError);
+	pathFileError = root + pathFileError;
+	if (access(pathFileError.c_str(), R_OK) != 0)
+	{
+		pathFileError = _defaultErrorPage[status];
+		write_error_prefixS("Path error not found: Response client with page default: ", pathFileError);
+	}
 	if (status == ERROR400)
 		return sendErrorToClient(pathFileError, "400 Bad Request");
 	else if (status == ERROR403)

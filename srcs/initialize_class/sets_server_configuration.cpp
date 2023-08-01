@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:40:49 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/15 11:13:09 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 20:04:16 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ void	Server_configuration::set_error_page( std::string number, std::string error
 {
 	if (_error_page.find(number) != _error_page.end())
 		return ;
+	if (error_page[0] == '.')
+		error_page.erase(0, 2);
+	else if (error_page[0] == '/')
+		error_page.erase(0, 1);
 	this->_error_page.insert(std::pair<std::string, std::string*>(number, new std::string(error_page)));
 }
 

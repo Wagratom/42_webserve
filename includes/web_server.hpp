@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/30 10:48:57 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 20:01:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ class	Server
 		bool	createRootLocation(const t_location*& location);
 		bool	sendAutoindex( const bool& autoindex, const std::string& root);
 
-		std::string	generetePathErrorValid( int& status, const std::string& root, std::string path );
 		bool		generetePathToResponse( std::string& dst , const std::string& root, const std::string& listNames );
 		bool		responseClientError( int status, const std::string& root, std::string pathFileError );
 		bool		findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint);
