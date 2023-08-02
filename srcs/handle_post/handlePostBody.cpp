@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/01 20:44:48 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/02 09:09:16 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,9 @@ bool	Server::handleProcessResponse( void )
 		_response->hasProcess = false;
 		int	wexitstatus = checkStatusCGI(status);
 		if (wexitstatus != 0)
-			return responseClientError(wexitstatus, _response->root, getErrorPageMap(_response->errorPage, get_stringError(wexitstatus)));
+			return responseClientError(get_stringError(wexitstatus), getErrorPageMap(get_stringError(wexitstatus)));
 		if (responseServer() == false)
-			return (responseClientError(ERROR500, _response->root, getErrorPageMap(_response->errorPage, "500")));
-
+			return (responseClientError("500", getErrorPageMap("500")));
 		return (handleKeepAlive());
 	}
 	return (true);

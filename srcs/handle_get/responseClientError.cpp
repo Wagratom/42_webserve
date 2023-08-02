@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/01 22:50:03 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/02 12:29:18 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	Server::sendErrorToClient( std::string path, std::string statusHeader)
 	if (getContentFile(tmp, _response->cgi, statusHeader) == false)
 		return (false);
 	sendResponseClient(tmp.content);
-	return cleanupClient(_client_fd);
+	return (true);
 }
 
 bool	Server::genereteValidpath(std::string& path)
@@ -31,20 +31,20 @@ bool	Server::genereteValidpath(std::string& path)
 	try{
 		std::string	extension = path.substr(path.find_last_of("."));
 
-		if (access(path.c_str(), F_OK) == -1)
+		if (access(path.c_str(), F_OK) != 0)
 		{
 			path = _defaultErrorPage[ERROR404];
 			return write_error_prefixS("Path error not found: Response client with page default: ", path);
 		}
 		if (_response->cgi.find(extension) != _response->cgi.end())
 		{
-			if (access(path.c_str(), X_OK) == -1)
+			if (access(path.c_str(), X_OK) != 0)
 			{
 				path = _defaultErrorPage[ERROR403];
 				return write_error_prefixS("Path not permition: Response client with page default: ", path);
 			}
 		}
-		else if (access(path.c_str(), R_OK) == -1)
+		else if (access(path.c_str(), R_OK) != 0)
 		{
 			path = _defaultErrorPage[ERROR403];
 			return write_error_prefixS("Path not permition: Response client with page default: ", path);
@@ -57,24 +57,23 @@ bool	Server::genereteValidpath(std::string& path)
 	}
 }
 
-bool	Server::responseClientError(int status, const std::string& root, std::string path)
+bool	Server::responseClientError(std::string error, std::string path)
 {
 	write_debug("responseClientError");
-	path = root + path;
 	genereteValidpath(path);
-	if (status == ERROR400)
+	if (error == ERROR400)
 		return sendErrorToClient(path, "400 Bad Request");
-	else if (status == ERROR403)
+	else if (error == ERROR403)
 		return (sendErrorToClient(path, "403 Forbidden"));
-	else if (status == ERROR404)
+	else if (error == ERROR404)
 		return sendErrorToClient(path, "404 Not Found");
-	else if (status == ERROR405)
+	else if (error == ERROR405)
 		return sendErrorToClient(path, "405 Method Not Allowed");
-	else if (status == ERROR413)
+	else if (error == ERROR413)
 		return sendErrorToClient(path, "413 Payload Too Large");
-	else if (status == ERROR500)
+	else if (error == ERROR500)
 		return sendErrorToClient(path, "500 Internal Server Error");
-	else if (status == ERROR504)
+	else if (error == ERROR504)
 		return sendErrorToClient(path, "504 Gateway Timeout");
 	return (true);
 }

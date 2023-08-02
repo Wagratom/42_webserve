@@ -27,8 +27,8 @@ bool	Server::timeoutHandler( void )
 			write_debug_number("Timeout process: ", it->first);
 			_client_fd = it->first;
 			_response = it->second;
-			if (responseClientError(ERROR504, _response->root, getErrorPageMap(it->second->errorPage, "504")) == false)
-				responseClientError(ERROR500, _response->root, getErrorPageMap(it->second->errorPage, "500"));
+			if (responseClientError(ERROR504, getErrorPageMap("504")) == false)
+				responseClientError(ERROR500, getErrorPageMap("500"));
 			if (waitpid(it->second->process.pid, NULL, WNOHANG) == 0)
 				kill(it->second->process.pid, SIGKILL);
 			it++;

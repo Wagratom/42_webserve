@@ -25,7 +25,8 @@ bool	Server::preparingToReadFile(auxReadFiles& tmp, std::string& endPoint)
 
 	if (checkExtensionFile == std::string::npos || checkExtensionFile == 0)
 		return write_error("preparingToReadFile: not found extension file");
-	endPoint.erase(0, 1);
+	if (endPoint[endPoint.length() - 1] == '/')
+		endPoint.erase(endPoint.length() - 1);
 	tmp.path = _response->root + endPoint;
 	return true;
 }
@@ -36,9 +37,8 @@ bool Server::responseFileServer(std::string& endPoint)
 
 	bzero(&tmp, sizeof(tmp));
 	write_debug("responseFileServer");
-	_response->errorPage = _response->errorPage;
 	if (preparingToReadFile(tmp, endPoint) == false)
-		return (responseClientError(ERROR404, _response->root, getErrorPageMap(_response->errorPage, "404")));
+		return (responseClientError("404", getErrorPageMap("404")));
 	return responseClient(tmp, _response->cgi, "200 OK");
 }
 

@@ -62,13 +62,15 @@ static bool	extractLocationName(std::string& line)
 	return (true);
 }
 
-static void	saveAndAppendSlash(std::string& dst, const std::string name)
+static void	handleSlashs(std::string& dst, const std::string name)
 {
 	dst = name;
 	if (dst[dst.length() - 1] != '/')
 		dst.append("/");
 	else if (dst[dst.length() - 1] == '/' && dst.size() == 1)
 		dst.append("/");
+	if (dst[0] == '/')
+		dst.erase(0, 1);
 }
 
 bool	Parser_configuration::saveLocationName(std::string& locationName)
@@ -81,7 +83,7 @@ bool	Parser_configuration::saveLocationName(std::string& locationName)
 		return (false);
 	if (extractLocationName(locationLine) == false)
 		return (false);
-	saveAndAppendSlash(locationName, locationLine);
+	handleSlashs(locationName, locationLine);
 	_file.erase(_file.begin());
 	return (true);
 }

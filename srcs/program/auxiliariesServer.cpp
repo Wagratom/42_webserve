@@ -6,38 +6,31 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:41:44 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/01 21:26:56 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/02 13:13:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <web_server.hpp>
 
-std::string	Server::getErrorPageMap(const std::map<std::string, std::string*>& errorMap, std::string error)
+std::string	Server::getErrorPageMap(std::string error)
 {
 	if (error.empty())
 		return ("");
 	try {
-		return (*errorMap.at(error));
+		std::string full_path = _response->root + *_response->errorPage.at(error);
+		return (*_response->errorPage.at(error));
 	} catch (const std::exception& e) {
-		return ("");
+		return (_defaultErrorPage[error]);
 	}
 }
 
 std::string	get_stringError(int error)
 {
-	if (error == ERROR400) // Bad Request
-		return ("400");
-	if (error == ERROR403) // Forbidden
-		return ("403");
-	if (error == ERROR404) // Not Found
+	if (error == 104) // Bad Request
 		return ("404");
-	if (error == ERROR405) // Method Not Allowed
-		return ("405");
-	if (error == ERROR413) // Request Entity Too Large
-		return ("413");
-	if (error == ERROR500) // Internal Server Error
-		return ("500");
-	return ("");
+	if (error == 103) // Forbidden
+		return ("403");
+	return ("500");
 }
 
 bool	Server::configureEnvsServer(epoll_event& event)
@@ -84,6 +77,8 @@ bool	Server::findLocationVector(const std::map<std::string, t_location*>& locati
 
 	if (endPoint[endPoint.length() - 1] != '/')
 		endPoint += "/";
+	if (endPoint[0] == '/')
+		endPoint.erase(0, 1);
 	while (true)
 	{
 		if (locations.find(endPoint) != locations.end())

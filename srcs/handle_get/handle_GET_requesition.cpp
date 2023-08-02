@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/01 21:09:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/02 13:28:14 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	Server::handleQuerystring(std::string& endPoint)
 bool	Server::handle_GET_requesition( void )
 {
 	std::string endPoint = _parserRequest->get_endPoint();
-	std::string	LocationsNames = endPoint;
 
 	write_debug_prefix(CIANO, "\t Tratavive request");
 	write_debug(AZUL);
@@ -35,7 +34,7 @@ bool	Server::handle_GET_requesition( void )
 		return (responseServer());
 	if (endPoint.find("?") != std::string::npos)
 		handleQuerystring(endPoint);
-	if (findLocationVector(_response->locations, LocationsNames))
-		return (responseLocation(endPoint, LocationsNames));
+	if (findLocationVector(_response->locations, endPoint))
+		return (responseLocation(endPoint));
 	return (responseFileServer(endPoint));
 }

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/28 13:37:42 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/02 08:56:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,10 @@ static void	redirectCGI( Response*& response )
 	execlp(script, script, NULL);
 	writeStreerrorPrefix("Error: redirectCGI");
 	sleep(2);
-	if (errno == ENOENT)
-		exit(ERROR404);
-	if (errno == EACCES)
-		exit(ERROR403);
-	if (errno == EISDIR)
-		exit(ERROR403);
-	if (errno == ENOTDIR)
-		exit(ERROR404);
+	if (errno == ENOENT || errno == ENOTDIR)
+		exit(104);
+	if (errno == EACCES || errno == EISDIR)
+		exit(103);
 	exit(1);
 }
 

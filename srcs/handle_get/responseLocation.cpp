@@ -29,15 +29,6 @@ static bool	isPostMethod( void )
 	return (false);
 }
 
-static bool	isEndPoint(std::string& endPoint, std::string& locationName)
-{
-	if (endPoint[endPoint.length() - 1] != '/')
-		endPoint += "/";
-	if (endPoint == locationName)
-		return (true);
-	return (false);
-}
-
 bool	Server::createRootLocation(const t_location*& location)
 {
 	if (location->configuration->get_root().empty() == false)
@@ -67,7 +58,7 @@ bool	Server::checkMethodSupported(std::vector<std::string> methods)
 void	Server::updateResponseLocation(const t_location*& location)
 {
 	_response->errorPage = location->configuration->get_error_page();
-	_response->root = location->configuration->get_root();
+	_response->root = location->configuration->get_root() + location->endPoint;
 	_response->cgi = location->configuration->get_cgi();
 	_response->index = location->configuration->get_index();
 	_response->autoindex = location->configuration->get_autoIndex();
@@ -77,7 +68,7 @@ void	Server::updateResponseLocation(const t_location*& location)
 /* ************************************************************************** */
 /*								init										  */
 /* ************************************************************************** */
-bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
+bool	Server::responseLocation(std::string& locationName)
 {
 	try {
 		const t_location*	location = _response->locations.at(locationName);
@@ -85,35 +76,32 @@ bool	Server::responseLocation(std::string& endPoint, std::string& locationName)
 		write_debug_prefix("responseLocation: ", locationName);
 		if (hasRedirection(location))
 			return (responseRedirect(location->configuration->get_return()));
-		if (checkMethodSupported(location->configuration->get_limit_except()) == false)
-			return (responseClientError(ERROR405, location->configuration->get_root(), getErrorPageMap(location->configuration->get_error_page(), "405")));
 		if (createRootLocation(location) == false)
-			return (responseClientError(ERROR500, location->configuration->get_root(), getErrorPageMap(location->configuration->get_error_page(), "500")));
+			return (responseClientError("500", getErrorPageMap("500")));
 		updateResponseLocation(location);
-		if (isRequerimentFile(endPoint))
-			return (responseFileLocation(location, endPoint));
-		if (isEndPoint(endPoint, locationName))
-			return (returnIndexLocation(location));
-		return (responseClientError(ERROR404, location->configuration->get_root(), getErrorPageMap(_response->errorPage, "404")));
+		if (checkMethodSupported(location->configuration->get_limit_except()) == false)
+			return (responseClientError("405", getErrorPageMap("405")));
+		if (isRequerimentFile(locationName))
+			return (responseFileLocation(location, locationName));
+		return (returnIndexLocation());
 	} catch (std::exception& e) {
 		write_error("responseLocation: " + std::string(e.what()));
-		return (responseClientError(ERROR500, _response->root, getErrorPageMap(_response->errorPage, "500")));
+		return (responseClientError("500", getErrorPageMap("500")));
 	}
 }
 
-bool	Server::returnIndexLocation(const t_location*& location)
+bool	Server::returnIndexLocation( void )
 {
-	Location_configuration*	locationConf = location->configuration;
-	auxReadFiles			tmp;
+	auxReadFiles	tmp;
 
 	bzero(&tmp, sizeof(tmp));
 	write_debug("returnIndexLocation");
-	if (generetePathToResponse(tmp.path, locationConf->get_root(), locationConf->get_index()) == false)
-		return (sendAutoindex(locationConf->get_autoIndex(), locationConf->get_root()));
+	if (generetePathToResponse(tmp.path, _response->root, _response->index) == false)
+		return (sendAutoindex(_response->autoindex, _response->root));
 	if (isPostMethod())
 	{
 		setenv("SCRIPT_FILENAME", tmp.path.c_str(), 1);
 		return (handleScriptPOST());
 	}
-	return (responseClient(tmp, locationConf->get_cgi(), "200 OK"));
+	return (responseClient(tmp, _response->cgi, "200 OK"));
 }

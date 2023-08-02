@@ -16,6 +16,7 @@ static bool	open_file_status( const std::string& path )
 {
 	std::ifstream	file(path.c_str());
 
+	std::cout << "path: " << path << std::endl;
 	if (access(path.c_str(), F_OK) == -1)
 		return (false);
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/01 22:18:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/02 13:25:39 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 # define MAX_CONNECTIONS 10
 # define MAX_CLIENTS 1024
 
-# define ERROR400 100 // Bad Request
-# define ERROR403 103 // Forbidden
-# define ERROR404 104 // Not Found
-# define ERROR405 105 // Method Not Allowed
-# define ERROR413 113 // Payload Too Large
-# define ERROR415 115 // Unsupported Media Type
-# define ERROR500 200 // Internal Server Error
-# define ERROR504 204 // Gateway Timeout
+# define ERROR400 "400" // Bad Request
+# define ERROR403 "403" // Forbidden
+# define ERROR404 "404" // Not Found
+# define ERROR405 "405" // Method Not Allowed
+# define ERROR413 "413" // Payload Too Large
+# define ERROR415 "415" // Unsupported Media Type
+# define ERROR500 "500" // Internal Server Error
+# define ERROR504 "504" // Gateway Timeout
 
 # define CHILD_PROCESS 0
 
@@ -106,9 +106,9 @@ class	Server
 		void	handleQuerystring(std::string& endPoint);
 		bool	responseServer( void );
 		bool	responseFileServer( std::string& endPoint );
-		bool	responseLocation( std::string& endPoint, std::string& locationName );
+		bool	responseLocation( std::string& locationName );
 		void	updateResponseLocation(const t_location*& location);
-		bool	returnIndexLocation(const t_location*& _location );
+		bool	returnIndexLocation( void );
 		bool	responseFileLocation(const t_location*& location, std::string& endPoint);
 
 		bool	handlePostRequest( void ); // POST
@@ -127,13 +127,13 @@ class	Server
 		bool	handleClientResponse( void ); // escrita
 		bool	handleProcessClient( void );
 
-		bool	auxSendErrorPost( int status, std::string Error );
+		// bool	auxSendErrorPost( int status, std::string Error );
 		bool	preparingToReadFile(auxReadFiles& tmp, std::string& endPoint);
 		bool	createRootLocation(const t_location*& location);
 		bool	sendAutoindex( const bool& autoindex, const std::string& root);
 
 		bool	generetePathToResponse( std::string& dst , const std::string& root, const std::string& listNames );
-		bool	responseClientError( int status, const std::string& root, std::string pathFileError );
+		bool	responseClientError( std::string error, std::string pathFileError );
 		bool	genereteValidpath( std::string& path );
 		bool	findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint);
 
@@ -152,7 +152,7 @@ class	Server
 		bool	responseClient(auxReadFiles& dst, const std::map<std::string, std::string>& cgi, std::string statusHeader);
 		bool	getContentFilePHP(auxReadFiles& dst);
 
-		std::string	getErrorPageMap(const std::map<std::string, std::string*>& errorMap, std::string Error);
+		std::string	getErrorPageMap( std::string Error );
 		//				GETTERS to tests
 		std::map<std::string, t_location*>	location( int port ) {
 			return (this->_serversConf.at(port)->get_locations());
@@ -175,7 +175,7 @@ class	Server
 		// Response				**_response;
 
 		std::map<int, Server_configuration*>	_serversConf;
-		std::map<int, std::string>				_defaultErrorPage;
+		std::map<std::string, std::string>		_defaultErrorPage;
 		std::map<int, Response*>				_responses;
 		std::time_t								_lastVerifyTimeout;
 		Response*								_response;

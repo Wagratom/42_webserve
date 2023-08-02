@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 19:12:17 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/16 16:47:12 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/02 11:36:50 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Location_configuration:: Location_configuration( void )
 	, _index("")
 	, _root("")
 	, _autoIndex(false)
-	, _clientMaxBodySize(0)
+	, _clientMaxBodySize(1000000)
 {};
 
 Location_configuration::~Location_configuration( void ) {
