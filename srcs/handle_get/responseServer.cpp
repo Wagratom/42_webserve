@@ -14,13 +14,13 @@
 
 bool	Server::responseServer( void )
 {
-	std::map<std::string, std::string*>	errorPages = _serverUsing->get_error_page();
+	std::map<std::string, std::string*>	errorPages = _response->errorPage;
 	auxReadFiles						tmp;
 
 	bzero(&tmp, sizeof(tmp));
 	write_debug("Response server");
-	_response->errorMap = _serverUsing->get_error_page();
-	if (generetePathToResponse(tmp.path, _serverUsing->get_root(), _serverUsing->get_index()) == false)
-		return (sendAutoindex(_serverUsing->get_autoIndex(), _serverUsing->get_root()));
-	return (responseClient(tmp, _serverUsing->get_cgi(), "200 OK"));
+	_response->errorPage = _response->errorPage;
+	if (generetePathToResponse(tmp.path, _response->root, _response->index) == false)
+		return (sendAutoindex(_response->autoindex, _response->root));
+	return (responseClient(tmp, _response->cgi, "200 OK"));
 }

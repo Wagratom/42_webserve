@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/30 14:15:59 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 21:12:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ bool	Server::handlePostRequest()
 
 	write_debug("handlePostRequest");
 	_response->method = "POST";
-	if (findLocationVector(_serverUsing->get_locations(), LocationsNames))
+	if (findLocationVector(_response->locations, LocationsNames))
 		return responseLocation(endPoint, LocationsNames);
 	std::string	script = endPoint.erase(0, 1);
-	_response->errorMap = _serverUsing->get_error_page();
-	setenv("SCRIPT_FILENAME", std::string(_serverUsing->get_root() + script).c_str(), 1);
+	_response->errorPage = _response->errorPage;
+	setenv("SCRIPT_FILENAME", std::string(_response->root + script).c_str(), 1);
 	return handleScriptPOST();
 }

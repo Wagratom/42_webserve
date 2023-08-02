@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 19:49:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/29 18:01:50 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 21:23:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	Server::sendAutoindex( const bool& autoindex, const std::string& root)
 {
 	write_debug("sendAutoindex");
 	if (autoindex == false)
-		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "404")));
+		return (responseClientError(ERROR404, _response->root, getErrorPageMap(_response->errorPage, "404")));
 	_response->isProcessAutoindex = true;
 	setenv("CONTENT_LENGTH", "0", 1);
 	setenv("REQUEST_METHOD", "GET", 1);
@@ -30,17 +30,17 @@ bool	Server::sendAutoindex( const bool& autoindex, const std::string& root)
 		if (getContentFilePHP(tmp) == false)
 		{
 			if (tmp.notPermmision == true)
-				return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "403")));
-			return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
+				return (responseClientError(ERROR403, _response->root, getErrorPageMap(_response->errorPage, "403")));
+			return (responseClientError(ERROR500, _response->root, getErrorPageMap(_response->errorPage, "500")));
 		}
 		if (_response->hasProcess == true)
 			return (true);
 		if (sendResponseClient(tmp.content) == false)
-			return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
+			return (responseClientError(ERROR500, _response->root, getErrorPageMap(_response->errorPage, "500")));
 		return (true);
 	} catch (std::exception& e) {
 		write_error("sendAutoindex: " + std::string(e.what()));
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
+		return (responseClientError(ERROR500, _response->root, getErrorPageMap(_response->errorPage, "500")));
 	}
 }
 

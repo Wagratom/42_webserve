@@ -65,12 +65,12 @@ bool	Server::responseClient(auxReadFiles& tmp, const std::map<std::string, std::
 	if (getContentFile(tmp, cgi, statusHeader) == false)
 	{
 		if (tmp.notPermmision == true)
-			return (responseClientError(ERROR403, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "403")));
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
+			return (responseClientError(ERROR403, _response->root, getErrorPageMap(_response->errorPage, "403")));
+		return (responseClientError(ERROR500, _response->root, getErrorPageMap(_response->errorPage, "500")));
 	}
 	if (_response->hasProcess == true)
 		return (true);
 	if (sendResponseClient(tmp.content) == false)
-		return (responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500")));
+		return (responseClientError(ERROR500, _response->root, getErrorPageMap(_response->errorPage, "500")));
 	return true;
 }

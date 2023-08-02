@@ -26,7 +26,7 @@ bool	Server::preparingToReadFile(auxReadFiles& tmp, std::string& endPoint)
 	if (checkExtensionFile == std::string::npos || checkExtensionFile == 0)
 		return write_error("preparingToReadFile: not found extension file");
 	endPoint.erase(0, 1);
-	tmp.path = _serverUsing->get_root() + endPoint;
+	tmp.path = _response->root + endPoint;
 	return true;
 }
 
@@ -36,20 +36,20 @@ bool Server::responseFileServer(std::string& endPoint)
 
 	bzero(&tmp, sizeof(tmp));
 	write_debug("responseFileServer");
-	_response->errorMap = _serverUsing->get_error_page();
+	_response->errorPage = _response->errorPage;
 	if (preparingToReadFile(tmp, endPoint) == false)
-		return (responseClientError(ERROR404, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "404")));
-	return responseClient(tmp, _serverUsing->get_cgi(), "200 OK");
+		return (responseClientError(ERROR404, _response->root, getErrorPageMap(_response->errorPage, "404")));
+	return responseClient(tmp, _response->cgi, "200 OK");
 }
 
-bool	Server::responseFileLocation(const t_location*& location, std::string& endPoint)
+bool	Server:: responseFileLocation(const t_location*& location, std::string& endPoint)
 {
 	auxReadFiles	tmp;
 
 	bzero(&tmp, sizeof(tmp));
 	write_debug("responseFileLocation");
 	endPoint.erase(0, location->endPoint.length());
-	tmp.path = location->configuration->get_root() + endPoint;
+	tmp.path = _response->root + endPoint;
 	if (isPostMethod())
 	{
 		setenv("SCRIPT_FILENAME", tmp.path.c_str(), 1);

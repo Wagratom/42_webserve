@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:41:44 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/30 14:23:30 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 21:26:56 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ bool	Server::configureEnvsServer(epoll_event& event)
 	_client_fd = event.data.fd;
 	if (event.events & EPOLLOUT)
 		_write = true;
-	_serverUsing = _serversConf.at(_port);
 	return true;
 }
 
@@ -64,9 +63,17 @@ bool	Server::createNewResponses()
 	}
 	write_debug("createNewResponses");
 	_responses.insert(std::pair<int, Response*>(_client_fd, new Response));
-	_responses.at(_client_fd)->write = _write;
-	_responses.at(_client_fd)->port = _port;
 	_response = _responses.at(_client_fd);
+	_response->write = _write;
+	_response->port = _port;
+	Server_configuration* configuration = _serversConf.at(_port);
+	_response->errorPage = configuration->get_error_page();
+	_response->root = configuration->get_root();
+	_response->cgi = configuration->get_cgi();
+	_response->locations = configuration->get_locations();
+	_response->index = configuration->get_index();
+	_response->autoindex = configuration->get_autoIndex();
+	_response->clientMaxBodySize = configuration->get_clientMaxBodySize();
 	return true;
 }
 

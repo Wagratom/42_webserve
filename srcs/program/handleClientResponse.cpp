@@ -18,9 +18,8 @@ bool	Server::handleProcessClient( void )
 	_response->hasProcess = false;
 	std::string	content;
 
-	_serverUsing = _serversConf.at(_response->port);
 	if (readOuputFormatedCGI(content, _response->process) == false)
-		responseClientError(ERROR500, _serverUsing->get_root(), getErrorPageMap(_response->errorMap, "500"));
+		responseClientError(ERROR500, _response->root, getErrorPageMap(_response->errorPage, "500"));
 	sendResponseClient(content);
 	// cleanupFd(_client_fd);
 	return (true);

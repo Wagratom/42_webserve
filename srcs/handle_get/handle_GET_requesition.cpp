@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:35 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/28 10:39:59 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 21:09:23 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	Server::handle_GET_requesition( void )
 		return (responseServer());
 	if (endPoint.find("?") != std::string::npos)
 		handleQuerystring(endPoint);
-	if (findLocationVector(_serverUsing->get_locations(), LocationsNames))
+	if (findLocationVector(_response->locations, LocationsNames))
 		return (responseLocation(endPoint, LocationsNames));
 	return (responseFileServer(endPoint));
 }

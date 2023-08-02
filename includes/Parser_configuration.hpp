@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 08:30:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/07/29 10:16:45 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 21:07:04 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ class  Server_configuration : public aux_configuration
 		const std::string&							get_root( void ) const;
 		const std::string&							get_index( void ) const;
 		const std::string&							get_return( void ) const;
-		const bool&								get_autoIndex( void ) const;
+		const bool&									get_autoIndex( void ) const;
 		const int&									get_port( void ) const;
 		const int&									get_clientMaxBodySize( void ) const;
 

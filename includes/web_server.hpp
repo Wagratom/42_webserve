@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/01 20:01:38 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 22:18:39 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,21 @@ class	Response
 		int						bytesRead;
 		int						sizeContent;
 		int						port;
+		int						clientMaxBodySize;
 		bool					hasProcess;
 		bool					write;
 		bool					isProcessAutoindex;
 		bool					endHeader;
+		bool					autoindex;
 		std::time_t				creationTime;
 		std::string				buffer;
 		std::string				method;
+		std::string				root;
+		std::string				index;
 		ChildProcessData		process;
-		std::map<std::string, std::string*>	errorMap;
+		std::map<std::string, std::string>	cgi;
+		std::map<std::string, t_location*>	locations;
+		std::map<std::string, std::string*>	errorPage;
 };
 
 class	Server
@@ -101,12 +107,13 @@ class	Server
 		bool	responseServer( void );
 		bool	responseFileServer( std::string& endPoint );
 		bool	responseLocation( std::string& endPoint, std::string& locationName );
+		void	updateResponseLocation(const t_location*& location);
 		bool	returnIndexLocation(const t_location*& _location );
 		bool	responseFileLocation(const t_location*& location, std::string& endPoint);
 
 		bool	handlePostRequest( void ); // POST
 		bool	handleScriptPOST( void );
-		bool	checkPermitionFile(std::string path);
+		bool	checkPermitionFile( void );
 		bool	checkClientMaxSize( void );
 		bool	handlePostBody( void );
 		bool	readAndSaveDatas( void );
@@ -125,9 +132,10 @@ class	Server
 		bool	createRootLocation(const t_location*& location);
 		bool	sendAutoindex( const bool& autoindex, const std::string& root);
 
-		bool		generetePathToResponse( std::string& dst , const std::string& root, const std::string& listNames );
-		bool		responseClientError( int status, const std::string& root, std::string pathFileError );
-		bool		findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint);
+		bool	generetePathToResponse( std::string& dst , const std::string& root, const std::string& listNames );
+		bool	responseClientError( int status, const std::string& root, std::string pathFileError );
+		bool	genereteValidpath( std::string& path );
+		bool	findLocationVector(const std::map<std::string, t_location*>& locations, std::string& endPoint);
 
 		bool	sendErrorToClient( std::string path, std::string header );
 
@@ -169,7 +177,6 @@ class	Server
 		std::map<int, Server_configuration*>	_serversConf;
 		std::map<int, std::string>				_defaultErrorPage;
 		std::map<int, Response*>				_responses;
-		Server_configuration*					_serverUsing;
 		std::time_t								_lastVerifyTimeout;
 		Response*								_response;
 };
@@ -181,11 +188,6 @@ bool		getContentFile(auxReadFiles& dst,  const std::map<std::string, std::string
 // void		generateDynamicHeader(auxReadFiles& tmp, std::string status_code);
 void		generateHeaderDynamicStatus(auxReadFiles& tmp, std::string status);
 bool		executeFork( ChildProcessData& infos);
-// void		executeCGI(char** argv, char** envp);
-// bool		getContentFile(auxReadFiles& dst);
-// void		appendBar(std::string& str);
-// bool		generateFilesList(std::string& listFiles, const char* pathDir);
-// bool		generateResponse(std::string& response);
 std::string	generateHeaderRedirect(std::string status, std::string endPoint);
 bool		readOuputFormatedCGI(std::string& dst, const ChildProcessData& auxProcess);
 

@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/01 20:15:19 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/01 21:26:38 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ Response::Response( void )
 	, bytesRead(0)
 	, sizeContent(0)
 	, port(0)
+	, clientMaxBodySize(0)
 	, hasProcess(false)
 	, write(false)
 	, isProcessAutoindex(false)
@@ -87,6 +88,10 @@ Response::Response( void )
 	, creationTime(std::time(NULL))
 	, buffer("")
 	, method("")
-	, errorMap() {
+	, root("")
+	, index("")
+	, cgi()
+	, locations()
+	, errorPage() {
 	bzero(&process, sizeof(ChildProcessData));
 };
