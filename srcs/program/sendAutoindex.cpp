@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 19:49:32 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/02 09:12:27 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/03 09:58:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 bool	Server::sendAutoindex( const bool& autoindex, const std::string& root)
 {
 	write_debug("sendAutoindex");
-	if (autoindex == false)
+	if (autoindex == false || access(root.c_str(), F_OK) == -1)
+	{
+		write_error("root not found");
 		return (responseClientError("404", getErrorPageMap("404")));
+	}
 	_response->isProcessAutoindex = true;
 	setenv("CONTENT_LENGTH", "0", 1);
 	setenv("REQUEST_METHOD", "GET", 1);

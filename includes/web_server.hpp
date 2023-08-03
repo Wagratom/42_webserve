@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/02 13:25:39 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/03 10:34:24 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ class	Server
 		bool	handle_GET_requesition( void ); // GET
 		void	handleQuerystring(std::string& endPoint);
 		bool	responseServer( void );
-		bool	responseFileServer( std::string& endPoint );
-		bool	responseLocation( std::string& locationName );
+		bool	responseFileServer( std::string endPoint );
+		bool	responseLocation( std::string endPoint, std::string& locationName );
 		void	updateResponseLocation(const t_location*& location);
 		bool	returnIndexLocation( void );
 		bool	responseFileLocation(const t_location*& location, std::string& endPoint);

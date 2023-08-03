@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/02 12:30:20 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/03 10:48:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	Server::checkPermitionFile()
 			responseClientError("404", getErrorPageMap("404"));
 		else if (access(path.c_str(), F_OK) != 0)
 			responseClientError("404", getErrorPageMap("404"));
-		else if (access(path.c_str(), W_OK) != 0)
+		else if (access(path.c_str(), X_OK) != 0)
 			responseClientError("403", getErrorPageMap("403"));
 		else if (access(path.c_str(), R_OK) != 0)
 			responseClientError("403", getErrorPageMap("403"));

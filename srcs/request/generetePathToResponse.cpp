@@ -16,9 +16,9 @@ static bool	open_file_status( const std::string& path )
 {
 	std::ifstream	file(path.c_str());
 
-	std::cout << "path: " << path << std::endl;
 	if (access(path.c_str(), F_OK) == -1)
 		return (false);
+	write_debug_prefix("Path: ", path);
 	return (true);
 }
 
@@ -50,7 +50,7 @@ bool	Server::generetePathToResponse(std::string& dst, const std::string& root, c
 {
 	write_debug("generetePathToResponse");
 	if (listNames.empty() || root.empty())
-		return (false);
+		return (write_error("path not found"));
 	if (getValidPath(dst, root, listNames) == false)
 		return (write_error("path not found"));
 	return (true);

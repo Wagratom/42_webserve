@@ -31,7 +31,7 @@ bool	Server::preparingToReadFile(auxReadFiles& tmp, std::string& endPoint)
 	return true;
 }
 
-bool Server::responseFileServer(std::string& endPoint)
+bool Server::responseFileServer(std::string endPoint)
 {
 	auxReadFiles	tmp;
 

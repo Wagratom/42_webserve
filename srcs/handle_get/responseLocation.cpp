@@ -68,7 +68,7 @@ void	Server::updateResponseLocation(const t_location*& location)
 /* ************************************************************************** */
 /*								init										  */
 /* ************************************************************************** */
-bool	Server::responseLocation(std::string& locationName)
+bool	Server::responseLocation(std::string endpoint , std::string& locationName)
 {
 	try {
 		const t_location*	location = _response->locations.at(locationName);
@@ -81,8 +81,8 @@ bool	Server::responseLocation(std::string& locationName)
 		updateResponseLocation(location);
 		if (checkMethodSupported(location->configuration->get_limit_except()) == false)
 			return (responseClientError("405", getErrorPageMap("405")));
-		if (isRequerimentFile(locationName))
-			return (responseFileLocation(location, locationName));
+		if (isRequerimentFile(endpoint))
+			return (responseFileLocation(location, endpoint));
 		return (returnIndexLocation());
 	} catch (std::exception& e) {
 		write_error("responseLocation: " + std::string(e.what()));
