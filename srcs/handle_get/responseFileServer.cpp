@@ -27,6 +27,8 @@ bool	Server::preparingToReadFile(auxReadFiles& tmp, std::string& endPoint)
 		return write_error("preparingToReadFile: not found extension file");
 	if (endPoint[endPoint.length() - 1] == '/')
 		endPoint.erase(endPoint.length() - 1);
+	if (endPoint[0] == '/')
+		endPoint.erase(0, 1);
 	tmp.path = _response->root + endPoint;
 	return true;
 }
