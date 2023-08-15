@@ -14,6 +14,7 @@
 	$output = ob_get_contents();
 	$contentLength = strlen($output);
 	header("Content-Length: $contentLength");
+	while (1);
 	?>
 	</body>
 </html>

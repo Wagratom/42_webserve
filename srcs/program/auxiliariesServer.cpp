@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:41:44 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/03 10:32:15 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/15 11:46:06 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ std::string	Server::getErrorPageMap(std::string error)
 		return ("");
 	try {
 		std::string full_path = _response->root + *_response->errorPage.at(error);
-		return (*_response->errorPage.at(error));
+		return (full_path);
 	} catch (const std::exception& e) {
 		return (_defaultErrorPage[error]);
 	}

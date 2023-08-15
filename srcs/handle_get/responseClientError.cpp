@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:52:50 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/02 12:29:18 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/15 11:41:44 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,24 @@ bool	Server::genereteValidpath(std::string& path)
 
 		if (access(path.c_str(), F_OK) != 0)
 		{
+			return write_error_prefixS("Error not found F_OK: path:" , path);
 			path = _defaultErrorPage[ERROR404];
-			return write_error_prefixS("Path error not found: Response client with page default: ", path);
+			return write_error_prefixS("Response client with page default: ", path);
 		}
 		if (_response->cgi.find(extension) != _response->cgi.end())
 		{
 			if (access(path.c_str(), X_OK) != 0)
 			{
+				return write_error_prefixS("Error not found F_OK: path:" , path);
 				path = _defaultErrorPage[ERROR403];
-				return write_error_prefixS("Path not permition: Response client with page default: ", path);
+				return write_error_prefixS("Response client with page default: ", path);
 			}
 		}
 		else if (access(path.c_str(), R_OK) != 0)
 		{
+			return write_error_prefixS("Error not found F_OK: path:" , path);
 			path = _defaultErrorPage[ERROR403];
-			return write_error_prefixS("Path not permition: Response client with page default: ", path);
+			return write_error_prefixS("Response client with page default: ", path);
 		}
 		return (true);
 	}
