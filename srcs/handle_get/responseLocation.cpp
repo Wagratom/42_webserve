@@ -29,6 +29,15 @@ static bool	isPostMethod( void )
 	return (false);
 }
 
+static bool	isValidLocation(std::string location, std::string name)
+{
+	if (location[0] == '/')
+		location.erase(0,1);
+	if (location != name)
+		return false;
+	return true;
+}
+
 bool	Server::createRootLocation(const t_location*& location)
 {
 	if (location->configuration->get_root().empty() == false)
@@ -65,6 +74,7 @@ void	Server::updateResponseLocation(const t_location*& location)
 	_response->clientMaxBodySize = location->configuration->get_clientMaxBodySize();
 
 }
+
 /* ************************************************************************** */
 /*								init										  */
 /* ************************************************************************** */
@@ -83,6 +93,8 @@ bool	Server::responseLocation(std::string endpoint , std::string& locationName)
 			return (responseClientError("405", getErrorPageMap("405")));
 		if (isRequerimentFile(endpoint))
 			return (responseFileLocation(location, endpoint));
+		if (isValidLocation(endpoint, locationName) == false)
+			return (responseClientError("404", getErrorPageMap("404")));
 		return (returnIndexLocation());
 	} catch (std::exception& e) {
 		write_error("responseLocation: " + std::string(e.what()));
@@ -95,7 +107,6 @@ bool	Server::returnIndexLocation( void )
 	auxReadFiles	tmp;
 
 	bzero(&tmp, sizeof(tmp));
-	write_debug("returnIndexLocation");
 	if (generetePathToResponse(tmp.path, _response->root, _response->index) == false)
 		return (sendAutoindex(_response->autoindex, _response->root));
 	if (isPostMethod())

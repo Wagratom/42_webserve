@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 09:52:42 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/01 20:03:58 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:14:37 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	Location_configuration::set_error_page( std::string number, std::string err
 
 void	Location_configuration::set_client_max_body_size( int maxSize )
 {
-	if (this->_clientMaxBodySize != 0)
+	if (this->_clientMaxBodySize != 1000000)
 		return ;
 	this->_clientMaxBodySize = maxSize;
 }
