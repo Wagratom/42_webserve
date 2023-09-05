@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:03 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/02 09:09:16 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:17:43 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ bool	Server::handleProcessResponse( void )
 	int		status;
 
 	write_debug("handleProcessResponse");
-	write(_response->process.fd[1], _response->buffer.data(), _response->bytesRead);
+	if (write(_response->process.fd[1], _response->buffer.data(), _response->bytesRead) == -1)
+		return (writeStreerrorPrefix("Error: handleProcessResponse"));
 	_response->buffer.clear();
 	if (_response->sizeContent == _response->contentLenght)
 	{
