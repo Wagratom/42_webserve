@@ -6,11 +6,11 @@
 #    By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 15:47:23 by wwallas-          #+#    #+#              #
-#    Updated: 2023/07/25 13:23:57 by wwallas-         ###   ########.fr        #
+#    Updated: 2023/09/07 11:50:49 by wwallas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	parser
+NAME		=	webserve
 
 MAIN		=
 

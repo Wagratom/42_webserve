@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 09:40:58 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/03 10:34:24 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/09/18 12:05:42 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ class	Server
 		bool	responseServer( void );
 		bool	responseFileServer( std::string endPoint );
 		bool	responseLocation( std::string endPoint, std::string& locationName );
-		void	updateResponseLocation(const t_location*& location);
+		bool	handle_request_location(const t_location*& location, std::string& path);
+		void	updateResponseLocation(const t_location*& location, bool& is_location_server);
 		bool	returnIndexLocation( void );
 		bool	responseFileLocation(const t_location*& location, std::string& endPoint);
 
@@ -129,7 +130,7 @@ class	Server
 
 		// bool	auxSendErrorPost( int status, std::string Error );
 		bool	preparingToReadFile(auxReadFiles& tmp, std::string& endPoint);
-		bool	createRootLocation(const t_location*& location);
+		bool	createRootLocation(const t_location*& location, bool& is_location_server);
 		bool	sendAutoindex( const bool& autoindex, const std::string& root);
 
 		bool	generetePathToResponse( std::string& dst , const std::string& root, const std::string& listNames );
@@ -161,6 +162,9 @@ class	Server
 		std::vector<Server_configuration*>	server( void ) {
 			return (this->_parserFile->get_server_configuration());
 		}
+
+		bool	is_get_server( void );
+		bool	seed_head_client( void );
 
 	private:
 		Parser_configuration*	_parserFile;

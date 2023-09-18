@@ -11,15 +11,11 @@
 /* ************************************************************************** */
 
 #include <web_server.hpp>
+#include <sys/stat.h>
 
 static bool	hasRedirection(const t_location*& location)
 {
 	return (location->configuration->get_return().empty() == false);
-}
-
-static bool	isRequerimentFile(const std::string& endPoint)
-{
-	return (endPoint.find(".") != std::string::npos);
 }
 
 static bool	isPostMethod( void )
@@ -29,23 +25,16 @@ static bool	isPostMethod( void )
 	return (false);
 }
 
-static bool	isValidLocation(std::string location, std::string name)
+bool	Server::createRootLocation(const t_location*& location, bool& is_location_server)
 {
-	if (location[0] == '/')
-		location.erase(0,1);
-	if (location != name)
-		return false;
-	return true;
-}
+	const std::string& root = location->configuration->get_root();
 
-bool	Server::createRootLocation(const t_location*& location)
-{
-	if (location->configuration->get_root().empty() == false)
-		return (true);
-	std::string	rootServer = _response->root;
-	if (rootServer.empty())
-		write_error("Error: root not found");
-	location->configuration->set_root(rootServer);
+	if (root.empty() && _response->root.empty())
+		return write_error("Error: root not found");
+	if (root.empty())
+		is_location_server = true;
+	else
+		_response->root = root;
 	return (true);
 }
 
@@ -64,15 +53,15 @@ bool	Server::checkMethodSupported(std::vector<std::string> methods)
 	return (false);
 }
 
-void	Server::updateResponseLocation(const t_location*& location)
+void	Server::updateResponseLocation(const t_location*& location, bool& is_location_server)
 {
 	_response->errorPage = location->configuration->get_error_page();
-	_response->root = location->configuration->get_root() + location->endPoint;
+	if (_response->root[0] == '.' && _response->root[1] == '/' && is_location_server == false)
+		_response->root = _response->root + location->endPoint;
 	_response->cgi = location->configuration->get_cgi();
 	_response->index = location->configuration->get_index();
 	_response->autoindex = location->configuration->get_autoIndex();
 	_response->clientMaxBodySize = location->configuration->get_clientMaxBodySize();
-
 }
 
 /* ************************************************************************** */
@@ -80,32 +69,57 @@ void	Server::updateResponseLocation(const t_location*& location)
 /* ************************************************************************** */
 bool	Server::responseLocation(std::string endpoint , std::string& locationName)
 {
+	write_debug_prefix("responseLocation: ", locationName);
 	try {
 		const t_location*	location = _response->locations.at(locationName);
+		bool				is_location_server;
 
-		write_debug_prefix("responseLocation: ", locationName);
+		is_location_server = false;
 		if (hasRedirection(location))
 			return (responseRedirect(location->configuration->get_return()));
-		if (createRootLocation(location) == false)
+		if (createRootLocation(location, is_location_server) == false)
 			return (responseClientError("500", getErrorPageMap("500")));
-		updateResponseLocation(location);
+		updateResponseLocation(location, is_location_server);
 		if (checkMethodSupported(location->configuration->get_limit_except()) == false)
 			return (responseClientError("405", getErrorPageMap("405")));
-		if (isRequerimentFile(endpoint))
-			return (responseFileLocation(location, endpoint));
-		if (isValidLocation(endpoint, locationName) == false)
-			return (responseClientError("404", getErrorPageMap("404")));
-		return (returnIndexLocation());
+		endpoint.erase(0, locationName.length());
+		return (handle_request_location(location, endpoint));
 	} catch (std::exception& e) {
 		write_error("responseLocation: " + std::string(e.what()));
 		return (responseClientError("500", getErrorPageMap("500")));
 	}
 }
 
+bool	Server::handle_request_location(const t_location*& location, std::string& order)
+{
+	if (order[0] == '/')
+		order.erase(0, 1);
+	std::string path = _response->root + order;
+	struct stat file_stat;
+	if (stat(path.c_str(), &file_stat) == 0)
+	{
+		if (S_ISDIR(file_stat.st_mode))
+		{
+			_response->root = path;
+			if (_response->root[_response->root.length() - 1] != '/')
+				_response->root += "/";
+			return (returnIndexLocation());
+		}
+		else
+			return (responseFileLocation(location, path));
+	}
+	else {
+		responseClientError("404", getErrorPageMap("404"));
+	}
+	return false;
+}
+
+
 bool	Server::returnIndexLocation( void )
 {
 	auxReadFiles	tmp;
 
+	write_debug("returnIndexLocation");
 	bzero(&tmp, sizeof(tmp));
 	if (generetePathToResponse(tmp.path, _response->root, _response->index) == false)
 		return (sendAutoindex(_response->autoindex, _response->root));

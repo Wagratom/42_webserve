@@ -26,6 +26,7 @@ bool	Server::filterEvent(epoll_event* event, int numberOfEvents)
 	index = 0;
 	while (index < numberOfEvents)
 	{
+		usleep(100);
 		if (checkEventInServer(event[index], _serversConf))
 			handleNewConnections(event[index].data.fd);
 		else

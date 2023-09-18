@@ -44,14 +44,13 @@ bool Server::responseFileServer(std::string endPoint)
 	return responseClient(tmp, _response->cgi, "200 OK");
 }
 
-bool	Server:: responseFileLocation(const t_location*& location, std::string& endPoint)
+bool	Server:: responseFileLocation(const t_location*& location, std::string& path)
 {
 	auxReadFiles	tmp;
 
-	bzero(&tmp, sizeof(tmp));
 	write_debug("responseFileLocation");
-	endPoint.erase(0, location->endPoint.length());
-	tmp.path = _response->root + endPoint;
+	bzero(&tmp, sizeof(tmp));
+	tmp.path = path;
 	if (isPostMethod())
 	{
 		setenv("SCRIPT_FILENAME", tmp.path.c_str(), 1);

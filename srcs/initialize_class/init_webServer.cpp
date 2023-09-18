@@ -6,7 +6,7 @@
 /*   By: wwallas- <wwallas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:01:16 by wwallas-          #+#    #+#             */
-/*   Updated: 2023/08/02 08:51:23 by wwallas-         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:13:17 by wwallas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ std::string**	Server::create_verbs( void )
 	verbs[0] = new std::string("GET");
 	verbs[1] = new std::string("POST");
 	verbs[2] = new std::string("DELETE");
-	verbs[3] = NULL;
+	verbs[3] = new std::string("HEAD");
+	verbs[4] = NULL;
 	return (verbs);
 }
 

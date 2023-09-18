@@ -19,6 +19,24 @@ bool	deleteParserRequest(Parser_request*& parserRequest, bool status)
 	return (status);
 }
 
+bool	Server::is_get_server(void)
+{
+	if (_parserRequest->get_endPoint() != "/")
+		return true;
+	if (_parserRequest->get_metodo() == "GET")
+		return true;
+	responseClientError("405", getErrorPageMap("405"));
+	return (false);
+}
+
+bool	Server::seed_head_client( void ) {
+	std::string content = "HTTP/1.1 405 OK\r\n";
+	content += "Content-Type: text/html\r\n";
+	content += "Content-Length: 0\r\n\r\n";
+	sendResponseClient(content);
+	return (true);
+}
+
 bool	Server::responseRequest( void )
 {
 	_parserRequest = new Parser_request(_response->buffer);
@@ -29,6 +47,10 @@ bool	Server::responseRequest( void )
 		return (deleteParserRequest(_parserRequest, false));
 	if (_parserRequest->set_envs_header() == false)
 		return (deleteParserRequest(_parserRequest, false));
+	if (_parserRequest->get_metodo() == "HEAD")
+		return deleteParserRequest(_parserRequest, true), seed_head_client();
+	if (is_get_server() == false)
+		return (deleteParserRequest(_parserRequest, true));
 	if (_parserRequest->get_metodo() == "GET")
 		return deleteParserRequest(_parserRequest, handle_GET_requesition());
 	if (_parserRequest->get_metodo() == "POST")
