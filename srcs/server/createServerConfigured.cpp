@@ -12,6 +12,18 @@
 
 #include <web_server.hpp>
 
+static void addedServenameInHost(std::string serveName)
+{
+	std::string host = "127.0.0.1 " + serveName;
+	std::ofstream file("/etc/hosts", std::ios::app);  // Abre o arquivo em modo de apêndice
+
+	if (!file.is_open())
+		std::cout << "\033[0;31m\tError: File /etc/hosts not open" << std::endl;
+	else
+		file << host << std::endl;
+	file.close();
+}
+
 bool	Server::createServerConfigured( void )
 {
 	std::vector<Server_configuration*>	auxServer = server();
@@ -28,6 +40,8 @@ bool	Server::createServerConfigured( void )
 			hasServerValid = true;
 			_serversConf[(*it)->get_port()] = (*it);
 			_serversConf[serverFd] = (*it);
+			addedServenameInHost((*it)->get_server_name());
+			std::cout << (*it)->get_server_name() << std::endl;
 		}
 	}
 	if (hasServerValid == false)

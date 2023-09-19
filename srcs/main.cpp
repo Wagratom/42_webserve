@@ -15,7 +15,7 @@
 bool	valid_arguments( int argc, char *argv[])
 {
 	write_debug("Validating arguments");
-	if (argc > 3)
+	if (argc > 3 || argc <= 1)
 		return (write_error("Error: Invalid number of arguments"));
 	if (argv == NULL || *argv == 0)
 		return (write_error("Error: Invalid arguments"));
