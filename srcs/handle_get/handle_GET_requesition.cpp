@@ -34,7 +34,8 @@ bool	Server::handle_GET_requesition( void )
 		return (responseServer());
 	if (locationName.find("?") != std::string::npos)
 		handleQuerystring(locationName);
+	std::string copy = locationName;
 	if (findLocationVector(_response->locations, locationName))
 		return (responseLocation(_parserRequest->get_endPoint(), locationName));
-	return (responseFileServer(_parserRequest->get_endPoint()));
+	return (responseFileServer(copy));
 }

@@ -30,6 +30,7 @@ bool	Server::preparingToReadFile(auxReadFiles& tmp, std::string& endPoint)
 	if (endPoint[0] == '/')
 		endPoint.erase(0, 1);
 	tmp.path = _response->root + endPoint;
+	std::cout << "path: " << tmp.path << std::endl;
 	return true;
 }
 

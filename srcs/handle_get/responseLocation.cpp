@@ -92,9 +92,11 @@ bool	Server::responseLocation(std::string endpoint , std::string& locationName)
 
 bool	Server::handle_request_location(const t_location*& location, std::string& order)
 {
+	write_debug("handle_request_location");
 	if (order[0] == '/')
 		order.erase(0, 1);
 	std::string path = _response->root + order;
+	std::cout << "path: " << path << std::endl;
 	struct stat file_stat;
 	if (stat(path.c_str(), &file_stat) == 0)
 	{
