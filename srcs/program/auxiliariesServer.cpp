@@ -106,7 +106,6 @@ bool	Server::handleKeepAlive( void )
 bool	Server::sendResponseClient(std::string response)
 {
 	write_debug("sendResponseClient");
-	cleanupResponse(_client_fd);
 	if (_write != true)
 		return (true);
 	if ((send(_client_fd, response.c_str(), response.size(), 0) < 0))

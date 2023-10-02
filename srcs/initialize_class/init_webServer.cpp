@@ -26,12 +26,17 @@ void	Server::initializeDefaultErrorPage( void )
 
 std::string**	Server::create_verbs( void )
 {
-	std::string** verbs = new std::string*[4];
+	std::string** verbs = new std::string*[10];
 	verbs[0] = new std::string("GET");
 	verbs[1] = new std::string("POST");
 	verbs[2] = new std::string("DELETE");
 	verbs[3] = new std::string("HEAD");
-	verbs[4] = NULL;
+	verbs[4] = new std::string("PUT");
+	verbs[5] = new std::string("CONNECT");
+	verbs[6] = new std::string("OPTIONS");
+	verbs[7] = new std::string("TRACE");
+	verbs[8] = new std::string("PATCH");
+	verbs[9] = NULL;
 	return (verbs);
 }
 
