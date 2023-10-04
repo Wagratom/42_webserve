@@ -32,7 +32,7 @@ bool	Server::timeoutHandler( void )
 			if (waitpid(it->second->process.pid, NULL, WNOHANG) == 0)
 				kill(it->second->process.pid, SIGKILL);
 			it++;
-			cleanupFd(_client_fd);
+			cleanupClient(_client_fd);
 			status = true;
 		}
 		else
