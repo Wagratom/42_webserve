@@ -25,8 +25,7 @@ bool	Server::is_get_server(void)
 		return true;
 	if (_parserRequest->get_metodo() == "GET")
 		return true;
-	responseClientError("405", getErrorPageMap("405"));
-	return (false);
+	return (responseClientError("405", getErrorPageMap("405")));
 }
 
 bool	Server::responseRequest( void )

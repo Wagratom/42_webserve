@@ -98,7 +98,7 @@ bool	Server::handleKeepAlive( void )
 	else
 	{
 		write_debug_number("Close: ", _client_fd);
-		cleanupFd(_client_fd);
+		cleanupClient(_client_fd);
 	}
 	return (true);
 }
