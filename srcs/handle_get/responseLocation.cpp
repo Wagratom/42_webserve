@@ -18,6 +18,15 @@ static bool	hasRedirection(const t_location*& location)
 	return (location->configuration->get_return().empty() == false);
 }
 
+static void removeQueryString(std::string& endPoint)
+{
+	size_t	questionMarkPos = endPoint.find("?");
+
+	if (questionMarkPos == std::string::npos)
+		return ;
+	endPoint.erase(questionMarkPos);
+}
+
 static bool	isPostMethod( void )
 {
 	if (std::string(getenv("REQUEST_METHOD")) == "POST")
@@ -93,6 +102,7 @@ bool	Server::responseLocation(std::string endpoint , std::string& locationName)
 bool	Server::handle_request_location(const t_location*& location, std::string& order)
 {
 	write_debug("handle_request_location");
+	removeQueryString(order);
 	if (order[0] == '/')
 		order.erase(0, 1);
 	std::string path = _response->root + order;
